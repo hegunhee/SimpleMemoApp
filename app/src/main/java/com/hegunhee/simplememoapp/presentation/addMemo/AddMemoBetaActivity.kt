@@ -1,11 +1,16 @@
 package com.hegunhee.simplememoapp.presentation.addMemo
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.hegunhee.simplememoapp.data.Entity.accountItem
 import com.hegunhee.simplememoapp.databinding.AddMemoBetaBinding
 import com.hegunhee.simplememoapp.presentation.Main.MainActivity
+import java.time.LocalDate
+import java.time.LocalTime
 
 class AddMemoBetaActivity : AppCompatActivity() {
 
@@ -17,6 +22,11 @@ class AddMemoBetaActivity : AppCompatActivity() {
         initViews()
     }
     private fun initViews() = with(binding){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            day.text = LocalDate.now().toString()
+            time.text = LocalTime.now().toString()
+        }
+
         save.setOnClickListener {
             Intent(this@AddMemoBetaActivity,MainActivity::class.java)?.apply {
                 putExtra(Item,accountItem(
@@ -31,10 +41,7 @@ class AddMemoBetaActivity : AppCompatActivity() {
                 finish()
             }
         }
-
-
     }
-
     companion object{
         const val Item = "accountItem"
     }
