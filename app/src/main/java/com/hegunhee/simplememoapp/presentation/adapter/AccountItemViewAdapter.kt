@@ -12,7 +12,7 @@ class AccountItemViewAdapter : RecyclerView.Adapter<AccountItemViewAdapter.Accou
 
     inner class AccountItemViewHolder(private val binding : AccountitemviewBinding) : RecyclerView.ViewHolder(binding.root){
         fun bindView(item : accountItem) = with(binding){
-            this.description.text = item.description ?: item.payType
+            this.description.text = item.description ?: item.attr
             //
             //
 

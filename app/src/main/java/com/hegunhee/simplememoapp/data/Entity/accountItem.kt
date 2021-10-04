@@ -6,10 +6,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class accountItem(
-    val category : String,
-    val description : String?,
+    val category: String,
     val day : String,
     val time : String,
+    val asset : String,
+    val attr : String,
     val price : Int,
-    val payType : String
+    val description: String?,
 ) : Parcelable
