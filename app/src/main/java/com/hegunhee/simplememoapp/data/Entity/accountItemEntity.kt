@@ -10,10 +10,11 @@ import kotlinx.parcelize.Parcelize
 data class accountItemEntity(
     val category: String,
     val day : String,
-    @PrimaryKey
     val time : String,
     val asset : String,
     val attr : String,
     val price : Int,
     val description: String?,
+    @PrimaryKey(autoGenerate = true)
+    val id : Int = 0
 ) :Parcelable

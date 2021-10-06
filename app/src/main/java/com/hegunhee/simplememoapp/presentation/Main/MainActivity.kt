@@ -29,8 +29,9 @@ internal class MainActivity:  BaseActivity<MainViewModel,ActivityMainBinding>(){
     private fun initViews() {
         getResultText = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result->
             if(result.resultCode == RESULT_OK){
-                val accountItem = result.data?.getParcelableExtra<accountItemEntity>(AddMemoBetaActivity.Item)
+                val accountItem = result.data?.getParcelableExtra<accountItemEntity>(AddMemoBetaActivity.Item) ?: return@registerForActivityResult
                 Toast.makeText(this, accountItem.toString(), Toast.LENGTH_SHORT).show()
+                viewModel.addEntity(accountItem)
             }
         }
     }
@@ -51,6 +52,11 @@ internal class MainActivity:  BaseActivity<MainViewModel,ActivityMainBinding>(){
             }
             is MainState.Success -> {
                 Log.d("data", it.ItemList.toString())
+                val totalIncomeMoney = it.ItemList.filter { it.category.equals("수입") }.map { it.price }.sum()
+                val totalSpendMoney = it.ItemList.filter { it.category.equals("지출") }.map { it.price }.sum()
+                binding.incomeTotalMoney.text = "수입\n" + totalIncomeMoney
+                binding.spendTotalMoney.text = "지출\n" + totalSpendMoney
+                binding.totalMoney.text = "총합\n" + (totalIncomeMoney - totalSpendMoney)
             }
         }
     }

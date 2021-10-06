@@ -1,9 +1,6 @@
 package com.hegunhee.simplememoapp.data.Dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.hegunhee.simplememoapp.data.Entity.accountItemEntity
 
 @Dao
@@ -17,5 +14,8 @@ interface DataDao {
 
     @Query("SELECT * FROM accountItemEntity where category =:time")
     suspend fun select(time : String) : accountItemEntity
+
+    @Delete
+    suspend fun delete(entity : accountItemEntity)
 
 }

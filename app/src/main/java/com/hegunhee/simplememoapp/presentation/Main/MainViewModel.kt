@@ -2,6 +2,7 @@ package com.hegunhee.simplememoapp.presentation.Main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.hegunhee.simplememoapp.data.Entity.accountItemEntity
 import com.hegunhee.simplememoapp.model.Repository
 import com.hegunhee.simplememoapp.presentation.BaseViewModel
 import kotlinx.coroutines.Job
@@ -17,7 +18,11 @@ internal class MainViewModel(val repository: Repository) : BaseViewModel() {
     }
     override fun fetchData(): Job = viewModelScope.launch {
         setData(MainState.Loading)
-
+        setData(MainState.Success(repository.getAll()))
+    }
+    fun addEntity(entity : accountItemEntity) : Job = viewModelScope.launch {
+        setData(MainState.Loading)
+        repository.insert(entity)
         setData(MainState.Success(repository.getAll()))
     }
 }

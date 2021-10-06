@@ -23,8 +23,6 @@ import java.util.*
 class AddMemoBetaActivity() : AppCompatActivity() {
 
     private lateinit var binding: AddMemoBetaBinding
-    private val dao by inject<DataDao>()
-    private val ioDispatcher by inject<CoroutineDispatcher>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = AddMemoBetaBinding.inflate(layoutInflater)
@@ -55,8 +53,6 @@ class AddMemoBetaActivity() : AppCompatActivity() {
                 attr.text = ""
                 tableGroup.isGone = true
             }
-
-
         }
 
         save.setOnClickListener {
@@ -83,6 +79,7 @@ class AddMemoBetaActivity() : AppCompatActivity() {
                 attr.callOnClick()
                 return@setOnClickListener
             } else attr.text.toString()
+
             val price = if (price.text.isNullOrEmpty()) {
                 Toast.makeText(this@AddMemoBetaActivity, "가격을 입력해주세요", Toast.LENGTH_SHORT).show()
                 price.callOnClick()
@@ -90,28 +87,9 @@ class AddMemoBetaActivity() : AppCompatActivity() {
             } else price.text.toString().toInt()
             val description = description.text.toString()
 
-//            Toast.makeText(
-//                this@AddMemoBetaActivity,
-//                "category = $category day = $day time = $time asset = $asset attr = $attr price = $price desc = $description"
-//                , Toast.LENGTH_SHORT
-//            ).show()
-
-
             Intent(this@AddMemoBetaActivity, MainActivity::class.java).apply {
-                putExtra(
-                    Item, accountItemEntity(
-                        category,
-                        day,
-                        time,
-                        asset,
-                        attr,
-                        price,
-                        description
-                    )
-                )
-                GlobalScope.launch (ioDispatcher){
-                    dao.insert(accountItemEntity(category, day, time, asset, attr, price, description))
-                }
+                val entity = accountItemEntity(category, day, time, asset, attr, price, description)
+                putExtra(Item, entity)
                 setResult(RESULT_OK, this)
                 finish()
             }

@@ -13,14 +13,14 @@ import org.koin.dsl.module
 
 internal val module = module {
 
-    single {Dispatchers.IO}
-    single {Dispatchers.Main}
+    single { Dispatchers.IO }
+    single { Dispatchers.Main }
 
     viewModel { MainViewModel(get()) }
 
 
-    single <Repository>{DefaultRepository(get(),get()) }
+    single<Repository> { DefaultRepository(get(), get()) }
 
-    single { provideDB(androidContext())}
-    single { provideToDoDao(get())}
+    single { provideDB(androidContext()) }
+    single { provideToDoDao(get()) }
 }
