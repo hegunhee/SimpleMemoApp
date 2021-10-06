@@ -9,18 +9,22 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import com.hegunhee.simplememoapp.data.Entity.accountItem
+import com.hegunhee.simplememoapp.data.Dao.DataDao
+import com.hegunhee.simplememoapp.data.Entity.accountItemEntity
 import com.hegunhee.simplememoapp.databinding.AddMemoBetaBinding
 import com.hegunhee.simplememoapp.presentation.Main.MainActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import java.text.SimpleDateFormat
 import java.util.*
 
-class AddMemoBetaActivity : AppCompatActivity() {
+class AddMemoBetaActivity() : AppCompatActivity() {
 
     private lateinit var binding: AddMemoBetaBinding
+    private val dao by inject<DataDao>()
+    private val ioDispatcher by inject<CoroutineDispatcher>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = AddMemoBetaBinding.inflate(layoutInflater)
@@ -93,9 +97,9 @@ class AddMemoBetaActivity : AppCompatActivity() {
 //            ).show()
 
 
-            Intent(this@AddMemoBetaActivity, MainActivity::class.java)?.apply {
+            Intent(this@AddMemoBetaActivity, MainActivity::class.java).apply {
                 putExtra(
-                    Item, accountItem(
+                    Item, accountItemEntity(
                         category,
                         day,
                         time,
@@ -105,6 +109,9 @@ class AddMemoBetaActivity : AppCompatActivity() {
                         description
                     )
                 )
+                GlobalScope.launch (ioDispatcher){
+                    dao.insert(accountItemEntity(category, day, time, asset, attr, price, description))
+                }
                 setResult(RESULT_OK, this)
                 finish()
             }
@@ -113,8 +120,8 @@ class AddMemoBetaActivity : AppCompatActivity() {
         day.setOnClickListener {
             DatePickerDialog(
                 this@AddMemoBetaActivity,
-                DatePickerDialog.OnDateSetListener { datePicker, y, m, d ->
-                    day.text = "${y}/${m + 1}/$d (${getDayOfWeek("$y-${m+1}-${d}")})"
+                { datePicker, y, m, d ->
+                    day.text = "${y}/${m + 1}/$d (${getDayOfWeek("$y-${m + 1}-${d}")})"
                 },
                 cal.get(Calendar.YEAR),
                 cal.get(Calendar.MONTH),
@@ -124,7 +131,7 @@ class AddMemoBetaActivity : AppCompatActivity() {
         time.setOnClickListener {
             TimePickerDialog(
                 this@AddMemoBetaActivity,
-                TimePickerDialog.OnTimeSetListener { timePicker, h, m ->
+                { timePicker, h, m ->
                     time.text = "${ampmTime(h)}:$m"
                 },
                 cal.get(Calendar.HOUR),
@@ -200,27 +207,33 @@ class AddMemoBetaActivity : AppCompatActivity() {
             "${cal.get(Calendar.YEAR)}/${cal.get(Calendar.MONTH) + 1}/${cal.get(Calendar.DAY_OF_MONTH)}(${getDefaultDayOfWeek()}) "
         day.text = dayText
         val timeText =
-            if (cal.get(Calendar.HOUR_OF_DAY) > 12) "오후 ${cal.get(Calendar.HOUR_OF_DAY) - 12}:${cal.get(Calendar.MINUTE)}" else "오전 ${
+            if (cal.get(Calendar.HOUR_OF_DAY) > 12) "오후 ${cal.get(Calendar.HOUR_OF_DAY) - 12}:${
+                cal.get(
+                    Calendar.MINUTE
+                )
+            }" else "오전 ${
                 cal.get(Calendar.HOUR_OF_DAY)
             }:${cal.get(Calendar.MINUTE)}"
         time.text = timeText
     }
-    private fun ampmTime(time : Int) : String {
-        return if(time> 12){
-            "오후 ${time-12}"
-        }else{
+
+    private fun ampmTime(time: Int): String {
+        return if (time > 12) {
+            "오후 ${time - 12}"
+        } else {
             "오전 $time"
         }
     }
 
-    private fun getDayOfWeek(date : String) : String {
+    private fun getDayOfWeek(date: String): String {
         val df = SimpleDateFormat("yyyy-MM-dd")
         val nDate = df.parse(date)
         val specificCal = Calendar.getInstance().apply { this.time = nDate }
         return getDefaultDayOfWeek(specificCal)
     }
-    private fun getDefaultDayOfWeek(calender : Calendar = cal): String {
-        Log.d("Default",""+calender.time)
+
+    private fun getDefaultDayOfWeek(calender: Calendar = cal): String {
+        Log.d("Default", "" + calender.time)
         return when (calender.get(Calendar.DAY_OF_WEEK)) {
             1 -> "일"
             2 -> "월"
@@ -232,6 +245,7 @@ class AddMemoBetaActivity : AppCompatActivity() {
             else -> "null"
         }
     }
+
     private fun toggleTableVisiblity(category: String) = with(binding) {
         when (category) {
             "asset" -> {

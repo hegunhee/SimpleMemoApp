@@ -6,10 +6,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import com.hegunhee.simplememoapp.data.Entity.accountItem
+import com.hegunhee.simplememoapp.data.Dao.DataDao
+import com.hegunhee.simplememoapp.data.Entity.accountItemEntity
 import com.hegunhee.simplememoapp.databinding.ActivityMainBinding
 import com.hegunhee.simplememoapp.presentation.BaseActivity
 import com.hegunhee.simplememoapp.presentation.addMemo.AddMemoBetaActivity
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class MainActivity:  BaseActivity<MainViewModel,ActivityMainBinding>(){
@@ -27,7 +29,7 @@ internal class MainActivity:  BaseActivity<MainViewModel,ActivityMainBinding>(){
     private fun initViews() {
         getResultText = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result->
             if(result.resultCode == RESULT_OK){
-                val accountItem = result.data?.getParcelableExtra<accountItem>(AddMemoBetaActivity.Item)
+                val accountItem = result.data?.getParcelableExtra<accountItemEntity>(AddMemoBetaActivity.Item)
                 Toast.makeText(this, accountItem.toString(), Toast.LENGTH_SHORT).show()
             }
         }
@@ -46,6 +48,9 @@ internal class MainActivity:  BaseActivity<MainViewModel,ActivityMainBinding>(){
             }
             is MainState.Loading -> {
                 Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+            }
+            is MainState.Success -> {
+                Log.d("data", it.ItemList.toString())
             }
         }
     }
