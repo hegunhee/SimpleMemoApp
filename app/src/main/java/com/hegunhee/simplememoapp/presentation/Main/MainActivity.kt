@@ -1,8 +1,10 @@
 package com.hegunhee.simplememoapp.presentation.Main
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.widget.Adapter
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -10,6 +12,7 @@ import com.hegunhee.simplememoapp.data.Dao.DataDao
 import com.hegunhee.simplememoapp.data.Entity.accountItemEntity
 import com.hegunhee.simplememoapp.databinding.ActivityMainBinding
 import com.hegunhee.simplememoapp.presentation.BaseActivity
+import com.hegunhee.simplememoapp.presentation.adapter.AccountItemViewAdapter
 import com.hegunhee.simplememoapp.presentation.addMemo.AddMemoBetaActivity
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -19,6 +22,8 @@ internal class MainActivity:  BaseActivity<MainViewModel,ActivityMainBinding>(){
 
     override val viewModel by viewModel<MainViewModel>()
 
+    private val adapter = AccountItemViewAdapter()
+
     private lateinit var getResultText : ActivityResultLauncher<Intent>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,11 +31,12 @@ internal class MainActivity:  BaseActivity<MainViewModel,ActivityMainBinding>(){
         initListener()
     }
 
-    private fun initViews() {
+    private fun initViews() = with(binding) {
+        this.recyclerView.adapter = adapter
         getResultText = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result->
             if(result.resultCode == RESULT_OK){
                 val accountItem = result.data?.getParcelableExtra<accountItemEntity>(AddMemoBetaActivity.Item) ?: return@registerForActivityResult
-                Toast.makeText(this, accountItem.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, accountItem.toString(), Toast.LENGTH_SHORT).show()
                 viewModel.addEntity(accountItem)
             }
         }
@@ -51,14 +57,23 @@ internal class MainActivity:  BaseActivity<MainViewModel,ActivityMainBinding>(){
                 Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
             }
             is MainState.Success -> {
-                Log.d("data", it.ItemList.toString())
-                val totalIncomeMoney = it.ItemList.filter { it.category.equals("수입") }.map { it.price }.sum()
-                val totalSpendMoney = it.ItemList.filter { it.category.equals("지출") }.map { it.price }.sum()
-                binding.incomeTotalMoney.text = "수입\n" + totalIncomeMoney
-                binding.spendTotalMoney.text = "지출\n" + totalSpendMoney
-                binding.totalMoney.text = "총합\n" + (totalIncomeMoney - totalSpendMoney)
+                handleSuccess(it)
             }
         }
+    }
+
+    fun handleSuccess(state : MainState.Success) = with(binding){
+        adapter.setData(state.ItemList)
+        adapter.notifyDataSetChanged()
+        Log.d("data", state.ItemList.toString())
+        val totalIncomeMoney = state.ItemList.filter { it.category.equals("수입") }.map { it.price }.sum()
+        val totalSpendMoney = state.ItemList.filter { it.category.equals("지출") }.map { it.price }.sum()
+        incomeTotalMoney.text = totalIncomeMoney.toString()
+        spendTotalMoney.text = totalSpendMoney.toString()
+        totalMoney.text = (totalIncomeMoney - totalSpendMoney).toString()
+        incomeTotalMoney.setTextColor(Color.BLUE)
+        spendTotalMoney.setTextColor(Color.RED)
+
     }
 
 }

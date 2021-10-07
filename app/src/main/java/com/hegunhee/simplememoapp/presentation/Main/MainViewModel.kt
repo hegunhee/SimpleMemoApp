@@ -1,5 +1,6 @@
 package com.hegunhee.simplememoapp.presentation.Main
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.simplememoapp.data.Entity.accountItemEntity
@@ -23,6 +24,6 @@ internal class MainViewModel(val repository: Repository) : BaseViewModel() {
     fun addEntity(entity : accountItemEntity) : Job = viewModelScope.launch {
         setData(MainState.Loading)
         repository.insert(entity)
-        setData(MainState.Success(repository.getAll()))
+        fetchData()
     }
 }
