@@ -3,6 +3,8 @@ package com.hegunhee.simplememoapp.di
 import android.content.Context
 import com.hegunhee.simplememoapp.data.DB.provideDB
 import com.hegunhee.simplememoapp.data.DB.provideToDoDao
+import com.hegunhee.simplememoapp.domain.product.GetAllMemoUseCase
+import com.hegunhee.simplememoapp.domain.product.InsertOneMemoUseCase
 import com.hegunhee.simplememoapp.model.DefaultRepository
 import com.hegunhee.simplememoapp.model.Repository
 import com.hegunhee.simplememoapp.presentation.Main.MainViewModel
@@ -16,7 +18,11 @@ internal val module = module {
     single { Dispatchers.IO }
     single { Dispatchers.Main }
 
-    viewModel { MainViewModel(get()) }
+    factory {GetAllMemoUseCase(get())}
+    factory {InsertOneMemoUseCase(get())}
+
+    viewModel { MainViewModel(get(),get()) }
+
 
 
     single<Repository> { DefaultRepository(get(), get()) }

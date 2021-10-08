@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import com.hegunhee.simplememoapp.R
 import com.hegunhee.simplememoapp.data.Dao.DataDao
 import com.hegunhee.simplememoapp.data.Entity.accountItemEntity
 import com.hegunhee.simplememoapp.databinding.AddMemoBetaBinding
@@ -32,7 +33,6 @@ class AddMemoBetaActivity() : AppCompatActivity() {
 
     private fun initViews() = with(binding) {
         setCurrentTime()
-
         back.setOnClickListener {
             onBackPressed()
         }
@@ -125,10 +125,12 @@ class AddMemoBetaActivity() : AppCompatActivity() {
 
         attr.setOnClickListener {
             Toast.makeText(this@AddMemoBetaActivity, "분류 테이블 호출", Toast.LENGTH_SHORT).show()
-            if (category.text == "수입")
+            if (category.text == "수입") {
                 toggleTableVisiblity("attrIncome")
-            else if (category.text == "지출")
+            }
+            else if (category.text == "지출") {
                 toggleTableVisiblity("attrExpenses")
+            }
             else
                 Toast.makeText(
                     this@AddMemoBetaActivity,
@@ -136,7 +138,6 @@ class AddMemoBetaActivity() : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
         }
-
 
         assetCard.setOnClickListener {
             asset.text = "카드"
