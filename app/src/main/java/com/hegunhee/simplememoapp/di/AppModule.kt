@@ -1,13 +1,12 @@
 package com.hegunhee.simplememoapp.di
 
-import android.content.Context
 import com.hegunhee.simplememoapp.data.DB.provideDB
 import com.hegunhee.simplememoapp.data.DB.provideToDoDao
 import com.hegunhee.simplememoapp.domain.product.GetAllMemoUseCase
 import com.hegunhee.simplememoapp.domain.product.InsertOneMemoUseCase
 import com.hegunhee.simplememoapp.model.DefaultRepository
 import com.hegunhee.simplememoapp.model.Repository
-import com.hegunhee.simplememoapp.presentation.Main.MainViewModel
+import com.hegunhee.simplememoapp.presentation.Memo.MemoViewModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -21,7 +20,7 @@ internal val module = module {
     factory {GetAllMemoUseCase(get())}
     factory {InsertOneMemoUseCase(get())}
 
-    viewModel { MainViewModel(get(),get()) }
+    viewModel { MemoViewModel(get(),get()) }
 
 
 

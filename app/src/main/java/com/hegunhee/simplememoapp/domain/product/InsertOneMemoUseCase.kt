@@ -5,9 +5,9 @@ import com.hegunhee.simplememoapp.domain.UseCase
 import com.hegunhee.simplememoapp.model.DefaultRepository
 import com.hegunhee.simplememoapp.model.Repository
 
-class InsertOneMemoUseCase(private val defaultRepository: Repository) : UseCase {
+class InsertOneMemoUseCase(private val repository: Repository) : UseCase {
 
     suspend operator fun invoke(item : accountItemEntity){
-        defaultRepository.insert(item)
+        repository.insert(item)
     }
 }

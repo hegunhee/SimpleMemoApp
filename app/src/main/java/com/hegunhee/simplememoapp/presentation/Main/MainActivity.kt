@@ -1,79 +1,64 @@
 package com.hegunhee.simplememoapp.presentation.Main
 
-import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import android.widget.Adapter
+import android.view.MenuItem
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import com.hegunhee.simplememoapp.data.Dao.DataDao
-import com.hegunhee.simplememoapp.data.Entity.accountItemEntity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.hegunhee.simplememoapp.R
 import com.hegunhee.simplememoapp.databinding.ActivityMainBinding
-import com.hegunhee.simplememoapp.presentation.BaseActivity
-import com.hegunhee.simplememoapp.presentation.adapter.AccountItemViewAdapter
-import com.hegunhee.simplememoapp.presentation.addMemo.AddMemoBetaActivity
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.hegunhee.simplememoapp.presentation.Memo.MemoFragment
 
-internal class MainActivity:  BaseActivity<MainViewModel,ActivityMainBinding>(){
-    override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
+internal class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener{
 
-    override val viewModel by viewModel<MainViewModel>()
-
-    private val adapter = AccountItemViewAdapter()
-
-    private lateinit var getResultText : ActivityResultLauncher<Intent>
+    private lateinit var binding : ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initViews()
-        initListener()
+
+    }
+    private fun initViews() = with(binding){
+        mainBottomNavigation.setOnNavigationItemSelectedListener(this@MainActivity)
+        showFragment(MemoFragment.newInstance(),MemoFragment.TAG)
+
     }
 
-    private fun initViews() = with(binding) {
-        this.recyclerView.adapter = adapter
-        getResultText = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result->
-            if(result.resultCode == RESULT_OK){
-                val accountItem = result.data?.getParcelableExtra<accountItemEntity>(AddMemoBetaActivity.Item) ?: return@registerForActivityResult
-                Toast.makeText(this@MainActivity, accountItem.toString(), Toast.LENGTH_SHORT).show()
-                viewModel.addEntity(accountItem)
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.menu_memo ->{
+                showFragment(MemoFragment.newInstance(),MemoFragment.TAG)
+                true
             }
+            R.id.menu_statis ->{
+                Toast.makeText(this@MainActivity, "statis 미구현 기능", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.menu_asset ->{
+                Toast.makeText(this@MainActivity, "asset 미구현 기능", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.menu_settings ->{
+                Toast.makeText(this@MainActivity, "menu 미구현 기능", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> false
+        }
+
+    }
+    fun showFragment(fragment: Fragment, tag: String){
+        val findFragment = supportFragmentManager.findFragmentByTag(tag)
+        supportFragmentManager.fragments.forEach{fm ->
+            supportFragmentManager.beginTransaction().hide(fm).commitAllowingStateLoss()
+        }
+        findFragment?.let {
+            supportFragmentManager.beginTransaction().show(it).commitAllowingStateLoss()
+        } ?: run{
+            supportFragmentManager.beginTransaction()
+                .add(R.id.fragment_container,fragment,tag)
+                .commitAllowingStateLoss()
         }
     }
-
-    private fun initListener() = with(binding){
-        addMemo.setOnClickListener {
-            getResultText.launch(Intent(this@MainActivity,AddMemoBetaActivity::class.java))
-        }
-    }
-
-    override fun observeData() = viewModel.liveData.observe(this){
-        when(it){
-            is MainState.Uninitalized ->{
-                Toast.makeText(this, "Uninitalized", Toast.LENGTH_SHORT).show()
-            }
-            is MainState.Loading -> {
-                Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
-            }
-            is MainState.Success -> {
-                handleSuccess(it)
-            }
-        }
-    }
-
-    fun handleSuccess(state : MainState.Success) = with(binding){
-        adapter.setData(state.ItemList)
-        adapter.notifyDataSetChanged()
-        Log.d("data", state.ItemList.toString())
-        val totalIncomeMoney = state.ItemList.filter { it.category.equals("수입") }.map { it.price }.sum()
-        val totalSpendMoney = state.ItemList.filter { it.category.equals("지출") }.map { it.price }.sum()
-        incomeTotalMoney.text = totalIncomeMoney.toString()
-        spendTotalMoney.text = totalSpendMoney.toString()
-        totalMoney.text = (totalIncomeMoney - totalSpendMoney).toString()
-        incomeTotalMoney.setTextColor(Color.BLUE)
-        spendTotalMoney.setTextColor(Color.RED)
-
-    }
-
 }

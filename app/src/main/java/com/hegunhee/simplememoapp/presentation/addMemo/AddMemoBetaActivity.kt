@@ -9,15 +9,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import com.hegunhee.simplememoapp.R
-import com.hegunhee.simplememoapp.data.Dao.DataDao
 import com.hegunhee.simplememoapp.data.Entity.accountItemEntity
 import com.hegunhee.simplememoapp.databinding.AddMemoBetaBinding
-import com.hegunhee.simplememoapp.presentation.Main.MainActivity
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.koin.android.ext.android.inject
+import com.hegunhee.simplememoapp.presentation.Memo.MemoFragment
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -87,7 +81,7 @@ class AddMemoBetaActivity() : AppCompatActivity() {
             } else price.text.toString().toInt()
             val description = description.text.toString()
 
-            Intent(this@AddMemoBetaActivity, MainActivity::class.java).apply {
+            Intent(this@AddMemoBetaActivity, MemoFragment::class.java).apply {
                 val entity = accountItemEntity(category, day, time, asset, attr, price, description)
                 putExtra(Item, entity)
                 setResult(RESULT_OK, this)
