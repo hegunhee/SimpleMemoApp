@@ -3,12 +3,14 @@ package com.hegunhee.simplememoapp.presentation.addMemo
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import com.hegunhee.simplememoapp.R
 import com.hegunhee.simplememoapp.data.Entity.accountItemEntity
 import com.hegunhee.simplememoapp.databinding.AddMemoBetaBinding
 import com.hegunhee.simplememoapp.presentation.Memo.MemoFragment
@@ -36,7 +38,7 @@ class AddMemoBetaActivity() : AppCompatActivity() {
             } else {
                 category.text = "수입"
                 attr.text = ""
-                tableGroup.isGone = true
+                save.setBackgroundColor(this@AddMemoBetaActivity.resources.getColor(R.color.blue))
             }
 
         }
@@ -46,6 +48,7 @@ class AddMemoBetaActivity() : AppCompatActivity() {
                 category.text = "지출"
                 attr.text = ""
                 tableGroup.isGone = true
+                save.setBackgroundColor(this@AddMemoBetaActivity.resources.getColor(R.color.red))
             }
         }
 

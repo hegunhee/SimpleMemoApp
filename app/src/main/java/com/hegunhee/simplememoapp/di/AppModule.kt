@@ -7,6 +7,7 @@ import com.hegunhee.simplememoapp.domain.product.InsertOneMemoUseCase
 import com.hegunhee.simplememoapp.model.DefaultRepository
 import com.hegunhee.simplememoapp.model.Repository
 import com.hegunhee.simplememoapp.presentation.Memo.MemoViewModel
+import com.hegunhee.simplememoapp.presentation.Statis.StatisViewModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -21,7 +22,7 @@ internal val module = module {
     factory {InsertOneMemoUseCase(get())}
 
     viewModel { MemoViewModel(get(),get()) }
-
+    viewModel { StatisViewModel() }
 
 
     single<Repository> { DefaultRepository(get(), get()) }

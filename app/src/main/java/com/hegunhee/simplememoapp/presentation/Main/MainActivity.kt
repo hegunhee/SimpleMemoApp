@@ -9,6 +9,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.hegunhee.simplememoapp.R
 import com.hegunhee.simplememoapp.databinding.ActivityMainBinding
 import com.hegunhee.simplememoapp.presentation.Memo.MemoFragment
+import com.hegunhee.simplememoapp.presentation.Statis.StatisFragment
 
 internal class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener{
 
@@ -33,7 +34,7 @@ internal class MainActivity : AppCompatActivity(), BottomNavigationView.OnNaviga
                 true
             }
             R.id.menu_statis ->{
-                Toast.makeText(this@MainActivity, "statis 미구현 기능", Toast.LENGTH_SHORT).show()
+                showFragment(StatisFragment.newInstance(),StatisFragment.TAG)
                 true
             }
             R.id.menu_asset ->{

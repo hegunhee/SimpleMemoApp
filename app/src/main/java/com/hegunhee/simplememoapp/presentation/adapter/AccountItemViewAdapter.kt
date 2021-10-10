@@ -1,5 +1,6 @@
 package com.hegunhee.simplememoapp.presentation.adapter
 
+import android.content.Context
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ class AccountItemViewAdapter() :
 
     private var accountList = listOf<accountItemEntity>()
 
+    private lateinit var mContext : Context
     inner class AccountItemViewHolder(private val binding: AccountitemviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindView(item: accountItemEntity) = with(binding) {
@@ -32,14 +34,14 @@ class AccountItemViewAdapter() :
             this.price.text = item.price.toString()
 
             this.root.setOnClickListener {
-                Log.d("Adapter", item.toString())
+                Toast.makeText(mContext, item.toString(), Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountItemViewHolder {
-        val view =
-            AccountitemviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view = AccountitemviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        mContext = parent.context
         return AccountItemViewHolder(view)
     }
 

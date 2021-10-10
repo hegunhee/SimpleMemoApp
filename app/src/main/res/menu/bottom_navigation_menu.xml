@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_memo"
+        android:enabled="true"
+        android:icon="@drawable/ic_memo"
+        android:title="가계부" />
+    <item
+        android:id="@+id/menu_statis"
+        android:enabled="true"
+        android:icon="@drawable/ic_statis"
+        android:title="통계" />
+
+    <item
+        android:id="@+id/menu_asset"
+        android:enabled="true"
+        android:title="자산"
+        android:icon="@drawable/ic_asset"
+        />
+
+    <item
+        android:id="@+id/menu_settings"
+        android:enabled="true"
+        android:icon="@drawable/ic_settings"
+        android:title="설정"
+
+        />
+</menu>
