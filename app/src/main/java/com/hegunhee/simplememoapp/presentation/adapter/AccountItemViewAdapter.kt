@@ -1,6 +1,7 @@
 package com.hegunhee.simplememoapp.presentation.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hegunhee.simplememoapp.R
 import com.hegunhee.simplememoapp.data.Entity.accountItemEntity
 import com.hegunhee.simplememoapp.databinding.AccountitemviewBinding
+import com.hegunhee.simplememoapp.presentation.showMemo.ShowMemoActivity
 
 class AccountItemViewAdapter() :
     RecyclerView.Adapter<AccountItemViewAdapter.AccountItemViewHolder>() {
@@ -34,7 +36,10 @@ class AccountItemViewAdapter() :
             this.price.text = item.price.toString()
 
             this.root.setOnClickListener {
-                Toast.makeText(mContext, item.toString(), Toast.LENGTH_SHORT).show()
+//                Toast.makeText(mContext, item.toString(), Toast.LENGTH_SHORT).show()
+                val intent = Intent(mContext,ShowMemoActivity::class.java)
+                intent.putExtra(ShowMemoActivity.item,item)
+                mContext.startActivity(intent)
             }
         }
     }

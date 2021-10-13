@@ -12,8 +12,8 @@ interface DataDao {
     @Query("SELECT * FROM accountItemEntity")
     suspend fun selectAll() : List<accountItemEntity>
 
-    @Query("SELECT * FROM accountItemEntity where category =:time")
-    suspend fun select(time : String) : accountItemEntity
+//    @Query("SELECT * FROM accountItemEntity where id =:id")
+//    suspend fun select(id : Int) : accountItemEntity
 
     @Delete
     suspend fun delete(entity : accountItemEntity)

@@ -5,9 +5,9 @@ import com.hegunhee.simplememoapp.domain.UseCase
 import com.hegunhee.simplememoapp.model.DefaultRepository
 import com.hegunhee.simplememoapp.model.Repository
 
-class GetAllMemoUseCase(private val repository : Repository) : UseCase {
+class GetAllSortedMemoUseCase(private val repository : Repository) : UseCase {
 
     suspend operator fun invoke(): List<accountItemEntity> {
-        return repository.getAll()
+        return repository.getAll().sortedBy { it.price }
     }
 }

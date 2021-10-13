@@ -13,7 +13,7 @@ class DefaultRepository(
     private val ioDispatcher : CoroutineDispatcher
 ) : Repository {
     override suspend fun getAll(): List<accountItemEntity>  = withContext(ioDispatcher){
-        return@withContext dao.selectAll().sortedBy { it.price }
+        return@withContext dao.selectAll()
     }
 
     override suspend fun insert(entity : accountItemEntity) : Unit = withContext(ioDispatcher) {

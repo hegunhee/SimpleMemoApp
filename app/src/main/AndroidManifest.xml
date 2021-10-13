@@ -18,6 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".presentation.addMemo.AddMemoBetaActivity"/>
+        <activity android:name=".presentation.showMemo.ShowMemoActivity"/>
     </application>
 
 </manifest>
