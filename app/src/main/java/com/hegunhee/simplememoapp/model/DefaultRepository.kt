@@ -20,6 +20,10 @@ class DefaultRepository(
         dao.insert(entity)
     }
 
+    override suspend fun delete(entity: accountItemEntity) {
+        dao.delete(entity)
+    }
+
 //    override suspend fun get(): accountItemEntity {
 //        return dao.select()
 //    }

@@ -19,6 +19,7 @@
         </activity>
         <activity android:name=".presentation.addMemo.AddMemoBetaActivity"/>
         <activity android:name=".presentation.showMemo.ShowMemoActivity"/>
+        <activity android:name=".presentation.testMemo.TestMemoActivity"/>
     </application>
 
 </manifest>

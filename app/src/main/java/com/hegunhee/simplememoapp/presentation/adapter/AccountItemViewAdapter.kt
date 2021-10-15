@@ -12,13 +12,15 @@ import com.hegunhee.simplememoapp.R
 import com.hegunhee.simplememoapp.data.Entity.accountItemEntity
 import com.hegunhee.simplememoapp.databinding.AccountitemviewBinding
 import com.hegunhee.simplememoapp.presentation.showMemo.ShowMemoActivity
+import com.hegunhee.simplememoapp.presentation.testMemo.TestMemoActivity
 
-class AccountItemViewAdapter() :
+class AccountItemViewAdapter(val listener: callbackListener) :
     RecyclerView.Adapter<AccountItemViewAdapter.AccountItemViewHolder>() {
 
     private var accountList = listOf<accountItemEntity>()
 
-    private lateinit var mContext : Context
+    private lateinit var mContext: Context
+
     inner class AccountItemViewHolder(private val binding: AccountitemviewBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindView(item: accountItemEntity) = with(binding) {
@@ -35,17 +37,24 @@ class AccountItemViewAdapter() :
             this.time.text = item.day + "/" + item.time
             this.price.text = item.price.toString()
 
+//            this.root.setOnClickListener {
+////                Toast.makeText(mContext, item.toString(), Toast.LENGTH_SHORT).show()
+//                val intent = Intent(mContext,ShowMemoActivity::class.java)
+//                intent.putExtra(ShowMemoActivity.item,item)
+//                mContext.startActivity(intent)
+//            }
             this.root.setOnClickListener {
-//                Toast.makeText(mContext, item.toString(), Toast.LENGTH_SHORT).show()
-                val intent = Intent(mContext,ShowMemoActivity::class.java)
-                intent.putExtra(ShowMemoActivity.item,item)
-                mContext.startActivity(intent)
+                val intent = Intent(mContext, TestMemoActivity::class.java)
+                intent.putExtra(TestMemoActivity.TYPE, TestMemoActivity.REPLACE)
+                intent.putExtra(TestMemoActivity.ITEM, item)
+                //mContext.startActivityForResult()
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountItemViewHolder {
-        val view = AccountitemviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view =
+            AccountitemviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         mContext = parent.context
         return AccountItemViewHolder(view)
     }

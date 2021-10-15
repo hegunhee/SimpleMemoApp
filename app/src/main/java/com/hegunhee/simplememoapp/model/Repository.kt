@@ -7,5 +7,7 @@ interface Repository {
 
 //    suspend fun get() : accountItemEntity
 
+    suspend fun delete(entity: accountItemEntity)
+
     suspend fun insert(entity : accountItemEntity)
 }
