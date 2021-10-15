@@ -28,7 +28,7 @@ internal val module = module {
     viewModel { MemoViewModel(get(),get()) }
     viewModel { StatisViewModel() }
     viewModel { ShowMemoViewModel()}
-    viewModel { TestMemoViewModel(get()) }
+    viewModel { TestMemoViewModel(get(),get()) }
 
 
     single<Repository> { DefaultRepository(get(), get()) }

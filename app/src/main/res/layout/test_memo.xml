@@ -230,8 +230,8 @@
         android:text="삭제"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/replace"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
         android:id="@+id/replace"
@@ -244,8 +244,18 @@
         android:text="수정"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:layout_constraintStart_toEndOf="@id/delete" />
+        app:layout_constraintStart_toEndOf="@id/delete"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/line"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="290dp"
+        />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -257,8 +267,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/save"
-        tools:visibility="gone">
+        app:layout_constraintTop_toBottomOf="@id/line"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/assetTableName"
@@ -331,8 +341,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/save"
-        tools:visibility="gone">
+        app:layout_constraintTop_toBottomOf="@id/line"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/attrIncomeTableName"
@@ -405,7 +415,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/save"
+        app:layout_constraintTop_toBottomOf="@id/line"
         tools:visibility="visible">
 
         <TextView

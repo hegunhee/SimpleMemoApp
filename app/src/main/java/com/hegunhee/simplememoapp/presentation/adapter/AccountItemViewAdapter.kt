@@ -47,7 +47,7 @@ class AccountItemViewAdapter(val listener: callbackListener) :
                 val intent = Intent(mContext, TestMemoActivity::class.java)
                 intent.putExtra(TestMemoActivity.TYPE, TestMemoActivity.REPLACE)
                 intent.putExtra(TestMemoActivity.ITEM, item)
-                //mContext.startActivityForResult()
+                mContext.startActivity(intent)
             }
         }
     }

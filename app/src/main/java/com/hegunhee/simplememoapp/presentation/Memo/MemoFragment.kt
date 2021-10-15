@@ -31,6 +31,7 @@ internal class MemoFragment : BaseFragment<MemoViewModel, FragmentMemoBinding>()
 
     override fun onResume() {
         super.onResume()
+        viewModel.fetchData()
     }
     private lateinit var getResultText: ActivityResultLauncher<Intent>
 
@@ -47,7 +48,6 @@ internal class MemoFragment : BaseFragment<MemoViewModel, FragmentMemoBinding>()
 //            getResultText.launch(Intent(requireContext(),AddMemoBetaActivity::class.java))
 //        }
         addMemo.setOnClickListener {
-            //startActivityForResult()
             val intent = Intent(requireContext(), TestMemoActivity::class.java)
             intent.putExtra(TestMemoActivity.TYPE, TestMemoActivity.ADD)
             startActivity(intent)
