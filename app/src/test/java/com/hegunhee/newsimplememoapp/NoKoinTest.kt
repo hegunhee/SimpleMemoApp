@@ -1,9 +1,9 @@
 package com.hegunhee.newsimplememoapp
 
 import com.hegunhee.newsimplememoapp.data.People
-import com.hegunhee.newsimplememoapp.domain.AddPeopleUseCase
-import com.hegunhee.newsimplememoapp.domain.GetAllPeopleUseCase
-import com.hegunhee.newsimplememoapp.domain.SayHelloUseCase
+import com.hegunhee.newsimplememoapp.domain.koinTest.AddPeopleUseCase
+import com.hegunhee.newsimplememoapp.domain.koinTest.GetAllPeopleUseCase
+import com.hegunhee.newsimplememoapp.domain.koinTest.SayHelloUseCase
 import com.hegunhee.newsimplememoapp.model.DefaultKoinTestTestRepository
 import com.hegunhee.newsimplememoapp.model.KoinTestRepository
 import kotlinx.coroutines.runBlocking

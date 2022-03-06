@@ -3,11 +3,9 @@ package com.hegunhee.newsimplememoapp
 import android.app.Application
 import com.hegunhee.newsimplememoapp.data.People
 import com.hegunhee.newsimplememoapp.di.koinTestModule
-import com.hegunhee.newsimplememoapp.domain.AddPeopleUseCase
-import com.hegunhee.newsimplememoapp.domain.GetAllPeopleUseCase
-import com.hegunhee.newsimplememoapp.domain.SayHelloUseCase
-import com.hegunhee.newsimplememoapp.model.DefaultKoinTestTestRepository
-import com.hegunhee.newsimplememoapp.model.KoinTestRepository
+import com.hegunhee.newsimplememoapp.domain.koinTest.AddPeopleUseCase
+import com.hegunhee.newsimplememoapp.domain.koinTest.GetAllPeopleUseCase
+import com.hegunhee.newsimplememoapp.domain.koinTest.SayHelloUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
@@ -23,7 +21,7 @@ import org.mockito.Mock
 import org.mockito.junit.MockitoJUnit
 import kotlin.test.assertEquals
 
-class KoinTest : KoinTest {
+class TestKoin : KoinTest {
 
     @get:Rule
     val mockitoRule = MockitoJUnit.rule()
