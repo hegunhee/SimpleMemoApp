@@ -1,7 +1,7 @@
-package com.hegunhee.newsimplememoapp.domain.koinTest
+package com.hegunhee.newsimplememoapp.koinTest
 
 import com.hegunhee.newsimplememoapp.domain.UseCase
-import com.hegunhee.newsimplememoapp.model.KoinTestRepository
+import com.hegunhee.newsimplememoapp.koinTest.KoinTestRepository
 
 class SayHelloUseCase(val testRepository: KoinTestRepository) : UseCase {
     suspend operator fun invoke() = testRepository.sayHello()

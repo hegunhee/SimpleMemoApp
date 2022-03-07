@@ -1,11 +1,11 @@
 package com.hegunhee.newsimplememoapp
 
-import com.hegunhee.newsimplememoapp.data.People
-import com.hegunhee.newsimplememoapp.domain.koinTest.AddPeopleUseCase
-import com.hegunhee.newsimplememoapp.domain.koinTest.GetAllPeopleUseCase
-import com.hegunhee.newsimplememoapp.domain.koinTest.SayHelloUseCase
-import com.hegunhee.newsimplememoapp.model.DefaultKoinTestTestRepository
-import com.hegunhee.newsimplememoapp.model.KoinTestRepository
+import com.hegunhee.newsimplememoapp.koinTest.People
+import com.hegunhee.newsimplememoapp.koinTest.AddPeopleUseCase
+import com.hegunhee.newsimplememoapp.koinTest.GetAllPeopleUseCase
+import com.hegunhee.newsimplememoapp.koinTest.SayHelloUseCase
+import com.hegunhee.newsimplememoapp.koinTest.DefaultKoinTestTestRepository
+import com.hegunhee.newsimplememoapp.koinTest.KoinTestRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
 import org.junit.Test
@@ -20,7 +20,7 @@ class NoKoinTest {
     }
     @Test
     fun `add and get test`() :Unit= runBlocking{
-        val peoples = List<People>(5){People("이름${it}",it)}
+        val peoples = List<People>(5){ People("이름${it}",it) }
         val testRepository : KoinTestRepository = DefaultKoinTestTestRepository()
         val getUseCase = GetAllPeopleUseCase(testRepository)
         val addUseCase = AddPeopleUseCase(testRepository)

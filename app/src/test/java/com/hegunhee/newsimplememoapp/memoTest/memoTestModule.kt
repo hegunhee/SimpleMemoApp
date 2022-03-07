@@ -1,6 +1,5 @@
 package com.hegunhee.newsimplememoapp.di
 
-import android.app.Application
 import com.hegunhee.newsimplememoapp.data.DB.provideDB
 import com.hegunhee.newsimplememoapp.data.DB.provideToDoDao
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.AddMemoUseCase
@@ -8,8 +7,8 @@ import com.hegunhee.newsimplememoapp.domain.memoUsecase.DeleteAllMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.DeleteMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetAllMemoUseCase
 import com.hegunhee.newsimplememoapp.model.MemoRepository
-import com.hegunhee.newsimplememoapp.model.TestMemoRepository
-import com.hegunhee.newsimplememoapp.viewmodel.MemoTestViewModel
+import com.hegunhee.newsimplememoapp.memoTest.TestMemoRepository
+import com.hegunhee.newsimplememoapp.memoTest.MemoTestViewModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel

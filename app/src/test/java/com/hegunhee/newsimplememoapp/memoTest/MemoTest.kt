@@ -1,20 +1,16 @@
-package com.hegunhee.newsimplememoapp
+package com.hegunhee.newsimplememoapp.memoTest
 
 import android.app.Application
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.hegunhee.newsimplememoapp.data.DB.MemoDatabase
-import com.hegunhee.newsimplememoapp.data.Dao.MemoDao
 import com.hegunhee.newsimplememoapp.data.Entity.Memo
-import com.hegunhee.newsimplememoapp.data.toTestMemo
 import com.hegunhee.newsimplememoapp.di.memoTestModule
-import com.hegunhee.newsimplememoapp.viewmodel.MemoTestViewModel
+import com.hegunhee.newsimplememoapp.memoTest.MemoTestViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
+import kotlinx.coroutines.withContext
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -62,14 +58,14 @@ open class MemoTest : KoinTest {
     }
 
     @Test
-    fun `add Memo`() = runBlockingTest{
+    fun `add Memo`() = runBlocking {
         val memo = Memo(
             1, "수입", 2022, 3, 6, "일", "오후", 8, 6, "용돈", 10000, "설명"
         )
         val memos = listOf<Memo>(memo)
         viewModel.addMemo(memo)
         viewModel.getAllMemo()
-        assertEquals(memo,memos[0])
+        assertEquals(viewModel.memos, memos)
     }
 
 //    @Test

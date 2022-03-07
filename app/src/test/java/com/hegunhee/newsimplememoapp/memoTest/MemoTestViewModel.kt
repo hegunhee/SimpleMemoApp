@@ -1,4 +1,4 @@
-package com.hegunhee.newsimplememoapp.viewmodel
+package com.hegunhee.newsimplememoapp.memoTest
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

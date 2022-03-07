@@ -1,15 +1,14 @@
-package com.hegunhee.newsimplememoapp.model
+package com.hegunhee.newsimplememoapp.memoTest
 
 import android.util.Log
-import com.hegunhee.newsimplememoapp.data.DB.MemoDatabase
 import com.hegunhee.newsimplememoapp.data.Dao.MemoDao
 import com.hegunhee.newsimplememoapp.data.Entity.Memo
+import com.hegunhee.newsimplememoapp.model.MemoRepository
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 class TestMemoRepository(val dao : MemoDao,
-val ioDispatcher: CoroutineDispatcher) : MemoRepository{
+val ioDispatcher: CoroutineDispatcher) : MemoRepository {
 
     override suspend fun addMemo(memo: Memo) = withContext(ioDispatcher) {
         Log.d("Test","addMemo")

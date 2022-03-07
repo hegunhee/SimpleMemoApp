@@ -1,6 +1,4 @@
-package com.hegunhee.newsimplememoapp.model
-
-import com.hegunhee.newsimplememoapp.data.People
+package com.hegunhee.newsimplememoapp.koinTest
 
 class DefaultKoinTestTestRepository : KoinTestRepository {
     private val peopleList : MutableList<People> = mutableListOf<People>()
