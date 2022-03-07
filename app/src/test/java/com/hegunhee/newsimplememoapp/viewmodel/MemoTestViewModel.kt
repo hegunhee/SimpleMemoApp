@@ -1,14 +1,12 @@
 package com.hegunhee.newsimplememoapp.viewmodel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.data.Memo
-import com.hegunhee.newsimplememoapp.domain.memoTest.AddMemoUseCase
-import com.hegunhee.newsimplememoapp.domain.memoTest.DeleteAllMemoUseCase
-import com.hegunhee.newsimplememoapp.domain.memoTest.DeleteMemoUseCase
-import com.hegunhee.newsimplememoapp.domain.memoTest.GetAllMemoUseCase
-import kotlinx.coroutines.joinAll
+import com.hegunhee.newsimplememoapp.data.Entity.Memo
+import com.hegunhee.newsimplememoapp.domain.memoUsecase.AddMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.memoUsecase.DeleteAllMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.memoUsecase.DeleteMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetAllMemoUseCase
 import kotlinx.coroutines.launch
 
 class MemoTestViewModel(
