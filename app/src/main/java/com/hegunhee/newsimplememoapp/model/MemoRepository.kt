@@ -11,4 +11,6 @@ interface MemoRepository {
     suspend fun deleteAllMemo()
 
     suspend fun deleteMemo(memo : Memo)
+
+    suspend fun addMemoList(memo : List<Memo>)
 }

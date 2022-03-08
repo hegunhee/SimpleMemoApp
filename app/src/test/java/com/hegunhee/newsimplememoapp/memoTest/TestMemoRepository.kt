@@ -7,23 +7,27 @@ import com.hegunhee.newsimplememoapp.model.MemoRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
-class TestMemoRepository(val dao : MemoDao,
-val ioDispatcher: CoroutineDispatcher) : MemoRepository {
+class TestMemoRepository() : MemoRepository {
 
-    override suspend fun addMemo(memo: Memo) = withContext(ioDispatcher) {
-        Log.d("Test","addMemo")
-        dao.addMemo(memo)
+    val memoList : MutableList<Memo> = mutableListOf()
+
+    override suspend fun addMemo(memo: Memo) {
+        memoList.add(memo)
     }
 
-    override suspend fun getAllMemo(): List<Memo> = withContext(ioDispatcher) {
-        Log.d("Test","getAllMemo")
-        return@withContext dao.getAllMemo()
+    override suspend fun getAllMemo(): List<Memo> {
+        return memoList.toList()
     }
 
     override suspend fun deleteAllMemo() {
+        memoList.clear()
     }
 
-    override suspend fun deleteMemo(memo: Memo) = withContext(ioDispatcher) {
-        dao.deleteMemo(memo)
+    override suspend fun deleteMemo(memo: Memo){
+        memoList.remove(memo)
+    }
+
+    override suspend fun addMemoList(memos: List<Memo>) {
+        memoList.addAll(memos)
     }
 }

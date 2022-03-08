@@ -18,4 +18,8 @@ class DefaultMemoRepository : MemoRepository {
     override suspend fun deleteMemo(memo: Memo) {
         TODO("Not yet implemented")
     }
+
+    override suspend fun addMemoList(memo: List<Memo>) {
+        TODO("Not yet implemented")
+    }
 }

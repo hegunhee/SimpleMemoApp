@@ -3,17 +3,15 @@ package com.hegunhee.newsimplememoapp.memoTest
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.data.Entity.Memo
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.AddMemoUseCase
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.DeleteAllMemoUseCase
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.DeleteMemoUseCase
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetAllMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.memoUsecase.*
 import kotlinx.coroutines.launch
 
 class MemoTestViewModel(
-    val addMemoUseCase: AddMemoUseCase,
-    val deleteMemoUseCase: DeleteMemoUseCase,
-    val getAllMemoUseCase: GetAllMemoUseCase,
-    val deleteAllMemoUseCase: DeleteAllMemoUseCase
+    private val addMemoUseCase: AddMemoUseCase,
+    private val deleteMemoUseCase: DeleteMemoUseCase,
+    private val getAllMemoUseCase: GetAllMemoUseCase,
+    private val deleteAllMemoUseCase: DeleteAllMemoUseCase,
+    private val addMemoListUseCase: AddMemoListUseCase
 ) : ViewModel() {
     var memos = listOf<Memo>()
 
@@ -30,6 +28,10 @@ class MemoTestViewModel(
 
     fun deleteMemo(memo : Memo) = viewModelScope.launch {
         deleteMemoUseCase(memo)
+    }
+
+    fun addMemos(memo : List<Memo>) = viewModelScope.launch {
+        addMemoListUseCase(memo)
     }
 
 
