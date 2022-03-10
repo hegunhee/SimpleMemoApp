@@ -22,4 +22,10 @@ class DefaultMemoRepository : MemoRepository {
     override suspend fun addMemoList(memo: List<Memo>) {
         TODO("Not yet implemented")
     }
+
+    override suspend fun getMemoSortedByYearAndMonth(year: Int, month: Int): List<Memo> {
+        TODO("Not yet implemented")
+    }
+
+
 }

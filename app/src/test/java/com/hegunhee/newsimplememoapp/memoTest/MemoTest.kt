@@ -90,4 +90,12 @@ open class MemoTest : KoinTest {
         assertEquals(viewModel.memos,memos)
     }
 
+    @Test
+    fun `delete other Memo by Repository`() = runBlockingTest {
+        val memos = getTwentyMockingMemo().filter { it.year == 2022}.filter { it.month == 3 }.sortedByDescending { it.day }.toList()
+        viewModel.addMemos(getTwentyMockingMemo())
+        viewModel.getMemoSortedByYearAndMonth(2022,3)
+        assertEquals(viewModel.memos, memos)
+    }
+
 }

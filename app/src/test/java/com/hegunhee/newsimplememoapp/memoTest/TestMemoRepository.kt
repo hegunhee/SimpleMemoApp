@@ -30,4 +30,10 @@ class TestMemoRepository() : MemoRepository {
     override suspend fun addMemoList(memos: List<Memo>) {
         memoList.addAll(memos)
     }
+
+    override suspend fun getMemoSortedByYearAndMonth(year: Int, month: Int): List<Memo> {
+        return memoList.filter { it.year == year }.filter { it.month == month }.sortedByDescending { it.day }.toList()
+    }
+
+
 }
