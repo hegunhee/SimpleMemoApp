@@ -6,7 +6,7 @@ import com.hegunhee.newsimplememoapp.data.Entity.Memo
 @Dao
 interface MemoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addMemo(memo : Memo)
+    suspend fun insertMemo(memo : Memo)
 
     @Delete
     suspend fun deleteMemo(memo : Memo)
@@ -16,5 +16,11 @@ interface MemoDao {
 
     @Query("SELECT * FROM Memo where id = :id")
     suspend fun getMemo(id : Int) : Memo
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllMemo(vararg memos : Memo)
+
+    @Query("SELECT * FROM Memo where year = :year AND month = :month ORDER BY day DESC")
+    suspend fun getMemoSortedByYearAndMonth(year : Int,month : Int) : List<Memo>
 
 }
