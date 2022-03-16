@@ -41,11 +41,11 @@ open class MemoTest : KoinTest {
 
     @Before
     fun setUp() {
-        startKoin {
-            androidContext(context)
-            modules(memoTestModule)
-        }
-        Dispatchers.setMain(dispatcher)
+//        startKoin {
+//            androidContext(context)
+//            modules(memoTestModule)
+//        }
+//        Dispatchers.setMain(dispatcher)
     }
 
     @After

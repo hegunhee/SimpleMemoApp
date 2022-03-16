@@ -36,11 +36,11 @@ class TestKoin : KoinTest {
 
     @Before
     fun setUp(){
-        startKoin {
-            androidContext(context)
-            modules(koinTestModule)
-        }
-        Dispatchers.setMain(dispatcher)
+//        startKoin {
+//            androidContext(context)
+//            modules(koinTestModule)
+//        }
+//        Dispatchers.setMain(dispatcher)
     }
 
     @After
