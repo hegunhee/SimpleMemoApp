@@ -3,7 +3,7 @@ package com.hegunhee.newsimplememoapp.data.DB
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.hegunhee.newsimplememoapp.data.Dao.MemoDao
-import com.hegunhee.newsimplememoapp.data.Entity.Memo
+import com.hegunhee.newsimplememoapp.data.entity.Memo
 
 @Database(entities = [Memo::class],version = 1,exportSchema = false)
 abstract class MemoDatabase : RoomDatabase(){

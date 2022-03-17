@@ -2,9 +2,8 @@ package com.hegunhee.newsimplememoapp.memoTest
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.data.Entity.Memo
+import com.hegunhee.newsimplememoapp.data.entity.Memo
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.*
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class MemoTestViewModel(

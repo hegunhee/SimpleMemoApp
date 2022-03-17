@@ -1,11 +1,7 @@
 package com.hegunhee.newsimplememoapp.memoTest
 
-import android.util.Log
-import com.hegunhee.newsimplememoapp.data.Dao.MemoDao
-import com.hegunhee.newsimplememoapp.data.Entity.Memo
+import com.hegunhee.newsimplememoapp.data.entity.Memo
 import com.hegunhee.newsimplememoapp.model.MemoRepository
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
 
 class TestMemoRepository() : MemoRepository {
 

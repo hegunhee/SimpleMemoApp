@@ -1,6 +1,6 @@
 package com.hegunhee.newsimplememoapp.model
 
-import com.hegunhee.newsimplememoapp.data.Entity.Memo
+import com.hegunhee.newsimplememoapp.data.entity.Memo
 
 interface MemoRepository {
 

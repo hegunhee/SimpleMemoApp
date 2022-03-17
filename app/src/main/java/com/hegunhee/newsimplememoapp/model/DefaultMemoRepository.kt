@@ -1,30 +1,33 @@
 package com.hegunhee.newsimplememoapp.model
 
-import com.hegunhee.newsimplememoapp.data.Entity.Memo
+import com.hegunhee.newsimplememoapp.data.Dao.MemoDao
+import com.hegunhee.newsimplememoapp.data.entity.Memo
 
-class DefaultMemoRepository : MemoRepository {
+class DefaultMemoRepository(
+    private val dao : MemoDao
+) : MemoRepository {
     override suspend fun addMemo(memo: Memo) {
-        TODO("Not yet implemented")
+        dao.insertMemo(memo)
     }
 
     override suspend fun getAllMemo(): List<Memo> {
-        TODO("Not yet implemented")
+        return dao.getAllMemo()
     }
 
     override suspend fun deleteAllMemo() {
-        TODO("Not yet implemented")
+        dao.deleteAllMemo()
     }
 
     override suspend fun deleteMemo(memo: Memo) {
-        TODO("Not yet implemented")
+        dao.deleteMemo(memo)
     }
 
     override suspend fun addMemoList(memo: List<Memo>) {
-        TODO("Not yet implemented")
+        dao.insertAllMemo(*memo.toTypedArray())
     }
 
     override suspend fun getMemoSortedByYearAndMonth(year: Int, month: Int): List<Memo> {
-        TODO("Not yet implemented")
+        return dao.getMemoSortedByYearAndMonth(year,month)
     }
 
 

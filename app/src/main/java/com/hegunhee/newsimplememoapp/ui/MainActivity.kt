@@ -6,9 +6,14 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.hegunhee.newsimplememoapp.R
+import com.hegunhee.newsimplememoapp.data.DB.provideDB
+import com.hegunhee.newsimplememoapp.data.DB.provideToDoDao
+import com.hegunhee.newsimplememoapp.data.entity.getTwentyMockingMemo
 import com.hegunhee.newsimplememoapp.databinding.ActivityMainBinding
 import com.hegunhee.newsimplememoapp.ui.memo.MemoFragment
 import com.hegunhee.newsimplememoapp.ui.statics.StaticsFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,7 +24,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         initViews()
         initNavigation()
+        initData()
+    }
 
+    private fun initData(){
+        runBlocking(Dispatchers.IO){
+            val dao = provideToDoDao(provideDB(this@MainActivity))
+            dao.insertAllMemo(*getTwentyMockingMemo().toTypedArray())
+
+        }
     }
     private fun initViews()  {
         showFragment(MemoFragment.newInstance(),MemoFragment.TAG)

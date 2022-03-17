@@ -23,18 +23,11 @@ class MemoFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_memo,container,false)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
-        initViews()
+        viewModel.init_date()
         return binding.root
     }
 
-    private fun initViews() = with(binding){
-        leftButton.setOnClickListener {
-            Toast.makeText(context, "Click_left", Toast.LENGTH_SHORT).show()
-        }
-        rightButton.setOnClickListener {
-            Toast.makeText(context, "Click_right", Toast.LENGTH_SHORT).show()
-        }
-    }
+
 
 
     companion object{

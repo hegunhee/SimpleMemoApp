@@ -5,9 +5,17 @@
 
     <data>
 
+        <import type="com.hegunhee.newsimplememoapp.data.entity.Memo" />
+
+        <import type="androidx.databinding.ObservableArrayList" />
+
         <variable
             name="viewmodel"
             type="com.hegunhee.newsimplememoapp.ui.memo.MemoViewModel" />
+
+        <variable
+            name="memoList"
+            type="ObservableArrayList&lt;Memo&gt;" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,6 +30,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/ic_left"
             android:backgroundTint="@color/black"
+            android:onClick="@{() -> viewmodel.click_left()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
+            android:text="@{viewmodel.year_date.toString()}"
             android:textSize="20dp"
             app:layout_constraintStart_toEndOf="@id/left_button"
             app:layout_constraintTop_toTopOf="@id/left_button"
@@ -49,6 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:text="@{viewmodel.month_date.toString()}"
             android:textSize="20dp"
             app:layout_constraintStart_toEndOf="@id/year"
             app:layout_constraintTop_toTopOf="@id/year_text"
@@ -69,6 +80,7 @@
             android:layout_height="30dp"
             android:background="@drawable/ic_right"
             android:backgroundTint="@color/black"
+            android:onClick="@{() -> viewmodel.click_right()}"
             app:layout_constraintStart_toEndOf="@id/month"
             app:layout_constraintTop_toTopOf="@id/left_button" />
 
@@ -114,6 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:textSize="15dp"
+            android:text="@{viewmodel.income_value.toString()}"
             app:layout_constraintEnd_toStartOf="@id/expenses"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/income"
@@ -128,7 +141,7 @@
             android:textSize="15dp"
             app:layout_constraintEnd_toStartOf="@id/total"
             app:layout_constraintStart_toEndOf="@id/income"
-
+            android:text="@{viewmodel.expense_value.toString()}"
             app:layout_constraintTop_toTopOf="@id/income_text"
             tools:text="1000"
 
@@ -142,8 +155,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/expenses"
             app:layout_constraintTop_toBottomOf="@id/left_button"
+            android:text="@{viewmodel.total_value.toString()}"
             app:layout_constraintTop_toTopOf="@id/income_text"
             tools:text="1000" />
+
+        <TextView
+            android:id="@+id/empty_recyclerview"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:text="데이터가 존재하지 않습니다"
+            android:textSize="20dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/expenses_text"
+            tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"

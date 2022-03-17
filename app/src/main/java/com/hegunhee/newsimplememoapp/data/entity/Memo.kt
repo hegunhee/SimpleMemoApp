@@ -1,4 +1,4 @@
-package com.hegunhee.newsimplememoapp.data.Entity
+package com.hegunhee.newsimplememoapp.data.entity
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo

@@ -1,7 +1,7 @@
 package com.hegunhee.newsimplememoapp.data.Dao
 
 import androidx.room.*
-import com.hegunhee.newsimplememoapp.data.Entity.Memo
+import com.hegunhee.newsimplememoapp.data.entity.Memo
 
 @Dao
 interface MemoDao {
@@ -10,6 +10,9 @@ interface MemoDao {
 
     @Delete
     suspend fun deleteMemo(memo : Memo)
+
+    @Query("DELETE FROM Memo")
+    suspend fun deleteAllMemo()
 
     @Query("SELECT * FROM Memo")
     suspend fun getAllMemo() : List<Memo>
