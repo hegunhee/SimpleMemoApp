@@ -9,12 +9,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.FragmentMemoBinding
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MemoFragment : Fragment() {
 
-    val viewModel : MemoViewModel by inject()
+    val viewModel : MemoViewModel by viewModel()
     private lateinit var binding : FragmentMemoBinding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,8 +21,8 @@ class MemoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_memo,container,false)
-//        binding.viewmodel = viewModel
-//        binding.lifecycleOwner = this
+        binding.viewmodel = viewModel
+        binding.lifecycleOwner = this
         initViews()
         return binding.root
     }
