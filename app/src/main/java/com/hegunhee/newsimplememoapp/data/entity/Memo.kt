@@ -10,12 +10,8 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "Memo")
 @Parcelize
 data class Memo(
-    @PrimaryKey(autoGenerate = true)
-    var id : Int = 0,
     val category: String,
-    @ColumnInfo(name = "year")
     val year: Int,
-    @ColumnInfo(name = "month")
     val month: Int,
     val day: Int,
     val dayOfWeek: String,
@@ -24,6 +20,9 @@ data class Memo(
     val minute: Int,
     val attr: String,
     val price: Int,
-    val description: String
-) : Parcelable{
+    val asset : String,
+    val description: String,
+    @PrimaryKey(autoGenerate = true)
+    var id: Int = 0
+) : Parcelable {
 }

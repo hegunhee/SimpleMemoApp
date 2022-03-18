@@ -28,11 +28,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initData(){
-        runBlocking(Dispatchers.IO){
-            val dao = provideToDoDao(provideDB(this@MainActivity))
-            dao.insertAllMemo(*getTwentyMockingMemo().toTypedArray())
-
-        }
     }
     private fun initViews()  {
         showFragment(MemoFragment.newInstance(),MemoFragment.TAG)

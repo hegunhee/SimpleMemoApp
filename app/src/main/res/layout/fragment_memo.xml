@@ -5,17 +5,10 @@
 
     <data>
 
-        <import type="com.hegunhee.newsimplememoapp.data.entity.Memo" />
-
-        <import type="androidx.databinding.ObservableArrayList" />
-
         <variable
             name="viewmodel"
             type="com.hegunhee.newsimplememoapp.ui.memo.MemoViewModel" />
 
-        <variable
-            name="memoList"
-            type="ObservableArrayList&lt;Memo&gt;" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -125,8 +118,8 @@
             android:id="@+id/income_text"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:textSize="15dp"
             android:text="@{viewmodel.income_value.toString()}"
+            android:textSize="15dp"
             app:layout_constraintEnd_toStartOf="@id/expenses"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/income"
@@ -138,10 +131,10 @@
             android:id="@+id/expenses_text"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:text="@{viewmodel.expense_value.toString()}"
             android:textSize="15dp"
             app:layout_constraintEnd_toStartOf="@id/total"
             app:layout_constraintStart_toEndOf="@id/income"
-            android:text="@{viewmodel.expense_value.toString()}"
             app:layout_constraintTop_toTopOf="@id/income_text"
             tools:text="1000"
 
@@ -151,11 +144,11 @@
             android:id="@+id/total_text"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:text="@{viewmodel.total_value.toString()}"
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/expenses"
             app:layout_constraintTop_toBottomOf="@id/left_button"
-            android:text="@{viewmodel.total_value.toString()}"
             app:layout_constraintTop_toTopOf="@id/income_text"
             tools:text="1000" />
 
@@ -174,11 +167,13 @@
             tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/expenses_text" />
+            app:layout_constraintTop_toBottomOf="@+id/expenses_text"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
