@@ -63,7 +63,6 @@ class MemoViewModel(
                 income_value.value = data.filter { it.category == "수입" }.map { it.price }.sum()
                 expense_value.value = data.filter { it.category != "수입" }.map { it.price }.sum()
                 total_value.value = income_value.value!! - expense_value.value!!
-                // 추가적으로 변화
             }
         }
 

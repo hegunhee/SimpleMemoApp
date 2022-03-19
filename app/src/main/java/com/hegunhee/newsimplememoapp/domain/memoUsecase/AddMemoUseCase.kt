@@ -5,7 +5,7 @@ import com.hegunhee.newsimplememoapp.domain.UseCase
 import com.hegunhee.newsimplememoapp.model.MemoRepository
 
 class AddMemoUseCase(
-    val repository : MemoRepository
+    private val repository : MemoRepository
 ) : UseCase {
 
     suspend operator fun invoke(memo : Memo){

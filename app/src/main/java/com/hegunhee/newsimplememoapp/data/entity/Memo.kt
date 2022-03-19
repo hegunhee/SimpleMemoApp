@@ -1,12 +1,10 @@
 package com.hegunhee.newsimplememoapp.data.entity
 
 import android.os.Parcelable
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
-// Entity로 변환할때 주 생성자인 auto_increment가 추가되어야함
 @Entity(tableName = "Memo")
 @Parcelize
 data class Memo(

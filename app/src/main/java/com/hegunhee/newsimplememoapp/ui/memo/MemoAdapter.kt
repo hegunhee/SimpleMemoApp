@@ -19,14 +19,13 @@ class MemoAdapter(private var memoList: List<Memo>) : RecyclerView.Adapter<MemoA
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindView(memo : Memo) = with(binding){
-            Log.d("BindingTest","bindView")
             this.day.text = memo.day.toString()
             this.dayOfWeek.text = memo.dayOfWeek
             this.amPm.text = memo.amPm
             this.hour.text = memo.hour.toString()
             this.minute.text = memo.minute.toString()
             this.attr.text = memo.attr
-            this.description.text = if(memo.description.isNullOrBlank()){
+            this.description.text = if(memo.description.isBlank()){
                 this.description.setTextColor(Color.GRAY)
                 memo.attr
             } else memo.description
@@ -46,23 +45,19 @@ class MemoAdapter(private var memoList: List<Memo>) : RecyclerView.Adapter<MemoA
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemoViewHolder {
-        Log.d("BindingTest","Create ViewHolder")
         val binding = ItemMemoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         mContext = parent.context
         return MemoViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MemoViewHolder, position: Int) {
-        Log.d("BindingTest","onBindViewHolder")
         holder.bindView(memoList[position])
     }
 
     override fun getItemCount(): Int = memoList.size
 
     fun setData(memoList : List<Memo>){
-        Log.d("BindingTest","setData")
         this.memoList = memoList
-        Log.d("BindingTest","adapterSetData ${this.memoList.toString()}")
         notifyDataSetChanged()
     }
 }
