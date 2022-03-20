@@ -35,6 +35,7 @@ class MemoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = this
         initAdapter()
+        initViews()
         observeData()
         viewModel.init_date()
     }
@@ -42,6 +43,12 @@ class MemoFragment : Fragment() {
 
     private fun initAdapter() = with(binding) {
         recyclerview.adapter = adapter
+    }
+
+    private fun initViews() = with(binding){
+        floatingButton.setOnClickListener {
+            Toast.makeText(requireContext(), "clicked", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun observeData() = viewModel.memoList.observe(viewLifecycleOwner) {

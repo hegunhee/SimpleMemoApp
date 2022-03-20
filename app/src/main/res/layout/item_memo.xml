@@ -4,7 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
     android:background="@color/purple_200">
+
+    <View
+        android:id="@+id/guideStartLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/guideEndLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <View
+        android:id="@+id/guideMiddleLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="@id/day" />
+
 
     <TextView
         android:id="@+id/day"
@@ -55,10 +78,10 @@
         android:id="@+id/semicolon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text=":"
         android:textSize="20dp"
         app:layout_constraintStart_toEndOf="@id/hour"
-        app:layout_constraintTop_toTopOf="@id/hour"
-        android:text=":" />
+        app:layout_constraintTop_toTopOf="@id/hour" />
 
     <TextView
         android:id="@+id/minute"
@@ -103,11 +126,10 @@
         android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/asset"
-        tools:text="20000"
-        app:layout_constraintTop_toTopOf="@id/description"
         android:textSize="20dp"
-        android:layout_marginStart="50dp"
-        />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintTop_toTopOf="@id/description"
+        tools:text="20000" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
