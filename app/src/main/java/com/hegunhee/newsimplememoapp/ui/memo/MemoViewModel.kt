@@ -1,5 +1,6 @@
 package com.hegunhee.newsimplememoapp.ui.memo
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -69,6 +70,11 @@ class MemoViewModel(
             }
         }
 
+    }
+
+    fun refreshData(){
+        Log.d("Refresh","Refresh")
+        setData(year_date.value!!,month_date.value!!)
     }
 
 
