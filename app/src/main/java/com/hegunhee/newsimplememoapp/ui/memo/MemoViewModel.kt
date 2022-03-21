@@ -22,6 +22,9 @@ class MemoViewModel(
     val expense_value = MutableLiveData<Int>()
     val total_value = MutableLiveData<Int>()
 
+
+
+
     fun init_date() {
         val date = LocalDate.now()
         year_date.value = date.year

@@ -1,5 +1,6 @@
 package com.hegunhee.newsimplememoapp.ui.memo
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.data.entity.Memo
 import com.hegunhee.newsimplememoapp.databinding.FragmentMemoBinding
+import com.hegunhee.newsimplememoapp.ui.addMemo.AddMemo
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MemoFragment : Fragment() {
@@ -47,7 +49,8 @@ class MemoFragment : Fragment() {
 
     private fun initViews() = with(binding){
         floatingButton.setOnClickListener {
-            Toast.makeText(requireContext(), "clicked", Toast.LENGTH_SHORT).show()
+            val intent = Intent(requireContext(),AddMemo::class.java)
+            startActivity(intent)
         }
     }
 
