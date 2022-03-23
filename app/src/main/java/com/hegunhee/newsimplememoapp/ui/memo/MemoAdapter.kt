@@ -1,6 +1,7 @@
 package com.hegunhee.newsimplememoapp.ui.memo
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.databinding.ObservableArrayList
 import androidx.recyclerview.widget.RecyclerView
 import com.hegunhee.newsimplememoapp.data.entity.Memo
 import com.hegunhee.newsimplememoapp.databinding.ItemMemoBinding
+import com.hegunhee.newsimplememoapp.ui.detailMemo.DetailMemo
 
 
 class MemoAdapter(private var memoList: List<Memo>) : RecyclerView.Adapter<MemoAdapter.MemoViewHolder>() {
@@ -37,7 +39,10 @@ class MemoAdapter(private var memoList: List<Memo>) : RecyclerView.Adapter<MemoA
                 price.setTextColor(Color.BLUE)
 
             this.root.setOnClickListener {
-                Toast.makeText(mContext, memo.toString(), Toast.LENGTH_SHORT).show()
+                val intent = Intent(mContext,DetailMemo::class.java)
+                intent.putExtra("Memo",memo)
+                mContext.startActivity(intent)
+//                Toast.makeText(mContext, memo.toString(), Toast.LENGTH_SHORT).show()
             }
         }
 
