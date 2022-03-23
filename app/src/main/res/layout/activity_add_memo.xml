@@ -83,6 +83,7 @@
             android:text="@{viewmodel.date_Info}"
             android:textSize="20dp"
             app:layout_constraintEnd_toStartOf="@id/time"
+
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_day"
             tools:text="2022/3/22 (화)" />
@@ -94,8 +95,9 @@
             android:layout_marginStart="30dp"
             android:text="@{viewmodel.time_Info}"
             android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="20dp"
             app:layout_constraintStart_toEndOf="@id/day"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/text_day"
             tools:text="오후 9:33" />
 
@@ -114,8 +116,11 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
+            android:background="@color/gray"
             android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@{viewmodel.asset}"
+            app:layout_constraintEnd_toEndOf="@id/time"
+
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_asset"
             tools:text="현금" />
@@ -136,10 +141,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
+            android:background="@color/gray"
             android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/time"
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_attr"
+            android:text="@{viewmodel.attr}"
             tools:text="식비" />
 
         <TextView
@@ -186,6 +193,7 @@
             tools:text="설명충" />
 
         <Button
+            android:id="@+id/save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"

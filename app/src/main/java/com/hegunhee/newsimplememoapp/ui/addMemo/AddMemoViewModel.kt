@@ -1,12 +1,21 @@
 package com.hegunhee.newsimplememoapp.ui.addMemo
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.hegunhee.newsimplememoapp.data.entity.Memo
+import com.hegunhee.newsimplememoapp.data.entity.isExpenseAttr
+import com.hegunhee.newsimplememoapp.data.entity.isIncomeAttr
+import com.hegunhee.newsimplememoapp.domain.memoUsecase.AddMemoUseCase
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 import kotlin.math.min
 
-class AddMemoViewModel : ViewModel() {
+class AddMemoViewModel(
+    private val addMemoUseCase : AddMemoUseCase
+) : ViewModel() {
 
     val category = MutableLiveData<String>()
 
@@ -20,6 +29,9 @@ class AddMemoViewModel : ViewModel() {
     var hour: Int = 0
     var minute: Int = 0
     var time_Info = MutableLiveData<String>()
+
+    var asset = MutableLiveData<String>()
+    var attr = MutableLiveData<String>()
 
     fun initData() {
         category.value = "지출"
@@ -60,10 +72,22 @@ class AddMemoViewModel : ViewModel() {
 
     fun setCategoryIncome() {
         category.value = "수입"
+        if(isExpenseAttr(attr.value?:return)){
+            attr.value = ""
+        }
     }
 
     fun setCategoryExpense() {
         category.value = "지출"
+        if(isIncomeAttr(attr.value?:return)){
+            attr.value = ""
+        }
+    }
+
+    fun saveData(price : Int, desc : String) = viewModelScope.launch {
+        val memo = Memo(category.value!!,year,month,day,day_of_week,ampm,hour,minute,asset.value!!,price,attr.value!!,desc)
+        Log.d("TestSaveMemo",memo.toString())
+        addMemoUseCase(memo)
     }
 
     private fun transferdayofweekbyKorean(day_of_week: String): String {

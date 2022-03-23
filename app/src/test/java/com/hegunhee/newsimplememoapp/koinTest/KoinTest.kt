@@ -1,24 +1,6 @@
 package com.hegunhee.newsimplememoapp
 
-import android.app.Application
-import com.hegunhee.newsimplememoapp.koinTest.People
-import com.hegunhee.newsimplememoapp.di.koinTestModule
-import com.hegunhee.newsimplememoapp.koinTest.AddPeopleUseCase
-import com.hegunhee.newsimplememoapp.koinTest.GetAllPeopleUseCase
-import com.hegunhee.newsimplememoapp.koinTest.SayHelloUseCase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.test.setMain
-import org.junit.*
-import org.koin.android.ext.koin.androidContext
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
-import org.koin.test.KoinTest
-import org.koin.test.inject
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnit
+
 
 //class TestKoin : KoinTest {
 //

@@ -1,12 +1,17 @@
 package com.hegunhee.newsimplememoapp.ui.addMemo
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.hegunhee.newsimplememoapp.R
+import com.hegunhee.newsimplememoapp.data.entity.assetArray
+import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
+import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
 import com.hegunhee.newsimplememoapp.databinding.ActivityAddMemoBinding
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
@@ -26,32 +31,70 @@ class AddMemo : AppCompatActivity() {
         initListener()
     }
 
-    private fun initListener() {
-        binding.backButton.setOnClickListener {
+    private fun initListener() = with(binding) {
+        backButton.setOnClickListener {
             onBackPressed()
         }
-        binding.day.setOnClickListener {
+        day.setOnClickListener {
             setDate()
         }
-        binding.time.setOnClickListener {
+        time.setOnClickListener {
             setTime()
         }
-        binding.asset.setOnClickListener {
-            Toast.makeText(this, "asset", Toast.LENGTH_SHORT).show()
+        this.asset.setOnClickListener {
+            setAsset()
         }
-        binding.attr.setOnClickListener {
-            Toast.makeText(this, "attr", Toast.LENGTH_SHORT).show()
+        attr.setOnClickListener {
+            setAttr()
+        }
+        save.setOnClickListener {
+            with(addMemoViewModel) {
+                if (asset.value.isNullOrEmpty()) {
+                    setAsset()
+                } else if (attr.value.isNullOrEmpty()) {
+                    setAttr()
+                } else if (price.text.isNullOrEmpty()) {
+                    Toast.makeText(this@AddMemo, "가격을 설정해주세요", Toast.LENGTH_SHORT).show()
+                } else {
+                    val description = if (desc.text.isNullOrEmpty()) "" else desc.text.toString()
+                    saveData(price.text.toString().toInt(), description)
+                    finish()
+                }
+            }
         }
 
     }
 
-    private fun setDate(){
-        val dateSetListener = DatePickerDialog.OnDateSetListener { view, year,month,dayOfMonth ->
-            addMemoViewModel.setDate(LocalDate.of(year,month+1,dayOfMonth))
+    private fun setAsset() {
+        AlertDialog.Builder(this)
+            .setTitle("자산")
+            .setItems(assetArray,
+                DialogInterface.OnClickListener { dialogInterface, which ->
+                    addMemoViewModel.asset.value = assetArray[which]
+                }).create().show()
+    }
+
+    private fun setAttr() {
+        val attrType = if (addMemoViewModel.category.value == "수입") {
+            incomeAttr
+        } else {
+            expenseAttr
         }
-        with(addMemoViewModel){
-            DatePickerDialog(this@AddMemo,dateSetListener,year,month-1,day).show()
-            Toast.makeText(this@AddMemo, "${year}년${month}월${day}일 ${day_of_week}", Toast.LENGTH_SHORT).show()
+        AlertDialog.Builder(this)
+            .setTitle("자산")
+            .setItems(attrType,
+                DialogInterface.OnClickListener { dialogInterface, which ->
+                    addMemoViewModel.attr.value = attrType[which]
+                }).create().show()
+    }
+
+    private fun setDate() {
+        val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            addMemoViewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))
+        }
+
+        with(addMemoViewModel) {
+            DatePickerDialog(this@AddMemo, dateSetListener, year, month - 1, day).show()
         }
 
     }
