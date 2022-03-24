@@ -20,17 +20,9 @@ class DetailMemo : AppCompatActivity() {
         binding.lifecycleOwner = this
         val memo = intent.getParcelableExtra<Memo>("Memo")
         memo?.let {
-            testInitViews(it)
+            viewModel.initViewModel(it)
         }
         Toast.makeText(this, memo.toString(), Toast.LENGTH_SHORT).show()
     }
 
-    private fun testInitViews(memo : Memo) = with(binding){
-        category.text = memo.category
-        day.text = "${memo.year}/${memo.month}/${memo.day} (${memo.dayOfWeek})"
-        time.text = "${memo.amPm} ${memo.hour}:${memo.minute}"
-        asset.text = memo.asset
-        attr.text = memo.attr
-
-    }
 }

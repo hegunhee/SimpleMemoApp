@@ -33,25 +33,13 @@ class AddMemoViewModel(
     var asset = MutableLiveData<String>()
     var attr = MutableLiveData<String>()
 
+
     fun initData() {
         category.value = "지출"
         setDate()
         initTime()
 
     }
-
-
-    //Dialog로 데이터를 받아서 사용할때는 LocalDate.of를 사용하자
-
-    fun setDate(date: LocalDate = LocalDate.now()) {
-
-        year = date.year
-        month = date.monthValue
-        day = date.dayOfMonth
-        day_of_week = transferdayofweekbyKorean(date.dayOfWeek.toString())
-        date_Info.value = "${year}/${month}/${day} (${day_of_week})"
-    }
-
     private fun initTime() {
         val day = LocalDateTime.now().plusHours(9)
         if (day.hour > 12) {
@@ -65,6 +53,16 @@ class AddMemoViewModel(
         }
         setTimeInfo()
     }
+
+    fun setDate(date: LocalDate = LocalDate.now()) {
+
+        year = date.year
+        month = date.monthValue
+        day = date.dayOfMonth
+        day_of_week = transferdayofweekbyKorean(date.dayOfWeek.toString())
+        date_Info.value = "${year}/${month}/${day} (${day_of_week})"
+    }
+
 
     fun setTimeInfo(){
         time_Info.value = "$ampm ${hour}:${minute}"
