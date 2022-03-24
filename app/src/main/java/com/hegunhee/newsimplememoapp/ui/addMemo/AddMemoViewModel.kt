@@ -82,8 +82,9 @@ class AddMemoViewModel(
         }
     }
 
+
     fun saveData(price : Int, desc : String) = viewModelScope.launch {
-        val memo = Memo(category.value!!,year,month,day,day_of_week,ampm,hour,minute,asset.value!!,price,attr.value!!,desc)
+        val memo = Memo(category.value!!,year,month,day,day_of_week,ampm,hour,minute,attr.value!!,price,asset.value!!,desc)
         Log.d("TestSaveMemo",memo.toString())
         addMemoUseCase(memo)
     }
