@@ -26,8 +26,9 @@ MVVM + DataBinding
 6) MemoViewModel 및 Repository 코드 작성 및 MemoFragment UI 작성  
 7) MemoViewModel DataBinding 도입  
 8) Adapter 및 LiveData Observe 사용  
+9) DetailMemoActivity작성  
 ----------------완료-------------------  
-9) UI 작성(mainActivity -> addMemoActivity -> 메모 확인 View -> 통계)  
+10) UI 작성(mainActivity -> addMemoActivity -> 메모 확인 View -> 통계)  
 ## 이후 개선될 사항  
 현재 계획으로는 데이터 추가, 확인, 지출, 수입별 통계까지이지만 더 추가 예정  
 ## 변경사항  
