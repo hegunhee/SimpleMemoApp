@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -14,6 +15,7 @@ import com.hegunhee.newsimplememoapp.data.entity.assetArray
 import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
 import com.hegunhee.newsimplememoapp.databinding.ActivityDetailMemoBinding
+import com.hegunhee.newsimplememoapp.ui.memo.MemoFragment
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -62,7 +64,7 @@ class DetailMemo : AppCompatActivity() {
                 } else if (attr.value.isNullOrEmpty()) {
                     setAttr()
                 } else if (price.value.isNullOrEmpty()) {
-                    android.widget.Toast.makeText(this@DetailMemo, "가격을 설정해주세요", android.widget.Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@DetailMemo, "가격을 설정해주세요", android.widget.Toast.LENGTH_SHORT).show()
                 } else {
                     saveData()
                     finish()

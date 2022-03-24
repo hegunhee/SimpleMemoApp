@@ -31,6 +31,8 @@ class AddMemo : AppCompatActivity() {
         initListener()
     }
 
+
+
     private fun initListener() = with(binding) {
         backButton.setOnClickListener {
             onBackPressed()

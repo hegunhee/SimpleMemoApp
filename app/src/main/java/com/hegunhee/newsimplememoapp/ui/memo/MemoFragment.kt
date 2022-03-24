@@ -1,5 +1,6 @@
 package com.hegunhee.newsimplememoapp.ui.memo
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableArrayList
@@ -42,14 +45,19 @@ class MemoFragment : Fragment() {
         viewModel.init_date()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.init_date()
+    }
+
 
     private fun initAdapter() = with(binding) {
         recyclerview.adapter = adapter
     }
 
-    private fun initViews() = with(binding){
+    private fun initViews() = with(binding) {
         floatingButton.setOnClickListener {
-            val intent = Intent(requireContext(),AddMemo::class.java)
+            val intent = Intent(requireContext(), AddMemo::class.java)
             startActivity(intent)
         }
     }
