@@ -27,10 +27,11 @@ MVVM + DataBinding
 7) MemoViewModel DataBinding 도입  
 8) Adapter 및 LiveData Observe 사용  
 9) DetailMemoActivity작성  
+10) DetailMemoActivity로직까지 완성  
 ----------------완료-------------------  
-10) UI 작성(mainActivity -> addMemoActivity -> 메모 확인 View -> 통계)  
 ## 이후 개선될 사항  
 현재 계획으로는 데이터 추가, 확인, 지출, 수입별 통계까지이지만 더 추가 예정  
+현재 Fragment가 초기화되지않아 추가, 수정, 삭제시 Adapter에 드러나지않음 향후 방법을 모색해야됨  
 ## 변경사항  
 원래는 RecyclerView에 데이터 변경이 일어날때마다 BindingAdpater로 변경하려고 했지만 계속 실패해 데이터가 변경된것을 적용할때  
 LiveData를 이용해서 Fragment에서 옵저빙해서 데이터를 변경해줌  
