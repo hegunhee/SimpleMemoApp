@@ -18,6 +18,20 @@ MVVM + DataBinding
   - Kotlin Coroutine
   - Koin  
   - Room  
+## 기술 정보  
+  * **Android Clean Architecture** 적용  
+    기존에 안드로이드를 공부할때는 모든 활동을 onCreate안에 구현했지만  
+    AAC를 공부하고나서 로직 분리와 의존성 분리의 중요성을 깨닫고 프로젝트에 적용하였습니다.  
+  * **Room DataBase** 적용  
+    가계부라는 특성상 가계부 데이터를 저장하고 불러오는 과정이 필요한데  
+    Room을 이용해서 데이터베이스 생성, 테이블 관리, DAO(Data Access Object)를 쉽게 관리하였습니다.
+  * **Coroutine** 적용  
+    Room을 사용하거나 가계부 정보들을 정렬하는데 많은 시간이 필요하기때문에  
+    Coroutine을 사용해서 main Thread의 부담을 줄일 수 있음
+  * **Koin** 적용  
+    Activity에서 ViewModel을 사용할때 의존성이나 Model의 Repository를 사용할때  
+    의존성 주입을 위해 Koin을 사용하였습니다.  
+    러닝커브가 낮고 사용하기 쉬웠습니다.  
 ## 진척도  
 1) 가계부에 관한 Test Code 작성  
 2) Test Code에 Koin 도입 및 작동하는지 확인  
