@@ -5,16 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.data.entity.Memo
+import com.hegunhee.newsimplememoapp.data.entity.changeKoreanDayOfWeek
 import com.hegunhee.newsimplememoapp.data.entity.isExpenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.isIncomeAttr
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.AddMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.memoUsecase.InsertMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.DeleteMemoUseCase
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 class DetailMemoViewModel(
     private val deleteMemoUseCase: DeleteMemoUseCase,
-    private val addMemoUseCase: AddMemoUseCase
+    private val addMemoUseCase: InsertMemoUseCase
 ) : ViewModel() {
 
     private lateinit var memo: Memo
@@ -24,13 +25,13 @@ class DetailMemoViewModel(
     var year: Int = 0
     var month: Int = 0
     var day: Int = 0
-    var day_of_week: String = ""
-    val date_Info = MutableLiveData<String>()
+    var dayOfWeek: String = ""
+    val dateInfo = MutableLiveData<String>()
 
     var ampm: String = ""
     var hour: Int = 0
     var minute: Int = 0
-    var time_Info = MutableLiveData<String>()
+    var timeInfo = MutableLiveData<String>()
 
     val asset = MutableLiveData<String>()
     val attr = MutableLiveData<String>()
@@ -58,15 +59,15 @@ class DetailMemoViewModel(
         year = memo.year
         month = memo.month
         day = memo.day
-        day_of_week = memo.dayOfWeek
-        date_Info.value = "${year}/${month}/${day} (${day_of_week}) "
+        dayOfWeek = memo.dayOfWeek
+        dateInfo.value = "${year}/${month}/${day} (${dayOfWeek}) "
     }
 
     private fun initTime() {
         ampm = memo.amPm
         hour = memo.hour
         minute = memo.minute
-        time_Info.value = "$ampm ${hour}:${minute}"
+        timeInfo.value = "$ampm ${hour}:${minute}"
     }
 
     fun setDate(date: LocalDate = LocalDate.now()) {
@@ -74,12 +75,12 @@ class DetailMemoViewModel(
         year = date.year
         month = date.monthValue
         day = date.dayOfMonth
-        day_of_week = transferdayofweekbyKorean(date.dayOfWeek.toString())
-        date_Info.value = "${year}/${month}/${day} (${day_of_week})"
+        dayOfWeek = changeKoreanDayOfWeek(date.dayOfWeek.toString())
+        dateInfo.value = "${year}/${month}/${day} (${dayOfWeek})"
     }
 
     fun setTimeInfo() {
-        time_Info.value = "$ampm ${hour}:${minute}"
+        timeInfo.value = "$ampm ${hour}:${minute}"
     }
 
     fun setCategoryIncome() {
@@ -102,7 +103,7 @@ class DetailMemoViewModel(
             year,
             month,
             day,
-            day_of_week,
+            dayOfWeek,
             ampm,
             hour,
             minute,
@@ -123,18 +124,6 @@ class DetailMemoViewModel(
     }
 
 
-    private fun transferdayofweekbyKorean(day_of_week: String): String {
-        return when (day_of_week) {
-            "MONDAY" -> "월"
-            "TUESDAY" -> "화"
-            "WEDNESDAY" -> "수"
-            "THURSDAY" -> "목"
-            "FRIDAY" -> "금"
-            "SATURDAY" -> "토"
-            "SUNDAY" -> "일"
-            else -> "error"
-        }
-    }
 
 
 }

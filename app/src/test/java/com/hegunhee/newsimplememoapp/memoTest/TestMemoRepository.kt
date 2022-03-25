@@ -7,7 +7,7 @@ class TestMemoRepository() : MemoRepository {
 
     val memoList : MutableList<Memo> = mutableListOf()
 
-    override suspend fun addMemo(memo: Memo) {
+    override suspend fun insertMemo(memo: Memo) {
         memoList.add(memo)
     }
 
@@ -23,7 +23,7 @@ class TestMemoRepository() : MemoRepository {
         memoList.remove(memo)
     }
 
-    override suspend fun addMemoList(memos: List<Memo>) {
+    override suspend fun insertMemoList(memos: List<Memo>) {
         memoList.addAll(memos)
     }
 

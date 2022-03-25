@@ -16,57 +16,57 @@ class MemoViewModel(
     private var _memoList = MutableLiveData<MemoState>(MemoState.Uninitialized)
     val memoList = _memoList
 
-    val year_date = MutableLiveData<Int>()
-    val month_date = MutableLiveData<Int>()
+    val yearDate = MutableLiveData<Int>()
+    val monthDate = MutableLiveData<Int>()
 
-    val income_value = MutableLiveData<Int>()
-    val expense_value = MutableLiveData<Int>()
-    val total_value = MutableLiveData<Int>()
-
-
+    val incomeValue = MutableLiveData<Int>()
+    val expenseValue = MutableLiveData<Int>()
+    val totalValue = MutableLiveData<Int>()
 
 
-    fun init_date() {
+
+
+    fun initDate() {
         val date = LocalDate.now()
-        year_date.value = date.year
-        month_date.value = date.monthValue
+        yearDate.value = date.year
+        monthDate.value = date.monthValue
         setData(date.year, date.monthValue)
     }
 
-    fun click_left() {
-        if (month_date.value!! <= 1) {
-            year_date.value = year_date.value!! - 1
-            month_date.value = 12
+    fun clickLeft() {
+        if (monthDate.value!! <= 1) {
+            yearDate.value = yearDate.value!! - 1
+            monthDate.value = 12
         } else {
-            month_date.value = month_date.value!! - 1
+            monthDate.value = monthDate.value!! - 1
         }
-        setData(year_date.value!!, month_date.value!!)
+        setData(yearDate.value!!, monthDate.value!!)
     }
 
-    fun click_right() {
-        if (month_date.value!! >= 12) {
-            year_date.value = year_date.value!! + 1
-            month_date.value = 1
+    fun clickRight() {
+        if (monthDate.value!! >= 12) {
+            yearDate.value = yearDate.value!! + 1
+            monthDate.value = 1
         } else {
-            month_date.value = month_date.value!! + 1
+            monthDate.value = monthDate.value!! + 1
         }
-        setData(year_date.value!!, month_date.value!!)
+        setData(yearDate.value!!, monthDate.value!!)
     }
 
 
-    fun setData(year: Int, month: Int) {
+    private fun setData(year: Int, month: Int) {
         viewModelScope.launch {
             val data = getAllDataBySort(year,month)
             if(data.isNullOrEmpty()){
                 _memoList.postValue(MemoState.EmptyOrNull)
-                income_value.value = 0
-                expense_value.value = 0
-                total_value.value = 0
+                incomeValue.value = 0
+                expenseValue.value = 0
+                totalValue.value = 0
             }else{
                 _memoList.postValue(MemoState.Success(data))
-                income_value.value = data.filter { it.category == "수입" }.map { it.price }.sum()
-                expense_value.value = data.filter { it.category != "수입" }.map { it.price }.sum()
-                total_value.value = income_value.value!! - expense_value.value!!
+                incomeValue.value = data.filter { it.category == "수입" }.map { it.price }.sum()
+                expenseValue.value = data.filter { it.category != "수입" }.map { it.price }.sum()
+                totalValue.value = incomeValue.value!! - expenseValue.value!!
             }
         }
 
@@ -74,7 +74,7 @@ class MemoViewModel(
 
     fun refreshData(){
         Log.d("Refresh","Refresh")
-        setData(year_date.value!!,month_date.value!!)
+        setData(yearDate.value!!,monthDate.value!!)
     }
 
 

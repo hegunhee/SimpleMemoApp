@@ -19,8 +19,8 @@ val memoTestModule = module {
     factory { GetAllMemoUseCase(get()) }
     factory { DeleteAllMemoUseCase(get()) }
     factory { DeleteMemoUseCase(get()) }
-    factory { AddMemoUseCase(get()) }
-    factory { AddMemoListUseCase(get()) }
+    factory { InsertMemoUseCase(get()) }
+    factory { InsertMemoListUseCase(get()) }
     factory { GetMemoSortedByYearAndMonthUseCase(get()) }
     single<MemoRepository> { TestMemoRepository() }
 

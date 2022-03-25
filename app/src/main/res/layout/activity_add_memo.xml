@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:maxLines="1"
-            android:text="@{viewmodel.date_Info}"
+            android:text="@{viewmodel.dateInfo}"
             android:textSize="20dp"
             app:layout_constraintEnd_toStartOf="@id/time"
 
@@ -93,7 +93,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:text="@{viewmodel.time_Info}"
+            android:text="@{viewmodel.timeInfo}"
             android:textSize="20dp"
             android:layout_marginEnd="20dp"
             app:layout_constraintStart_toEndOf="@id/day"

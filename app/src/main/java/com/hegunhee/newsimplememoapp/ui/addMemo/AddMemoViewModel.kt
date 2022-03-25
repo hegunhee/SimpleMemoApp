@@ -5,16 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.data.entity.Memo
+import com.hegunhee.newsimplememoapp.data.entity.changeKoreanDayOfWeek
 import com.hegunhee.newsimplememoapp.data.entity.isExpenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.isIncomeAttr
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.AddMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.memoUsecase.InsertMemoUseCase
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
-import kotlin.math.min
 
 class AddMemoViewModel(
-    private val addMemoUseCase : AddMemoUseCase
+    private val addMemoUseCase : InsertMemoUseCase
 ) : ViewModel() {
 
     val category = MutableLiveData<String>()
@@ -22,13 +22,13 @@ class AddMemoViewModel(
     var year: Int = 0
     var month: Int = 0
     var day: Int = 0
-    var day_of_week: String = ""
-    val date_Info = MutableLiveData<String>()
+    var dayOfWeek: String = ""
+    val dateInfo = MutableLiveData<String>()
 
     var ampm: String = ""
     var hour: Int = 0
     var minute: Int = 0
-    var time_Info = MutableLiveData<String>()
+    var timeInfo = MutableLiveData<String>()
 
     var asset = MutableLiveData<String>()
     var attr = MutableLiveData<String>()
@@ -59,13 +59,13 @@ class AddMemoViewModel(
         year = date.year
         month = date.monthValue
         day = date.dayOfMonth
-        day_of_week = transferdayofweekbyKorean(date.dayOfWeek.toString())
-        date_Info.value = "${year}/${month}/${day} (${day_of_week})"
+        dayOfWeek = changeKoreanDayOfWeek(date.dayOfWeek.toString())
+        dateInfo.value = "${year}/${month}/${day} (${dayOfWeek})"
     }
 
 
     fun setTimeInfo(){
-        time_Info.value = "$ampm ${hour}:${minute}"
+        timeInfo.value = "$ampm ${hour}:${minute}"
     }
 
     fun setCategoryIncome() {
@@ -84,21 +84,9 @@ class AddMemoViewModel(
 
 
     fun saveData(price : Int, desc : String) = viewModelScope.launch {
-        val memo = Memo(category.value!!,year,month,day,day_of_week,ampm,hour,minute,attr.value!!,price,asset.value!!,desc)
+        val memo = Memo(category.value!!,year,month,day,dayOfWeek,ampm,hour,minute,attr.value!!,price,asset.value!!,desc)
         Log.d("TestSaveMemo",memo.toString())
         addMemoUseCase(memo)
     }
 
-    private fun transferdayofweekbyKorean(day_of_week: String): String {
-        return when (day_of_week) {
-            "MONDAY" -> "월"
-            "TUESDAY" -> "화"
-            "WEDNESDAY" -> "수"
-            "THURSDAY" -> "목"
-            "FRIDAY" -> "금"
-            "SATURDAY" -> "토"
-            "SUNDAY" -> "일"
-            else -> "error"
-        }
-    }
 }

@@ -31,13 +31,12 @@ class DetailMemo : AppCompatActivity() {
         binding.lifecycleOwner = this
         val memo = intent.getParcelableExtra<Memo>("Memo")
         memo?.let {
-            Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
             viewModel.initViewModel(it)
         }
         initListener()
     }
 
-    fun initListener() = with(binding) {
+    private fun initListener() = with(binding) {
         backButton.setOnClickListener {
             onBackPressed()
         }
@@ -64,7 +63,8 @@ class DetailMemo : AppCompatActivity() {
                 } else if (attr.value.isNullOrEmpty()) {
                     setAttr()
                 } else if (price.value.isNullOrEmpty()) {
-                    Toast.makeText(this@DetailMemo, "가격을 설정해주세요", android.widget.Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@DetailMemo, "가격을 설정해주세요", android.widget.Toast.LENGTH_SHORT)
+                        .show()
                 } else {
                     saveData()
                     finish()
@@ -121,7 +121,11 @@ class DetailMemo : AppCompatActivity() {
                     hour = hourOfDay
                     this.minute = minute
                 }
-                android.widget.Toast.makeText(this@DetailMemo, "${ampm},${hour}:${minute}", android.widget.Toast.LENGTH_SHORT).show()
+                android.widget.Toast.makeText(
+                    this@DetailMemo,
+                    "${ampm},${hour}:${minute}",
+                    android.widget.Toast.LENGTH_SHORT
+                ).show()
                 setTimeInfo()
             }
 

@@ -7,11 +7,11 @@ import com.hegunhee.newsimplememoapp.domain.memoUsecase.*
 import kotlinx.coroutines.launch
 
 class MemoTestViewModel(
-    private val addMemoUseCase: AddMemoUseCase,
+    private val addMemoUseCase: InsertMemoUseCase,
     private val deleteMemoUseCase: DeleteMemoUseCase,
     private val getAllMemoUseCase: GetAllMemoUseCase,
     private val deleteAllMemoUseCase: DeleteAllMemoUseCase,
-    private val addMemoListUseCase: AddMemoListUseCase,
+    private val insertMemoListUseCase: InsertMemoListUseCase,
     private val getMemoSortedByYearAndMonthUseCase: GetMemoSortedByYearAndMonthUseCase
 ) : ViewModel() {
     var memos = listOf<Memo>()
@@ -36,7 +36,7 @@ class MemoTestViewModel(
     }
 
     fun addMemos(memo : List<Memo>) = viewModelScope.launch {
-        addMemoListUseCase(memo)
+        insertMemoListUseCase(memo)
     }
 
 

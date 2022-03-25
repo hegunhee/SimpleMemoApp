@@ -1,22 +1,15 @@
 package com.hegunhee.newsimplememoapp.ui.memo
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ObservableArrayList
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.hegunhee.newsimplememoapp.R
-import com.hegunhee.newsimplememoapp.data.entity.Memo
 import com.hegunhee.newsimplememoapp.databinding.FragmentMemoBinding
 import com.hegunhee.newsimplememoapp.ui.addMemo.AddMemo
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -42,12 +35,12 @@ class MemoFragment : Fragment() {
         initAdapter()
         initViews()
         observeData()
-        viewModel.init_date()
+        viewModel.initDate()
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel.init_date()
+        viewModel.initDate()
     }
 
 

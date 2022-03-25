@@ -4,7 +4,7 @@ import com.hegunhee.newsimplememoapp.data.entity.Memo
 
 interface MemoRepository {
 
-    suspend fun addMemo(memo : Memo)
+    suspend fun insertMemo(memo : Memo)
 
     suspend fun getAllMemo() : List<Memo>
 
@@ -12,7 +12,7 @@ interface MemoRepository {
 
     suspend fun deleteMemo(memo : Memo)
 
-    suspend fun addMemoList(memo : List<Memo>)
+    suspend fun insertMemoList(memo : List<Memo>)
 
     suspend fun getMemoSortedByYearAndMonth(year : Int, month : Int) : List<Memo>
 }

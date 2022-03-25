@@ -6,7 +6,7 @@ import com.hegunhee.newsimplememoapp.data.entity.Memo
 class DefaultMemoRepository(
     private val dao : MemoDao
 ) : MemoRepository {
-    override suspend fun addMemo(memo: Memo) {
+    override suspend fun insertMemo(memo: Memo) {
         dao.insertMemo(memo)
     }
 
@@ -22,7 +22,7 @@ class DefaultMemoRepository(
         dao.deleteMemo(memo)
     }
 
-    override suspend fun addMemoList(memo: List<Memo>) {
+    override suspend fun insertMemoList(memo: List<Memo>) {
         dao.insertAllMemo(*memo.toTypedArray())
     }
 
