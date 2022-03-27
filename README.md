@@ -5,7 +5,14 @@
 ## App 화면  
 
 ## 프로젝트 구조  
-MVVM + DataBinding  
+MVVM을 지향하며 DataBinding을 사용하였습니다.    
+## 앱 사진  
+![memoView](https://user-images.githubusercontent.com/57277631/160281890-b0bc213d-128e-441f-80d8-1c6c37e12245.PNG)  
+시작할때, 가계부 화면  
+![addMemoView](https://user-images.githubusercontent.com/57277631/160281895-6e1661ae-5b0c-4e09-a58e-09a6b11fcf09.PNG)  
+가계부 추가, FloatingActionButton 클릭시 이동  
+![detailMemoView](https://user-images.githubusercontent.com/57277631/160281897-da526653-76e4-4a56-8530-3d3ff4c39f61.PNG)  
+가계부 수정 및 삭제, 클릭시 이동  
 ## 사용된 라이브러리  
 * Architecture
   - ViewModel  
