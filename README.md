@@ -50,9 +50,13 @@ MVVM을 지향하며 DataBinding을 사용하였습니다.
 9) DetailMemoActivity작성  
 10) DetailMemoActivity로직까지 완성  
 ----------------완료-------------------  
+11) 통계Fragment xml 작성  
+12) 통계Fragment 로직 작성  
+13) 
 ## 이후 개선될 사항  
 현재 계획으로는 데이터 추가, 확인, 지출, 수입별 통계까지이지만 더 추가 예정  
-현재 Fragment가 초기화되지않아 추가, 수정, 삭제시 Adapter에 드러나지않음 향후 방법을 모색해야됨  
+현재 Fragment가 초기화되지않아 추가, 수정시 Adapter에 드러나지않음 향후 방법을 모색해야됨 -> Fragment의 onResume 생명주기를 활용  
 ## 변경사항  
 원래는 RecyclerView에 데이터 변경이 일어날때마다 BindingAdpater로 변경하려고 했지만 계속 실패해 데이터가 변경된것을 적용할때  
-LiveData를 이용해서 Fragment에서 옵저빙해서 데이터를 변경해줌  
+LiveData를 이용해 Fragment에서 LiveData를 옵저빙해서 데이터를 변경해줌  
+Fragment의 onResume 생명주기를 활용해서 데이터의 변화를 확실하게 보여줌  
