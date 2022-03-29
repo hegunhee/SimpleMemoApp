@@ -5,7 +5,14 @@
 ## App 화면  
 
 ## 프로젝트 구조  
-MVVM + DataBinding  
+MVVM을 지향하며 DataBinding을 사용하였습니다.    
+## 앱 사진  
+![memoView](https://user-images.githubusercontent.com/57277631/160281890-b0bc213d-128e-441f-80d8-1c6c37e12245.PNG)  
+시작할때, 가계부 화면  
+![addMemoView](https://user-images.githubusercontent.com/57277631/160281895-6e1661ae-5b0c-4e09-a58e-09a6b11fcf09.PNG)  
+가계부 추가, FloatingActionButton 클릭시 이동  
+![detailMemoView](https://user-images.githubusercontent.com/57277631/160281897-da526653-76e4-4a56-8530-3d3ff4c39f61.PNG)  
+가계부 수정 및 삭제, 클릭시 이동  
 ## 사용된 라이브러리  
 * Architecture
   - ViewModel  
@@ -43,9 +50,13 @@ MVVM + DataBinding
 9) DetailMemoActivity작성  
 10) DetailMemoActivity로직까지 완성  
 ----------------완료-------------------  
+11) 통계Fragment xml 작성  
+12) 통계Fragment 로직 작성  
+13) 설정 및 기타사항 추가  
 ## 이후 개선될 사항  
 현재 계획으로는 데이터 추가, 확인, 지출, 수입별 통계까지이지만 더 추가 예정  
-현재 Fragment가 초기화되지않아 추가, 수정, 삭제시 Adapter에 드러나지않음 향후 방법을 모색해야됨  
+현재 Fragment가 초기화되지않아 추가, 수정시 Adapter에 드러나지않음 향후 방법을 모색해야됨 -> Fragment의 onResume 생명주기를 활용  
 ## 변경사항  
 원래는 RecyclerView에 데이터 변경이 일어날때마다 BindingAdpater로 변경하려고 했지만 계속 실패해 데이터가 변경된것을 적용할때  
-LiveData를 이용해서 Fragment에서 옵저빙해서 데이터를 변경해줌  
+LiveData를 이용해 Fragment에서 LiveData를 옵저빙해서 데이터를 변경해줌  
+Fragment의 onResume 생명주기를 활용해서 데이터의 변화를 확실하게 보여줌  
