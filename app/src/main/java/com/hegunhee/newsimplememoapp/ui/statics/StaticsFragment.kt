@@ -13,19 +13,26 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StaticsFragment : Fragment() {
 
-    private lateinit var binding : FragmentStaticsBinding
-    val viewModel : StaticViewModel by viewModel()
+    private lateinit var binding: FragmentStaticsBinding
+    val viewModel: StaticViewModel by viewModel()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_statics,container,false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_statics, container, false)
         binding.viewmodel = viewModel
         return binding.root
     }
 
-    companion object{
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.lifecycleOwner = this
+        viewModel.initDate()
+    }
+
+
+    companion object {
         const val TAG = "statics"
         fun newInstance() = StaticsFragment()
     }

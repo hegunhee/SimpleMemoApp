@@ -4,11 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-<data>
-    <variable
-        name="viewmodel"
-        type="com.hegunhee.newsimplememoapp.ui.statics.StaticViewModel" />
-</data>
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.hegunhee.newsimplememoapp.ui.statics.StaticViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,6 +23,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/ic_left"
             android:backgroundTint="@color/black"
+            android:onClick="@{() -> viewmodel.clickLeft()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,6 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
+            android:text="@{viewmodel.yearDate.toString()}"
             android:textSize="20dp"
             app:layout_constraintStart_toEndOf="@id/left_button"
             app:layout_constraintTop_toTopOf="@id/left_button"
@@ -49,6 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:text="@{viewmodel.monthDate.toString()}"
             android:textSize="20dp"
             app:layout_constraintStart_toEndOf="@id/year"
             app:layout_constraintTop_toTopOf="@id/year_text"
@@ -70,13 +74,16 @@
             android:layout_height="30dp"
             android:background="@drawable/ic_right"
             android:backgroundTint="@color/black"
+            android:onClick="@{() -> viewmodel.clickRight()}"
             app:layout_constraintStart_toEndOf="@id/month"
             app:layout_constraintTop_toTopOf="@id/left_button" />
 
         <TextView
+            android:id="@+id/category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
+            android:text="@{viewmodel.category}"
             app:layout_constraintStart_toEndOf="@id/right_button"
             app:layout_constraintTop_toTopOf="@id/year_text"
             tools:text="지출"
@@ -91,6 +98,7 @@
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/blue"
             android:text="수입"
+            android:onClick="@{() -> viewmodel.setIncome()}"
             app:layout_constraintEnd_toStartOf="@id/expense"
             app:layout_constraintStart_toStartOf="@id/left_button"
             app:layout_constraintTop_toBottomOf="@id/left_button" />
@@ -102,6 +110,7 @@
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/red"
             android:text="지출"
+            android:onClick="@{() -> viewmodel.setExpense()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/income"
             app:layout_constraintTop_toTopOf="@id/income"
@@ -113,17 +122,16 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/income"
-            />
+            app:layout_constraintTop_toBottomOf="@id/income" />
 
         <TextView
             android:id="@+id/empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="데이터가 없습니다." />
