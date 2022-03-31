@@ -53,11 +53,10 @@ class StaticViewModel(
 
     private fun setData(year: Int, month: Int) = viewModelScope.launch {
         val category = category.value!!
+        val staticsData = mutableListOf<StaticsData>()
         val data =
             getMemoSortedByYearAndMonthUseCase(year, month).filter { it.category == category }
-                .groupBy { it.attr }.values.map {
-
-                }
+                .groupBy { it.attr }
         val attrType = if (category == "지출") {
             expenseAttr
         } else {
