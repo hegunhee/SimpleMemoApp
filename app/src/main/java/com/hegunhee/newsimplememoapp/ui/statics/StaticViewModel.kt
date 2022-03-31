@@ -7,11 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoSortedByYearAndMonthUseCase
+import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetStaticsDataUseCase
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 class StaticViewModel(
-    private val getMemoSortedByYearAndMonthUseCase: GetMemoSortedByYearAndMonthUseCase
+    private val getStaticsDataUseCase: GetStaticsDataUseCase
 ) : ViewModel() {
 
     val category = MutableLiveData<String>()
@@ -53,17 +54,8 @@ class StaticViewModel(
 
     private fun setData(year: Int, month: Int) = viewModelScope.launch {
         val category = category.value!!
-        val staticsData = mutableListOf<StaticsData>()
-        val data =
-            getMemoSortedByYearAndMonthUseCase(year, month).filter { it.category == category }
-                .groupBy { it.attr }
-        val attrType = if (category == "지출") {
-            expenseAttr
-        } else {
-            incomeAttr
-        }
-
-        Log.d("testData", data.toString())
+        val data = getStaticsDataUseCase(category,year,month)
+        Log.d("testData",data.toString())
 
     }
 
