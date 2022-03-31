@@ -21,7 +21,7 @@ internal val module = module{
     viewModel{DetailMemoViewModel(get(),get())}
     viewModel{MemoViewModel(get())}
     viewModel{AddMemoViewModel(get())}
-    viewModel{StaticViewModel()}
+    viewModel{StaticViewModel(get())}
 
     factory { GetMemoSortedByYearAndMonthUseCase(get()) }
     factory {InsertMemoUseCase(get())}

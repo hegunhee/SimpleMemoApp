@@ -3,9 +3,16 @@ package com.hegunhee.newsimplememoapp.ui.statics
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
+import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
+import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoSortedByYearAndMonthUseCase
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 
-class StaticViewModel() : ViewModel() {
+class StaticViewModel(
+    private val getMemoSortedByYearAndMonthUseCase: GetMemoSortedByYearAndMonthUseCase
+) : ViewModel() {
 
     val category = MutableLiveData<String>()
     val yearDate = MutableLiveData<Int>()
@@ -44,13 +51,27 @@ class StaticViewModel() : ViewModel() {
         setData(yearDate.value!!, monthDate.value!!)
     }
 
-    private fun setData(year: Int, month: Int) {
+    private fun setData(year: Int, month: Int) = viewModelScope.launch {
+        val category = category.value!!
+        val data =
+            getMemoSortedByYearAndMonthUseCase(year, month).filter { it.category == category }
+                .groupBy { it.attr }.values.map {
+
+                }
+        val attrType = if (category == "지출") {
+            expenseAttr
+        } else {
+            incomeAttr
+        }
+
+        Log.d("testData", data.toString())
+
     }
 
     fun setIncome() {
         if (category.value == "지출") {
             category.value = "수입"
-            setData(yearDate.value!!,monthDate.value!!)
+            setData(yearDate.value!!, monthDate.value!!)
         }
 
     }
@@ -58,7 +79,7 @@ class StaticViewModel() : ViewModel() {
     fun setExpense() {
         if (category.value == "수입") {
             category.value = "지출"
-            setData(yearDate.value!!,monthDate.value!!)
+            setData(yearDate.value!!, monthDate.value!!)
         }
     }
 }
