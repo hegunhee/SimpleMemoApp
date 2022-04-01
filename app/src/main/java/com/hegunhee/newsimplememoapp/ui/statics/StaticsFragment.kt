@@ -40,10 +40,8 @@ class StaticsFragment : Fragment() {
     private fun initObserver() = viewModel.staticsData.observe(viewLifecycleOwner){
         when(it){
             StaticsState.Uninitialized -> {
-                Toast.makeText(requireContext(), "uninitialized", Toast.LENGTH_SHORT).show()
             }
             is StaticsState.Success -> {
-                Toast.makeText(requireContext(), it.list.toString(), Toast.LENGTH_SHORT).show()
                 binding.total.isGone = false
                 binding.recyclerview.isGone = false
                 binding.empty.isGone = true
@@ -55,7 +53,6 @@ class StaticsFragment : Fragment() {
                 binding.total.isGone = true
                 binding.recyclerview.isGone = true
                 binding.empty.isGone = false
-                Toast.makeText(requireContext(), "isEmpty", Toast.LENGTH_SHORT).show()
             }
 
         }

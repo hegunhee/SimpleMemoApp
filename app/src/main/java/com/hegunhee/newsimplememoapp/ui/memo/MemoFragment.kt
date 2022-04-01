@@ -58,7 +58,6 @@ class MemoFragment : Fragment() {
     private fun observeData() = viewModel.memoList.observe(viewLifecycleOwner) {
         when (it) {
             is MemoState.Uninitialized -> {
-                Toast.makeText(requireContext(), "Uninitialized", Toast.LENGTH_SHORT).show()
             }
             is MemoState.Success -> {
                 binding.recyclerview.isVisible = true
