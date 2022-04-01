@@ -117,12 +117,23 @@
 
             />
 
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="합계 : 30000원"
+            android:gravity="center"
+            android:textSize="20dp"
+            app:layout_constraintTop_toBottomOf="@id/income"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/income" />
+            app:layout_constraintTop_toBottomOf="@id/total" />
 
         <TextView
             android:id="@+id/empty"
@@ -134,7 +145,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="데이터가 없습니다." />
+            android:text="데이터가 없습니다."
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

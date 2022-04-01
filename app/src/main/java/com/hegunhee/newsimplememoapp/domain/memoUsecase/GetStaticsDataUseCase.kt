@@ -15,6 +15,6 @@ class GetStaticsDataUseCase(
             val sum = list.sumOf { it.price }.toDouble()
             staticsData.add(StaticsData(((sum/totalValue)*100).toInt(),attr,sum.toInt(),year,month))
         }
-        return staticsData.toList()
+        return staticsData.sortedByDescending { it.percent }.toList()
     }
 }

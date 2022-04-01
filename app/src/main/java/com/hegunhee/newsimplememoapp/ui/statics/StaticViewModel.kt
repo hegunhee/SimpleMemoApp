@@ -15,6 +15,8 @@ class StaticViewModel(
     private val getStaticsDataUseCase: GetStaticsDataUseCase
 ) : ViewModel() {
 
+    private var _staticsData = MutableLiveData<StaticsState>(StaticsState.Uninitialized)
+    val staticsData = _staticsData
     val category = MutableLiveData<String>()
     val yearDate = MutableLiveData<Int>()
     val monthDate = MutableLiveData<Int>()
@@ -55,7 +57,14 @@ class StaticViewModel(
     private fun setData(year: Int, month: Int) = viewModelScope.launch {
         val category = category.value!!
         val data = getStaticsDataUseCase(category,year,month)
-        Log.d("testData",data.toString())
+        if(data.isEmpty()){
+            _staticsData.postValue(StaticsState.EmptyOrNull)
+            Log.d("testData","data is empty")
+        }else{
+            _staticsData.postValue(StaticsState.Success(data))
+            Log.d("testData",data.toString())
+        }
+
 
     }
 
