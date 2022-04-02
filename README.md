@@ -1,11 +1,8 @@
 # New 덜 편한 가계부
 ## 소개  
-기존에 했었던 덜 편한 가계부에서 데이터바인딩, Unit Test등의 새로운 기술들을 사용해  
-다시 만들어 봤습니다.    
-## App 화면  
-
-## 프로젝트 구조  
-MVVM을 지향하며 DataBinding을 사용하였습니다.    
+"편한 가계부" 앱을 모티브로해서 만들었습니다.  
+가계부를 추가, 수정, 삭제를 할 수 있습니다.  
+통계 탭을통해 이번달에 어떤 항목(식비,교통,기타)으로 얼마를 사용했는지 볼 수 있습니다.  
 ## 앱 사진  
 ![memoView](https://user-images.githubusercontent.com/57277631/160281890-b0bc213d-128e-441f-80d8-1c6c37e12245.PNG)  
 시작할때, 가계부 화면  
@@ -17,8 +14,8 @@ MVVM을 지향하며 DataBinding을 사용하였습니다.
 통계 탭  
 
 ## 사용된 라이브러리  
-* Architecture
-  - ViewModel  
+* JetPack
+  - AAC-ViewModel  
   - LiveData  
 * UI
   - ConstraintLayout  
@@ -29,9 +26,17 @@ MVVM을 지향하며 DataBinding을 사용하였습니다.
   - Koin  
   - Room  
 ## 기술 정보  
-  * **Android Clean Architecture** 적용  
-    기존에 안드로이드를 공부할때는 모든 활동을 onCreate안에 구현했지만  
-    AAC를 공부하고나서 로직 분리와 의존성 분리의 중요성을 깨닫고 프로젝트에 적용하였습니다.  
+  * **AAC-ViewModel** 적용  
+    Activity나 Fragment 코드가 비대해지는것을 막고 데이터를 관리하는 데 사용합니다.  
+    액티비티가 프래그먼트가 화면 회전 등의 이유로 Destroy 상태가 되어도 AAC-ViewModel은 Destroy 되지않기때문에  
+    데이터를 쉽게 관리할 수 있습니다. 그리고 ViewModelScope를 사용해 Coroutine을 쉽게 사용할 수 있습니다.  
+  * **LiveData** 적용  
+    LiveData를 사용해서 View에서 ViewModel의 LiveData를 옵저빙해 Adapter에 데이터를 쉽게 set할 수 있게 하였습니다.  
+    DataBinding으로 xml과 코드를 결합시킬때 LiveData를 사용해 데이터를 쉽게 연동하였습니다.  
+  * **DataBinding** 적용  
+    dataBinding을 사용하여 findViewById를 사용하지 않으며 xml 파일과 데이터를 연결해줍니다.  
+    그 이외에도 데이터바인딩 변수를 viewModel로 만들어 viewModel에서 만든 함수를 Button의 onClick메소드로 사용할 수 있습니다.  
+    Listener 에서 Context를 사용해야하는경우는 ViewModel에 Context를 할당하면 안되기때문에 어쩔 수 없이 Activity나 Fragment에서 구현하였습니다.  
   * **Room DataBase** 적용  
     가계부라는 특성상 가계부 데이터를 저장하고 불러오는 과정이 필요한데  
     Room을 이용해서 데이터베이스 생성, 테이블 관리, DAO(Data Access Object)를 쉽게 관리하였습니다.
@@ -60,7 +65,12 @@ MVVM을 지향하며 DataBinding을 사용하였습니다.
 현재 계획으로는 데이터 추가, 확인, 지출, 수입별 통계까지이지만 더 추가 예정  
 현재 Fragment가 초기화되지않아 추가, 수정시 Adapter에 드러나지않음 향후 방법을 모색해야됨 -> Fragment의 onResume 생명주기를 활용(완)  
 통계 탭에서 데이터의 price 값이 Int의 범위 혹은 Double의 범위에 넘어갈경우 방법을 모색해야됨  
-## 변경사항  
-원래는 RecyclerView에 데이터 변경이 일어날때마다 BindingAdpater로 변경하려고 했지만 계속 실패해 데이터가 변경된것을 적용할때  
-LiveData를 이용해 Fragment에서 LiveData를 옵저빙해서 데이터를 변경해줌  
-Fragment의 onResume 생명주기를 활용해서 데이터의 변화를 확실하게 보여줌  
+## 위기 및 극복  
+1) **RecyclerView Adapter** 데이터 변경 **(MemoFragment, StaticsFragment)**  
+년도, 월을 조정하는 버튼을 누를경우 RecyclerView의 데이터를 해당하는 년,월의 데이터로 바뀌어야되기때문에  
+계획단계에서는 RecyclerView에 데이터 변경이 일어날때마다 BindingAdpater를 사용해 데이터를 변경하려고 했지만  
+계속 실패하는 문제가 발생 해서 데이터가 변경된것을 적용할때 LiveData와 State패턴을 이용해 Fragment에서 LiveData를 옵저빙해서 데이터를 변경해줌  
+2) **Fragment 생명주기**를 이용한 데이터 재호출 **(MemoFragment)**  
+MemoFragment의 경우 데이터추가, 수정,삭제가 일어날 경우 데이터를 다시 받아오는것이 아니어서 데이터가 잘 추가가 되었는지 혹은 수정이 되었는지 확인이 불가능했음    
+다른 Activity로 이동 후 돌아오는 과정에서 Fragment의 생명주기인 onResume이 호출되는것을 이용해  
+AddMemo나 DetailMemo같은 Activity이동 후 돌아올 경우 현재 Room에 저장되어있는 데이터를 불러오도록 설정
