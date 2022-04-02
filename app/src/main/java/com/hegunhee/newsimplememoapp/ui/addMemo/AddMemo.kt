@@ -6,6 +6,7 @@ import android.app.TimePickerDialog
 import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.hegunhee.newsimplememoapp.R
@@ -24,6 +25,7 @@ class AddMemo : AppCompatActivity() {
     private val addMemoViewModel: AddMemoViewModel by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("lifecycle","AddMemoOnCreate")
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_memo)
         binding.viewmodel = addMemoViewModel
         binding.lifecycleOwner = this

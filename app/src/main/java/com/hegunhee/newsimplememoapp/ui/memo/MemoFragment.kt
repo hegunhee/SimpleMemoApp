@@ -2,6 +2,7 @@ package com.hegunhee.newsimplememoapp.ui.memo
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,25 +18,34 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MemoFragment : Fragment() {
 
     val viewModel: MemoViewModel by viewModel()
-    private lateinit var binding: FragmentMemoBinding
+    private var _binding : FragmentMemoBinding? = null
+    private val binding get() = _binding!!
     private val adapter = MemoAdapter(listOf())
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_memo, container, false)
+        Log.d("lifecycle","MemoFragmentOnCreateView")
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_memo, container, false)
         binding.viewmodel = viewModel
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d("lifecycle","MemoFragmentOnViewCreated")
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = this
         initAdapter()
         initViews()
         observeData()
         viewModel.initDate()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("lifecycle","MemoFragmentOnDestroyView")
+        _binding = null
     }
 
     override fun onResume() {

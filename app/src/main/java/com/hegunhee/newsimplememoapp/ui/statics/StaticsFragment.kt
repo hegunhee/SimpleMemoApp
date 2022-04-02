@@ -1,6 +1,7 @@
 package com.hegunhee.newsimplememoapp.ui.statics
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +17,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class StaticsFragment : Fragment() {
 
-    private lateinit var binding: FragmentStaticsBinding
+    private var _binding : FragmentStaticsBinding? = null
+    private val binding get() = _binding!!
     val viewModel: StaticViewModel by viewModel()
     private val adapter = StaticsAdapter()
     override fun onCreateView(
@@ -24,17 +26,25 @@ class StaticsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_statics, container, false)
+        Log.d("lifecycle","StaticsFragmentOnCreateView")
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_statics, container, false)
         binding.viewmodel = viewModel
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        Log.d("lifecycle","StaticsFragmentOnViewCreated")
         super.onViewCreated(view, savedInstanceState)
         binding.lifecycleOwner = this
         viewModel.initDate()
         initObserver()
         initAdapter()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("lifecycle","StaticsFragmentonDestroyView")
+        _binding = null
     }
 
     private fun initObserver() = viewModel.staticsData.observe(viewLifecycleOwner){
