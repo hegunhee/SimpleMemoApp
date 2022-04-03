@@ -11,40 +11,23 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.FragmentMemoBinding
+import com.hegunhee.newsimplememoapp.ui.BaseFragment
 import com.hegunhee.newsimplememoapp.ui.addMemo.AddMemoActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MemoFragment : Fragment() {
+class MemoFragment : BaseFragment<FragmentMemoBinding>(R.layout.fragment_memo) {
 
     val viewModel: MemoViewModel by viewModel()
-    private var _binding : FragmentMemoBinding? = null
-    private val binding get() = _binding!!
     private val adapter = MemoAdapter(listOf())
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        Log.d("lifecycle","MemoFragmentOnCreateView")
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_memo, container, false)
-        binding.viewmodel = viewModel
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d("lifecycle","MemoFragmentOnViewCreated")
         super.onViewCreated(view, savedInstanceState)
-        binding.lifecycleOwner = this
+        Log.d("BaseTest","MemoFragmentOnViewCreated - ${R.layout.fragment_memo}")
+        binding.viewmodel = viewModel
         initAdapter()
         initViews()
         observeData()
         viewModel.initDate()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("lifecycle","MemoFragmentOnDestroyView")
-        _binding = null
     }
 
     override fun onResume() {

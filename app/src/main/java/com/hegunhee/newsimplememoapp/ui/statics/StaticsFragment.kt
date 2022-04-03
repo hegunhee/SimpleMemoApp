@@ -1,5 +1,6 @@
 package com.hegunhee.newsimplememoapp.ui.statics
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,41 +13,26 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.FragmentStaticsBinding
+import com.hegunhee.newsimplememoapp.ui.BaseFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class StaticsFragment : Fragment() {
+class StaticsFragment : BaseFragment<FragmentStaticsBinding>(R.layout.fragment_statics){
 
-    private var _binding : FragmentStaticsBinding? = null
-    private val binding get() = _binding!!
     val viewModel: StaticViewModel by viewModel()
     private val adapter = StaticsAdapter()
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        Log.d("lifecycle","StaticsFragmentOnCreateView")
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_statics, container, false)
-        binding.viewmodel = viewModel
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Log.d("lifecycle","StaticsFragmentOnViewCreated")
         super.onViewCreated(view, savedInstanceState)
+        Log.d("BaseTest","StaticsFragmentOnViewCreated ${R.layout.fragment_statics}")
+        binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         viewModel.initDate()
         initObserver()
         initAdapter()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        Log.d("lifecycle","StaticsFragmentonDestroyView")
-        _binding = null
-    }
-
+    @SuppressLint("SetTextI18n")
     private fun initObserver() = viewModel.staticsData.observe(viewLifecycleOwner){
         when(it){
             StaticsState.Uninitialized -> {
@@ -70,9 +56,6 @@ class StaticsFragment : Fragment() {
     private fun initAdapter(){
         binding.recyclerview.adapter = adapter
     }
-
-
-
 
     companion object {
         const val TAG = "statics"
