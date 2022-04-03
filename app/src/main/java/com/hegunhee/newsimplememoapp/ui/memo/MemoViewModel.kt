@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoSortedByYearAndMonthUseCase
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import kotlin.math.exp
 
 class MemoViewModel(
     private val getAllDataBySort: GetMemoSortedByYearAndMonthUseCase
@@ -22,6 +21,8 @@ class MemoViewModel(
     val incomeValue = MutableLiveData<Int>()
     val expenseValue = MutableLiveData<Int>()
     val totalValue = MutableLiveData<Int>()
+
+    val recyclerViewVisible = MutableLiveData<Boolean>(false)
 
 
 
@@ -58,11 +59,13 @@ class MemoViewModel(
         viewModelScope.launch {
             val data = getAllDataBySort(year,month)
             if(data.isNullOrEmpty()){
+                recyclerViewVisible.value = false
                 _memoList.postValue(MemoState.EmptyOrNull)
                 incomeValue.value = 0
                 expenseValue.value = 0
                 totalValue.value = 0
             }else{
+                recyclerViewVisible.value = true
                 _memoList.postValue(MemoState.Success(data))
                 incomeValue.value = data.filter { it.category == "수입" }.map { it.price }.sum()
                 expenseValue.value = data.filter { it.category != "수입" }.map { it.price }.sum()

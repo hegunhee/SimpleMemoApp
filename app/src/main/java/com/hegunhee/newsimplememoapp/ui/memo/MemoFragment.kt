@@ -3,12 +3,7 @@ package com.hegunhee.newsimplememoapp.ui.memo
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.core.view.isVisible
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.FragmentMemoBinding
 import com.hegunhee.newsimplememoapp.ui.BaseFragment
@@ -22,7 +17,6 @@ class MemoFragment : BaseFragment<FragmentMemoBinding>(R.layout.fragment_memo) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("BaseTest","MemoFragmentOnViewCreated - ${R.layout.fragment_memo}")
         binding.viewmodel = viewModel
         initAdapter()
         initViews()
@@ -42,8 +36,7 @@ class MemoFragment : BaseFragment<FragmentMemoBinding>(R.layout.fragment_memo) {
 
     private fun initViews() = with(binding) {
         floatingButton.setOnClickListener {
-            val intent = Intent(requireContext(), AddMemoActivity::class.java)
-            startActivity(intent)
+            Intent(requireContext(), AddMemoActivity::class.java).apply { startActivity(this) }
         }
     }
 
@@ -52,16 +45,10 @@ class MemoFragment : BaseFragment<FragmentMemoBinding>(R.layout.fragment_memo) {
             is MemoState.Uninitialized -> {
             }
             is MemoState.Success -> {
-                binding.recyclerview.isVisible = true
-                binding.emptyRecyclerview.isVisible = false
                 adapter.setData(it.MemoList)
             }
             is MemoState.EmptyOrNull -> {
-                binding.recyclerview.isVisible = false
-                binding.emptyRecyclerview.isVisible = true
             }
-
-
         }
 
     }

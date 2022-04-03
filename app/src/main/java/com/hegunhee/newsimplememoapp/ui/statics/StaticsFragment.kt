@@ -35,21 +35,11 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>(R.layout.fragment_s
     @SuppressLint("SetTextI18n")
     private fun initObserver() = viewModel.staticsData.observe(viewLifecycleOwner){
         when(it){
-            StaticsState.Uninitialized -> {
-            }
+            StaticsState.Uninitialized -> { }
             is StaticsState.Success -> {
-                binding.total.isGone = false
-                binding.recyclerview.isGone = false
-                binding.empty.isGone = true
-                binding.total.text = "합계 : ${it.list.sumOf { it.price }}원"
                 adapter.setData(it.list)
-
             }
-            StaticsState.EmptyOrNull ->{
-                binding.total.isGone = true
-                binding.recyclerview.isGone = true
-                binding.empty.isGone = false
-            }
+            StaticsState.EmptyOrNull ->{ }
 
         }
     }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="viewmodel"
             type="com.hegunhee.newsimplememoapp.ui.memo.MemoViewModel" />
@@ -169,17 +169,20 @@
             android:gravity="center"
             android:text="데이터가 존재하지 않습니다"
             android:textSize="20dp"
-            android:visibility="gone"
+            android:visibility="@{viewmodel.recyclerViewVisible ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/expenses_text"
+            app:layout_constraintVertical_bias="0.0"
             tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="@{viewmodel.recyclerViewVisible ? View.VISIBLE: View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/expenses_text" />

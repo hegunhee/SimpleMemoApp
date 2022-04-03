@@ -6,6 +6,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="viewmodel"
             type="com.hegunhee.newsimplememoapp.ui.statics.StaticViewModel" />
@@ -82,8 +84,8 @@
             android:id="@+id/category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
             android:text="@{viewmodel.category}"
+            android:textSize="20dp"
             app:layout_constraintStart_toEndOf="@id/right_button"
             app:layout_constraintTop_toTopOf="@id/year_text"
             tools:text="지출"
@@ -97,8 +99,8 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/blue"
-            android:text="수입"
             android:onClick="@{() -> viewmodel.setIncome()}"
+            android:text="수입"
             app:layout_constraintEnd_toStartOf="@id/expense"
             app:layout_constraintStart_toStartOf="@id/left_button"
             app:layout_constraintTop_toBottomOf="@id/left_button" />
@@ -109,8 +111,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/red"
-            android:text="지출"
             android:onClick="@{() -> viewmodel.setExpense()}"
+            android:text="지출"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/income"
             app:layout_constraintTop_toTopOf="@id/income"
@@ -121,17 +123,19 @@
             android:id="@+id/total"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="합계 : 30000원"
             android:gravity="center"
+            android:text="@{viewmodel.totalText}"
             android:textSize="20dp"
+            android:visibility="@{viewmodel.recyclerViewVisible ? View.VISIBLE : View.GONE}"
             app:layout_constraintTop_toBottomOf="@id/income"
-            />
+            tools:text="합계 : 30000원" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_height="0dp"
+            android:visibility="@{viewmodel.recyclerViewVisible ? View.VISIBLE : View.GONE}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/total" />
 
@@ -139,14 +143,13 @@
             android:id="@+id/empty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="데이터가 없습니다."
             android:textSize="20dp"
-            android:visibility="gone"
+            android:visibility="@{viewmodel.recyclerViewVisible ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="데이터가 없습니다."
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

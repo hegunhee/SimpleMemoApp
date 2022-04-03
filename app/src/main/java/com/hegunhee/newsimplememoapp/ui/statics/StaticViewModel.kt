@@ -21,6 +21,9 @@ class StaticViewModel(
     val yearDate = MutableLiveData<Int>()
     val monthDate = MutableLiveData<Int>()
 
+    val recyclerViewVisible = MutableLiveData<Boolean>(false)
+    val totalText = MutableLiveData<String>()
+
 
     fun initDate() {
         val date = LocalDate.now()
@@ -74,9 +77,12 @@ class StaticViewModel(
         val category = category.value!!
         val data = getStaticsDataUseCase(category,year,month)
         if(data.isEmpty()){
+            recyclerViewVisible.value = false
             _staticsData.postValue(StaticsState.EmptyOrNull)
             Log.d("testData","data is empty")
         }else{
+            recyclerViewVisible.value = true
+            totalText.value = "합계 : ${data.sumOf { it.price }} 원"
             _staticsData.postValue(StaticsState.Success(data))
             Log.d("testData",data.toString())
         }
