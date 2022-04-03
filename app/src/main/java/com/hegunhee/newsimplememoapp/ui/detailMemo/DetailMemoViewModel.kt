@@ -48,34 +48,44 @@ class DetailMemoViewModel(
     private fun initData() {
         initDay()
         initTime()
-        category.value = memo.category
-        asset.value = memo.asset
-        attr.value = memo.attr
-        price.value = memo.price.toString()
-        desc.value = memo.description
+        memo.let {
+            category.value = it.category
+            asset.value = it.asset
+            attr.value = it.attr
+            price.value = it.price.toString()
+            desc.value = it.description
+        }
     }
 
     private fun initDay() {
-        year = memo.year
-        month = memo.month
-        day = memo.day
-        dayOfWeek = memo.dayOfWeek
+        memo.let {
+            year = it.year
+            month = it.month
+            day = it.day
+            dayOfWeek = it.dayOfWeek
+        }
+
         dateInfo.value = "${year}/${month}/${day} (${dayOfWeek}) "
     }
 
     private fun initTime() {
-        ampm = memo.amPm
-        hour = memo.hour
-        minute = memo.minute
+        memo.let {
+            ampm = it.amPm
+            hour = it.hour
+            minute = it.minute
+        }
+
         timeInfo.value = "$ampm ${hour}:${minute}"
     }
 
     fun setDate(date: LocalDate = LocalDate.now()) {
+        date.let {
+            year = it.year
+            month = it.monthValue
+            day = it.dayOfMonth
+            dayOfWeek = changeKoreanDayOfWeek(it.dayOfWeek.toString())
+        }
 
-        year = date.year
-        month = date.monthValue
-        day = date.dayOfMonth
-        dayOfWeek = changeKoreanDayOfWeek(date.dayOfWeek.toString())
         dateInfo.value = "${year}/${month}/${day} (${dayOfWeek})"
     }
 
@@ -98,7 +108,7 @@ class DetailMemoViewModel(
     }
 
     fun saveData() = viewModelScope.launch {
-        val memo = Memo(
+        Memo(
             category.value!!,
             year,
             month,
@@ -112,8 +122,7 @@ class DetailMemoViewModel(
             asset.value!!,
             desc.value!!,
             memo.id
-        )
-        addMemoUseCase(memo)
+        ).apply { addMemoUseCase(this) }
     }
 
 
@@ -121,27 +130,31 @@ class DetailMemoViewModel(
         deleteMemoUseCase.invoke(memo)
     }
 
-    fun back(){
+    fun back() {
         memoState.postValue(DetailMemoState.Back)
     }
-    fun clickDate(){
+
+    fun clickDate() {
         memoState.postValue(DetailMemoState.SetDate)
     }
-    fun clickTime(){
+
+    fun clickTime() {
         memoState.postValue(DetailMemoState.SetTime)
     }
-    fun clickAsset(){
+
+    fun clickAsset() {
         memoState.postValue(DetailMemoState.SetAsset)
     }
+
     fun clickAttr() {
         memoState.postValue(DetailMemoState.SetAttr)
     }
 
-    fun clickSave(){
+    fun clickSave() {
         memoState.postValue(DetailMemoState.Save)
     }
 
-    fun clickRemove(){
+    fun clickRemove() {
         removeMemo()
         memoState.postValue(DetailMemoState.Remove)
     }

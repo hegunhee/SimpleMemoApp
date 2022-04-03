@@ -77,45 +77,6 @@ class DetailMemoActivity : AppCompatActivity() {
         }
     }
 
-    private fun initListener() = with(binding) {
-//        backButton.setOnClickListener {
-//            onBackPressed()
-//        }
-//        day.setOnClickListener {
-//            setDate()
-//        }
-//        time.setOnClickListener {
-//            setTime()
-//        }
-//        this.asset.setOnClickListener {
-//            setAsset()
-//        }
-//        attr.setOnClickListener {
-//            setAttr()
-//        }
-//        remove.setOnClickListener {
-//            viewModel.removeMemo()
-//            finish()
-//        }
-//        save.setOnClickListener {
-//            with(viewModel) {
-//                if (asset.value.isNullOrEmpty()) {
-//                    setAsset()
-//                } else if (attr.value.isNullOrEmpty()) {
-//                    setAttr()
-//                } else if (price.value.isNullOrEmpty()) {
-//                    Toast.makeText(this@DetailMemoActivity, "가격을 설정해주세요", android.widget.Toast.LENGTH_SHORT)
-//                        .show()
-//                } else {
-//                    saveData()
-//                    finish()
-//                }
-//            }
-//        }
-    }
-
-
-
     private fun setAsset() {
         AlertDialog.Builder(this)
             .setTitle("자산")
@@ -164,7 +125,7 @@ class DetailMemoActivity : AppCompatActivity() {
                     hour = hourOfDay
                     this.minute = minute
                 }
-                android.widget.Toast.makeText(
+                Toast.makeText(
                     this@DetailMemoActivity,
                     "${ampm},${hour}:${minute}",
                     android.widget.Toast.LENGTH_SHORT

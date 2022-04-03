@@ -18,27 +18,28 @@ class MemoAdapter(private var memoList: List<Memo>) : RecyclerView.Adapter<MemoA
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindView(memo : Memo) = with(binding){
-            this.day.text = memo.day.toString()
-            this.dayOfWeek.text = memo.dayOfWeek
-            this.amPm.text = memo.amPm
-            this.hour.text = memo.hour.toString()
-            this.minute.text = memo.minute.toString()
-            this.attr.text = memo.attr
-            this.description.text = if(memo.description.isBlank()){
-                this.description.setTextColor(Color.GRAY)
+            day.text = memo.day.toString()
+            dayOfWeek.text = memo.dayOfWeek
+            amPm.text = memo.amPm
+            hour.text = memo.hour.toString()
+            minute.text = memo.minute.toString()
+            attr.text = memo.attr
+            description.text = if(memo.description.isBlank()){
+                description.setTextColor(Color.GRAY)
                 memo.attr
             } else memo.description
-            this.asset.text = memo.asset
-            this.price.text = memo.price.toString()
+            asset.text = memo.asset
+            price.text = memo.price.toString()
             if(memo.category == "지출")
                 price.setTextColor(Color.RED)
             else
                 price.setTextColor(Color.BLUE)
 
-            this.root.setOnClickListener {
-                val intent = Intent(mContext,DetailMemoActivity::class.java)
-                intent.putExtra("Memo",memo)
-                mContext.startActivity(intent)
+            root.setOnClickListener {
+                Intent(mContext,DetailMemoActivity::class.java).apply {
+                    putExtra("Memo",memo)
+                    mContext.startActivity(this)
+                }
             }
         }
     }

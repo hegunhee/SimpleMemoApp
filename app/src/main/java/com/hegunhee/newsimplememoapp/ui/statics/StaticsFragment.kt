@@ -24,7 +24,6 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>(R.layout.fragment_s
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("BaseTest","StaticsFragmentOnViewCreated ${R.layout.fragment_statics}")
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         viewModel.initDate()

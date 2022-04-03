@@ -79,12 +79,10 @@ class StaticViewModel(
         if(data.isEmpty()){
             recyclerViewVisible.value = false
             _staticsData.postValue(StaticsState.EmptyOrNull)
-            Log.d("testData","data is empty")
         }else{
             recyclerViewVisible.value = true
             totalText.value = "합계 : ${data.sumOf { it.price }} 원"
             _staticsData.postValue(StaticsState.Success(data))
-            Log.d("testData",data.toString())
         }
     }
 }
