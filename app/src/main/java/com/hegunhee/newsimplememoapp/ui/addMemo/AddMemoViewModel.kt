@@ -33,12 +33,13 @@ class AddMemoViewModel(
     var asset = MutableLiveData<String>()
     var attr = MutableLiveData<String>()
 
+    val memoState = MutableLiveData<AddMemoState>(AddMemoState.Uninitialized)
+
 
     fun initData() {
         category.value = "지출"
         setDate()
         initTime()
-
     }
     private fun initTime() {
         val day = LocalDateTime.now().plusHours(9)
@@ -55,7 +56,6 @@ class AddMemoViewModel(
     }
 
     fun setDate(date: LocalDate = LocalDate.now()) {
-
         year = date.year
         month = date.monthValue
         day = date.dayOfMonth
@@ -88,5 +88,26 @@ class AddMemoViewModel(
         Log.d("TestSaveMemo",memo.toString())
         addMemoUseCase(memo)
     }
+
+    fun back(){
+        memoState.postValue(AddMemoState.Back)
+    }
+    fun clickDate(){
+        memoState.postValue(AddMemoState.SetDate)
+    }
+    fun clickTime(){
+        memoState.postValue(AddMemoState.SetTime)
+    }
+    fun clickAsset(){
+        memoState.postValue(AddMemoState.SetAsset)
+    }
+    fun clickAttr() {
+        memoState.postValue(AddMemoState.SetAttr)
+    }
+
+    fun clickSave(){
+        memoState.postValue(AddMemoState.Save)
+    }
+
 
 }

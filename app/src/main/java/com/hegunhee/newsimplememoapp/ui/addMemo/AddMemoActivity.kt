@@ -28,28 +28,35 @@ class AddMemoActivity : AppCompatActivity() {
         binding.viewmodel = addMemoViewModel
         binding.lifecycleOwner = this
         addMemoViewModel.initData()
-        initListener()
+        observeData()
     }
 
+    private fun observeData() = addMemoViewModel.memoState.observe(this){
+        when(it){
+            AddMemoState.Uninitialized -> {}
+            AddMemoState.Back -> {
+                onBackPressed()
+            }
+            AddMemoState.Save -> {
+                saveData()
+            }
+            AddMemoState.SetAsset -> {
+                setAsset()
+            }
+            AddMemoState.SetAttr -> {
+                setAttr()
+            }
+            AddMemoState.SetDate -> {
+                setDate()
+            }
+            AddMemoState.SetTime -> {
+                setTime()
+            }
+        }
+    }
 
-
-    private fun initListener() = with(binding) {
-        backButton.setOnClickListener {
-            onBackPressed()
-        }
-        day.setOnClickListener {
-            setDate()
-        }
-        time.setOnClickListener {
-            setTime()
-        }
-        this.asset.setOnClickListener {
-            setAsset()
-        }
-        attr.setOnClickListener {
-            setAttr()
-        }
-        save.setOnClickListener {
+    private fun saveData(){
+        with(binding) {
             with(addMemoViewModel) {
                 if (asset.value.isNullOrEmpty()) {
                     setAsset()
@@ -64,7 +71,6 @@ class AddMemoActivity : AppCompatActivity() {
                 }
             }
         }
-
     }
 
     private fun setAsset() {

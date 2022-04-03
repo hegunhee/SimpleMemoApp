@@ -1,6 +1,5 @@
 package com.hegunhee.newsimplememoapp.ui.detailMemo
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -39,6 +38,7 @@ class DetailMemoViewModel(
     val price = MutableLiveData<String>()
     val desc = MutableLiveData<String>()
 
+    val memoState = MutableLiveData<DetailMemoState>(DetailMemoState.Uninitialized)
 
     fun initViewModel(memo: Memo) {
         this.memo = memo
@@ -119,10 +119,32 @@ class DetailMemoViewModel(
 
     fun removeMemo() = viewModelScope.launch {
         deleteMemoUseCase.invoke(memo)
-
     }
 
+    fun back(){
+        memoState.postValue(DetailMemoState.Back)
+    }
+    fun clickDate(){
+        memoState.postValue(DetailMemoState.SetDate)
+    }
+    fun clickTime(){
+        memoState.postValue(DetailMemoState.SetTime)
+    }
+    fun clickAsset(){
+        memoState.postValue(DetailMemoState.SetAsset)
+    }
+    fun clickAttr() {
+        memoState.postValue(DetailMemoState.SetAttr)
+    }
 
+    fun clickSave(){
+        memoState.postValue(DetailMemoState.Save)
+    }
+
+    fun clickRemove(){
+        removeMemo()
+        memoState.postValue(DetailMemoState.Remove)
+    }
 
 
 }
