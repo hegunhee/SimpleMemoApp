@@ -26,8 +26,8 @@ class DefaultMemoRepository(
         dao.insertAllMemo(*memo.toTypedArray())
     }
 
-    override suspend fun getMemoSortedByYearAndMonth(year: Int, month: Int): List<Memo> {
-        return dao.getMemoSortedByYearAndMonth(year,month)
+    override suspend fun getMemoListSortedByYearAndMonth(year: Int, month: Int): List<Memo> {
+        return dao.getMemoListSortedByYearAndMonth(year,month)
     }
 
 

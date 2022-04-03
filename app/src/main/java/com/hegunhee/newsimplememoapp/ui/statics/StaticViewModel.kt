@@ -54,19 +54,6 @@ class StaticViewModel(
         setData(yearDate.value!!, monthDate.value!!)
     }
 
-    private fun setData(year: Int, month: Int) = viewModelScope.launch {
-        val category = category.value!!
-        val data = getStaticsDataUseCase(category,year,month)
-        if(data.isEmpty()){
-            _staticsData.postValue(StaticsState.EmptyOrNull)
-            Log.d("testData","data is empty")
-        }else{
-            _staticsData.postValue(StaticsState.Success(data))
-            Log.d("testData",data.toString())
-        }
-
-
-    }
 
     fun setIncome() {
         if (category.value == "지출") {
@@ -80,6 +67,18 @@ class StaticViewModel(
         if (category.value == "수입") {
             category.value = "지출"
             setData(yearDate.value!!, monthDate.value!!)
+        }
+    }
+
+    private fun setData(year: Int, month: Int) = viewModelScope.launch {
+        val category = category.value!!
+        val data = getStaticsDataUseCase(category,year,month)
+        if(data.isEmpty()){
+            _staticsData.postValue(StaticsState.EmptyOrNull)
+            Log.d("testData","data is empty")
+        }else{
+            _staticsData.postValue(StaticsState.Success(data))
+            Log.d("testData",data.toString())
         }
     }
 }

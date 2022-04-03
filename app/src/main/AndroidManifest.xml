@@ -10,9 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewSimpleMemoApp">
-        <activity android:name=".ui.detailMemo.DetailMemo"></activity>
+        <activity android:name=".ui.detailMemo.DetailMemoActivity"></activity>
         <activity
-            android:name=".ui.addMemo.AddMemo"
+            android:name=".ui.addMemo.AddMemoActivity"
             android:exported="true"></activity>
         <activity
             android:name=".ui.MainActivity"

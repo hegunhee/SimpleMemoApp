@@ -113,7 +113,6 @@ class DetailMemoViewModel(
             desc.value!!,
             memo.id
         )
-        Log.d("TestSaveMemo", memo.toString())
         addMemoUseCase(memo)
     }
 

@@ -24,6 +24,6 @@ interface MemoDao {
     suspend fun insertAllMemo(vararg memos : Memo)
 
     @Query("SELECT * FROM Memo where year = :year AND month = :month ORDER BY day DESC")
-    suspend fun getMemoSortedByYearAndMonth(year : Int,month : Int) : List<Memo>
+    suspend fun getMemoListSortedByYearAndMonth(year : Int, month : Int) : List<Memo>
 
 }

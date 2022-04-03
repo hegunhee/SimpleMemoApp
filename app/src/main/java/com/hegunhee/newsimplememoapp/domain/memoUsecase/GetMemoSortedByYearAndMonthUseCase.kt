@@ -8,6 +8,6 @@ class GetMemoSortedByYearAndMonthUseCase(
     private val repository: MemoRepository
 ) : UseCase {
     suspend operator fun invoke(year : Int,month : Int) : List<Memo>{
-        return repository.getMemoSortedByYearAndMonth(year,month)
+        return repository.getMemoListSortedByYearAndMonth(year,month)
     }
 }

@@ -14,5 +14,5 @@ interface MemoRepository {
 
     suspend fun insertMemoList(memo : List<Memo>)
 
-    suspend fun getMemoSortedByYearAndMonth(year : Int, month : Int) : List<Memo>
+    suspend fun getMemoListSortedByYearAndMonth(year : Int, month : Int) : List<Memo>
 }

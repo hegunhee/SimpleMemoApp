@@ -1,40 +1,37 @@
-package com.hegunhee.newsimplememoapp.ui.detailMemo
+package com.hegunhee.newsimplememoapp.ui.addMemo
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.DialogInterface
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.hegunhee.newsimplememoapp.R
-import com.hegunhee.newsimplememoapp.data.entity.Memo
 import com.hegunhee.newsimplememoapp.data.entity.assetArray
 import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
-import com.hegunhee.newsimplememoapp.databinding.ActivityDetailMemoBinding
-import com.hegunhee.newsimplememoapp.ui.memo.MemoFragment
+import com.hegunhee.newsimplememoapp.databinding.ActivityAddMemoBinding
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-class DetailMemo : AppCompatActivity() {
 
-    private val viewModel: DetailMemoViewModel by inject()
-    private lateinit var binding: ActivityDetailMemoBinding
+class AddMemoActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityAddMemoBinding
+    private val addMemoViewModel: AddMemoViewModel by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_detail_memo)
-        binding.viewmodel = viewModel
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_memo)
+        binding.viewmodel = addMemoViewModel
         binding.lifecycleOwner = this
-        val memo = intent.getParcelableExtra<Memo>("Memo")
-        memo?.let {
-            viewModel.initViewModel(it)
-        }
+        addMemoViewModel.initData()
         initListener()
     }
+
+
 
     private fun initListener() = with(binding) {
         backButton.setOnClickListener {
@@ -52,39 +49,35 @@ class DetailMemo : AppCompatActivity() {
         attr.setOnClickListener {
             setAttr()
         }
-        remove.setOnClickListener {
-            viewModel.removeMemo()
-            finish()
-        }
         save.setOnClickListener {
-            with(viewModel) {
+            with(addMemoViewModel) {
                 if (asset.value.isNullOrEmpty()) {
                     setAsset()
                 } else if (attr.value.isNullOrEmpty()) {
                     setAttr()
-                } else if (price.value.isNullOrEmpty()) {
-                    Toast.makeText(this@DetailMemo, "가격을 설정해주세요", android.widget.Toast.LENGTH_SHORT)
-                        .show()
+                } else if (price.text.isNullOrEmpty()) {
+                    Toast.makeText(this@AddMemoActivity, "가격을 설정해주세요", Toast.LENGTH_SHORT).show()
                 } else {
-                    saveData()
+                    val description = if (desc.text.isNullOrEmpty()) "" else desc.text.toString()
+                    saveData(price.text.toString().toInt(), description)
                     finish()
                 }
             }
         }
+
     }
 
     private fun setAsset() {
         AlertDialog.Builder(this)
             .setTitle("자산")
-            .setItems(
-                assetArray,
+            .setItems(assetArray,
                 DialogInterface.OnClickListener { dialogInterface, which ->
-                    viewModel.asset.value = assetArray[which]
+                    addMemoViewModel.asset.value = assetArray[which]
                 }).create().show()
     }
 
     private fun setAttr() {
-        val attrType = if (viewModel.category.value == "수입") {
+        val attrType = if (addMemoViewModel.category.value == "수입") {
             incomeAttr
         } else {
             expenseAttr
@@ -93,17 +86,17 @@ class DetailMemo : AppCompatActivity() {
             .setTitle("자산")
             .setItems(attrType,
                 DialogInterface.OnClickListener { dialogInterface, which ->
-                    viewModel.attr.value = attrType[which]
+                    addMemoViewModel.attr.value = attrType[which]
                 }).create().show()
     }
 
     private fun setDate() {
         val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            viewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))
+            addMemoViewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))
         }
 
-        with(viewModel) {
-            DatePickerDialog(this@DetailMemo, dateSetListener, year, month - 1, day).show()
+        with(addMemoViewModel) {
+            DatePickerDialog(this@AddMemoActivity, dateSetListener, year, month - 1, day).show()
         }
 
     }
@@ -111,7 +104,7 @@ class DetailMemo : AppCompatActivity() {
     private fun setTime() {
         val time = LocalDateTime.now().plusHours(9)
         val timeSetListener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-            with(viewModel) {
+            with(addMemoViewModel) {
                 if (hourOfDay > 12) {
                     ampm = "오후"
                     hour = hourOfDay - 12
@@ -121,16 +114,11 @@ class DetailMemo : AppCompatActivity() {
                     hour = hourOfDay
                     this.minute = minute
                 }
-                android.widget.Toast.makeText(
-                    this@DetailMemo,
-                    "${ampm},${hour}:${minute}",
-                    android.widget.Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this@AddMemoActivity, "${ampm},${hour}:${minute}", Toast.LENGTH_SHORT).show()
                 setTimeInfo()
             }
 
         }
         TimePickerDialog(this, timeSetListener, time.hour, time.minute, false).show()
     }
-
 }

@@ -6,13 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.FragmentMemoBinding
-import com.hegunhee.newsimplememoapp.ui.addMemo.AddMemo
+import com.hegunhee.newsimplememoapp.ui.addMemo.AddMemoActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MemoFragment : Fragment() {
@@ -60,7 +59,7 @@ class MemoFragment : Fragment() {
 
     private fun initViews() = with(binding) {
         floatingButton.setOnClickListener {
-            val intent = Intent(requireContext(), AddMemo::class.java)
+            val intent = Intent(requireContext(), AddMemoActivity::class.java)
             startActivity(intent)
         }
     }
