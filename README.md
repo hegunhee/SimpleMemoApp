@@ -78,4 +78,4 @@ MemoFragment의 경우 데이터추가, 수정,삭제가 일어날 경우 데이
 AddMemo나 DetailMemo같은 Activity이동 후 돌아올 경우 현재 Room에 저장되어있는 데이터를 불러오도록 설정  
 3) **BaseFragment 사용**  
    DataBinding 객체를 사용하는 Fragment의 경우 onCreateView에서 바인딩 객체를 생성하고 onDestroyView에서 바인딩 객체를 해제해줘야된다.  
-   그래서 BaseFragment를 만들어 중복코드를 줄여줌 
+   Fragment마다 중복되는 코드이므로 BaseFragment를 만들어서 사용했습니다.
