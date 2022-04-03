@@ -36,7 +36,8 @@
   * **DataBinding** 적용  
     dataBinding을 사용하여 findViewById를 사용하지 않으며 xml 파일과 데이터를 연결해줍니다.  
     그 이외에도 데이터바인딩 변수를 viewModel로 만들어 viewModel에서 만든 함수를 Button의 onClick메소드로 사용할 수 있습니다.  
-    Listener 에서 Context를 사용해야하는경우는 ViewModel에 Context를 할당하면 안되기때문에 어쩔 수 없이 Activity나 Fragment에서 구현하였습니다.  
+    Listener 에서 Context를 사용해야하는경우는 ViewModel에 Context를 할당하면 안되기때문에  
+    어쩔 수 없이 Activity나 Fragment에서 구현하였습니다.  
   * **Room DataBase** 적용  
     가계부라는 특성상 가계부 데이터를 저장하고 불러오는 과정이 필요한데  
     Room을 이용해서 데이터베이스 생성, 테이블 관리, DAO(Data Access Object)를 쉽게 관리하였습니다.
@@ -69,7 +70,8 @@
 1) **RecyclerView Adapter** 데이터 변경 **(MemoFragment, StaticsFragment)**  
 년도, 월을 조정하는 버튼을 누를경우 RecyclerView의 데이터를 해당하는 년,월의 데이터로 바뀌어야되기때문에  
 계획단계에서는 RecyclerView에 데이터 변경이 일어날때마다 BindingAdpater를 사용해 데이터를 변경하려고 했지만  
-계속 실패하는 문제가 발생 해서 데이터가 변경된것을 적용할때 LiveData와 State패턴을 이용해 Fragment에서 LiveData를 옵저빙해서 데이터를 변경해줌  
+계속 실패하는 문제가 발생 해서 데이터가 변경된것을 적용할때 LiveData와 State패턴을 이용해  
+Fragment에서 LiveData를 옵저빙해서 데이터를 변경해줌  
 2) **Fragment 생명주기**를 이용한 데이터 재호출 **(MemoFragment)**  
 MemoFragment의 경우 데이터추가, 수정,삭제가 일어날 경우 데이터를 다시 받아오는것이 아니어서 데이터가 잘 추가가 되었는지 혹은 수정이 되었는지 확인이 불가능했음    
 다른 Activity로 이동 후 돌아오는 과정에서 Fragment의 생명주기인 onResume이 호출되는것을 이용해  
