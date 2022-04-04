@@ -70,9 +70,6 @@
 1) **RecyclerView Adapter** 데이터 변경 **(MemoFragment, StaticsFragment)**  
 https://github.com/hegunhee/NewSimpleMemoApp/issues/2  
 2) **Fragment 생명주기**를 이용한 데이터 재호출 **(MemoFragment)**  
-MemoFragment의 경우 데이터추가, 수정,삭제가 일어날 경우 데이터를 다시 받아오는것이 아니어서 데이터가 잘 추가가 되었는지 혹은 수정이 되었는지 확인이 불가능했음    
-다른 Activity로 이동 후 돌아오는 과정에서 Fragment의 생명주기인 onResume이 호출되는것을 이용해  
-AddMemo나 DetailMemo같은 Activity이동 후 돌아올 경우 현재 Room에 저장되어있는 데이터를 불러오도록 설정  
+https://github.com/hegunhee/NewSimpleMemoApp/issues/3  
 3) **BaseFragment 사용**  
-   DataBinding 객체를 사용하는 Fragment의 경우 onCreateView에서 바인딩 객체를 생성하고 onDestroyView에서 바인딩 객체를 해제해줘야된다.  
-   Fragment마다 중복되는 코드이므로 BaseFragment를 만들어서 사용했습니다.
+https://github.com/hegunhee/NewSimpleMemoApp/issues/4  
