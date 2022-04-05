@@ -12,9 +12,6 @@ class MemoViewModel(
     private val getAllDataBySort: GetMemoSortedByYearAndMonthUseCase
 ) : ViewModel() {
 
-    private var _memoList = MutableLiveData<MemoState>(MemoState.Uninitialized)
-    val memoList = _memoList
-
     val yearDate = MutableLiveData<Int>()
     val monthDate = MutableLiveData<Int>()
 
@@ -54,6 +51,9 @@ class MemoViewModel(
         setData(yearDate.value!!, monthDate.value!!)
     }
 
+
+    private var _memoList = MutableLiveData<MemoState>(MemoState.Uninitialized)
+    val memoList = _memoList
 
     private fun setData(year: Int, month: Int) {
         viewModelScope.launch {
