@@ -77,15 +77,6 @@
             app:layout_constraintStart_toEndOf="@id/month"
             app:layout_constraintTop_toTopOf="@id/left_button" />
 
-        <Button
-            android:id="@+id/refreshButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_baseline_refresh_24"
-            android:backgroundTint="@color/black"
-            android:onClick="@{() -> viewmodel.refreshData()}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/right_button" />
 
         <TextView
             android:id="@+id/income"

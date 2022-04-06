@@ -17,8 +17,10 @@ class MemoFragment : BaseFragment<FragmentMemoBinding>(R.layout.fragment_memo) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewmodel = viewModel
-        initAdapter()
+        binding.apply {
+            viewmodel = viewModel
+            recyclerview.adapter = adapter
+        }
         initViews()
         observeData()
         viewModel.initDate()
@@ -29,11 +31,6 @@ class MemoFragment : BaseFragment<FragmentMemoBinding>(R.layout.fragment_memo) {
         viewModel.initDate()
     }
 
-
-    private fun initAdapter() = with(binding) {
-        recyclerview.adapter = adapter
-    }
-
     private fun initViews() = with(binding) {
         floatingButton.setOnClickListener {
             Intent(requireContext(), AddMemoActivity::class.java).apply { startActivity(this) }
@@ -42,15 +39,12 @@ class MemoFragment : BaseFragment<FragmentMemoBinding>(R.layout.fragment_memo) {
 
     private fun observeData() = viewModel.memoList.observe(viewLifecycleOwner) {
         when (it) {
-            is MemoState.Uninitialized -> {
-            }
+            is MemoState.Uninitialized -> { }
             is MemoState.Success -> {
                 adapter.setData(it.MemoList)
             }
-            is MemoState.EmptyOrNull -> {
-            }
+            is MemoState.EmptyOrNull -> { }
         }
-
     }
 
 

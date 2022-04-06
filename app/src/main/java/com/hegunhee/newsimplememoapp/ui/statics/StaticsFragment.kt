@@ -24,11 +24,13 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>(R.layout.fragment_s
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewmodel = viewModel
-        binding.lifecycleOwner = this
+        binding.apply {
+            viewmodel = viewModel
+            lifecycleOwner = this@StaticsFragment
+            recyclerview.adapter = adapter
+        }
         viewModel.initDate()
         initObserver()
-        initAdapter()
     }
 
     @SuppressLint("SetTextI18n")
@@ -41,9 +43,6 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>(R.layout.fragment_s
             StaticsState.EmptyOrNull ->{ }
 
         }
-    }
-    private fun initAdapter(){
-        binding.recyclerview.adapter = adapter
     }
 
     companion object {

@@ -25,15 +25,18 @@ class AddMemoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_memo)
-        binding.viewmodel = addMemoViewModel
-        binding.lifecycleOwner = this
+        binding.apply {
+            viewmodel = addMemoViewModel
+            lifecycleOwner = this@AddMemoActivity
+        }
         addMemoViewModel.initData()
         observeData()
     }
 
-    private fun observeData() = addMemoViewModel.memoState.observe(this){
-        when(it){
-            AddMemoState.Uninitialized -> {}
+    private fun observeData() = addMemoViewModel.memoState.observe(this) {
+        when (it) {
+            AddMemoState.Uninitialized -> {
+            }
             AddMemoState.Back -> {
                 onBackPressed()
             }
@@ -55,7 +58,7 @@ class AddMemoActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveData(){
+    private fun saveData() {
         with(binding) {
             with(addMemoViewModel) {
                 if (asset.value.isNullOrEmpty()) {
@@ -97,19 +100,19 @@ class AddMemoActivity : AppCompatActivity() {
     }
 
     private fun setDate() {
-        val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            addMemoViewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))
-        }
 
-        with(addMemoViewModel) {
-            DatePickerDialog(this@AddMemoActivity, dateSetListener, year, month - 1, day).show()
+        DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            addMemoViewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))}.let {  listener->
+            with(addMemoViewModel){
+                DatePickerDialog(this@AddMemoActivity,listener,year,month-1,day).show()
+            }
         }
 
     }
 
     private fun setTime() {
         val time = LocalDateTime.now().plusHours(9)
-        val timeSetListener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+        TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
             with(addMemoViewModel) {
                 if (hourOfDay > 12) {
                     ampm = "오후"
@@ -120,11 +123,10 @@ class AddMemoActivity : AppCompatActivity() {
                     hour = hourOfDay
                     this.minute = minute
                 }
-                Toast.makeText(this@AddMemoActivity, "${ampm},${hour}:${minute}", Toast.LENGTH_SHORT).show()
                 setTimeInfo()
             }
-
+        }.let {
+            TimePickerDialog(this,it,time.hour,time.minute,false).show()
         }
-        TimePickerDialog(this, timeSetListener, time.hour, time.minute, false).show()
     }
 }

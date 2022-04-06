@@ -22,13 +22,10 @@ class MemoViewModel(
     val recyclerViewVisible = MutableLiveData<Boolean>(false)
 
 
-
-
-    fun initDate() {
-        val date = LocalDate.now()
-        yearDate.value = date.year
-        monthDate.value = date.monthValue
-        setData(date.year, date.monthValue)
+    fun initDate() = LocalDate.now().run {
+        yearDate.value = year
+        monthDate.value = monthValue
+        setData(year, monthValue)
     }
 
     fun clickLeft() {
@@ -57,27 +54,23 @@ class MemoViewModel(
 
     private fun setData(year: Int, month: Int) {
         viewModelScope.launch {
-            val data = getAllDataBySort(year,month)
-            if(data.isNullOrEmpty()){
-                recyclerViewVisible.value = false
-                _memoList.postValue(MemoState.EmptyOrNull)
-                incomeValue.value = 0
-                expenseValue.value = 0
-                totalValue.value = 0
-            }else{
-                recyclerViewVisible.value = true
-                _memoList.postValue(MemoState.Success(data))
-                incomeValue.value = data.filter { it.category == "수입" }.map { it.price }.sum()
-                expenseValue.value = data.filter { it.category != "수입" }.map { it.price }.sum()
-                totalValue.value = incomeValue.value!! - expenseValue.value!!
+            getAllDataBySort(year, month).let { data->
+                if(data.isNullOrEmpty()){
+                    recyclerViewVisible.value = false
+                    _memoList.postValue(MemoState.EmptyOrNull)
+                    incomeValue.value = 0
+                    expenseValue.value = 0
+                    totalValue.value = 0
+                }else{
+                    recyclerViewVisible.value = true
+                    _memoList.postValue(MemoState.Success(data))
+                    incomeValue.value = data.filter { it.category == "수입" }.map { it.price }.sum()
+                    expenseValue.value = data.filter { it.category != "수입" }.map { it.price }.sum()
+                    totalValue.value = incomeValue.value!! - expenseValue.value!!
+                }
             }
         }
 
-    }
-
-    fun refreshData(){
-        Log.d("Refresh","Refresh")
-        setData(yearDate.value!!,monthDate.value!!)
     }
 
 

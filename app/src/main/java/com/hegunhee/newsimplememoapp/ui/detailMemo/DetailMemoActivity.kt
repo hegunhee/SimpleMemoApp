@@ -26,10 +26,11 @@ class DetailMemoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail_memo)
-        binding.viewmodel = viewModel
-        binding.lifecycleOwner = this
-        val memo = intent.getParcelableExtra<Memo>("Memo")
-        memo?.let {
+        binding.apply {
+            viewmodel = viewModel
+            lifecycleOwner = this@DetailMemoActivity
+        }
+        intent.getParcelableExtra<Memo>("Memo")?.let {
             viewModel.initViewModel(it)
         }
         observeData()
@@ -102,19 +103,17 @@ class DetailMemoActivity : AppCompatActivity() {
     }
 
     private fun setDate() {
-        val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            viewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))
-        }
-
-        with(viewModel) {
-            DatePickerDialog(this@DetailMemoActivity, dateSetListener, year, month - 1, day).show()
+        DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            viewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))}.let {  listener->
+            with(viewModel){
+                DatePickerDialog(this@DetailMemoActivity,listener,year,month-1,day).show()
+            }
         }
 
     }
 
     private fun setTime() {
-        val time = LocalDateTime.now().plusHours(9)
-        val timeSetListener = TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+        TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
             with(viewModel) {
                 if (hourOfDay > 12) {
                     ampm = "오후"
@@ -133,8 +132,9 @@ class DetailMemoActivity : AppCompatActivity() {
                 setTimeInfo()
             }
 
+        }?.let {listener->
+            TimePickerDialog(this, listener, viewModel.hour, viewModel.minute, false).show()
         }
-        TimePickerDialog(this, timeSetListener, time.hour, time.minute, false).show()
     }
 
 }

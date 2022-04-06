@@ -26,11 +26,12 @@ class StaticViewModel(
 
 
     fun initDate() {
-        val date = LocalDate.now()
-        yearDate.value = date.year
-        monthDate.value = date.monthValue
-        initCategory()
-        setData(date.year, date.monthValue)
+        LocalDate.now()?.run{
+            yearDate.value = year
+            monthDate.value = monthValue
+            initCategory()
+            setData(year,monthValue)
+        }
     }
 
     private fun initCategory() {
@@ -75,14 +76,15 @@ class StaticViewModel(
 
     private fun setData(year: Int, month: Int) = viewModelScope.launch {
         val category = category.value!!
-        val data = getStaticsDataUseCase(category,year,month)
-        if(data.isEmpty()){
-            recyclerViewVisible.value = false
-            _staticsData.postValue(StaticsState.EmptyOrNull)
-        }else{
-            recyclerViewVisible.value = true
-            totalText.value = "합계 : ${data.sumOf { it.price }} 원"
-            _staticsData.postValue(StaticsState.Success(data))
+        getStaticsDataUseCase(category,year,month).run {
+            if(this.isNullOrEmpty()){
+                recyclerViewVisible.value = false
+                _staticsData.postValue(StaticsState.EmptyOrNull)
+            }else{
+                recyclerViewVisible.value = true
+                totalText.value = "합계 : ${this.sumOf { it.price }} 원"
+                _staticsData.postValue(StaticsState.Success(this))
+            }
         }
     }
 }
