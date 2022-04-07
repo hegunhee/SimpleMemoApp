@@ -9,7 +9,7 @@ class GetStaticsDataUseCase(
 ) : UseCase {
     suspend operator fun invoke(category : String,year : Int, month: Int) : List<StaticsData>{
         val staticsData = mutableListOf<StaticsData>()
-        val data = repository.getMemoListSortedByYearAndMonth(year,month).filter{it.category == category}
+        val data = repository.getMemoListSortedByCategoryAndYearAndMonth(category,year,month)
         val totalValue = data.sumOf { it.price }
         data.groupBy { it.attr }.forEach{ attr,list ->
             val sum = list.sumOf { it.price }.toDouble()

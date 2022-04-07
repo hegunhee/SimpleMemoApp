@@ -30,5 +30,13 @@ class DefaultMemoRepository(
         return dao.getMemoListSortedByYearAndMonth(year,month)
     }
 
+    override suspend fun getMemoListSortedByCategoryAndYearAndMonth(
+        category: String,
+        year: Int,
+        month: Int
+    ): List<Memo> {
+        return dao.getMemoListSortedByCategoryAndYearAndMonth(category,year,month)
+    }
+
 
 }
