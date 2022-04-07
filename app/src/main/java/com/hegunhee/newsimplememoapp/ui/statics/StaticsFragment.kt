@@ -33,6 +33,11 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>(R.layout.fragment_s
         initObserver()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.setData()
+    }
+
     @SuppressLint("SetTextI18n")
     private fun initObserver() = viewModel.staticsData.observe(viewLifecycleOwner){
         when(it){

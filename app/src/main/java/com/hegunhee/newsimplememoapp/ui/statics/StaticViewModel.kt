@@ -25,6 +25,7 @@ class StaticViewModel(
     val totalText = MutableLiveData<String>()
 
 
+
     fun initDate() {
         LocalDate.now()?.run{
             yearDate.value = year
@@ -45,7 +46,7 @@ class StaticViewModel(
         } else {
             monthDate.value = monthDate.value!! - 1
         }
-        setData(yearDate.value!!, monthDate.value!!)
+        setData()
     }
 
     fun clickRight() {
@@ -55,14 +56,14 @@ class StaticViewModel(
         } else {
             monthDate.value = monthDate.value!! + 1
         }
-        setData(yearDate.value!!, monthDate.value!!)
+        setData()
     }
 
 
     fun setIncome() {
         if (category.value == "지출") {
             category.value = "수입"
-            setData(yearDate.value!!, monthDate.value!!)
+            setData()
         }
 
     }
@@ -70,11 +71,11 @@ class StaticViewModel(
     fun setExpense() {
         if (category.value == "수입") {
             category.value = "지출"
-            setData(yearDate.value!!, monthDate.value!!)
+            setData()
         }
     }
 
-    private fun setData(year: Int, month: Int) = viewModelScope.launch {
+    fun setData(year: Int = yearDate.value!!, month: Int = monthDate.value!!) = viewModelScope.launch {
         val category = category.value!!
         getStaticsDataUseCase(category,year,month).run {
             if(this.isNullOrEmpty()){

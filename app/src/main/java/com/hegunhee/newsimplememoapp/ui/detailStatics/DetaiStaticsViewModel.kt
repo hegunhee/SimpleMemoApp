@@ -21,6 +21,10 @@ class DetaiStaticsViewModel(
 
     val recyclerViewVisible = MutableLiveData<Boolean>(false)
 
+    val detailStaticsState = MutableLiveData<DetailStaticsState>(DetailStaticsState.Uninitialized)
+
+    val totalText = MutableLiveData<String>()
+
 
 
     fun initData(staticsData : StaticsData){
@@ -57,8 +61,12 @@ class DetaiStaticsViewModel(
             getMemoListSortedByAttrYearMonthUseCase(attrData.value!!,year,month).run {
                 if(this.isNullOrEmpty()){
                     recyclerViewVisible.postValue(false)
+                    detailStaticsState.postValue(DetailStaticsState.NullOrEmpty)
                 }else{
                     recyclerViewVisible.postValue(true)
+                    detailStaticsState.postValue(DetailStaticsState.Success(this))
+                    val sum = this.sumOf { it.price }
+                    totalText.postValue("이번 달 ${attrData.value!!}는 ${sum}원 입니다." )
                 }
                 Log.d("setData",this.toString())
             }
