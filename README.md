@@ -52,15 +52,17 @@
 1) 가계부에 관한 Test Code 작성  
 2) Test Code에 Koin 도입 및 작동하는지 확인  
 3) Room에서 데이터를 불러올때 연도별, 월별로 정렬된 데이터 호출  
-5) BottomNavigationView 도입  
-6) MemoViewModel 및 Repository 코드 작성 및 MemoFragment UI 작성  
-7) MemoViewModel DataBinding 도입  
-8) Adapter 및 LiveData Observe 사용  
-9) DetailMemoActivity작성  
-10) DetailMemoActivity로직까지 완성  
-11) 통계Fragment xml 작성  
-12) 통계Fragment 로직 작성  
+4) BottomNavigationView 도입  
+5) MemoViewModel 및 Repository 코드 작성 및 MemoFragment UI 작성  
+6) MemoViewModel DataBinding 도입  
+7) Adapter 및 LiveData Observe 사용  
+8) DetailMemoActivity작성  
+9) DetailMemoActivity로직까지 완성  
+10) 통계Fragment xml 작성  
+11) 통계Fragment 로직 작성  
+12) Detail통계 Activity xml 및 ViewModel 작성  
 ----------------완료-------------------  
+13) Adapter작성 및 DB코드 작성
 14) 만들어놓은 사항 코드 개선  
 ## 이후 개선될 사항  
 현재 계획으로는 데이터 추가, 확인, 지출, 수입별 통계까지이지만 더 추가 예정  
