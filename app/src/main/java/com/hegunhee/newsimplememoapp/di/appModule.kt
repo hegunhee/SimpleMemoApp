@@ -10,6 +10,7 @@ import com.hegunhee.newsimplememoapp.model.DefaultMemoRepository
 import com.hegunhee.newsimplememoapp.model.MemoRepository
 import com.hegunhee.newsimplememoapp.ui.addMemo.AddMemoViewModel
 import com.hegunhee.newsimplememoapp.ui.detailMemo.DetailMemoViewModel
+import com.hegunhee.newsimplememoapp.ui.detailStatics.DetaiStaticsViewModel
 import com.hegunhee.newsimplememoapp.ui.memo.MemoViewModel
 import com.hegunhee.newsimplememoapp.ui.statics.StaticViewModel
 import org.koin.android.ext.koin.androidContext
@@ -23,6 +24,7 @@ internal val module = module{
     viewModel{MemoViewModel(get())}
     viewModel{AddMemoViewModel(get())}
     viewModel{StaticViewModel(get())}
+    viewModel{DetaiStaticsViewModel()}
 
     factory { GetMemoSortedByYearAndMonthUseCase(get()) }
     factory {InsertMemoUseCase(get())}

@@ -2,10 +2,13 @@ package com.hegunhee.newsimplememoapp.ui.statics
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.hegunhee.newsimplememoapp.databinding.ItemStaticsBinding
+import com.hegunhee.newsimplememoapp.ui.detailStatics.DetailStaticsActivity
 
 class StaticsAdapter : RecyclerView.Adapter<StaticsAdapter.StaticsViewHolder>() {
     private var staticsList = listOf<StaticsData>()
@@ -18,6 +21,13 @@ class StaticsAdapter : RecyclerView.Adapter<StaticsAdapter.StaticsViewHolder>() 
             this.percent.text = "${statics.percent}%"
             this.attr.text = statics.attr
             this.price.text = "${statics.price}원"
+
+            root.setOnClickListener {
+                Intent(mContext,DetailStaticsActivity::class.java).apply {
+                    putExtra("statics",statics)
+                    mContext.startActivity(this)
+                }
+            }
         }
     }
 
