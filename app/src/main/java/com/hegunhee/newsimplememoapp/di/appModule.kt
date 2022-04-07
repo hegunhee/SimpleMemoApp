@@ -2,10 +2,7 @@ package com.hegunhee.newsimplememoapp.di
 
 import com.hegunhee.newsimplememoapp.data.DB.provideDB
 import com.hegunhee.newsimplememoapp.data.DB.provideToDoDao
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.InsertMemoUseCase
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.DeleteMemoUseCase
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoSortedByYearAndMonthUseCase
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetStaticsDataUseCase
+import com.hegunhee.newsimplememoapp.domain.memoUsecase.*
 import com.hegunhee.newsimplememoapp.model.DefaultMemoRepository
 import com.hegunhee.newsimplememoapp.model.MemoRepository
 import com.hegunhee.newsimplememoapp.ui.addMemo.AddMemoViewModel
@@ -24,12 +21,13 @@ internal val module = module{
     viewModel{MemoViewModel(get())}
     viewModel{AddMemoViewModel(get())}
     viewModel{StaticViewModel(get())}
-    viewModel{DetaiStaticsViewModel()}
+    viewModel{DetaiStaticsViewModel(get())}
 
     factory { GetMemoSortedByYearAndMonthUseCase(get()) }
     factory {InsertMemoUseCase(get())}
     factory {DeleteMemoUseCase(get())}
     factory {GetStaticsDataUseCase(get())}
+    factory { GetMemoListSortedByAttrYearMonthUseCase(get()) }
 
     single<MemoRepository> { DefaultMemoRepository(get()) }
 

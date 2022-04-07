@@ -27,6 +27,11 @@ class DetailStaticsActivity : AppCompatActivity() {
         initBackButtonObserve()
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        viewModel.setData()
+    }
+
     private fun initBackButtonObserve() = viewModel.backButton.observe(this){
         when(it){
             BackButtonState.Back -> {onBackPressed()}

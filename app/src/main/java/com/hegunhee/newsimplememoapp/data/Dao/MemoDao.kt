@@ -29,4 +29,7 @@ interface MemoDao {
     @Query("SELECT * FROM Memo where year = :year AND month = :month AND category = :category ORDER BY day DESC")
     suspend fun getMemoListSortedByCategoryAndYearAndMonth(category : String,year : Int,month : Int) : List<Memo>
 
+    @Query("SELECT * FROM Memo where year = :year AND month = :month AND attr = :attr ORDER BY day DESC")
+    suspend fun getMemoListSortedByAttrYearMonth(attr : String,year : Int,month : Int) : List<Memo>
+
 }

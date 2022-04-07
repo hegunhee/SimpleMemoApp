@@ -1,10 +1,16 @@
 package com.hegunhee.newsimplememoapp.ui.detailStatics
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoListSortedByAttrYearMonthUseCase
 import com.hegunhee.newsimplememoapp.ui.statics.StaticsData
+import kotlinx.coroutines.launch
 
-class DetaiStaticsViewModel() : ViewModel() {
+class DetaiStaticsViewModel(
+    private val getMemoListSortedByAttrYearMonthUseCase: GetMemoListSortedByAttrYearMonthUseCase
+) : ViewModel() {
 
     val yearDate = MutableLiveData<Int>(1)
     val monthDate = MutableLiveData<Int>(1)
@@ -23,6 +29,7 @@ class DetaiStaticsViewModel() : ViewModel() {
             monthDate.value = month
             attrData.value = attr
         }
+        setData()
     }
 
     fun clickLeft() {
@@ -32,7 +39,7 @@ class DetaiStaticsViewModel() : ViewModel() {
         } else {
             monthDate.value = monthDate.value!! - 1
         }
-        setData(yearDate.value!!, monthDate.value!!)
+        setData()
     }
 
     fun clickRight() {
@@ -42,11 +49,21 @@ class DetaiStaticsViewModel() : ViewModel() {
         } else {
             monthDate.value = monthDate.value!! + 1
         }
-        setData(yearDate.value!!, monthDate.value!!)
+        setData()
     }
 
-    fun setData(year : Int, month : Int){
+    fun setData(year : Int = yearDate.value!!, month : Int = monthDate.value!!){
+        viewModelScope.launch {
+            getMemoListSortedByAttrYearMonthUseCase(attrData.value!!,year,month).run {
+                if(this.isNullOrEmpty()){
+                    recyclerViewVisible.postValue(false)
+                }else{
+                    recyclerViewVisible.postValue(true)
+                }
+                Log.d("setData",this.toString())
+            }
 
+        }
     }
 
     fun back(){
