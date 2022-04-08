@@ -4,14 +4,16 @@
 가계부를 추가, 수정, 삭제를 할 수 있습니다.  
 통계 탭을통해 이번달에 어떤 항목(식비,교통,기타)으로 얼마를 사용했는지 볼 수 있습니다.  
 ## 앱 사진  
-![memoView](https://user-images.githubusercontent.com/57277631/160281890-b0bc213d-128e-441f-80d8-1c6c37e12245.PNG)  
+![memoView](https://user-images.githubusercontent.com/57277631/162414207-c4b8b394-4fa3-4ced-beea-3b5ced3d049b.PNG)  
 시작할때, 가계부 화면  
-![addMemoView](https://user-images.githubusercontent.com/57277631/160281895-6e1661ae-5b0c-4e09-a58e-09a6b11fcf09.PNG)  
+![addMemoView](https://user-images.githubusercontent.com/57277631/162414201-7cc69be9-a147-4b3a-b28a-38b0b764aea0.PNG)  
 가계부 추가, FloatingActionButton 클릭시 이동  
-![detailMemoView](https://user-images.githubusercontent.com/57277631/160281897-da526653-76e4-4a56-8530-3d3ff4c39f61.PNG)  
+![detailMemoView](https://user-images.githubusercontent.com/57277631/162414205-b1c013ed-4539-4ab9-936e-670cf2623a06.PNG)  
 가계부 수정 및 삭제, 클릭시 이동  
-![staticsMemoView](https://user-images.githubusercontent.com/57277631/161213715-31ee22dc-26b3-44a5-b11e-a8909fec2053.PNG)  
+![staticsMemoView](https://user-images.githubusercontent.com/57277631/162414213-39419874-cef4-48b9-8243-7b35ed9d9840.PNG)  
 통계 탭  
+![StaticDetailMemoView](https://user-images.githubusercontent.com/57277631/162414209-3b6abc0a-e110-4b67-b7b6-9737cb7033c3.PNG)  
+통계 자세히보기 탭  
 
 ## 사용된 라이브러리  
 * JetPack
@@ -61,8 +63,8 @@
 10) 통계Fragment xml 작성  
 11) 통계Fragment 로직 작성  
 12) Detail통계 Activity xml 및 ViewModel 작성  
+13) Adapter작성 및 DB코드 작성  
 ----------------완료-------------------  
-13) Adapter작성 및 DB코드 작성
 14) 만들어놓은 사항 코드 개선  
 ## 이후 개선될 사항  
 현재 계획으로는 데이터 추가, 확인, 지출, 수입별 통계까지이지만 더 추가 예정  
