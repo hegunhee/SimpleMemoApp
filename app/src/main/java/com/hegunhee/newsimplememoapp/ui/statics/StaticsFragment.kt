@@ -1,6 +1,7 @@
 package com.hegunhee.newsimplememoapp.ui.statics
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,44 +15,51 @@ import androidx.fragment.app.Fragment
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.FragmentStaticsBinding
 import com.hegunhee.newsimplememoapp.ui.BaseFragment
+import com.hegunhee.newsimplememoapp.ui.detailStatics.DetailStaticsActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class StaticsFragment : BaseFragment<FragmentStaticsBinding>(R.layout.fragment_statics){
+class StaticsFragment : BaseFragment<FragmentStaticsBinding>(R.layout.fragment_statics) {
 
     val viewModel: StaticViewModel by viewModel()
-    private val adapter = StaticsAdapter()
+    private val adapter = StaticsAdapter { statics ->
+        Intent(requireContext(), DetailStaticsActivity::class.java).apply {
+            putExtra("statics", statics)
+            requireContext().startActivity(this)
+        }}
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.apply {
-            viewmodel = viewModel
-            lifecycleOwner = this@StaticsFragment
-            recyclerview.adapter = adapter
-        }
-        viewModel.initDate()
-        initObserver()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.setData()
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun initObserver() = viewModel.staticsData.observe(viewLifecycleOwner){
-        when(it){
-            StaticsState.Uninitialized -> { }
-            is StaticsState.Success -> {
-                adapter.setData(it.list)
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
+            binding.apply {
+                viewmodel = viewModel
+                lifecycleOwner = this@StaticsFragment
+                recyclerview.adapter = adapter
             }
-            StaticsState.EmptyOrNull ->{ }
-
+            viewModel.initDate()
+            initObserver()
         }
-    }
 
-    companion object {
+        override fun onResume() {
+            super.onResume()
+            viewModel.setData()
+        }
+
+        @SuppressLint("SetTextI18n")
+        private fun initObserver() = viewModel.staticsData.observe(viewLifecycleOwner) {
+            when (it) {
+                StaticsState.Uninitialized -> {
+                }
+                is StaticsState.Success -> {
+                    adapter.setData(it.list)
+                }
+                StaticsState.EmptyOrNull -> {
+                }
+
+            }
+        }
+
+        companion object {
         const val TAG = "statics"
         fun newInstance() = StaticsFragment()
     }
-}
+    }

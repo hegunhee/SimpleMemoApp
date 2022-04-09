@@ -10,10 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hegunhee.newsimplememoapp.databinding.ItemStaticsBinding
 import com.hegunhee.newsimplememoapp.ui.detailStatics.DetailStaticsActivity
 
-class StaticsAdapter : RecyclerView.Adapter<StaticsAdapter.StaticsViewHolder>() {
+class StaticsAdapter(private val onStaticsClick : (StaticsData) -> Unit) : RecyclerView.Adapter<StaticsAdapter.StaticsViewHolder>() {
     private var staticsList = listOf<StaticsData>()
-
-    private lateinit var mContext : Context
     inner class StaticsViewHolder(private val binding : ItemStaticsBinding) : RecyclerView.ViewHolder(binding.root){
 
         @SuppressLint("SetTextI18n")
@@ -23,17 +21,13 @@ class StaticsAdapter : RecyclerView.Adapter<StaticsAdapter.StaticsViewHolder>() 
             this.price.text = "${statics.price}원"
 
             root.setOnClickListener {
-                Intent(mContext,DetailStaticsActivity::class.java).apply {
-                    putExtra("statics",statics)
-                    mContext.startActivity(this)
-                }
+                onStaticsClick(statics)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StaticsViewHolder {
         val binding = ItemStaticsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
-        mContext = parent.context
         return StaticsViewHolder(binding)
     }
 

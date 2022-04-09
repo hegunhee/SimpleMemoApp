@@ -1,11 +1,13 @@
 package com.hegunhee.newsimplememoapp.ui.detailStatics
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.ActivityDetailStaticsBinding
+import com.hegunhee.newsimplememoapp.ui.detailMemo.DetailMemoActivity
 import com.hegunhee.newsimplememoapp.ui.memo.MemoAdapter
 import com.hegunhee.newsimplememoapp.ui.statics.StaticsData
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -14,7 +16,11 @@ class DetailStaticsActivity : AppCompatActivity() {
 
     private val viewModel : DetaiStaticsViewModel by viewModel()
     private lateinit var binding : ActivityDetailStaticsBinding
-    private val adapter = MemoAdapter(listOf())
+    private val adapter = MemoAdapter(listOf()) { memo ->
+        Intent(this, DetailMemoActivity::class.java).apply {
+            putExtra("Memo", memo)
+            this@DetailStaticsActivity.startActivity(this)
+        }}
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_detail_statics)
