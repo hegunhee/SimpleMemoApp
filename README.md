@@ -77,3 +77,5 @@ https://github.com/hegunhee/NewSimpleMemoApp/issues/2
 https://github.com/hegunhee/NewSimpleMemoApp/issues/3  
 3) **BaseFragment 사용**  
 https://github.com/hegunhee/NewSimpleMemoApp/issues/4  
+4) **Adapter Callback 사용**  
+https://github.com/hegunhee/NewSimpleMemoApp/issues/5
