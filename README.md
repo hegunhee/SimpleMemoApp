@@ -70,6 +70,9 @@
 현재 계획으로는 데이터 추가, 확인, 지출, 수입별 통계까지이지만 더 추가 예정  
 현재 Fragment가 초기화되지않아 추가, 수정시 Adapter에 드러나지않음 향후 방법을 모색해야됨 -> Fragment의 onResume 생명주기를 활용(완)  
 통계 탭에서 데이터의 price 값이 Int의 범위 혹은 Double의 범위에 넘어갈경우 방법을 모색해야됨  
+  
+앞으로 추가가 된다면 지금은 현재 분류나 자산의 갯수나 종류가 고정되어있지만 실제로 유저가 추가할 수 있게 sharedPreference를  
+연동하지 않을까 라는 생각이 있습니다.  
 ## 위기 및 극복  
 1) **RecyclerView Adapter** 데이터 변경 **(MemoFragment, StaticsFragment)**  
 https://github.com/hegunhee/NewSimpleMemoApp/issues/2  
