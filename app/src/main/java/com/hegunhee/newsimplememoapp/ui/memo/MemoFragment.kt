@@ -13,7 +13,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MemoFragment : BaseFragment<FragmentMemoBinding>(R.layout.fragment_memo) {
 
     val viewModel: MemoViewModel by viewModel()
-    private val adapter = MemoAdapter(listOf()) { memo ->
+    private val adapter = MemoAdapter(arrayListOf()) { memo ->
         Intent(requireContext(), DetailMemoActivity::class.java).apply {
             putExtra("Memo", memo)
             requireContext().startActivity(this)

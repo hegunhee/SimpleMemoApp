@@ -16,7 +16,7 @@ class DetailStaticsActivity : AppCompatActivity() {
 
     private val viewModel : DetaiStaticsViewModel by viewModel()
     private lateinit var binding : ActivityDetailStaticsBinding
-    private val adapter = MemoAdapter(listOf()) { memo ->
+    private val adapter = MemoAdapter(arrayListOf()) { memo ->
         Intent(this, DetailMemoActivity::class.java).apply {
             putExtra("Memo", memo)
             this@DetailStaticsActivity.startActivity(this)
