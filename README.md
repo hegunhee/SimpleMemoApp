@@ -82,4 +82,6 @@ https://github.com/hegunhee/NewSimpleMemoApp/issues/3
 3) **BaseFragment 사용**  
 https://github.com/hegunhee/NewSimpleMemoApp/issues/4  
 4) **Adapter Callback 사용**  
-https://github.com/hegunhee/NewSimpleMemoApp/issues/5
+https://github.com/hegunhee/NewSimpleMemoApp/issues/5  
+5) **RecyclerView DiffUtil 사용**  
+https://github.com/hegunhee/NewSimpleMemoApp/issues/6  
