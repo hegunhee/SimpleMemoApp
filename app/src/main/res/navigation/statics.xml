@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/statics"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/staticsFragment">
+
+
+    <fragment
+        android:id="@+id/staticsFragment"
+        android:name="com.hegunhee.newsimplememoapp.ui.statics.StaticsFragment"
+        tools:layout="@layout/fragment_statics"
+        android:label="StaticsFragment" />
+</navigation>
