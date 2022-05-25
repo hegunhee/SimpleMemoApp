@@ -9,6 +9,30 @@
     <fragment
         android:id="@+id/memoFragment"
         android:name="com.hegunhee.newsimplememoapp.ui.memo.MemoFragment"
-        tools:layout="@layout/fragment_memo"
-        android:label="MemoFragment" />
+        android:label="MemoFragment"
+        tools:layout="@layout/fragment_memo">
+        <action
+            android:id="@+id/memo_to_add"
+            app:destination="@id/addMemoActivity" />
+        <action
+            android:id="@+id/memo_to_detail"
+            app:destination="@id/detailMemoActivity" />
+    </fragment>
+
+    <activity
+        android:id="@+id/addMemoActivity"
+        android:name="com.hegunhee.newsimplememoapp.ui.addMemo.AddMemoActivity"
+        android:label="AddMemoActivity"
+        tools:layout="@layout/activity_add_memo" />
+    <activity
+        android:id="@+id/detailMemoActivity"
+        android:name="com.hegunhee.newsimplememoapp.ui.detailMemo.DetailMemoActivity"
+        tools:layout="@layout/activity_detail_memo"
+        android:label="DetailMemoActivity" >
+        <argument
+            android:name="memo"
+            app:argType="com.hegunhee.newsimplememoapp.data.entity.Memo" />
+    </activity>
+
+
 </navigation>

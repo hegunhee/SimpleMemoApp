@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.navArgs
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.data.entity.Memo
 import com.hegunhee.newsimplememoapp.data.entity.assetArray
@@ -30,9 +31,7 @@ class DetailMemoActivity : AppCompatActivity() {
             viewmodel = viewModel
             lifecycleOwner = this@DetailMemoActivity
         }
-        intent.getParcelableExtra<Memo>("Memo")?.let {
-            viewModel.initViewModel(it)
-        }
+        viewModel.initViewModel(navArgs<DetailMemoActivityArgs>().value.memo)
         observeData()
     }
 
