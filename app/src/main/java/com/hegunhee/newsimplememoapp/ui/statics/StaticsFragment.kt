@@ -12,10 +12,12 @@ import android.widget.Toast
 import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.FragmentStaticsBinding
 import com.hegunhee.newsimplememoapp.ui.BaseFragment
 import com.hegunhee.newsimplememoapp.ui.detailStatics.DetailStaticsActivity
+
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -23,10 +25,15 @@ class StaticsFragment : BaseFragment<FragmentStaticsBinding>(R.layout.fragment_s
 
     val viewModel: StaticViewModel by viewModel()
     private val adapter = StaticsAdapter { statics ->
-        Intent(requireContext(), DetailStaticsActivity::class.java).apply {
-            putExtra("statics", statics)
-            requireContext().startActivity(this)
-        }}
+        StaticsFragmentDirections.staticsToDetailStatics(statics).also {
+            findNavController().navigate(it)
+        }
+
+//        Intent(requireContext(), DetailStaticsActivity::class.java).apply {
+//            putExtra("statics", statics)
+//            requireContext().startActivity(this)
+//        }
+    }
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)

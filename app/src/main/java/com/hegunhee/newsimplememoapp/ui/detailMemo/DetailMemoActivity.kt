@@ -15,10 +15,8 @@ import com.hegunhee.newsimplememoapp.data.entity.assetArray
 import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
 import com.hegunhee.newsimplememoapp.databinding.ActivityDetailMemoBinding
-import com.hegunhee.newsimplememoapp.ui.addMemo.AddMemoState
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 class DetailMemoActivity : AppCompatActivity() {
 
@@ -31,12 +29,17 @@ class DetailMemoActivity : AppCompatActivity() {
             viewmodel = viewModel
             lifecycleOwner = this@DetailMemoActivity
         }
-        viewModel.initViewModel(navArgs<DetailMemoActivityArgs>().value.memo)
+        intent?.getParcelableExtra<Memo>("Memo")?.let {
+            viewModel.initViewModel(it)
+        } ?: kotlin.run {
+            viewModel.initViewModel(navArgs<DetailMemoActivityArgs>().value.detailMemo)
+        }
+
         observeData()
     }
 
-    private fun observeData() = viewModel.memoState.observe(this){
-        when(it){
+    private fun observeData() = viewModel.memoState.observe(this) {
+        when (it) {
             DetailMemoState.Uninitialized -> {}
             DetailMemoState.Back -> {
                 onBackPressed()
@@ -61,14 +64,19 @@ class DetailMemoActivity : AppCompatActivity() {
             }
         }
     }
-    fun saveData(){
+
+    fun saveData() {
         with(viewModel) {
             if (asset.value.isNullOrEmpty()) {
                 setAsset()
             } else if (attr.value.isNullOrEmpty()) {
                 setAttr()
             } else if (price.value.isNullOrEmpty()) {
-                Toast.makeText(this@DetailMemoActivity, "가격을 설정해주세요", android.widget.Toast.LENGTH_SHORT)
+                Toast.makeText(
+                    this@DetailMemoActivity,
+                    "가격을 설정해주세요",
+                    android.widget.Toast.LENGTH_SHORT
+                )
                     .show()
             } else {
                 saveData()
@@ -103,9 +111,10 @@ class DetailMemoActivity : AppCompatActivity() {
 
     private fun setDate() {
         DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-            viewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))}.let {  listener->
-            with(viewModel){
-                DatePickerDialog(this@DetailMemoActivity,listener,year,month-1,day).show()
+            viewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))
+        }.let { listener ->
+            with(viewModel) {
+                DatePickerDialog(this@DetailMemoActivity, listener, year, month - 1, day).show()
             }
         }
 
@@ -131,7 +140,7 @@ class DetailMemoActivity : AppCompatActivity() {
                 setTimeInfo()
             }
 
-        }?.let {listener->
+        }?.let { listener ->
             TimePickerDialog(this, listener, viewModel.hour, viewModel.minute, false).show()
         }
     }
