@@ -5,10 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoSortedByYearAndMonthUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import javax.inject.Inject
 
-class MemoViewModel(
+@HiltViewModel
+class MemoViewModel @Inject constructor(
     private val getAllDataBySort: GetMemoSortedByYearAndMonthUseCase
 ) : ViewModel() {
 

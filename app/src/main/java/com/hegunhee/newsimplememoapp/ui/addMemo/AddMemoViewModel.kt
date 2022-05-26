@@ -9,11 +9,14 @@ import com.hegunhee.newsimplememoapp.data.entity.changeKoreanDayOfWeek
 import com.hegunhee.newsimplememoapp.data.entity.isExpenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.isIncomeAttr
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.InsertMemoUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
+import javax.inject.Inject
 
-class AddMemoViewModel(
+@HiltViewModel
+class AddMemoViewModel @Inject constructor(
     private val addMemoUseCase : InsertMemoUseCase
 ) : ViewModel() {
 

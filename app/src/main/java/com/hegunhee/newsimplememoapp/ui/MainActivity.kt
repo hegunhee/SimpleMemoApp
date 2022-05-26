@@ -10,7 +10,9 @@ import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.ActivityMainBinding
 import com.hegunhee.newsimplememoapp.ui.memo.MemoFragment
 import com.hegunhee.newsimplememoapp.ui.statics.StaticsFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding

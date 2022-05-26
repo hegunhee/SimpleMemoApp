@@ -2,6 +2,7 @@ package com.hegunhee.newsimplememoapp.model
 
 import com.hegunhee.newsimplememoapp.data.Dao.MemoDao
 import com.hegunhee.newsimplememoapp.data.entity.Memo
+import javax.inject.Inject
 
 class DefaultMemoRepository(
     private val dao : MemoDao

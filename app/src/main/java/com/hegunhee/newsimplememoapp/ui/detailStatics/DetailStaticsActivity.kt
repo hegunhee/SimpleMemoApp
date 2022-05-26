@@ -3,17 +3,22 @@ package com.hegunhee.newsimplememoapp.ui.detailStatics
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.navigation.navArgs
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.ActivityDetailStaticsBinding
 import com.hegunhee.newsimplememoapp.ui.detailMemo.DetailMemoActivity
 import com.hegunhee.newsimplememoapp.ui.memo.MemoAdapter
+import com.hegunhee.newsimplememoapp.ui.memo.MemoFragmentDirections
+import dagger.hilt.android.AndroidEntryPoint
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+@AndroidEntryPoint
 class DetailStaticsActivity : AppCompatActivity() {
 
-    private val viewModel: DetaiStaticsViewModel by viewModel()
+    private val viewModel: DetaiStaticsViewModel by viewModels()
     private lateinit var binding: ActivityDetailStaticsBinding
     private val adapter = MemoAdapter(arrayListOf()) { memo ->
         Intent(this, DetailMemoActivity::class.java).apply {

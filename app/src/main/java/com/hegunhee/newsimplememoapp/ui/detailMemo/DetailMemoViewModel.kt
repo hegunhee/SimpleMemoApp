@@ -9,10 +9,13 @@ import com.hegunhee.newsimplememoapp.data.entity.isExpenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.isIncomeAttr
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.InsertMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.DeleteMemoUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import javax.inject.Inject
 
-class DetailMemoViewModel(
+@HiltViewModel
+class DetailMemoViewModel @Inject constructor(
     private val deleteMemoUseCase: DeleteMemoUseCase,
     private val addMemoUseCase: InsertMemoUseCase
 ) : ViewModel() {

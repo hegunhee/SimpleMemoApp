@@ -7,21 +7,24 @@ import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.data.entity.assetArray
 import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
 import com.hegunhee.newsimplememoapp.databinding.ActivityAddMemoBinding
+import dagger.hilt.android.AndroidEntryPoint
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-
+@AndroidEntryPoint
 class AddMemoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddMemoBinding
-    private val addMemoViewModel: AddMemoViewModel by inject()
+//    private val addMemoViewModel: AddMemoViewModel by inject()
+    private val addMemoViewModel : AddMemoViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_memo)

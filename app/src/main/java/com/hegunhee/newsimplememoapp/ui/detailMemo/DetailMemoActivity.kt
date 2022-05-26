@@ -7,6 +7,7 @@ import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.navArgs
 import com.hegunhee.newsimplememoapp.R
@@ -15,12 +16,15 @@ import com.hegunhee.newsimplememoapp.data.entity.assetArray
 import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
 import com.hegunhee.newsimplememoapp.databinding.ActivityDetailMemoBinding
+import dagger.hilt.android.AndroidEntryPoint
 import org.koin.android.ext.android.inject
 import java.time.LocalDate
 
+@AndroidEntryPoint
 class DetailMemoActivity : AppCompatActivity() {
 
-    private val viewModel: DetailMemoViewModel by inject()
+//    private val viewModel: DetailMemoViewModel by inject()
+    private val viewModel : DetailMemoViewModel by viewModels()
     private lateinit var binding: ActivityDetailMemoBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

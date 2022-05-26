@@ -8,10 +8,13 @@ import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoSortedByYearAndMonthUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetStaticsDataUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import javax.inject.Inject
 
-class StaticViewModel(
+@HiltViewModel
+class StaticViewModel @Inject constructor(
     private val getStaticsDataUseCase: GetStaticsDataUseCase
 ) : ViewModel() {
 

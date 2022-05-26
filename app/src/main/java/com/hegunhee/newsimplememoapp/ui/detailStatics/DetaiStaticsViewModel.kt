@@ -6,9 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoListSortedByAttrYearMonthUseCase
 import com.hegunhee.newsimplememoapp.ui.statics.StaticsData
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetaiStaticsViewModel(
+@HiltViewModel
+class DetaiStaticsViewModel @Inject constructor(
     private val getMemoListSortedByAttrYearMonthUseCase: GetMemoListSortedByAttrYearMonthUseCase
 ) : ViewModel() {
 
