@@ -27,17 +27,12 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 @AndroidEntryPoint
 class StaticsFragment : BaseFragment<FragmentStaticsBinding>(R.layout.fragment_statics) {
 
-//    val viewModel: StaticViewModel by viewModel()
     private val viewModel : StaticViewModel by viewModels()
     private val adapter = StaticsAdapter { statics ->
         StaticsFragmentDirections.staticsToDetailStatics(statics).also {
             findNavController().navigate(it)
         }
 
-//        Intent(requireContext(), DetailStaticsActivity::class.java).apply {
-//            putExtra("statics", statics)
-//            requireContext().startActivity(this)
-//        }
     }
 
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

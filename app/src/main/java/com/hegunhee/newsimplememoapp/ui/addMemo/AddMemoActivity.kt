@@ -23,7 +23,6 @@ import java.time.LocalDateTime
 class AddMemoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddMemoBinding
-//    private val addMemoViewModel: AddMemoViewModel by inject()
     private val addMemoViewModel : AddMemoViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

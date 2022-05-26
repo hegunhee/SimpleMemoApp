@@ -17,7 +17,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MemoFragment : BaseFragment<FragmentMemoBinding>(R.layout.fragment_memo) {
 
-//    @Inject lateinit var viewModel: MemoViewModel by viewModels()
     private val viewModel : MemoViewModel by viewModels()
     private val adapter = MemoAdapter(arrayListOf()) { memo ->
         MemoFragmentDirections.memoToDetail(memo).also {

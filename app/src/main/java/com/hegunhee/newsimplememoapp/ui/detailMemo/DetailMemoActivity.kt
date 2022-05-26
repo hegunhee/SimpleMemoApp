@@ -23,7 +23,6 @@ import java.time.LocalDate
 @AndroidEntryPoint
 class DetailMemoActivity : AppCompatActivity() {
 
-//    private val viewModel: DetailMemoViewModel by inject()
     private val viewModel : DetailMemoViewModel by viewModels()
     private lateinit var binding: ActivityDetailMemoBinding
     override fun onCreate(savedInstanceState: Bundle?) {
