@@ -90,4 +90,6 @@ https://github.com/hegunhee/NewSimpleMemoApp/issues/5
 5) **RecyclerView DiffUtil 사용**  
 https://github.com/hegunhee/NewSimpleMemoApp/issues/6  
 6) **Navigation 도입**  
-https://github.com/hegunhee/NewSimpleMemoApp/issues/7
+https://github.com/hegunhee/NewSimpleMemoApp/issues/7  
+7) **Hilt 도입**  
+https://github.com/hegunhee/NewSimpleMemoApp/issues/8  
