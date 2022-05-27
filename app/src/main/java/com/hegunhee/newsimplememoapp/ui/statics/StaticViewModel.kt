@@ -1,12 +1,8 @@
 package com.hegunhee.newsimplememoapp.ui.statics
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
-import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoSortedByYearAndMonthUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetStaticsDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

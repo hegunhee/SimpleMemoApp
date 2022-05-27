@@ -1,6 +1,5 @@
 package com.hegunhee.newsimplememoapp.ui.memo
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -8,11 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.FragmentMemoBinding
 import com.hegunhee.newsimplememoapp.ui.BaseFragment
-import com.hegunhee.newsimplememoapp.ui.addMemo.AddMemoActivity
-import com.hegunhee.newsimplememoapp.ui.detailMemo.DetailMemoActivity
 import dagger.hilt.android.AndroidEntryPoint
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MemoFragment : BaseFragment<FragmentMemoBinding>(R.layout.fragment_memo) {

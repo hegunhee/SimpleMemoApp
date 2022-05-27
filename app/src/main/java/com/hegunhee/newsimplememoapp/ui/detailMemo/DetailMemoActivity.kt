@@ -17,7 +17,6 @@ import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
 import com.hegunhee.newsimplememoapp.databinding.ActivityDetailMemoBinding
 import dagger.hilt.android.AndroidEntryPoint
-import org.koin.android.ext.android.inject
 import java.time.LocalDate
 
 @AndroidEntryPoint

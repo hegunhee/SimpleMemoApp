@@ -1,27 +1,15 @@
 package com.hegunhee.newsimplememoapp.ui.statics
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.core.view.isGone
-import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.FragmentStaticsBinding
 import com.hegunhee.newsimplememoapp.ui.BaseFragment
-import com.hegunhee.newsimplememoapp.ui.detailStatics.DetaiStaticsViewModel
-import com.hegunhee.newsimplememoapp.ui.detailStatics.DetailStaticsActivity
 import dagger.hilt.android.AndroidEntryPoint
 
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 @AndroidEntryPoint

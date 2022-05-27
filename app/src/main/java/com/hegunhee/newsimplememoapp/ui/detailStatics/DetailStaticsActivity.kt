@@ -5,15 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
 import androidx.navigation.navArgs
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.ActivityDetailStaticsBinding
 import com.hegunhee.newsimplememoapp.ui.detailMemo.DetailMemoActivity
 import com.hegunhee.newsimplememoapp.ui.memo.MemoAdapter
-import com.hegunhee.newsimplememoapp.ui.memo.MemoFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 @AndroidEntryPoint
 class DetailStaticsActivity : AppCompatActivity() {

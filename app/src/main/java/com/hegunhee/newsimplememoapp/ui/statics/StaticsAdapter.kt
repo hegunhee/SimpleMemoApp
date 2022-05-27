@@ -1,16 +1,11 @@
 package com.hegunhee.newsimplememoapp.ui.statics
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.hegunhee.newsimplememoapp.databinding.ItemStaticsBinding
-import com.hegunhee.newsimplememoapp.ui.detailStatics.DetailStaticsActivity
-
 class StaticsAdapter(private val onStaticsClick: (StaticsData) -> Unit) :
     RecyclerView.Adapter<StaticsAdapter.StaticsViewHolder>() {
     private var staticsList = arrayListOf<StaticsData>()
