@@ -47,10 +47,13 @@
   * **Coroutine** 적용  
     Room을 사용하거나 가계부 정보들을 정렬하는데 많은 시간이 필요하기때문에  
     Coroutine을 사용해서 main Thread의 부담을 줄일 수 있음
-  * **Koin** 적용  
-    Activity에서 ViewModel을 사용할때 의존성이나 Model의 Repository를 사용할때  
-    의존성 주입을 위해 Koin을 사용하였습니다.  
-    러닝커브가 낮고 사용하기 쉬웠습니다.  
+  * ~~**Koin** 적용~~  
+    ~~Activity에서 ViewModel을 사용할때 의존성이나 Model의 Repository를 사용할때~~  
+    ~~의존성 주입을 위해 Koin을 사용하였습니다.~~  
+    ~~러닝커브가 낮고 사용하기 쉬웠습니다.~~  
+  * **Hilt** 적용  
+    프로젝트의 크기가 커질경우에 Koin은 불편한점이 많기때문에 Koin을 Hilt로 migration함  
+    
 ## 진척도  
 1) 가계부에 관한 Test Code 작성  
 2) Test Code에 Koin 도입 및 작동하는지 확인  
