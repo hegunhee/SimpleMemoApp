@@ -2,8 +2,11 @@ package com.hegunhee.newsimplememoapp.model
 
 import com.hegunhee.newsimplememoapp.data.Dao.MemoDao
 import com.hegunhee.newsimplememoapp.data.entity.Memo
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class DefaultMemoRepository(
+@Singleton
+class DefaultMemoRepository @Inject constructor(
     private val dao : MemoDao
 ) : MemoRepository {
     override suspend fun insertMemo(memo: Memo) {
