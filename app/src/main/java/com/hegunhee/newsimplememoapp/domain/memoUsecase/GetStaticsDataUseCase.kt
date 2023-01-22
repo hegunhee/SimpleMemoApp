@@ -1,12 +1,10 @@
 package com.hegunhee.newsimplememoapp.domain.memoUsecase
 
-import com.hegunhee.newsimplememoapp.domain.UseCase
 import com.hegunhee.newsimplememoapp.model.MemoRepository
 import com.hegunhee.newsimplememoapp.ui.statics.StaticsData
+import javax.inject.Inject
 
-class GetStaticsDataUseCase(
-    private val repository : MemoRepository
-) : UseCase {
+class GetStaticsDataUseCase @Inject constructor(private val repository : MemoRepository) {
     suspend operator fun invoke(category : String,year : Int, month: Int) : List<StaticsData>{
         val staticsData = mutableListOf<StaticsData>()
         val data = repository.getMemoListSortedByCategoryAndYearAndMonth(category,year,month)

@@ -1,12 +1,11 @@
 package com.hegunhee.newsimplememoapp.domain.memoUsecase
 
 import com.hegunhee.newsimplememoapp.data.entity.Memo
-import com.hegunhee.newsimplememoapp.domain.UseCase
 import com.hegunhee.newsimplememoapp.model.MemoRepository
+import javax.inject.Inject
 
-class GetMemoSortedByYearAndMonthUseCase(
-    private val repository: MemoRepository
-) : UseCase {
+class GetMemoSortedByYearAndMonthUseCase @Inject constructor(private val repository: MemoRepository) {
+
     suspend operator fun invoke(year: Int, month: Int): List<Memo> {
         return repository.getMemoListSortedByYearAndMonth(year, month)
             .sortedByDescending { it.minute }.sortedByDescending {

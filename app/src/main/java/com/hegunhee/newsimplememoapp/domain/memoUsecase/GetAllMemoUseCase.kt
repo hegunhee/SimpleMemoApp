@@ -1,10 +1,10 @@
 package com.hegunhee.newsimplememoapp.domain.memoUsecase
 
 import com.hegunhee.newsimplememoapp.data.entity.Memo
-import com.hegunhee.newsimplememoapp.domain.UseCase
 import com.hegunhee.newsimplememoapp.model.MemoRepository
+import javax.inject.Inject
 
-class GetAllMemoUseCase(private val repository: MemoRepository) :UseCase{
+class GetAllMemoUseCase @Inject constructor(private val repository: MemoRepository) {
 
     suspend operator fun invoke(): List<Memo> {
         return repository.getAllMemo()
