@@ -1,4 +1,4 @@
-package com.hegunhee.newsimplememoapp.di
+package com.hegunhee.newsimplememoapp.koinTest
 
 import com.hegunhee.newsimplememoapp.koinTest.AddPeopleUseCase
 import com.hegunhee.newsimplememoapp.koinTest.GetAllPeopleUseCase
