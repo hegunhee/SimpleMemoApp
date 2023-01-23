@@ -33,12 +33,6 @@ class DetailStaticsActivity : AppCompatActivity() {
             recyclerview.adapter = adapter
         }
         viewModel.initData(navArgs<DetailStaticsActivityArgs>().value.staticsData)
-
-//        intent.getParcelableExtra<StaticsData>("statics")?.run {
-//            Toast.makeText(this@DetailStaticsActivity, this.toString(), Toast.LENGTH_SHORT).show()
-//            viewModel.initData(this)
-//        }
-
         initObserver()
     }
 

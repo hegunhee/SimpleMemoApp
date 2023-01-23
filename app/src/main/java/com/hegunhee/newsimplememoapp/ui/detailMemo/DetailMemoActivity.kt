@@ -76,8 +76,7 @@ class DetailMemoActivity : AppCompatActivity() {
             } else if (price.value.isNullOrEmpty()) {
                 Toast.makeText(
                     this@DetailMemoActivity,
-                    "가격을 설정해주세요",
-                    android.widget.Toast.LENGTH_SHORT
+                    "가격을 설정해주세요", Toast.LENGTH_SHORT
                 )
                     .show()
             } else {
@@ -142,7 +141,7 @@ class DetailMemoActivity : AppCompatActivity() {
                 setTimeInfo()
             }
 
-        }?.let { listener ->
+        }.let { listener ->
             TimePickerDialog(this, listener, viewModel.hour, viewModel.minute, false).show()
         }
     }

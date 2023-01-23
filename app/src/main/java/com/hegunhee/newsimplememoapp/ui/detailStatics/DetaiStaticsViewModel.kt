@@ -1,6 +1,5 @@
 package com.hegunhee.newsimplememoapp.ui.detailStatics
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -71,7 +70,6 @@ class DetaiStaticsViewModel @Inject constructor(
                     val sum = this.sumOf { it.price }
                     totalText.postValue("이번 달 ${attrData.value!!}는 ${sum}원 입니다." )
                 }
-                Log.d("setData",this.toString())
             }
 
         }
