@@ -2,6 +2,8 @@ package com.hegunhee.newsimplememoapp.model
 
 import com.hegunhee.newsimplememoapp.data.Dao.MemoDao
 import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
+import com.hegunhee.newsimplememoapp.data.entity.toMemoEntity
+import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,6 +15,10 @@ class DefaultMemoRepository @Inject constructor(
         dao.insertMemo(memoEntity)
     }
 
+    override suspend fun getMemo(memoId: Int) : MemoType.Memo {
+        return dao.getMemo(memoId).toMemo()
+    }
+
     override suspend fun getAllMemo(): List<MemoEntity> {
         return dao.getAllMemo()
     }
@@ -21,8 +27,8 @@ class DefaultMemoRepository @Inject constructor(
         dao.deleteAllMemo()
     }
 
-    override suspend fun deleteMemo(memoEntity: MemoEntity) {
-        dao.deleteMemo(memoEntity)
+    override suspend fun deleteMemo(memo: MemoType.Memo) {
+        dao.deleteMemo(memo.toMemoEntity())
     }
 
     override suspend fun insertMemoList(memoEntity: List<MemoEntity>) {
