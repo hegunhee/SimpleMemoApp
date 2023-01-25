@@ -160,7 +160,7 @@
             android:gravity="center"
             android:text="데이터가 존재하지 않습니다"
             android:textSize="20dp"
-            android:visibility="@{viewModel.recyclerViewVisible ? View.GONE : View.VISIBLE}"
+            android:visibility="@{viewModel.memoList.isEmpty() ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -173,7 +173,7 @@
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:visibility="@{viewModel.recyclerViewVisible ? View.VISIBLE: View.GONE}"
+            android:visibility="@{viewModel.memoList.isEmpty() ? View.GONE : View.VISIBLE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/expenses_text" />

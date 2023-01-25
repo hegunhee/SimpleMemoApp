@@ -25,9 +25,6 @@ class MemoViewModel @Inject constructor(
     val expenseValue = MutableLiveData<Int>()
     val totalValue = MutableLiveData<Int>()
 
-    val recyclerViewVisible = MutableLiveData<Boolean>(false)
-
-
     fun initDate() = LocalDate.now().run {
         yearDate.value = year
         monthDate.value = monthValue
@@ -61,13 +58,11 @@ class MemoViewModel @Inject constructor(
         viewModelScope.launch {
             getAllDataBySort(year, month).let { data->
                 if(data.isEmpty()){
-                    recyclerViewVisible.value = false
                     _memoList.emit(emptyList())
                     incomeValue.value = 0
                     expenseValue.value = 0
                     totalValue.value = 0
                 }else{
-                    recyclerViewVisible.value = true
                     _memoList.emit(data)
                     incomeValue.value = data.filter { it.category == "수입" }.map { it.price }.sum()
                     expenseValue.value = data.filter { it.category != "수입" }.map { it.price }.sum()
