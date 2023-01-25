@@ -20,6 +20,9 @@ class MemoViewModel @Inject constructor(
     val yearDate = MutableStateFlow<Int>(LocalDate.now().year)
     val monthDate = MutableStateFlow<Int>(LocalDate.now().monthValue)
 
+    private val _memoList : MutableStateFlow<List<Memo>> = MutableStateFlow(emptyList())
+    val memoList : StateFlow<List<Memo>> = _memoList.asStateFlow()
+
     val incomeValue = MutableStateFlow<Int>(0)
     val expenseValue = MutableStateFlow<Int>(0)
     val totalValue = MutableStateFlow<Int>(0)
@@ -49,9 +52,6 @@ class MemoViewModel @Inject constructor(
         }
         setData(yearDate.value, monthDate.value)
     }
-
-    private val _memoList : MutableStateFlow<List<Memo>> = MutableStateFlow(emptyList())
-    val memoList : StateFlow<List<Memo>> = _memoList.asStateFlow()
 
     private fun setData(year: Int, month: Int) {
         viewModelScope.launch {
