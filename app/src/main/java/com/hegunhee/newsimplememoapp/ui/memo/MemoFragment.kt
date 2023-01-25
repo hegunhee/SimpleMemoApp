@@ -22,11 +22,7 @@ class MemoFragment : Fragment() {
 
     private val viewModel : MemoViewModel by viewModels()
     private lateinit var viewDataBinding : FragmentMemoBinding
-    private val adapter = MemoAdapter() { memo ->
-        MemoFragmentDirections.memoToDetail(memo).also {
-            findNavController().navigate(it)
-        }
-    }
+    private lateinit var adapter : MemoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +30,7 @@ class MemoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_memo,container,false)
+        adapter = MemoAdapter(viewModel)
         viewDataBinding = FragmentMemoBinding.bind(root).apply {
             viewModel = this@MemoFragment.viewModel
             recyclerview.adapter = adapter
@@ -44,7 +41,6 @@ class MemoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViews()
         observeData()
         viewModel.initDate()
     }
@@ -54,17 +50,27 @@ class MemoFragment : Fragment() {
         viewModel.initDate()
     }
 
-    private fun initViews() = with(viewDataBinding) {
-        floatingButton.setOnClickListener {
-            findNavController().navigate(R.id.memo_to_add)
-        }
-    }
-
     private fun observeData()  {
         lifecycleScope.launch{
             repeatOnLifecycle(Lifecycle.State.CREATED){
-                viewModel.memoList.collect {
-                    adapter.submitList(it)
+                launch {
+                    viewModel.memoList.collect {
+                        adapter.submitList(it)
+                    }
+                }
+                launch {
+                    viewModel.memoNavigation.collect { memoNavigation ->
+                        when(memoNavigation){
+                            MemoNavigation.AddMemo -> {
+                                findNavController().navigate(R.id.memo_to_add)
+                            }
+                            memoNavigation as MemoNavigation.DetailMemo-> {
+                                MemoFragmentDirections.memoToDetail(memoNavigation.memo).also {
+                                    findNavController().navigate(it)
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
