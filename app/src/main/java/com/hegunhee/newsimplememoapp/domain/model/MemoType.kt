@@ -1,9 +1,7 @@
 package com.hegunhee.newsimplememoapp.domain.model
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
 
-sealed class MemoType() : Parcelable {
+sealed class MemoType() {
 
     data class Memo(
         val category: String,
@@ -19,7 +17,7 @@ sealed class MemoType() : Parcelable {
         val asset : String,
         val description: String,
         var id: Int = 0
-    )
+    ) : MemoType()
 
     data class MemoDate(
         val year : Int,
@@ -28,5 +26,5 @@ sealed class MemoType() : Parcelable {
         val dayOfWeek : String,
         val incomeSum : Int,
         val expenseSum : Int
-    )
+    ): MemoType()
 }

@@ -39,6 +39,19 @@ class DefaultMemoRepository @Inject constructor(
         return dao.getMemoListSortedByYearAndMonth(year,month)
     }
 
+    override suspend fun getMemoTypeListSortedByYearAndMonth(year: Int, month: Int): List<MemoType> {
+        val group = dao.getMemoListSortedByYearAndMonth(year,month).groupBy { it.day }
+        val memoTypeList = mutableListOf<MemoType>()
+        group.forEach { (day, list) ->
+            val incomeSum = list.filter { it.category == "수입" }.map { it.price }.sum()
+            val expensesSum = list.filter { it.category == "지출" }.map { it.price }.sum()
+            val memoDate : MemoType = MemoType.MemoDate(year,month,day,list[0].dayOfWeek,incomeSum,expensesSum)
+            memoTypeList.add(memoDate)
+            memoTypeList.addAll(list.map { it.toMemo() })
+        }
+        return memoTypeList.toList()
+    }
+
     override suspend fun getMemoListSortedByCategoryAndYearAndMonth(
         category: String,
         year: Int,
