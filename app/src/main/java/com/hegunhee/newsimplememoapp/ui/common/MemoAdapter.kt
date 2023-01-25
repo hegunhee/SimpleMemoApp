@@ -8,15 +8,18 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hegunhee.newsimplememoapp.data.entity.Memo
 import com.hegunhee.newsimplememoapp.databinding.ItemMemoBinding
+import com.hegunhee.newsimplememoapp.ui.memo.MemoActionHandler
 
 
-class MemoAdapter(val onMemoClick: (Memo) -> Unit) :
+class MemoAdapter(val actionHandler : MemoAdapterActionHandler) :
     ListAdapter<Memo, MemoAdapter.MemoViewHolder>(diffUtil) {
 
     inner class MemoViewHolder(private val binding: ItemMemoBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bindView(memo: Memo) = with(binding) {
+            this.memo = memo
+            this.eventHandler = actionHandler
             day.text = memo.day.toString()
             dayOfWeek.text = memo.dayOfWeek
             amPm.text = memo.amPm
@@ -33,10 +36,6 @@ class MemoAdapter(val onMemoClick: (Memo) -> Unit) :
                 price.setTextColor(Color.RED)
             else
                 price.setTextColor(Color.BLUE)
-
-            root.setOnClickListener {
-                onMemoClick(memo)
-            }
         }
     }
 
