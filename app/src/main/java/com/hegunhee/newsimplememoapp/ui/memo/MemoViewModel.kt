@@ -1,6 +1,5 @@
 package com.hegunhee.newsimplememoapp.ui.memo
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.data.entity.Memo
@@ -18,12 +17,12 @@ class MemoViewModel @Inject constructor(
     private val getAllDataBySort: GetMemoSortedByYearAndMonthUseCase
 ) : ViewModel() {
 
-    val yearDate = MutableLiveData<Int>()
-    val monthDate = MutableLiveData<Int>()
+    val yearDate = MutableStateFlow<Int>(LocalDate.now().year)
+    val monthDate = MutableStateFlow<Int>(LocalDate.now().monthValue)
 
-    val incomeValue = MutableLiveData<Int>()
-    val expenseValue = MutableLiveData<Int>()
-    val totalValue = MutableLiveData<Int>()
+    val incomeValue = MutableStateFlow<Int>(0)
+    val expenseValue = MutableStateFlow<Int>(0)
+    val totalValue = MutableStateFlow<Int>(0)
 
     fun initDate() = LocalDate.now().run {
         yearDate.value = year
@@ -32,23 +31,23 @@ class MemoViewModel @Inject constructor(
     }
 
     fun clickLeft() {
-        if (monthDate.value!! <= 1) {
-            yearDate.value = yearDate.value!! - 1
+        if (monthDate.value <= 1) {
+            yearDate.value = yearDate.value - 1
             monthDate.value = 12
         } else {
-            monthDate.value = monthDate.value!! - 1
+            monthDate.value = monthDate.value - 1
         }
-        setData(yearDate.value!!, monthDate.value!!)
+        setData(yearDate.value, monthDate.value)
     }
 
     fun clickRight() {
-        if (monthDate.value!! >= 12) {
-            yearDate.value = yearDate.value!! + 1
+        if (monthDate.value >= 12) {
+            yearDate.value = yearDate.value + 1
             monthDate.value = 1
         } else {
-            monthDate.value = monthDate.value!! + 1
+            monthDate.value = monthDate.value + 1
         }
-        setData(yearDate.value!!, monthDate.value!!)
+        setData(yearDate.value, monthDate.value)
     }
 
     private val _memoList : MutableStateFlow<List<Memo>> = MutableStateFlow(emptyList())
@@ -60,11 +59,9 @@ class MemoViewModel @Inject constructor(
                 _memoList.emit(data)
                 incomeValue.value = data.filter { it.category == "수입" }.map { it.price }.sum()
                 expenseValue.value = data.filter { it.category != "수입" }.map { it.price }.sum()
-                totalValue.value = incomeValue.value!! - expenseValue.value!!
+                totalValue.value = incomeValue.value - expenseValue.value
             }
         }
 
     }
-
-
 }
