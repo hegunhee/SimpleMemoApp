@@ -3,8 +3,12 @@ package com.hegunhee.newsimplememoapp.ui.memo
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hegunhee.newsimplememoapp.data.entity.Memo
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoSortedByYearAndMonthUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
@@ -50,22 +54,21 @@ class MemoViewModel @Inject constructor(
         setData(yearDate.value!!, monthDate.value!!)
     }
 
-
-    private var _memoList = MutableLiveData<MemoState>(MemoState.Uninitialized)
-    val memoList = _memoList
+    private val _memoList : MutableStateFlow<List<Memo>> = MutableStateFlow(emptyList())
+    val memoList : StateFlow<List<Memo>> = _memoList.asStateFlow()
 
     private fun setData(year: Int, month: Int) {
         viewModelScope.launch {
             getAllDataBySort(year, month).let { data->
-                if(data.isNullOrEmpty()){
+                if(data.isEmpty()){
                     recyclerViewVisible.value = false
-                    _memoList.postValue(MemoState.EmptyOrNull)
+                    _memoList.emit(emptyList())
                     incomeValue.value = 0
                     expenseValue.value = 0
                     totalValue.value = 0
                 }else{
                     recyclerViewVisible.value = true
-                    _memoList.postValue(MemoState.Success(data))
+                    _memoList.emit(data)
                     incomeValue.value = data.filter { it.category == "수입" }.map { it.price }.sum()
                     expenseValue.value = data.filter { it.category != "수입" }.map { it.price }.sum()
                     totalValue.value = incomeValue.value!! - expenseValue.value!!

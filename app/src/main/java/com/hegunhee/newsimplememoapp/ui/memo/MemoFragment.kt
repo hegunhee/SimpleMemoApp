@@ -6,11 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.FragmentMemoBinding
-import com.hegunhee.newsimplememoapp.ui.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MemoFragment : Fragment() {
@@ -55,14 +59,12 @@ class MemoFragment : Fragment() {
         }
     }
 
-    private fun observeData() = viewModel.memoList.observe(viewLifecycleOwner) {
-        when (it) {
-            is MemoState.Uninitialized -> {
-            }
-            is MemoState.Success -> {
-                adapter.setData(it.MemoList)
-            }
-            is MemoState.EmptyOrNull -> {
+    private fun observeData()  {
+        lifecycleScope.launch{
+            repeatOnLifecycle(Lifecycle.State.CREATED){
+                viewModel.memoList.collect {
+                    adapter.setData(it)
+                }
             }
         }
     }
