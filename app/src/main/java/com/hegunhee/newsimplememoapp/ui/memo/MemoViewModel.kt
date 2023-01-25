@@ -5,9 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.data.entity.Memo
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoSortedByYearAndMonthUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
@@ -15,7 +13,10 @@ import javax.inject.Inject
 @HiltViewModel
 class MemoViewModel @Inject constructor(
     private val getAllDataBySort: GetMemoSortedByYearAndMonthUseCase
-) : ViewModel() {
+) : ViewModel(),MemoActionHandler{
+
+    private val _memoNavigation : MutableSharedFlow<MemoNavigation> = MutableSharedFlow<MemoNavigation>()
+    val memoNavigation : SharedFlow<MemoNavigation> = _memoNavigation.asSharedFlow()
 
     val yearDate = MutableStateFlow<Int>(LocalDate.now().year)
     val monthDate = MutableStateFlow<Int>(LocalDate.now().monthValue)
@@ -63,5 +64,17 @@ class MemoViewModel @Inject constructor(
             }
         }
 
+    }
+
+    override fun addMemo() {
+        viewModelScope.launch {
+            _memoNavigation.emit(MemoNavigation.AddMemo)
+        }
+    }
+
+    override fun detailMemo(memo: Memo) {
+        viewModelScope.launch {
+            _memoNavigation.emit(MemoNavigation.DetailMemo(memo))
+        }
     }
 }
