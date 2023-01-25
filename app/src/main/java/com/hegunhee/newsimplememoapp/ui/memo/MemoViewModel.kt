@@ -57,17 +57,10 @@ class MemoViewModel @Inject constructor(
     private fun setData(year: Int, month: Int) {
         viewModelScope.launch {
             getAllDataBySort(year, month).let { data->
-                if(data.isEmpty()){
-                    _memoList.emit(emptyList())
-                    incomeValue.value = 0
-                    expenseValue.value = 0
-                    totalValue.value = 0
-                }else{
-                    _memoList.emit(data)
-                    incomeValue.value = data.filter { it.category == "수입" }.map { it.price }.sum()
-                    expenseValue.value = data.filter { it.category != "수입" }.map { it.price }.sum()
-                    totalValue.value = incomeValue.value!! - expenseValue.value!!
-                }
+                _memoList.emit(data)
+                incomeValue.value = data.filter { it.category == "수입" }.map { it.price }.sum()
+                expenseValue.value = data.filter { it.category != "수입" }.map { it.price }.sum()
+                totalValue.value = incomeValue.value!! - expenseValue.value!!
             }
         }
 
