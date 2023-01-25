@@ -11,7 +11,7 @@ import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.navArgs
 import com.hegunhee.newsimplememoapp.R
-import com.hegunhee.newsimplememoapp.data.entity.Memo
+import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
 import com.hegunhee.newsimplememoapp.data.entity.assetArray
 import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
@@ -31,7 +31,7 @@ class DetailMemoActivity : AppCompatActivity() {
             viewmodel = viewModel
             lifecycleOwner = this@DetailMemoActivity
         }
-        intent?.getParcelableExtra<Memo>("Memo")?.let {
+        intent?.getParcelableExtra<MemoEntity>("Memo")?.let {
             viewModel.initViewModel(it)
         } ?: kotlin.run {
             viewModel.initViewModel(navArgs<DetailMemoActivityArgs>().value.detailMemo)

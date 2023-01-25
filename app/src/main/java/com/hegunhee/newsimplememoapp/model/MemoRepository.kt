@@ -1,22 +1,22 @@
 package com.hegunhee.newsimplememoapp.model
 
-import com.hegunhee.newsimplememoapp.data.entity.Memo
+import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
 
 interface MemoRepository {
 
-    suspend fun insertMemo(memo : Memo)
+    suspend fun insertMemo(memoEntity : MemoEntity)
 
-    suspend fun getAllMemo() : List<Memo>
+    suspend fun getAllMemo() : List<MemoEntity>
 
     suspend fun deleteAllMemo()
 
-    suspend fun deleteMemo(memo : Memo)
+    suspend fun deleteMemo(memoEntity : MemoEntity)
 
-    suspend fun insertMemoList(memo : List<Memo>)
+    suspend fun insertMemoList(memoEntity : List<MemoEntity>)
 
-    suspend fun getMemoListSortedByYearAndMonth(year : Int, month : Int) : List<Memo>
+    suspend fun getMemoListSortedByYearAndMonth(year : Int, month : Int) : List<MemoEntity>
 
-    suspend fun getMemoListSortedByCategoryAndYearAndMonth(category : String,year : Int,month : Int) : List<Memo>
+    suspend fun getMemoListSortedByCategoryAndYearAndMonth(category : String,year : Int,month : Int) : List<MemoEntity>
 
-    suspend fun getMemoListSortedByAttrYearMonth(attr : String,year : Int,month : Int) : List<Memo>
+    suspend fun getMemoListSortedByAttrYearMonth(attr : String,year : Int,month : Int) : List<MemoEntity>
 }

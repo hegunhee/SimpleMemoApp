@@ -6,33 +6,32 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.hegunhee.newsimplememoapp.data.entity.Memo
+import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
 import com.hegunhee.newsimplememoapp.databinding.ItemMemoBinding
-import com.hegunhee.newsimplememoapp.ui.memo.MemoActionHandler
 
 
 class MemoAdapter(val actionHandler : MemoAdapterActionHandler) :
-    ListAdapter<Memo, MemoAdapter.MemoViewHolder>(diffUtil) {
+    ListAdapter<MemoEntity, MemoAdapter.MemoViewHolder>(diffUtil) {
 
     inner class MemoViewHolder(private val binding: ItemMemoBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bindView(memo: Memo) = with(binding) {
-            this.memo = memo
+        fun bindView(memoEntity: MemoEntity) = with(binding) {
+            this.memo = memoEntity
             this.eventHandler = actionHandler
-            day.text = memo.day.toString()
-            dayOfWeek.text = memo.dayOfWeek
-            amPm.text = memo.amPm
-            hour.text = memo.hour.toString()
-            minute.text = memo.minute.toString()
-            attr.text = memo.attr
-            description.text = if (memo.description.isBlank()) {
+            day.text = memoEntity.day.toString()
+            dayOfWeek.text = memoEntity.dayOfWeek
+            amPm.text = memoEntity.amPm
+            hour.text = memoEntity.hour.toString()
+            minute.text = memoEntity.minute.toString()
+            attr.text = memoEntity.attr
+            description.text = if (memoEntity.description.isBlank()) {
                 description.setTextColor(Color.GRAY)
-                memo.attr
-            } else memo.description
-            asset.text = memo.asset
-            price.text = memo.price.toString()
-            if (memo.category == "지출")
+                memoEntity.attr
+            } else memoEntity.description
+            asset.text = memoEntity.asset
+            price.text = memoEntity.price.toString()
+            if (memoEntity.category == "지출")
                 price.setTextColor(Color.RED)
             else
                 price.setTextColor(Color.BLUE)
@@ -49,12 +48,12 @@ class MemoAdapter(val actionHandler : MemoAdapterActionHandler) :
     }
 }
 
-internal object diffUtil : DiffUtil.ItemCallback<Memo>(){
-    override fun areItemsTheSame(oldItem: Memo, newItem: Memo): Boolean {
+internal object diffUtil : DiffUtil.ItemCallback<MemoEntity>(){
+    override fun areItemsTheSame(oldItem: MemoEntity, newItem: MemoEntity): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Memo, newItem: Memo): Boolean {
+    override fun areContentsTheSame(oldItem: MemoEntity, newItem: MemoEntity): Boolean {
         return oldItem == newItem
     }
 

@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Entity(tableName = "Memo")
 @Parcelize
-data class Memo(
+data class MemoEntity(
     val category: String,
     val year: Int,
     val month: Int,

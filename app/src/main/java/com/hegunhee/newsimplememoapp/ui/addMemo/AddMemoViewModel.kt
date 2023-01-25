@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.data.entity.Memo
+import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
 import com.hegunhee.newsimplememoapp.data.entity.changeKoreanDayOfWeek
 import com.hegunhee.newsimplememoapp.data.entity.isExpenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.isIncomeAttr
@@ -87,9 +87,9 @@ class AddMemoViewModel @Inject constructor(
 
 
     fun saveData(price : Int, desc : String) = viewModelScope.launch {
-        val memo = Memo(category.value!!,year,month,day,dayOfWeek,ampm,hour,minute,attr.value!!,price,asset.value!!,desc)
-        Log.d("TestSaveMemo",memo.toString())
-        addMemoUseCase(memo)
+        val memoEntity = MemoEntity(category.value!!,year,month,day,dayOfWeek,ampm,hour,minute,attr.value!!,price,asset.value!!,desc)
+        Log.d("TestSaveMemo",memoEntity.toString())
+        addMemoUseCase(memoEntity)
     }
 
     fun back(){

@@ -2,7 +2,7 @@ package com.hegunhee.newsimplememoapp.ui.memo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.data.entity.Memo
+import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoSortedByYearAndMonthUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -21,8 +21,8 @@ class MemoViewModel @Inject constructor(
     val yearDate = MutableStateFlow<Int>(LocalDate.now().year)
     val monthDate = MutableStateFlow<Int>(LocalDate.now().monthValue)
 
-    private val _memoList : MutableStateFlow<List<Memo>> = MutableStateFlow(emptyList())
-    val memoList : StateFlow<List<Memo>> = _memoList.asStateFlow()
+    private val _memoList : MutableStateFlow<List<MemoEntity>> = MutableStateFlow(emptyList())
+    val memoList : StateFlow<List<MemoEntity>> = _memoList.asStateFlow()
 
     val incomeValue = MutableStateFlow<Int>(0)
     val expenseValue = MutableStateFlow<Int>(0)
@@ -72,9 +72,9 @@ class MemoViewModel @Inject constructor(
         }
     }
 
-    override fun detailMemo(memo: Memo) {
+    override fun detailMemo(memoEntity: MemoEntity) {
         viewModelScope.launch {
-            _memoNavigation.emit(MemoNavigation.DetailMemo(memo))
+            _memoNavigation.emit(MemoNavigation.DetailMemo(memoEntity))
         }
     }
 }
