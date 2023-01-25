@@ -72,9 +72,9 @@ class MemoViewModel @Inject constructor(
         }
     }
 
-    override fun detailMemo(memoEntity: MemoEntity) {
+    override fun detailMemo(memoId: Int) {
         viewModelScope.launch {
-            _memoNavigation.emit(MemoNavigation.DetailMemo(memoEntity))
+            _memoNavigation.emit(MemoNavigation.DetailMemo(memoId))
         }
     }
 }
