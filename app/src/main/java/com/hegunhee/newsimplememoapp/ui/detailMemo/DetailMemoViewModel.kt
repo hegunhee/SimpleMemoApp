@@ -9,6 +9,8 @@ import com.hegunhee.newsimplememoapp.data.entity.isExpenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.isIncomeAttr
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.InsertMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.DeleteMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -16,11 +18,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailMemoViewModel @Inject constructor(
+    private val getMemoUseCase : GetMemoUseCase,
     private val deleteMemoUseCase: DeleteMemoUseCase,
     private val addMemoUseCase: InsertMemoUseCase
 ) : ViewModel() {
 
-    private lateinit var memoEntity: MemoEntity
+    private lateinit var memoEntity: MemoType.Memo
 
     val category = MutableLiveData<String>()
 
@@ -43,9 +46,11 @@ class DetailMemoViewModel @Inject constructor(
 
     val memoState = MutableLiveData<DetailMemoState>(DetailMemoState.Uninitialized)
 
-    fun initViewModel(memoEntity: MemoEntity) {
-        this.memoEntity = memoEntity
-        initData()
+    fun initViewModel(memoId : Int) {
+        viewModelScope.launch {
+            this@DetailMemoViewModel.memoEntity = getMemoUseCase(memoId)
+            initData()
+        }
     }
 
     private fun initData() {

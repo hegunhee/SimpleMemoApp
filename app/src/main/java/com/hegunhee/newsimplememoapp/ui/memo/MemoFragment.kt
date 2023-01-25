@@ -65,7 +65,7 @@ class MemoFragment : Fragment() {
                                 findNavController().navigate(R.id.memo_to_add)
                             }
                             memoNavigation as MemoNavigation.DetailMemo-> {
-                                MemoFragmentDirections.memoToDetail(memoNavigation.memoEntity).also {
+                                MemoFragmentDirections.memoToDetail(memoNavigation.memoEntity.id).also {
                                     findNavController().navigate(it)
                                 }
                             }

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.navigation.navArgs
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
@@ -16,6 +17,7 @@ import com.hegunhee.newsimplememoapp.data.entity.assetArray
 import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
 import com.hegunhee.newsimplememoapp.databinding.ActivityDetailMemoBinding
+import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
@@ -31,12 +33,9 @@ class DetailMemoActivity : AppCompatActivity() {
             viewmodel = viewModel
             lifecycleOwner = this@DetailMemoActivity
         }
-        intent?.getParcelableExtra<MemoEntity>("Memo")?.let {
+        intent?.getIntExtra("MemoId",0)?.let {
             viewModel.initViewModel(it)
-        } ?: kotlin.run {
-            viewModel.initViewModel(navArgs<DetailMemoActivityArgs>().value.detailMemo)
         }
-
         observeData()
     }
 

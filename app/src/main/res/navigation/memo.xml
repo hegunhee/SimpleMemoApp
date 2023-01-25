@@ -30,8 +30,8 @@
         tools:layout="@layout/activity_detail_memo"
         android:label="DetailMemoActivity" >
         <argument
-            android:name="detailMemo"
-            app:argType="com.hegunhee.newsimplememoapp.data.entity.Memo" />
+            android:name="MemoId"
+            app:argType="integer" />
     </activity>
 
 
