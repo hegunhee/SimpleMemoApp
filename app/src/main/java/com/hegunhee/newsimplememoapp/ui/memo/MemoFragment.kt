@@ -12,6 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.FragmentMemoBinding
+import com.hegunhee.newsimplememoapp.ui.common.MemoAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -21,7 +22,7 @@ class MemoFragment : Fragment() {
 
     private val viewModel : MemoViewModel by viewModels()
     private lateinit var viewDataBinding : FragmentMemoBinding
-    private val adapter = MemoAdapter(arrayListOf()) { memo ->
+    private val adapter = MemoAdapter() { memo ->
         MemoFragmentDirections.memoToDetail(memo).also {
             findNavController().navigate(it)
         }
@@ -63,15 +64,9 @@ class MemoFragment : Fragment() {
         lifecycleScope.launch{
             repeatOnLifecycle(Lifecycle.State.CREATED){
                 viewModel.memoList.collect {
-                    adapter.setData(it)
+                    adapter.submitList(it)
                 }
             }
         }
-    }
-
-
-    companion object {
-        fun newInstance() = MemoFragment()
-        const val TAG = "MemoFragment"
     }
 }

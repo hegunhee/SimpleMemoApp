@@ -1,16 +1,17 @@
-package com.hegunhee.newsimplememoapp.ui.memo
+package com.hegunhee.newsimplememoapp.ui.common
 
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hegunhee.newsimplememoapp.data.entity.Memo
 import com.hegunhee.newsimplememoapp.databinding.ItemMemoBinding
 
 
-class MemoAdapter(private var memoList: ArrayList<Memo>, val onMemoClick: (Memo) -> Unit) :
-    RecyclerView.Adapter<MemoAdapter.MemoViewHolder>() {
+class MemoAdapter(val onMemoClick: (Memo) -> Unit) :
+    ListAdapter<Memo, MemoAdapter.MemoViewHolder>(diffUtil) {
 
     inner class MemoViewHolder(private val binding: ItemMemoBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -45,38 +46,17 @@ class MemoAdapter(private var memoList: ArrayList<Memo>, val onMemoClick: (Memo)
     }
 
     override fun onBindViewHolder(holder: MemoViewHolder, position: Int) {
-        holder.bindView(memoList[position])
-    }
-
-    override fun getItemCount(): Int = memoList.size
-
-    fun setData(memoList: List<Memo>) {
-        val diffCallback = MemoDiffUtil(this.memoList.toList(),memoList)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-
-        this.memoList.run {
-            clear()
-            addAll(memoList)
-            diffResult.dispatchUpdatesTo(this@MemoAdapter)
-        }
+        holder.bindView(getItem(position))
     }
 }
 
-class MemoDiffUtil(private val oldList : List<Memo>,private val newList : List<Memo>) : DiffUtil.Callback(){
-    override fun getOldListSize(): Int {
-        return oldList.size
+internal object diffUtil : DiffUtil.ItemCallback<Memo>(){
+    override fun areItemsTheSame(oldItem: Memo, newItem: Memo): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun getNewListSize(): Int {
-        return newList.size
-    }
-
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition].id == newList[newItemPosition].id
-    }
-
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList[newItemPosition]
+    override fun areContentsTheSame(oldItem: Memo, newItem: Memo): Boolean {
+        return oldItem == newItem
     }
 
 }

@@ -9,7 +9,7 @@ import androidx.navigation.navArgs
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.ActivityDetailStaticsBinding
 import com.hegunhee.newsimplememoapp.ui.detailMemo.DetailMemoActivity
-import com.hegunhee.newsimplememoapp.ui.memo.MemoAdapter
+import com.hegunhee.newsimplememoapp.ui.common.MemoAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,7 +17,7 @@ class DetailStaticsActivity : AppCompatActivity() {
 
     private val viewModel: DetaiStaticsViewModel by viewModels()
     private lateinit var binding: ActivityDetailStaticsBinding
-    private val adapter = MemoAdapter(arrayListOf()) { memo ->
+    private val adapter = MemoAdapter() { memo ->
         Intent(this, DetailMemoActivity::class.java).apply {
             putExtra("Memo", memo)
             this@DetailStaticsActivity.startActivity(this)
@@ -50,7 +50,7 @@ class DetailStaticsActivity : AppCompatActivity() {
         when (it) {
             DetailStaticsState.Uninitialized -> {}
             is DetailStaticsState.Success -> {
-                adapter.setData(it.data)
+                adapter.submitList(it.data)
             }
             DetailStaticsState.NullOrEmpty -> {
 
