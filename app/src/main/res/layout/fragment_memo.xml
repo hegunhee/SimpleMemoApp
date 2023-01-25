@@ -6,7 +6,7 @@
     <data>
         <import type="android.view.View"/>
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="com.hegunhee.newsimplememoapp.ui.memo.MemoViewModel" />
 
     </data>
@@ -23,7 +23,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/ic_left"
             android:backgroundTint="@color/black"
-            android:onClick="@{() -> viewmodel.clickLeft()}"
+            android:onClick="@{() -> viewModel.clickLeft()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            android:text="@{viewmodel.yearDate.toString()}"
+            android:text="@{viewModel.yearDate.toString()}"
             android:textSize="20dp"
             app:layout_constraintStart_toEndOf="@id/left_button"
             app:layout_constraintTop_toTopOf="@id/left_button"
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="@{viewmodel.monthDate.toString()}"
+            android:text="@{viewModel.monthDate.toString()}"
             android:textSize="20dp"
             app:layout_constraintStart_toEndOf="@id/year"
             app:layout_constraintTop_toTopOf="@id/year_text"
@@ -73,7 +73,7 @@
             android:layout_height="30dp"
             android:background="@drawable/ic_right"
             android:backgroundTint="@color/black"
-            android:onClick="@{() -> viewmodel.clickRight()}"
+            android:onClick="@{() -> viewModel.clickRight()}"
             app:layout_constraintStart_toEndOf="@id/month"
             app:layout_constraintTop_toTopOf="@id/left_button" />
 
@@ -119,7 +119,7 @@
             android:id="@+id/income_text"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="@{viewmodel.incomeValue.toString()}"
+            android:text="@{viewModel.incomeValue.toString()}"
             android:textSize="15dp"
             app:layout_constraintEnd_toStartOf="@id/expenses"
             app:layout_constraintStart_toStartOf="parent"
@@ -132,7 +132,7 @@
             android:id="@+id/expenses_text"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="@{viewmodel.expenseValue.toString()}"
+            android:text="@{viewModel.expenseValue.toString()}"
             android:textSize="15dp"
             app:layout_constraintEnd_toStartOf="@id/total"
             app:layout_constraintStart_toEndOf="@id/income"
@@ -145,7 +145,7 @@
             android:id="@+id/total_text"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="@{viewmodel.totalValue.toString()}"
+            android:text="@{viewModel.totalValue.toString()}"
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/expenses"
@@ -160,7 +160,7 @@
             android:gravity="center"
             android:text="데이터가 존재하지 않습니다"
             android:textSize="20dp"
-            android:visibility="@{viewmodel.recyclerViewVisible ? View.GONE : View.VISIBLE}"
+            android:visibility="@{viewModel.recyclerViewVisible ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -173,7 +173,7 @@
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:visibility="@{viewmodel.recyclerViewVisible ? View.VISIBLE: View.GONE}"
+            android:visibility="@{viewModel.recyclerViewVisible ? View.VISIBLE: View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/expenses_text" />
