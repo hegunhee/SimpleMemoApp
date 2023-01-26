@@ -6,6 +6,7 @@ import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetAllMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoSortedByYearAndMonthUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoTypeListSortedByYearAndMonthUseCase
+import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -24,8 +25,8 @@ class MemoViewModel @Inject constructor(
     val yearDate = MutableStateFlow<Int>(LocalDate.now().year)
     val monthDate = MutableStateFlow<Int>(LocalDate.now().monthValue)
 
-    private val _memoList : MutableStateFlow<List<MemoEntity>> = MutableStateFlow(emptyList())
-    val memoList : StateFlow<List<MemoEntity>> = _memoList.asStateFlow()
+    private val _memoList : MutableStateFlow<List<MemoType>> = MutableStateFlow(emptyList())
+    val memoList : StateFlow<List<MemoType>> = _memoList.asStateFlow()
 
     val incomeValue = MutableStateFlow<Int>(0)
     val expenseValue = MutableStateFlow<Int>(0)
@@ -60,10 +61,11 @@ class MemoViewModel @Inject constructor(
     private fun setData(year: Int, month: Int) {
         viewModelScope.launch {
             getAllMemoTypeBySort(year, month).let { data->
-                data
-//                _memoList.emit(data)
-//                incomeValue.value = data.filter { it.category == "수입" }.map { it.price }.sum()
-//                expenseValue.value = data.filter { it.category != "수입" }.map { it.price }.sum()
+                _memoList.emit(data)
+                data.filterIsInstance(MemoType.Memo::class.java).also { memoList ->
+                    incomeValue.value = memoList.filter { it.category == "수입" }.map { it.price }.sum()
+                    expenseValue.value = memoList.filter { it.category != "수입" }.map { it.price }.sum()
+                }
                 totalValue.value = incomeValue.value - expenseValue.value
             }
         }
