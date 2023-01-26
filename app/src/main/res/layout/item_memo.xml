@@ -1,136 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:background="@color/purple_200">
+<layout>
 
-    <View
-        android:id="@+id/guideStartLine"
+    <data>
+
+        <variable
+            name="eventHandler"
+            type="com.hegunhee.newsimplememoapp.ui.common.MemoAdapterActionHandler" />
+
+        <variable
+            name="memo"
+            type="com.hegunhee.newsimplememoapp.domain.model.MemoType.Memo" />
+
+        <import type="android.view.View"></import>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/guideEndLine"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-
-    <View
-        android:id="@+id/guideMiddleLine"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"
-        app:layout_constraintBottom_toBottomOf="@id/day" />
-
-
-    <TextView
-        android:id="@+id/day"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="18" />
+        android:background="@color/purple_200"
+        android:onClick="@{() -> eventHandler.detailMemo(memo.id)}">
 
-    <TextView
-        android:id="@+id/day_of_week"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="7dp"
-        android:background="@color/black"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="@id/description"
-        app:layout_constraintTop_toTopOf="@id/day"
-        tools:text="금" />
+        <TextView
+            android:id="@+id/attr"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="@{memo.attr}"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="기타" />
 
-    <TextView
-        android:id="@+id/am_pm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:textSize="20dp"
-        app:layout_constraintStart_toEndOf="@id/day_of_week"
-        app:layout_constraintTop_toTopOf="@id/day_of_week"
-        tools:text="오후" />
+        <TextView
+            android:id="@+id/desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{memo.description.isEmpty ? memo.asset : memo.description}"
+            android:textColor="@{memo.description.isEmpty ? @color/gray : @color/black}"
+            android:textSize="17sp"
+            app:layout_constraintEnd_toStartOf="@id/price"
+            app:layout_constraintStart_toEndOf="@id/attr"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="엔화 환전" />
 
-    <TextView
-        android:id="@+id/hour"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:textSize="20dp"
-        app:layout_constraintStart_toEndOf="@id/am_pm"
-        app:layout_constraintTop_toTopOf="@id/am_pm"
-        tools:text="8" />
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray"
+            android:textSize="13sp"
+            app:setTime="@{memo}"
+            app:layout_constraintStart_toStartOf="@id/desc"
+            app:layout_constraintTop_toBottomOf="@id/desc"
+            tools:text="sdasd" />
 
-    <TextView
-        android:id="@+id/semicolon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=":"
-        android:textSize="20dp"
-        app:layout_constraintStart_toEndOf="@id/hour"
-        app:layout_constraintTop_toTopOf="@id/hour" />
+        <TextView
+            android:id="@+id/asset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="@{memo.asset}"
+            android:textColor="@color/gray"
+            android:textSize="13sp"
+            android:visibility="@{memo.description.isEmpty ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/time"
+            app:layout_constraintStart_toEndOf="@id/time"
+            app:layout_constraintTop_toTopOf="@id/time"
+            tools:text="우리은행" />
 
-    <TextView
-        android:id="@+id/minute"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        app:layout_constraintStart_toEndOf="@id/semicolon"
-        app:layout_constraintTop_toTopOf="@id/semicolon"
-        tools:text="20" />
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
+            android:gravity="end"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/attr"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/attr"
+            app:setPrice="@{memo.price}"
+            app:setPriceType="@{memo.category}"
+            tools:text="333000원" />
 
-    <TextView
-        android:id="@+id/attr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="@id/day"
-        app:layout_constraintTop_toBottomOf="@id/day"
-        tools:text="식비" />
-
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:textSize="20dp"
-        app:layout_constraintStart_toEndOf="@id/attr"
-        app:layout_constraintTop_toTopOf="@id/attr"
-        tools:text="굴순두부" />
-
-    <TextView
-        android:id="@+id/asset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:textSize="15dp"
-        app:layout_constraintStart_toEndOf="@id/description"
-        app:layout_constraintTop_toTopOf="@id/description"
-        tools:text="카카오뱅크" />
-
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="30dp"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/description"
-        tools:text="20000" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -3,12 +3,14 @@ package com.hegunhee.newsimplememoapp.ui.detailMemo
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.data.entity.Memo
+import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
 import com.hegunhee.newsimplememoapp.data.entity.changeKoreanDayOfWeek
 import com.hegunhee.newsimplememoapp.data.entity.isExpenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.isIncomeAttr
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.InsertMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.DeleteMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -16,11 +18,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailMemoViewModel @Inject constructor(
+    private val getMemoUseCase : GetMemoUseCase,
     private val deleteMemoUseCase: DeleteMemoUseCase,
     private val addMemoUseCase: InsertMemoUseCase
 ) : ViewModel() {
 
-    private lateinit var memo: Memo
+    private lateinit var memoEntity: MemoType.Memo
 
     val category = MutableLiveData<String>()
 
@@ -43,15 +46,17 @@ class DetailMemoViewModel @Inject constructor(
 
     val memoState = MutableLiveData<DetailMemoState>(DetailMemoState.Uninitialized)
 
-    fun initViewModel(memo: Memo) {
-        this.memo = memo
-        initData()
+    fun initViewModel(memoId : Int) {
+        viewModelScope.launch {
+            this@DetailMemoViewModel.memoEntity = getMemoUseCase(memoId)
+            initData()
+        }
     }
 
     private fun initData() {
         initDay()
         initTime()
-        memo.let {
+        memoEntity.let {
             category.value = it.category
             asset.value = it.asset
             attr.value = it.attr
@@ -61,7 +66,7 @@ class DetailMemoViewModel @Inject constructor(
     }
 
     private fun initDay() {
-        memo.let {
+        memoEntity.let {
             year = it.year
             month = it.month
             day = it.day
@@ -72,7 +77,7 @@ class DetailMemoViewModel @Inject constructor(
     }
 
     private fun initTime() {
-        memo.let {
+        memoEntity.let {
             ampm = it.amPm
             hour = it.hour
             minute = it.minute
@@ -111,7 +116,7 @@ class DetailMemoViewModel @Inject constructor(
     }
 
     fun saveData() = viewModelScope.launch {
-        Memo(
+        MemoEntity(
             category.value!!,
             year,
             month,
@@ -124,13 +129,13 @@ class DetailMemoViewModel @Inject constructor(
             price.value.toString().toInt(),
             asset.value!!,
             desc.value!!,
-            memo.id
+            memoEntity.id
         ).apply { addMemoUseCase(this) }
     }
 
 
     fun removeMemo() = viewModelScope.launch {
-        deleteMemoUseCase.invoke(memo)
+        deleteMemoUseCase.invoke(memoEntity)
     }
 
     fun back() {

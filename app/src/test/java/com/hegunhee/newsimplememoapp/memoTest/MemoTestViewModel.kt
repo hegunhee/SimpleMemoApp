@@ -2,7 +2,7 @@ package com.hegunhee.newsimplememoapp.memoTest
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.data.entity.Memo
+import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.*
 import kotlinx.coroutines.launch
 
@@ -14,29 +14,29 @@ class MemoTestViewModel(
     private val insertMemoListUseCase: InsertMemoListUseCase,
     private val getMemoSortedByYearAndMonthUseCase: GetMemoSortedByYearAndMonthUseCase
 ) : ViewModel() {
-    var memos = listOf<Memo>()
+    var memoEntities = listOf<MemoEntity>()
 
     fun getAllMemo()  = viewModelScope.launch{
-        memos = getAllMemoUseCase()
+        memoEntities = getAllMemoUseCase()
     }
 
     fun getMemoSortedByYearAndMonth(year : Int,month : Int) = viewModelScope.launch {
-        memos = getMemoSortedByYearAndMonthUseCase(year,month)
+        memoEntities = getMemoSortedByYearAndMonthUseCase(year,month)
     }
-    fun addMemo(memo : Memo) = viewModelScope.launch{
-        addMemoUseCase(memo)
+    fun addMemo(memoEntity : MemoEntity) = viewModelScope.launch{
+        addMemoUseCase(memoEntity)
     }
 
     fun deleteAllMemo() = viewModelScope.launch {
         deleteAllMemoUseCase()
     }
 
-    fun deleteMemo(memo : Memo) = viewModelScope.launch {
-        deleteMemoUseCase(memo)
+    fun deleteMemo(memoEntity : MemoEntity) = viewModelScope.launch {
+        deleteMemoUseCase(memoEntity)
     }
 
-    fun addMemos(memo : List<Memo>) = viewModelScope.launch {
-        insertMemoListUseCase(memo)
+    fun addMemos(memoEntity : List<MemoEntity>) = viewModelScope.launch {
+        insertMemoListUseCase(memoEntity)
     }
 
 
