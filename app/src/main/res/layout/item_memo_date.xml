@@ -1,96 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
 
-    <View
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="wrap_content"
-        android:background="@color/black"
-        android:layout_height="1dp"/>
+<layout>
+    <data>
+        <variable
+            name="memoDate"
+            type="com.hegunhee.newsimplememoapp.domain.model.MemoType.MemoDate" />
+    </data>
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/black"
-        />
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/day"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="20" />
+        <View
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:background="@color/black"
+            android:layout_height="1dp"/>
 
-    <TextView
-        android:id="@+id/day_of_week"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:background="@color/gray"
-        android:padding="3dp"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@id/day"
-        app:layout_constraintStart_toEndOf="@id/day"
-        app:layout_constraintTop_toTopOf="@id/day"
-        tools:text="목요일" />
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/black"
+            />
 
-    <TextView
-        android:id="@+id/year_and_month"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@id/day"
-        app:layout_constraintStart_toEndOf="@id/day_of_week"
-        tools:text="2023.01" />
+        <TextView
+            android:id="@+id/day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:setDay="@{memoDate.day}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="20" />
 
-    <TextView
-        android:id="@+id/income"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:gravity="end"
-        android:textColor="@color/blue"
-        android:layout_marginStart="5dp"
-        android:maxLines="1"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@id/day"
-        app:layout_constraintEnd_toStartOf="@id/expense"
-        app:layout_constraintStart_toEndOf="@id/year_and_month"
-        app:layout_constraintTop_toTopOf="@id/day"
-        tools:text="33원" />
+        <TextView
+            android:id="@+id/day_of_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:padding="3dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:setDayOfWeek="@{memoDate.dayOfWeek}"
+            app:layout_constraintBottom_toBottomOf="@id/day"
+            app:layout_constraintStart_toEndOf="@id/day"
+            app:layout_constraintTop_toTopOf="@id/day"
+            tools:text="목요일" />
 
-    <TextView
-        android:id="@+id/expense"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:textColor="@color/red"
-        android:textSize="15sp"
-        android:maxLines="1"
-        app:layout_constraintBottom_toBottomOf="@id/day"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/day"
-        android:layout_marginEnd="10dp"
-        tools:text="3030원" />
+        <TextView
+            android:id="@+id/year_and_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            app:setDate="@{memoDate}"
+            app:layout_constraintBottom_toBottomOf="@id/day"
+            app:layout_constraintStart_toEndOf="@id/day_of_week"
+            tools:text="2023.01" />
+
+        <TextView
+            android:id="@+id/income"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:gravity="end"
+            android:textColor="@color/blue"
+            android:layout_marginStart="5dp"
+            android:maxLines="1"
+            android:textSize="15sp"
+            app:setPrice="@{memoDate.incomeSum}"
+            app:layout_constraintBottom_toBottomOf="@id/day"
+            app:layout_constraintEnd_toStartOf="@id/expense"
+            app:layout_constraintStart_toEndOf="@id/year_and_month"
+            app:layout_constraintTop_toTopOf="@id/day"
+            tools:text="33원" />
+
+        <TextView
+            android:id="@+id/expense"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:textColor="@color/red"
+            android:textSize="15sp"
+            android:maxLines="1"
+            app:setPrice="@{memoDate.expenseSum}"
+            app:layout_constraintBottom_toBottomOf="@id/day"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/day"
+            android:layout_marginEnd="10dp"
+            tools:text="3030원" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

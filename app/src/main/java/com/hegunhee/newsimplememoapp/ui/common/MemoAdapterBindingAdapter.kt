@@ -4,7 +4,6 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
-import kotlin.math.min
 
 @BindingAdapter("setPrice")
 fun TextView.setPrice(price : Int){
@@ -28,4 +27,26 @@ fun TextView.setTime(memo : MemoType.Memo){
         memo.minute.toString()
     }
     text = memo.amPm +" "+ memo.hour +":" + minute
+}
+
+@BindingAdapter("setDayOfWeek")
+fun TextView.setDayOfWeek(dayOfWeek : String){
+    if(dayOfWeek == "토"){
+        setBackgroundColor(R.color.blue)
+    }else if(dayOfWeek == "일"){
+        setBackgroundColor(R.color.red)
+    }else{
+        setBackgroundColor(R.color.gray)
+    }
+    text = dayOfWeek + "요일"
+}
+
+@BindingAdapter("setDate")
+fun TextView.setDate(memoDate: MemoType.MemoDate){
+    text = "" + memoDate.year +"." + memoDate.month
+}
+
+@BindingAdapter("setDay")
+fun TextView.setDay(day : Int){
+    text = ""+ day
 }

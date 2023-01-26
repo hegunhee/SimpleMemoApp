@@ -91,7 +91,8 @@
             app:layout_constraintBottom_toBottomOf="@id/attr"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/attr"
-            app:setPrice="@{memo}"
+            app:setPrice="@{memo.price}"
+            app:setPriceType="@{memo.category}"
             tools:text="333000원" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
