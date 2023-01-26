@@ -43,22 +43,10 @@ class MemoAdapter(val actionHandler : MemoAdapterActionHandler) :
             val memoEntity = memo as MemoType.Memo
             this.memo = memoEntity.toMemoEntity()
             this.eventHandler = actionHandler
-            day.text = memoEntity.day.toString()
-            dayOfWeek.text = memoEntity.dayOfWeek
-            amPm.text = memoEntity.amPm
-            hour.text = memoEntity.hour.toString()
-            minute.text = memoEntity.minute.toString()
             attr.text = memoEntity.attr
-            description.text = if (memoEntity.description.isBlank()) {
-                description.setTextColor(Color.GRAY)
-                memoEntity.attr
-            } else memoEntity.description
-            asset.text = memoEntity.asset
+            desc.text = memoEntity.description
+            time.text = memoEntity.amPm + " " + memoEntity.hour +":" + memoEntity.minute
             price.text = memoEntity.price.toString()
-            if (memoEntity.category == "지출")
-                price.setTextColor(Color.RED)
-            else
-                price.setTextColor(Color.BLUE)
         }
     }
 
