@@ -41,12 +41,8 @@ class MemoAdapter(val actionHandler : MemoAdapterActionHandler) :
 
         override fun bindView(memo: MemoType) : Unit = with(binding) {
             val memoEntity = memo as MemoType.Memo
-            this.memo = memoEntity.toMemoEntity()
+            this.memo = memoEntity
             this.eventHandler = actionHandler
-            attr.text = memoEntity.attr
-            desc.text = memoEntity.description
-            time.text = memoEntity.amPm + " " + memoEntity.hour +":" + memoEntity.minute
-            price.text = memoEntity.price.toString()
         }
     }
 
