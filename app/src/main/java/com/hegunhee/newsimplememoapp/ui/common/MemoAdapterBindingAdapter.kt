@@ -7,13 +7,17 @@ import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import kotlin.math.min
 
 @BindingAdapter("setPrice")
-fun TextView.setPrice(memo : MemoType.Memo){
-    when (memo.category) {
+fun TextView.setPrice(price : Int){
+    this.text = "" + price.toMoneyFormat() + "원"
+}
+
+@BindingAdapter("setPriceType")
+fun TextView.setPriceType(type : String){
+    when (type){
         "수입" -> { this.setTextColor(R.color.blue) }
         "지출" -> { this.setTextColor(R.color.red) }
         else -> { this.setTextColor(R.color.white) }
     }
-    this.text = "" +memo.price.toMoneyFormat() + "원"
 }
 
 @BindingAdapter("setTime")
