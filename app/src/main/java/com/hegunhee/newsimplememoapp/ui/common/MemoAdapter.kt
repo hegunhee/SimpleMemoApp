@@ -26,8 +26,13 @@ class MemoAdapter(val actionHandler : MemoAdapterActionHandler) :
 
     inner class MemoDateViewHolder(private val binding : ItemMemoDateBinding) : MemoAdapterViewHolder(binding.root){
 
-        override fun bindView(memo : MemoType){
-
+        override fun bindView(memo : MemoType) : Unit = with(binding){
+            val memoDate = memo as MemoType.MemoDate
+            this.day.text = memoDate.day.toString()
+            this.dayOfWeek.text = memoDate.dayOfWeek +"요일"
+            this.yearAndMonth.text = "" + memoDate.year + "." + memoDate.month
+            this.income.text = memoDate.incomeSum.toString() + "원"
+            this.expense.text = memoDate.expenseSum.toString() + "원"
         }
 
     }
