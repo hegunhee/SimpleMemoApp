@@ -2,9 +2,6 @@ package com.hegunhee.newsimplememoapp.ui.memo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetAllMemoUseCase
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoSortedByYearAndMonthUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoTypeListSortedByYearAndMonthUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +12,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MemoViewModel @Inject constructor(
-    private val getAllDataBySort: GetMemoSortedByYearAndMonthUseCase,
     private val getAllMemoTypeBySort : GetMemoTypeListSortedByYearAndMonthUseCase
 ) : ViewModel(),MemoActionHandler{
 
@@ -63,8 +59,8 @@ class MemoViewModel @Inject constructor(
             getAllMemoTypeBySort(year, month).let { data->
                 _memoList.emit(data)
                 data.filterIsInstance(MemoType.Memo::class.java).also { memoList ->
-                    incomeValue.value = memoList.filter { it.category == "수입" }.map { it.price }.sum()
-                    expenseValue.value = memoList.filter { it.category != "수입" }.map { it.price }.sum()
+                    incomeValue.value = memoList.filter { it.category == "수입" }.sumOf { it.price }
+                    expenseValue.value = memoList.filter { it.category != "수입" }.sumOf { it.price }
                 }
                 totalValue.value = incomeValue.value - expenseValue.value
             }
