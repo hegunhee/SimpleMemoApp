@@ -81,7 +81,7 @@ class AddMemoActivity : AppCompatActivity() {
     }
 
     private fun setAttr() {
-        val attrType = if (viewModel.category.value == "수입") {
+        val attrType = if (viewModel.category.value == getString(R.string.income)) {
             incomeAttr
         } else {
             expenseAttr
