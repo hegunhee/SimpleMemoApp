@@ -17,6 +17,7 @@ import com.hegunhee.newsimplememoapp.databinding.ActivityAddMemoBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneId
 
 @AndroidEntryPoint
 class AddMemoActivity : AppCompatActivity() {
@@ -112,7 +113,7 @@ class AddMemoActivity : AppCompatActivity() {
     }
 
     private fun setTime() {
-        val time = LocalDateTime.now().plusHours(9)
+        val time = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
         TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
             with(addMemoViewModel) {
                 if (hourOfDay > 12) {
