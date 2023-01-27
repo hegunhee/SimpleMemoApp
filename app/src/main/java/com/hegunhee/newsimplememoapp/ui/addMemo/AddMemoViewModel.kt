@@ -10,9 +10,7 @@ import com.hegunhee.newsimplememoapp.data.entity.isExpenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.isIncomeAttr
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.InsertMemoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -24,7 +22,8 @@ class AddMemoViewModel @Inject constructor(
     private val addMemoUseCase : InsertMemoUseCase
 ) : ViewModel() {
 
-    val category = MutableLiveData<String>()
+    private val _category : MutableStateFlow<String> = MutableStateFlow<String>("지출")
+    val category : StateFlow<String> = _category.asStateFlow()
 
     var year: Int = 0
     var month: Int = 0
@@ -44,7 +43,6 @@ class AddMemoViewModel @Inject constructor(
     val memoState : SharedFlow<AddMemoState> = _memoState.asSharedFlow()
 
     fun initData() {
-        category.value = "지출"
         setDate()
         initTime()
     }
@@ -76,14 +74,14 @@ class AddMemoViewModel @Inject constructor(
     }
 
     fun setCategoryIncome() {
-        category.value = "수입"
+        _category.value = "수입"
         if(isExpenseAttr(attr.value?:return)){
             attr.value = ""
         }
     }
 
     fun setCategoryExpense() {
-        category.value = "지출"
+        _category.value = "지출"
         if(isIncomeAttr(attr.value?:return)){
             attr.value = ""
         }
