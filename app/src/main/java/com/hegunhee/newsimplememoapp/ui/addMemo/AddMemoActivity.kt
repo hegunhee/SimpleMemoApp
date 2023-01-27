@@ -94,7 +94,7 @@ class AddMemoActivity : AppCompatActivity() {
             expenseAttr
         }
         AlertDialog.Builder(this)
-            .setTitle("자산")
+            .setTitle("분류")
             .setItems(attrType,
                 DialogInterface.OnClickListener { dialogInterface, which ->
                     addMemoViewModel.attr.value = attrType[which]
