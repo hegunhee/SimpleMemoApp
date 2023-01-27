@@ -2,6 +2,7 @@ package com.hegunhee.newsimplememoapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.hegunhee.newsimplememoapp.R
@@ -21,6 +22,9 @@ class MainActivity : AppCompatActivity() {
         with(binding){
             bottomNavigation.setupWithNavController(navController)
         }
+
+        // FIXME : 다크모드 정식 오픈시 해당 코드 제거
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
 
