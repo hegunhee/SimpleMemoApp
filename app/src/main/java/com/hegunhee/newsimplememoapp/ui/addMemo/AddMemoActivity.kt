@@ -28,15 +28,15 @@ import java.time.ZoneId
 class AddMemoActivity : AppCompatActivity() {
 
     private lateinit var viewDataBinding: ActivityAddMemoBinding
-    private val addMemoViewModel : AddMemoViewModel by viewModels()
+    private val viewModel : AddMemoViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_memo)
         viewDataBinding.apply {
-            viewmodel = addMemoViewModel
+            viewModel = this@AddMemoActivity.viewModel
             lifecycleOwner = this@AddMemoActivity
         }
-        addMemoViewModel.initData()
+        viewModel.initData()
         observeData()
     }
 
@@ -44,7 +44,7 @@ class AddMemoActivity : AppCompatActivity() {
         lifecycleScope.launch{
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 launch {
-                    addMemoViewModel.memoState.collect {
+                    viewModel.memoState.collect {
                         when(it){
                             AddMemoState.Back -> onBackPressed()
                             AddMemoState.Save -> saveData()
@@ -61,7 +61,7 @@ class AddMemoActivity : AppCompatActivity() {
 
     private fun saveData() {
         with(viewDataBinding) {
-            with(addMemoViewModel) {
+            with(viewModel) {
                 if (asset.value.isNullOrEmpty()) {
                     setAsset()
                 } else if (attr.value.isNullOrEmpty()) {
@@ -82,12 +82,12 @@ class AddMemoActivity : AppCompatActivity() {
             .setTitle(getString(R.string.asset))
             .setItems(assetArray,
                 DialogInterface.OnClickListener { _, which ->
-                    addMemoViewModel.asset.value = assetArray[which]
+                    viewModel.asset.value = assetArray[which]
                 }).create().show()
     }
 
     private fun setAttr() {
-        val attrType = if (addMemoViewModel.category.value == "수입") {
+        val attrType = if (viewModel.category.value == "수입") {
             incomeAttr
         } else {
             expenseAttr
@@ -96,14 +96,14 @@ class AddMemoActivity : AppCompatActivity() {
             .setTitle(getString(R.string.attr))
             .setItems(attrType,
                 DialogInterface.OnClickListener { _, which ->
-                    addMemoViewModel.attr.value = attrType[which]
+                    viewModel.attr.value = attrType[which]
                 }).create().show()
     }
 
     private fun setDate() {
         DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            addMemoViewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))}.let {  listener->
-            with(addMemoViewModel){
+            viewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))}.let { listener->
+            with(viewModel){
                 DatePickerDialog(this@AddMemoActivity,listener,year,month-1,day).show()
             }
         }
@@ -112,7 +112,7 @@ class AddMemoActivity : AppCompatActivity() {
     private fun setTime() {
         val time = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
         TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-            with(addMemoViewModel) {
+            with(viewModel) {
                 if (hourOfDay > 12) {
                     ampm = "오후"
                     hour = hourOfDay - 12

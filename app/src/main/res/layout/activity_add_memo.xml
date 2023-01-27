@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="com.hegunhee.newsimplememoapp.ui.addMemo.AddMemoViewModel" />
     </data>
 
@@ -23,7 +23,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/ic_back"
             android:backgroundTint="@color/black"
-            android:onClick="@{() -> viewmodel.back()}"
+            android:onClick="@{() -> viewModel.back()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,7 +31,7 @@
             android:id="@+id/category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewmodel.category}"
+            android:text="@{viewModel.category}"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="@id/backButton"
             app:layout_constraintStart_toEndOf="@id/backButton"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/blue"
-            android:onClick="@{() -> viewmodel.setCategoryIncome()}"
+            android:onClick="@{() -> viewModel.setCategoryIncome()}"
             android:text="@string/income"
             android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@id/expenses_button"
@@ -59,7 +59,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/red"
-            android:onClick="@{() -> viewmodel.setCategoryExpense()}"
+            android:onClick="@{() -> viewModel.setCategoryExpense()}"
             android:text="@string/expense"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -83,8 +83,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:maxLines="1"
-            android:onClick="@{() -> viewmodel.clickDate()}"
-            android:text="@{viewmodel.dateInfo}"
+            android:onClick="@{() -> viewModel.clickDate()}"
+            android:text="@{viewModel.dateInfo}"
             android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@id/time"
             app:layout_constraintStart_toEndOf="@id/text_day"
@@ -97,8 +97,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="20dp"
-            android:onClick="@{() -> viewmodel.clickTime()}"
-            android:text="@{viewmodel.timeInfo}"
+            android:onClick="@{() -> viewModel.clickTime()}"
+            android:text="@{viewModel.timeInfo}"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/day"
@@ -123,8 +123,8 @@
             app:layout_constraintEnd_toEndOf="@id/time"
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_asset"
-            app:category="@{viewmodel.asset}"
-            android:onClick="@{() -> viewmodel.clickAsset()}"
+            app:category="@{viewModel.asset}"
+            android:onClick="@{() -> viewModel.clickAsset()}"
             />
 
         <TextView
@@ -142,8 +142,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:onClick="@{() -> viewmodel.clickAttr()}"
-            app:category="@{viewmodel.attr}"
+            android:onClick="@{() -> viewModel.clickAttr()}"
+            app:category="@{viewModel.attr}"
             app:layout_constraintEnd_toEndOf="@id/time"
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_attr"
@@ -202,7 +202,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:backgroundTint="@color/purple_200"
-            android:onClick="@{() -> viewmodel.clickSave()}"
+            android:onClick="@{() -> viewModel.clickSave()}"
             android:text="@string/save"
             android:textSize="15sp"
             android:textColor="@color/white"
