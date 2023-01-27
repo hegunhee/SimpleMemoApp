@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewmodel.category}"
-            android:textSize="30dp"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="@id/backButton"
             app:layout_constraintStart_toEndOf="@id/backButton"
             app:layout_constraintTop_toTopOf="@id/backButton"
@@ -45,7 +45,8 @@
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/blue"
             android:onClick="@{() -> viewmodel.setCategoryIncome()}"
-            android:text="수입"
+            android:text="@string/income"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@id/expenses_button"
             app:layout_constraintStart_toStartOf="@id/backButton"
             app:layout_constraintTop_toBottomOf="@id/backButton" />
@@ -59,7 +60,8 @@
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/red"
             android:onClick="@{() -> viewmodel.setCategoryExpense()}"
-            android:text="지출"
+            android:text="@string/expense"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/income_button"
             app:layout_constraintTop_toTopOf="@id/income_button" />
@@ -70,8 +72,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
-            android:text="날짜"
-            android:textSize="20dp"
+            android:text="@string/date"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/income_button"
             app:layout_constraintTop_toBottomOf="@id/income_button" />
 
@@ -81,11 +83,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:maxLines="1"
-            android:text="@{viewmodel.dateInfo}"
             android:onClick="@{() -> viewmodel.clickDate()}"
-            android:textSize="20dp"
+            android:text="@{viewmodel.dateInfo}"
+            android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@id/time"
-
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_day"
             tools:text="2022/3/22 (화)" />
@@ -95,12 +96,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:text="@{viewmodel.timeInfo}"
-            android:textSize="20dp"
             android:layout_marginEnd="20dp"
             android:onClick="@{() -> viewmodel.clickTime()}"
-            app:layout_constraintStart_toEndOf="@id/day"
+            android:text="@{viewmodel.timeInfo}"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/day"
             app:layout_constraintTop_toTopOf="@id/text_day"
             tools:text="오후 9:33" />
 
@@ -109,12 +110,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="자산"
-            android:textSize="20dp"
+            android:text="@string/asset"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/text_day"
             app:layout_constraintTop_toBottomOf="@id/text_day" />
 
-        <TextView
+        <include layout="@layout/include_clickable_textview"
             android:id="@+id/asset"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -134,8 +135,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="분류"
-            android:textSize="20dp"
+            android:text="@string/attr"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/text_day"
             app:layout_constraintTop_toBottomOf="@id/text_asset" />
 
@@ -145,12 +146,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:background="@color/gray"
-            android:textSize="20dp"
             android:onClick="@{() -> viewmodel.clickAttr()}"
+            android:text="@{viewmodel.attr}"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="@id/time"
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_attr"
-            android:text="@{viewmodel.attr}"
             tools:text="식비" />
 
         <TextView
@@ -158,8 +159,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="가격"
-            android:textSize="20dp"
+            android:text="@string/price"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/text_day"
             app:layout_constraintTop_toBottomOf="@id/text_attr" />
 
@@ -169,19 +170,20 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:inputType="number"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_price"
-            tools:text="10000" />
+            tools:text="10000"
+            />
 
         <TextView
             android:id="@+id/text_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="내용"
-            android:textSize="20dp"
+            android:text="@string/description"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/text_day"
             app:layout_constraintTop_toBottomOf="@id/text_price" />
 
@@ -190,7 +192,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_desc"
@@ -203,10 +205,11 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
-            android:onClick="@{() -> viewmodel.clickSave()}"
             android:backgroundTint="@color/purple_200"
-            android:text="저장하기"
-            android:textSize="15dp"
+            android:onClick="@{() -> viewmodel.clickSave()}"
+            android:text="@string/save"
+            android:textSize="15sp"
+            android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/text_desc" />
 
 
