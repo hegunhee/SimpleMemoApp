@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">NewSimpleMemoApp</string>
 
-
-    <string name="attr">분류</string>
+    <string name="income">수입</string>
+    <string name="expense">지출</string>
+    <string name="date">날짜</string>
     <string name="asset">자산</string>
+    <string name="attr">분류</string>
+    <string name="price">가격</string>
+    <string name="description">설명</string>
+    <string name="save">저장하기</string>
 </resources>
