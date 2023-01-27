@@ -29,15 +29,20 @@ class AddMemoViewModel @Inject constructor(
     var month: Int = 0
     var day: Int = 0
     var dayOfWeek: String = ""
-    val dateInfo = MutableLiveData<String>()
+    private val _dateInfo : MutableStateFlow<String> = MutableStateFlow<String>("")
+    val dateInfo : StateFlow<String> = _dateInfo.asStateFlow()
 
     var ampm: String = ""
     var hour: Int = 0
     var minute: Int = 0
-    var timeInfo = MutableLiveData<String>()
+    private val _timeInfo : MutableStateFlow<String> = MutableStateFlow<String>("")
+    val timeInfo : StateFlow<String> = _timeInfo.asStateFlow()
 
-    var asset = MutableLiveData<String>()
-    var attr = MutableLiveData<String>()
+    private val _asset : MutableStateFlow<String> = MutableStateFlow<String>("")
+    val asset : StateFlow<String> = _asset.asStateFlow()
+
+    private val _attr : MutableStateFlow<String> = MutableStateFlow<String>("")
+    var attr : StateFlow<String> = _attr.asStateFlow()
 
     private val _memoState : MutableSharedFlow<AddMemoState> = MutableSharedFlow<AddMemoState>()
     val memoState : SharedFlow<AddMemoState> = _memoState.asSharedFlow()
@@ -65,31 +70,39 @@ class AddMemoViewModel @Inject constructor(
         month = date.monthValue
         day = date.dayOfMonth
         dayOfWeek = changeKoreanDayOfWeek(date.dayOfWeek.toString())
-        dateInfo.value = "${year}/${month}/${day} (${dayOfWeek})"
+        _dateInfo.value = "${year}/${month}/${day} (${dayOfWeek})"
     }
 
 
     fun setTimeInfo(){
-        timeInfo.value = "$ampm ${hour}:${minute}"
+        _timeInfo.value = "$ampm ${hour}:${minute}"
+    }
+
+    fun setAsset(asset : String) {
+        _asset.value = asset
+    }
+
+    fun setAttr(attr : String) {
+        _attr.value = attr
     }
 
     fun setCategoryIncome() {
         _category.value = "수입"
-        if(isExpenseAttr(attr.value?:return)){
-            attr.value = ""
+        if(isExpenseAttr(attr.value)){
+            _attr.value = ""
         }
     }
 
     fun setCategoryExpense() {
         _category.value = "지출"
-        if(isIncomeAttr(attr.value?:return)){
-            attr.value = ""
+        if(isIncomeAttr(attr.value)){
+            _attr.value = ""
         }
     }
 
 
     fun saveData(price : Int, desc : String) = viewModelScope.launch {
-        val memoEntity = MemoEntity(category.value!!,year,month,day,dayOfWeek,ampm,hour,minute,attr.value!!,price,asset.value!!,desc)
+        val memoEntity = MemoEntity(category.value,year,month,day,dayOfWeek,ampm,hour,minute,attr.value,price,asset.value,desc)
         Log.d("TestSaveMemo",memoEntity.toString())
         addMemoUseCase(memoEntity)
     }
