@@ -82,7 +82,7 @@ class AddMemoActivity : AppCompatActivity() {
             .setTitle(getString(R.string.asset))
             .setItems(assetArray,
                 DialogInterface.OnClickListener { _, which ->
-                    viewModel.asset.value = assetArray[which]
+                    viewModel.setAsset(assetArray[which])
                 }).create().show()
     }
 
@@ -96,7 +96,7 @@ class AddMemoActivity : AppCompatActivity() {
             .setTitle(getString(R.string.attr))
             .setItems(attrType,
                 DialogInterface.OnClickListener { _, which ->
-                    viewModel.attr.value = attrType[which]
+                    viewModel.setAttr(attrType[which])
                 }).create().show()
     }
 
