@@ -124,7 +124,13 @@ class AddMemoViewModel @Inject constructor(
     }
 
     fun clickSave() = viewModelScope.launch{
-        _memoState.emit(AddMemoState.Save)
+        if(asset.value.isBlank()){
+            _memoState.emit(AddMemoState.SetAsset)
+        }else if(attr.value.isBlank()){
+            _memoState.emit(AddMemoState.SetAttr)
+        }else {
+            _memoState.emit(AddMemoState.Save)
+        }
     }
 
 

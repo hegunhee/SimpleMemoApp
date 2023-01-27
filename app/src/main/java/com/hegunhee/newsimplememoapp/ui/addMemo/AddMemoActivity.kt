@@ -60,19 +60,13 @@ class AddMemoActivity : AppCompatActivity() {
     }
 
     private fun saveData() {
-        with(viewDataBinding) {
-            with(viewModel) {
-                if (asset.value.isNullOrEmpty()) {
-                    setAsset()
-                } else if (attr.value.isNullOrEmpty()) {
-                    setAttr()
-                } else if (price.text.isNullOrEmpty()) {
-                    Toast.makeText(this@AddMemoActivity, "가격을 설정해주세요", Toast.LENGTH_SHORT).show()
-                } else {
-                    val description = if (desc.text.isNullOrEmpty()) "" else desc.text.toString()
-                    saveData(price.text.toString().toInt(), description)
-                    finish()
-                }
+        with(viewDataBinding){
+            if(price.text.isNullOrEmpty()){
+                Toast.makeText(this@AddMemoActivity, "가격을 설정해주세요", Toast.LENGTH_SHORT).show()
+            }else{
+                val description = if (desc.text.isNullOrEmpty()) "" else desc.text.toString()
+                this@AddMemoActivity.viewModel.saveData(price.text.toString().toInt(),description)
+                finish()
             }
         }
     }
