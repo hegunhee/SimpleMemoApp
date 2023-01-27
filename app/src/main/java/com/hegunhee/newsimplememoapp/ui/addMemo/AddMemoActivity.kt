@@ -22,12 +22,12 @@ import java.time.ZoneId
 @AndroidEntryPoint
 class AddMemoActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAddMemoBinding
+    private lateinit var viewDataBinding: ActivityAddMemoBinding
     private val addMemoViewModel : AddMemoViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_add_memo)
-        binding.apply {
+        viewDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_memo)
+        viewDataBinding.apply {
             viewmodel = addMemoViewModel
             lifecycleOwner = this@AddMemoActivity
         }
@@ -61,7 +61,7 @@ class AddMemoActivity : AppCompatActivity() {
     }
 
     private fun saveData() {
-        with(binding) {
+        with(viewDataBinding) {
             with(addMemoViewModel) {
                 if (asset.value.isNullOrEmpty()) {
                     setAsset()
