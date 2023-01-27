@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.ZoneId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,7 +46,7 @@ class AddMemoViewModel @Inject constructor(
         initTime()
     }
     private fun initTime() {
-        val day = LocalDateTime.now().plusHours(9)
+        val day = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
         if (day.hour > 12) {
             ampm = "오후"
             hour = day.hour - 12
