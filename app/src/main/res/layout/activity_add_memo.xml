@@ -120,15 +120,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:background="@color/gray"
-            android:textSize="20dp"
-            android:text="@{viewmodel.asset}"
             app:layout_constraintEnd_toEndOf="@id/time"
-            android:onClick="@{() -> viewmodel.clickAsset()}"
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_asset"
-            tools:text="현금" />
-
+            app:category="@{viewmodel.asset}"
+            android:onClick="@{() -> viewmodel.clickAsset()}"
+            />
 
         <TextView
             android:id="@+id/text_attr"
@@ -140,19 +137,18 @@
             app:layout_constraintStart_toStartOf="@id/text_day"
             app:layout_constraintTop_toBottomOf="@id/text_asset" />
 
-        <TextView
-            android:id="@+id/attr"
+        <include layout="@layout/include_clickable_textview"
+            android:id="@id/attr"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:background="@color/gray"
             android:onClick="@{() -> viewmodel.clickAttr()}"
-            android:text="@{viewmodel.attr}"
-            android:textSize="20sp"
+            app:category="@{viewmodel.attr}"
             app:layout_constraintEnd_toEndOf="@id/time"
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_attr"
-            tools:text="식비" />
+
+            />
 
         <TextView
             android:id="@+id/text_price"
@@ -171,7 +167,7 @@
             android:layout_marginStart="30dp"
             android:inputType="number"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/attr"
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_price"
             tools:text="10000"
@@ -193,7 +189,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/price"
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_desc"
             tools:text="설명충" />
