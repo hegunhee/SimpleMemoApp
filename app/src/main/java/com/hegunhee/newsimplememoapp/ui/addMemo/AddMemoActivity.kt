@@ -79,9 +79,9 @@ class AddMemoActivity : AppCompatActivity() {
 
     private fun setAsset() {
         AlertDialog.Builder(this)
-            .setTitle("자산")
+            .setTitle(getString(R.string.asset))
             .setItems(assetArray,
-                DialogInterface.OnClickListener { dialogInterface, which ->
+                DialogInterface.OnClickListener { _, which ->
                     addMemoViewModel.asset.value = assetArray[which]
                 }).create().show()
     }
@@ -93,27 +93,25 @@ class AddMemoActivity : AppCompatActivity() {
             expenseAttr
         }
         AlertDialog.Builder(this)
-            .setTitle("분류")
+            .setTitle(getString(R.string.attr))
             .setItems(attrType,
-                DialogInterface.OnClickListener { dialogInterface, which ->
+                DialogInterface.OnClickListener { _, which ->
                     addMemoViewModel.attr.value = attrType[which]
                 }).create().show()
     }
 
     private fun setDate() {
-
-        DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+        DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             addMemoViewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))}.let {  listener->
             with(addMemoViewModel){
                 DatePickerDialog(this@AddMemoActivity,listener,year,month-1,day).show()
             }
         }
-
     }
 
     private fun setTime() {
         val time = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
-        TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+        TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
             with(addMemoViewModel) {
                 if (hourOfDay > 12) {
                     ampm = "오후"

@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">NewSimpleMemoApp</string>
+
+
+    <string name="attr">분류</string>
+    <string name="asset">자산</string>
 </resources>
