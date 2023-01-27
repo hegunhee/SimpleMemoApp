@@ -65,7 +65,7 @@ class AddMemoViewModel @Inject constructor(
         setTimeInfo()
     }
 
-    fun setDate(date: LocalDate = LocalDate.now()) {
+    fun setDate(date: LocalDate = LocalDate.now(ZoneId.of("Asia/Seoul"))) {
         year = date.year
         month = date.monthValue
         day = date.dayOfMonth
