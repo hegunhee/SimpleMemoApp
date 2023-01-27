@@ -9,12 +9,17 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.data.entity.assetArray
 import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
 import com.hegunhee.newsimplememoapp.databinding.ActivityAddMemoBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -35,27 +40,21 @@ class AddMemoActivity : AppCompatActivity() {
         observeData()
     }
 
-    private fun observeData() = addMemoViewModel.memoState.observe(this) {
-        when (it) {
-            AddMemoState.Uninitialized -> {
-            }
-            AddMemoState.Back -> {
-                onBackPressed()
-            }
-            AddMemoState.Save -> {
-                saveData()
-            }
-            AddMemoState.SetAsset -> {
-                setAsset()
-            }
-            AddMemoState.SetAttr -> {
-                setAttr()
-            }
-            AddMemoState.SetDate -> {
-                setDate()
-            }
-            AddMemoState.SetTime -> {
-                setTime()
+    private fun observeData()  {
+        lifecycleScope.launch{
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                launch {
+                    addMemoViewModel.memoState.collect {
+                        when(it){
+                            AddMemoState.Back -> onBackPressed()
+                            AddMemoState.Save -> saveData()
+                            AddMemoState.SetAsset -> setAsset()
+                            AddMemoState.SetAttr -> setAttr()
+                            AddMemoState.SetDate -> setDate()
+                            AddMemoState.SetTime -> setTime()
+                        }
+                    }
+                }
             }
         }
     }

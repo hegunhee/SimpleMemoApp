@@ -10,6 +10,9 @@ import com.hegunhee.newsimplememoapp.data.entity.isExpenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.isIncomeAttr
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.InsertMemoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -37,8 +40,8 @@ class AddMemoViewModel @Inject constructor(
     var asset = MutableLiveData<String>()
     var attr = MutableLiveData<String>()
 
-    val memoState = MutableLiveData<AddMemoState>(AddMemoState.Uninitialized)
-
+    private val _memoState : MutableSharedFlow<AddMemoState> = MutableSharedFlow<AddMemoState>()
+    val memoState : SharedFlow<AddMemoState> = _memoState.asSharedFlow()
 
     fun initData() {
         category.value = "지출"
@@ -93,24 +96,24 @@ class AddMemoViewModel @Inject constructor(
         addMemoUseCase(memoEntity)
     }
 
-    fun back(){
-        memoState.postValue(AddMemoState.Back)
+    fun back()= viewModelScope.launch{
+        _memoState.emit(AddMemoState.Back)
     }
-    fun clickDate(){
-        memoState.postValue(AddMemoState.SetDate)
+    fun clickDate() = viewModelScope.launch{
+        _memoState.emit(AddMemoState.SetDate)
     }
-    fun clickTime(){
-        memoState.postValue(AddMemoState.SetTime)
+    fun clickTime() = viewModelScope.launch{
+        _memoState.emit(AddMemoState.SetTime)
     }
-    fun clickAsset(){
-        memoState.postValue(AddMemoState.SetAsset)
+    fun clickAsset() = viewModelScope.launch{
+        _memoState.emit(AddMemoState.SetAsset)
     }
-    fun clickAttr() {
-        memoState.postValue(AddMemoState.SetAttr)
+    fun clickAttr() = viewModelScope.launch {
+        _memoState.emit(AddMemoState.SetAttr)
     }
 
-    fun clickSave(){
-        memoState.postValue(AddMemoState.Save)
+    fun clickSave() = viewModelScope.launch{
+        _memoState.emit(AddMemoState.Save)
     }
 
 

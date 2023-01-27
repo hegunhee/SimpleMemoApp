@@ -1,7 +1,6 @@
 package com.hegunhee.newsimplememoapp.ui.addMemo
 
 sealed class AddMemoState {
-    object Uninitialized : AddMemoState()
     object Back : AddMemoState()
     object SetDate : AddMemoState()
     object SetTime : AddMemoState()
