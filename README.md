@@ -7,9 +7,9 @@
 통계 탭을통해 이번달에 어떤 항목(식비,교통,기타)으로 얼마를 사용했는지 볼 수 있습니다.  
 기능 축소 후 점진적으로 컴포즈로 변경할 예정
 ## 앱 사진  
-![memoView](https://user-images.githubusercontent.com/57277631/162414207-c4b8b394-4fa3-4ced-beea-3b5ced3d049b.PNG)  
+![memoView](https://user-images.githubusercontent.com/57277631/215263981-e0d2ea6b-8cca-4f1d-a451-efcbbdb310a5.jpg)  
 시작할때, 가계부 화면  
-![addMemoView](https://user-images.githubusercontent.com/57277631/162414201-7cc69be9-a147-4b3a-b28a-38b0b764aea0.PNG)  
+![addMemoView](https://user-images.githubusercontent.com/57277631/215264017-3ddb73ae-253e-40ef-b05e-758300c69ebb.jpg)  
 가계부 추가, FloatingActionButton 클릭시 이동  
 ![detailMemoView](https://user-images.githubusercontent.com/57277631/162414205-b1c013ed-4539-4ab9-936e-670cf2623a06.PNG)  
 가계부 수정 및 삭제, 클릭시 이동  
