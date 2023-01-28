@@ -1,6 +1,7 @@
 package com.hegunhee.newsimplememoapp.ui.common
 
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
@@ -13,9 +14,9 @@ fun TextView.setPrice(price : Int){
 @BindingAdapter("setPriceType")
 fun TextView.setPriceType(type : String){
     when (type){
-        "수입" -> { this.setTextColor(R.color.blue) }
-        "지출" -> { this.setTextColor(R.color.red) }
-        else -> { this.setTextColor(R.color.white) }
+        "수입" -> { this.setTextColor(ContextCompat.getColor(context,R.color.blue)) }
+        "지출" -> { this.setTextColor(ContextCompat.getColor(context,R.color.red)) }
+        else -> { this.setTextColor(ContextCompat.getColor(context,R.color.white)) }
     }
 }
 
@@ -32,11 +33,11 @@ fun TextView.setTime(memo : MemoType.Memo){
 @BindingAdapter("setDayOfWeek")
 fun TextView.setDayOfWeek(dayOfWeek : String){
     if(dayOfWeek == "토"){
-        setBackgroundColor(R.color.blue)
+        setBackgroundResource(R.color.blue)
     }else if(dayOfWeek == "일"){
-        setBackgroundColor(R.color.red)
+        setBackgroundResource(R.color.red)
     }else{
-        setBackgroundColor(R.color.gray)
+        setBackgroundResource(R.color.black)
     }
     text = dayOfWeek + "요일"
 }
