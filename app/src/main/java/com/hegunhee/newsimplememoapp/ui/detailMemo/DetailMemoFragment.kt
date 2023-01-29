@@ -4,46 +4,51 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.DialogInterface
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
-import androidx.navigation.navArgs
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.hegunhee.newsimplememoapp.R
-import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
 import com.hegunhee.newsimplememoapp.data.entity.assetArray
 import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
-import com.hegunhee.newsimplememoapp.databinding.ActivityDetailMemoBinding
-import com.hegunhee.newsimplememoapp.domain.model.MemoType
+import com.hegunhee.newsimplememoapp.databinding.FragmentDetailMemoBinding
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
 @AndroidEntryPoint
-class DetailMemoActivity : AppCompatActivity() {
+class DetailMemoFragment : Fragment() {
 
     private val viewModel : DetailMemoViewModel by viewModels()
-    private lateinit var binding: ActivityDetailMemoBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_detail_memo)
-        binding.apply {
-            viewmodel = viewModel
-            lifecycleOwner = this@DetailMemoActivity
+    private lateinit var binding: FragmentDetailMemoBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val root = inflater.inflate(R.layout.fragment_detail_memo,container,false)
+        binding = FragmentDetailMemoBinding.bind(root).apply {
+            this.viewmodel = viewModel
+            lifecycleOwner = viewLifecycleOwner
         }
-        intent?.getIntExtra("MemoId",0)?.let {
-            viewModel.initViewModel(it)
-        }
+        val memoId = navArgs<DetailMemoFragmentArgs>().value.memoId
+        viewModel.initViewModel(memoId)
         observeData()
+        return root
     }
 
-    private fun observeData() = viewModel.memoState.observe(this) {
+
+    private fun observeData() = viewModel.memoState.observe(requireActivity()) {
         when (it) {
             DetailMemoState.Uninitialized -> {}
             DetailMemoState.Back -> {
-                onBackPressed()
+                findNavController().popBackStack()
             }
             DetailMemoState.Save -> {
                 saveData()
@@ -61,7 +66,7 @@ class DetailMemoActivity : AppCompatActivity() {
                 setTime()
             }
             DetailMemoState.Remove -> {
-                finish()
+                findNavController().popBackStack()
             }
         }
     }
@@ -74,19 +79,19 @@ class DetailMemoActivity : AppCompatActivity() {
                 setAttr()
             } else if (price.value.isNullOrEmpty()) {
                 Toast.makeText(
-                    this@DetailMemoActivity,
+                    requireContext(),
                     "가격을 설정해주세요", Toast.LENGTH_SHORT
                 )
                     .show()
             } else {
                 saveData()
-                finish()
+                findNavController().popBackStack()
             }
         }
     }
 
     private fun setAsset() {
-        AlertDialog.Builder(this)
+        AlertDialog.Builder(requireContext())
             .setTitle("자산")
             .setItems(
                 assetArray,
@@ -101,7 +106,7 @@ class DetailMemoActivity : AppCompatActivity() {
         } else {
             expenseAttr
         }
-        AlertDialog.Builder(this)
+        AlertDialog.Builder(requireContext())
             .setTitle("자산")
             .setItems(attrType,
                 DialogInterface.OnClickListener { dialogInterface, which ->
@@ -114,7 +119,7 @@ class DetailMemoActivity : AppCompatActivity() {
             viewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))
         }.let { listener ->
             with(viewModel) {
-                DatePickerDialog(this@DetailMemoActivity, listener, year, month - 1, day).show()
+                DatePickerDialog(requireContext(), listener, year, month - 1, day).show()
             }
         }
 
@@ -133,7 +138,7 @@ class DetailMemoActivity : AppCompatActivity() {
                     this.minute = minute
                 }
                 Toast.makeText(
-                    this@DetailMemoActivity,
+                    requireContext(),
                     "${ampm},${hour}:${minute}",
                     android.widget.Toast.LENGTH_SHORT
                 ).show()
@@ -141,8 +146,7 @@ class DetailMemoActivity : AppCompatActivity() {
             }
 
         }.let { listener ->
-            TimePickerDialog(this, listener, viewModel.hour, viewModel.minute, false).show()
+            TimePickerDialog(requireContext(), listener, viewModel.hour, viewModel.minute, false).show()
         }
     }
-
 }
