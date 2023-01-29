@@ -55,7 +55,7 @@ class MemoFragment : Fragment() {
     }
 
     private fun observeData()  {
-        lifecycleScope.launch{
+        viewLifecycleOwner.lifecycleScope.launch{
             repeatOnLifecycle(Lifecycle.State.RESUMED){
                 launch {
                     viewModel.memoList.collect {
