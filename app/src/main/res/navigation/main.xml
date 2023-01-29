@@ -5,45 +5,39 @@
     android:id="@+id/main"
     app:startDestination="@id/mainFragment">
 
+    <action
+        android:id="@+id/memo_to_add"
+        app:destination="@id/addMemoFragment"
+        />
+
+    <action
+        android:id="@+id/memo_to_detail"
+        app:destination="@id/detailMemoFragment" />
+
 
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.hegunhee.newsimplememoapp.ui.main.MainFragment"
         tools:layout="@layout/fragment_main"
         android:label="MainFragment">
-
-        <action
-            android:id="@+id/memo_to_add"
-            app:destination="@id/addMemoActivity"
-            />
-
-        <action
-            android:id="@+id/memo_to_detail"
-            app:destination="@id/detailMemoActivity" />
-
     </fragment>
 
     <fragment
-        android:id="@+id/memo"
-        android:name="com.hegunhee.newsimplememoapp.ui.memo.MemoFragment"
-        android:label="MemoFragment"
-        tools:layout="@layout/fragment_memo">
-    </fragment>
-
-    <activity
-        android:id="@+id/addMemoActivity"
-        android:name="com.hegunhee.newsimplememoapp.ui.addMemo.AddMemoActivity"
-        android:label="AddMemoActivity"
-        tools:layout="@layout/activity_add_memo" />
-    <activity
-        android:id="@+id/detailMemoActivity"
-        android:name="com.hegunhee.newsimplememoapp.ui.detailMemo.DetailMemoActivity"
-        tools:layout="@layout/activity_detail_memo"
+        android:id="@+id/addMemoFragment"
+        android:name="com.hegunhee.newsimplememoapp.ui.addMemo.AddMemoFragment"
+        android:label="AddMemoFragment"
+        tools:layout="@layout/fragment_add_memo" />
+    <fragment
+        android:id="@+id/detailMemoFragment"
+        android:name="com.hegunhee.newsimplememoapp.ui.detailMemo.DetailMemoFragment"
+        tools:layout="@layout/fragment_detail_memo"
         android:label="DetailMemoActivity" >
         <argument
-            android:name="MemoId"
-            app:argType="integer" />
-    </activity>
+            android:name="memoId"
+            app:argType="integer"
+            android:defaultValue="0"
+            />
+    </fragment>
 
 
 </navigation>
