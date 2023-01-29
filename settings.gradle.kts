@@ -1,2 +1,2 @@
 rootProject.name = "NewSimpleMemoApp"
-include ':app'
+include (":app")
