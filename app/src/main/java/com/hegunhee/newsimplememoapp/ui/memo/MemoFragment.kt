@@ -10,9 +10,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.FragmentMemoBinding
 import com.hegunhee.newsimplememoapp.ui.common.MemoAdapter
+import com.hegunhee.newsimplememoapp.ui.main.MainFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -22,6 +25,7 @@ class MemoFragment : Fragment() {
 
     private val viewModel : MemoViewModel by viewModels()
     private lateinit var viewDataBinding : FragmentMemoBinding
+
     private lateinit var adapter : MemoAdapter
 
     override fun onCreateView(
@@ -52,7 +56,7 @@ class MemoFragment : Fragment() {
 
     private fun observeData()  {
         lifecycleScope.launch{
-            repeatOnLifecycle(Lifecycle.State.CREATED){
+            repeatOnLifecycle(Lifecycle.State.RESUMED){
                 launch {
                     viewModel.memoList.collect {
                         adapter.submitList(it)
@@ -65,7 +69,7 @@ class MemoFragment : Fragment() {
                                 findNavController().navigate(R.id.memo_to_add)
                             }
                             memoNavigation as MemoNavigation.DetailMemo-> {
-                                MemoFragmentDirections.memoToDetail(memoNavigation.memoId).also {
+                                MainFragmentDirections.memoToDetail(memoNavigation.memoId).also {
                                     findNavController().navigate(it)
                                 }
                             }

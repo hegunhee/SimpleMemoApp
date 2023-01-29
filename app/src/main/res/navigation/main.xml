@@ -2,21 +2,32 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/memo"
-    app:startDestination="@id/memoFragment">
+    android:id="@+id/main"
+    app:startDestination="@id/mainFragment">
 
 
     <fragment
-        android:id="@+id/memoFragment"
-        android:name="com.hegunhee.newsimplememoapp.ui.memo.MemoFragment"
-        android:label="MemoFragment"
-        tools:layout="@layout/fragment_memo">
+        android:id="@+id/mainFragment"
+        android:name="com.hegunhee.newsimplememoapp.ui.main.MainFragment"
+        tools:layout="@layout/fragment_main"
+        android:label="MainFragment">
+
         <action
             android:id="@+id/memo_to_add"
-            app:destination="@id/addMemoActivity" />
+            app:destination="@id/addMemoActivity"
+            />
+
         <action
             android:id="@+id/memo_to_detail"
             app:destination="@id/detailMemoActivity" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/memo"
+        android:name="com.hegunhee.newsimplememoapp.ui.memo.MemoFragment"
+        android:label="MemoFragment"
+        tools:layout="@layout/fragment_memo">
     </fragment>
 
     <activity
