@@ -8,8 +8,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.navArgs
 import com.hegunhee.newsimplememoapp.R
 import com.hegunhee.newsimplememoapp.databinding.ActivityDetailStaticsBinding
-import com.hegunhee.newsimplememoapp.ui.detailMemo.DetailMemoActivity
-import com.hegunhee.newsimplememoapp.ui.common.MemoAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
