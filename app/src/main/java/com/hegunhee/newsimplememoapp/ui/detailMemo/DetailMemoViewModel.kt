@@ -12,6 +12,9 @@ import com.hegunhee.newsimplememoapp.domain.memoUsecase.DeleteMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
@@ -44,7 +47,8 @@ class DetailMemoViewModel @Inject constructor(
     val price = MutableLiveData<String>()
     val desc = MutableLiveData<String>()
 
-    val memoState = MutableLiveData<DetailMemoState>(DetailMemoState.Uninitialized)
+    private val _memoState : MutableSharedFlow<DetailMemoState> = MutableSharedFlow<DetailMemoState>()
+    val memoState : SharedFlow<DetailMemoState> = _memoState.asSharedFlow()
 
     fun initViewModel(memoId : Int) {
         viewModelScope.launch {
@@ -133,38 +137,37 @@ class DetailMemoViewModel @Inject constructor(
         ).apply { addMemoUseCase(this) }
     }
 
-
-    fun removeMemo() = viewModelScope.launch {
-        deleteMemoUseCase.invoke(memoEntity)
+    fun back() = viewModelScope.launch{
+        _memoState.emit(DetailMemoState.Back)
     }
 
-    fun back() {
-        memoState.postValue(DetailMemoState.Back)
+    fun clickDate() = viewModelScope.launch{
+        _memoState.emit(DetailMemoState.SetDate)
     }
 
-    fun clickDate() {
-        memoState.postValue(DetailMemoState.SetDate)
+    fun clickTime() = viewModelScope.launch{
+        _memoState.emit(DetailMemoState.SetTime)
     }
 
-    fun clickTime() {
-        memoState.postValue(DetailMemoState.SetTime)
+    fun clickAsset() = viewModelScope.launch{
+        _memoState.emit(DetailMemoState.SetAsset)
     }
 
-    fun clickAsset() {
-        memoState.postValue(DetailMemoState.SetAsset)
+    fun clickAttr() = viewModelScope.launch{
+        _memoState.emit(DetailMemoState.SetAttr)
     }
 
-    fun clickAttr() {
-        memoState.postValue(DetailMemoState.SetAttr)
+    fun clickSave() = viewModelScope.launch{
+        _memoState.emit(DetailMemoState.Save)
     }
 
-    fun clickSave() {
-        memoState.postValue(DetailMemoState.Save)
-    }
-
-    fun clickRemove() {
+    fun clickRemove() = viewModelScope.launch{
         removeMemo()
-        memoState.postValue(DetailMemoState.Remove)
+        _memoState.emit(DetailMemoState.Remove)
+    }
+
+    private suspend fun removeMemo() {
+        deleteMemoUseCase.invoke(memoEntity)
     }
 
 
