@@ -56,9 +56,6 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
 
-    // koin DI
-    implementation ("io.insert-koin:koin-android:3.1.2")
-
     // Coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1")
@@ -74,7 +71,6 @@ dependencies {
 
     androidTestImplementation ("androidx.room:room-testing:2.2.3")
     androidTestImplementation ("androidx.test.ext:junit:1.1.1")
-    androidTestImplementation ("org.koin:koin-test:2.0.1")
     androidTestImplementation ("org.mockito:mockito-core:2.25.0")
 
     // Hilt
