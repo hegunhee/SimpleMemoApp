@@ -11,6 +11,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.hegunhee.newsimplememoapp.R
@@ -19,12 +22,13 @@ import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
 import com.hegunhee.newsimplememoapp.databinding.FragmentDetailMemoBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 @AndroidEntryPoint
 class DetailMemoFragment : Fragment() {
 
-    private val viewModel : DetailMemoViewModel by viewModels()
+    private val viewModel: DetailMemoViewModel by viewModels()
     private lateinit var binding: FragmentDetailMemoBinding
 
     override fun onCreateView(
@@ -32,7 +36,7 @@ class DetailMemoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_detail_memo,container,false)
+        val root = inflater.inflate(R.layout.fragment_detail_memo, container, false)
         binding = FragmentDetailMemoBinding.bind(root).apply {
             this.viewmodel = viewModel
             lifecycleOwner = viewLifecycleOwner
@@ -44,29 +48,36 @@ class DetailMemoFragment : Fragment() {
     }
 
 
-    private fun observeData() = viewModel.memoState.observe(requireActivity()) {
-        when (it) {
-            DetailMemoState.Uninitialized -> {}
-            DetailMemoState.Back -> {
-                findNavController().popBackStack()
-            }
-            DetailMemoState.Save -> {
-                saveData()
-            }
-            DetailMemoState.SetAsset -> {
-                setAsset()
-            }
-            DetailMemoState.SetAttr -> {
-                setAttr()
-            }
-            DetailMemoState.SetDate -> {
-                setDate()
-            }
-            DetailMemoState.SetTime -> {
-                setTime()
-            }
-            DetailMemoState.Remove -> {
-                findNavController().popBackStack()
+    private fun observeData() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                launch {
+                    viewModel.memoState.collect {
+                        when (it) {
+                            DetailMemoState.Back -> {
+                                findNavController().popBackStack()
+                            }
+                            DetailMemoState.Save -> {
+                                saveData()
+                            }
+                            DetailMemoState.SetAsset -> {
+                                setAsset()
+                            }
+                            DetailMemoState.SetAttr -> {
+                                setAttr()
+                            }
+                            DetailMemoState.SetDate -> {
+                                setDate()
+                            }
+                            DetailMemoState.SetTime -> {
+                                setTime()
+                            }
+                            DetailMemoState.Remove -> {
+                                findNavController().popBackStack()
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -146,7 +157,13 @@ class DetailMemoFragment : Fragment() {
             }
 
         }.let { listener ->
-            TimePickerDialog(requireContext(), listener, viewModel.hour, viewModel.minute, false).show()
+            TimePickerDialog(
+                requireContext(),
+                listener,
+                viewModel.hour,
+                viewModel.minute,
+                false
+            ).show()
         }
     }
 }
