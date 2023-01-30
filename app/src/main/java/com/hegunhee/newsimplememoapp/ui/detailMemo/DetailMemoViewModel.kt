@@ -12,9 +12,7 @@ import com.hegunhee.newsimplememoapp.domain.memoUsecase.DeleteMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
@@ -28,24 +26,30 @@ class DetailMemoViewModel @Inject constructor(
 
     private lateinit var memoEntity: MemoType.Memo
 
-    val category = MutableLiveData<String>()
+    private val _category : MutableStateFlow<String> = MutableStateFlow<String>("")
+    val category : StateFlow<String> = _category.asStateFlow()
 
     var year: Int = 0
     var month: Int = 0
     var day: Int = 0
     var dayOfWeek: String = ""
-    val dateInfo = MutableLiveData<String>()
+    private val _dateInfo : MutableStateFlow<String> = MutableStateFlow<String>("")
+    val dateInfo : StateFlow<String> = _dateInfo.asStateFlow()
 
     var ampm: String = ""
     var hour: Int = 0
     var minute: Int = 0
-    var timeInfo = MutableLiveData<String>()
+    private val _timeInfo : MutableStateFlow<String> = MutableStateFlow<String>("")
+    val timeInfo : StateFlow<String> = _timeInfo.asStateFlow()
 
-    val asset = MutableLiveData<String>()
-    val attr = MutableLiveData<String>()
+    private val _asset : MutableStateFlow<String> = MutableStateFlow<String>("")
+    val asset : StateFlow<String> = _asset.asStateFlow()
+
+    private val _attr : MutableStateFlow<String> = MutableStateFlow<String>("")
+    val attr : StateFlow<String> = _attr.asStateFlow()
 
     val price = MutableLiveData<String>()
-    val desc = MutableLiveData<String>()
+    val desc : MutableStateFlow<String> = MutableStateFlow<String>("")
 
     private val _memoState : MutableSharedFlow<DetailMemoState> = MutableSharedFlow<DetailMemoState>()
     val memoState : SharedFlow<DetailMemoState> = _memoState.asSharedFlow()
@@ -61,9 +65,9 @@ class DetailMemoViewModel @Inject constructor(
         initDay()
         initTime()
         memoEntity.let {
-            category.value = it.category
-            asset.value = it.asset
-            attr.value = it.attr
+            _category.value = it.category
+            _asset.value = it.asset
+            _attr.value = it.attr
             price.value = it.price.toString()
             desc.value = it.description
         }
@@ -77,7 +81,7 @@ class DetailMemoViewModel @Inject constructor(
             dayOfWeek = it.dayOfWeek
         }
 
-        dateInfo.value = "${year}/${month}/${day} (${dayOfWeek}) "
+        _dateInfo.value = "${year}/${month}/${day} (${dayOfWeek}) "
     }
 
     private fun initTime() {
@@ -86,8 +90,7 @@ class DetailMemoViewModel @Inject constructor(
             hour = it.hour
             minute = it.minute
         }
-
-        timeInfo.value = "$ampm ${hour}:${minute}"
+        _timeInfo.value = "$ampm ${hour}:${minute}"
     }
 
     fun setDate(date: LocalDate = LocalDate.now()) {
@@ -98,24 +101,24 @@ class DetailMemoViewModel @Inject constructor(
             dayOfWeek = changeKoreanDayOfWeek(it.dayOfWeek.toString())
         }
 
-        dateInfo.value = "${year}/${month}/${day} (${dayOfWeek})"
+        _dateInfo.value = "${year}/${month}/${day} (${dayOfWeek})"
     }
 
     fun setTimeInfo() {
-        timeInfo.value = "$ampm ${hour}:${minute}"
+        _timeInfo.value = "$ampm ${hour}:${minute}"
     }
 
     fun setCategoryIncome() {
-        category.value = "수입"
-        if (isExpenseAttr(attr.value ?: return)) {
-            attr.value = ""
+        _category.value = "수입"
+        if (isExpenseAttr(attr.value)) {
+            _attr.value = ""
         }
     }
 
     fun setCategoryExpense() {
-        category.value = "지출"
-        if (isIncomeAttr(attr.value ?: return)) {
-            attr.value = ""
+        _category.value = "지출"
+        if (isIncomeAttr(attr.value)) {
+            _attr.value = ""
         }
     }
 
@@ -129,10 +132,10 @@ class DetailMemoViewModel @Inject constructor(
             ampm,
             hour,
             minute,
-            attr.value!!,
+            attr.value,
             price.value.toString().toInt(),
-            asset.value!!,
-            desc.value!!,
+            asset.value,
+            desc.value,
             memoEntity.id
         ).apply { addMemoUseCase(this) }
     }
@@ -168,6 +171,14 @@ class DetailMemoViewModel @Inject constructor(
 
     private suspend fun removeMemo() {
         deleteMemoUseCase.invoke(memoEntity)
+    }
+
+    fun setAsset(asset : String) = viewModelScope.launch {
+        _asset.value = asset
+    }
+
+    fun setAttr(attr : String) = viewModelScope.launch {
+        _attr.value = attr
     }
 
 

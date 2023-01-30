@@ -84,9 +84,9 @@ class DetailMemoFragment : Fragment() {
 
     fun saveData() {
         with(viewModel) {
-            if (asset.value.isNullOrEmpty()) {
+            if (asset.value.isEmpty()) {
                 setAsset()
-            } else if (attr.value.isNullOrEmpty()) {
+            } else if (attr.value.isEmpty()) {
                 setAttr()
             } else if (price.value.isNullOrEmpty()) {
                 Toast.makeText(
@@ -107,7 +107,7 @@ class DetailMemoFragment : Fragment() {
             .setItems(
                 assetArray,
                 DialogInterface.OnClickListener { dialogInterface, which ->
-                    viewModel.asset.value = assetArray[which]
+                    viewModel.setAsset(assetArray[which])
                 }).create().show()
     }
 
@@ -121,7 +121,7 @@ class DetailMemoFragment : Fragment() {
             .setTitle("자산")
             .setItems(attrType,
                 DialogInterface.OnClickListener { dialogInterface, which ->
-                    viewModel.attr.value = attrType[which]
+                    viewModel.setAttr(assetArray[which])
                 }).create().show()
     }
 
