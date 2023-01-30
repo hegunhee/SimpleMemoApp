@@ -113,7 +113,7 @@ class DetailMemoFragment : Fragment() {
             .setTitle("자산")
             .setItems(attrType,
                 DialogInterface.OnClickListener { _, which ->
-                    viewModel.setAttr(assetArray[which])
+                    viewModel.setAttr(attrType[which])
                 }).create().show()
     }
 
