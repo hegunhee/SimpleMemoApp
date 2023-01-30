@@ -124,7 +124,7 @@ class DetailMemoViewModel @Inject constructor(
 
     fun saveData() = viewModelScope.launch {
         MemoEntity(
-            category.value!!,
+            category.value,
             year,
             month,
             day,
@@ -161,7 +161,14 @@ class DetailMemoViewModel @Inject constructor(
     }
 
     fun clickSave() = viewModelScope.launch{
-        _memoState.emit(DetailMemoState.Save)
+        if(asset.value.isBlank()){
+            _memoState.emit(DetailMemoState.SetAsset)
+        }else if(attr.value.isBlank()){
+            _memoState.emit(DetailMemoState.SetAttr)
+        }else{
+            _memoState.emit(DetailMemoState.Save)
+        }
+
     }
 
     fun clickRemove() = viewModelScope.launch{
