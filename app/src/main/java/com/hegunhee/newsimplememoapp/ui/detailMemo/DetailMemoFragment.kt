@@ -82,19 +82,11 @@ class DetailMemoFragment : Fragment() {
         }
     }
 
-    fun saveData() {
+    private fun saveData() {
         with(viewModel) {
-            if (asset.value.isEmpty()) {
-                setAsset()
-            } else if (attr.value.isEmpty()) {
-                setAttr()
-            } else if (price.value.isNullOrEmpty()) {
-                Toast.makeText(
-                    requireContext(),
-                    "가격을 설정해주세요", Toast.LENGTH_SHORT
-                )
-                    .show()
-            } else {
+            if(price.value.isNullOrEmpty()){
+                Toast.makeText(requireContext(), "가격을 설정해주세요", Toast.LENGTH_SHORT).show()
+            }else {
                 saveData()
                 findNavController().popBackStack()
             }
