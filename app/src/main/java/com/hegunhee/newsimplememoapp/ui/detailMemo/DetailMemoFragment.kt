@@ -106,7 +106,7 @@ class DetailMemoFragment : Fragment() {
             .setTitle("자산")
             .setItems(
                 assetArray,
-                DialogInterface.OnClickListener { dialogInterface, which ->
+                DialogInterface.OnClickListener { _, which ->
                     viewModel.setAsset(assetArray[which])
                 }).create().show()
     }
@@ -120,13 +120,13 @@ class DetailMemoFragment : Fragment() {
         AlertDialog.Builder(requireContext())
             .setTitle("자산")
             .setItems(attrType,
-                DialogInterface.OnClickListener { dialogInterface, which ->
+                DialogInterface.OnClickListener { _, which ->
                     viewModel.setAttr(assetArray[which])
                 }).create().show()
     }
 
     private fun setDate() {
-        DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+        DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             viewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))
         }.let { listener ->
             with(viewModel) {
@@ -137,7 +137,7 @@ class DetailMemoFragment : Fragment() {
     }
 
     private fun setTime() {
-        TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+        TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
             with(viewModel) {
                 if (hourOfDay > 12) {
                     ampm = "오후"
@@ -148,11 +148,6 @@ class DetailMemoFragment : Fragment() {
                     hour = hourOfDay
                     this.minute = minute
                 }
-                Toast.makeText(
-                    requireContext(),
-                    "${ampm},${hour}:${minute}",
-                    android.widget.Toast.LENGTH_SHORT
-                ).show()
                 setTimeInfo()
             }
 
