@@ -52,9 +52,6 @@ dependencies {
 
     implementation(libs.bundles.lifecycle)
 
-    // koin DI
-    implementation ("io.insert-koin:koin-android:3.1.2")
-
     // Coroutines
     implementation(libs.bundles.coroutine)
     implementation(libs.coroutine.test)
@@ -66,7 +63,6 @@ dependencies {
     androidTestImplementation(libs.room.testing)
     androidTestImplementation(libs.test.ext.junit)
     androidTestImplementation(libs.mockito.core)
-    androidTestImplementation ("org.koin:koin-test:2.0.1")
 
     // Hilt
     implementation(libs.hilt.android)
