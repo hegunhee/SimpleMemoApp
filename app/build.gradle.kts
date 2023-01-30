@@ -41,41 +41,32 @@ android {
 
 dependencies {
 
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.5.0")
-    implementation ("androidx.core:core-ktx:1.7.0")
-    implementation ("androidx.appcompat:appcompat:1.4.1")
-    implementation ("com.google.android.material:material:1.5.0")
-    implementation ("androidx.constraintlayout:constraintlayout:2.1.3")
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.4.2")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.4.2")
-    testImplementation ("junit:junit:4.+")
-    androidTestImplementation ("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation ("androidx.test.espresso:espresso-core:3.4.0")
-    testImplementation ("org.mockito:mockito-inline:3.4.0")
+    implementation(libs.bundles.ui)
 
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
+    implementation(libs.bundles.navigation)
+
+    testImplementation(libs.junit.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
+    testImplementation(libs.mockito.inline)
+
+    implementation(libs.bundles.lifecycle)
 
     // Coroutines
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1")
-    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3")
+    implementation(libs.bundles.coroutine)
+    implementation(libs.coroutine.test)
 
     //Room DB
-    implementation ("androidx.room:room-runtime:2.4.2")
-    kapt ("androidx.room:room-compiler:2.4.2")
-    implementation ("androidx.room:room-ktx:2.4.2")
-    kapt ("android.arch.persistence.room:compiler:1.1.1")
-    kaptTest ("android.arch.persistence.room:testing:1.1.1")
+    implementation(libs.bundles.room)
+    kapt(libs.room.compiler)
 
-
-    androidTestImplementation ("androidx.room:room-testing:2.2.3")
-    androidTestImplementation ("androidx.test.ext:junit:1.1.1")
-    androidTestImplementation ("org.mockito:mockito-core:2.25.0")
+    androidTestImplementation(libs.room.testing)
+    androidTestImplementation(libs.test.ext.junit)
+    androidTestImplementation(libs.mockito.core)
 
     // Hilt
-    implementation ("com.google.dagger:hilt-android:2.40")
-    kapt ("com.google.dagger:hilt-android-compiler:2.40")
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 
 
 }
