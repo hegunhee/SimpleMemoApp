@@ -68,8 +68,6 @@ dependencies {
     implementation ("androidx.room:room-runtime:2.4.2")
     kapt ("androidx.room:room-compiler:2.4.2")
     implementation ("androidx.room:room-ktx:2.4.2")
-    kapt ("android.arch.persistence.room:compiler:1.1.1")
-    kaptTest ("android.arch.persistence.room:testing:1.1.1")
 
 
     androidTestImplementation ("androidx.room:room-testing:2.2.3")
