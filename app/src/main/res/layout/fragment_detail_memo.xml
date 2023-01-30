@@ -113,19 +113,18 @@
             app:layout_constraintStart_toStartOf="@id/text_day"
             app:layout_constraintTop_toBottomOf="@id/text_day" />
 
-        <TextView
+        <include
             android:id="@+id/asset"
+            layout="@layout/include_clickable_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:background="@color/gray"
-            android:text="@{viewmodel.asset}"
-            android:textSize="20dp"
-            android:onClick="@{() -> viewmodel.clickAsset()}"
+            app:category="@{viewmodel.asset}"
+            app:layout_constraintBottom_toBottomOf="@id/text_asset"
             app:layout_constraintEnd_toEndOf="@id/time"
+            android:onClick="@{() -> viewmodel.clickAsset()}"
             app:layout_constraintStart_toEndOf="@id/text_day"
-            app:layout_constraintTop_toTopOf="@id/text_asset"
-            tools:text="현금" />
+            app:layout_constraintTop_toTopOf="@id/text_asset" />
 
 
         <TextView
@@ -138,19 +137,18 @@
             app:layout_constraintStart_toStartOf="@id/text_day"
             app:layout_constraintTop_toBottomOf="@id/text_asset" />
 
-        <TextView
+        <include
             android:id="@+id/attr"
+            layout="@layout/include_clickable_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:background="@color/gray"
-            android:text="@{viewmodel.attr}"
-            android:textSize="20dp"
             android:onClick="@{() -> viewmodel.clickAttr()}"
+            app:category="@{viewmodel.attr}"
             app:layout_constraintEnd_toEndOf="@id/time"
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_attr"
-            tools:text="식비" />
+            />
 
         <TextView
             android:id="@+id/text_price"
