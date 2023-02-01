@@ -5,7 +5,7 @@ import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
 
 @Dao
 interface MemoDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertMemo(memoEntity : MemoEntity)
 
     @Delete
