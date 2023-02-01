@@ -35,10 +35,6 @@ class DefaultMemoRepository @Inject constructor(
         dao.insertAllMemo(*memoEntity.toTypedArray())
     }
 
-    override suspend fun getMemoListSortedByYearAndMonth(year: Int, month: Int): List<MemoEntity> {
-        return dao.getMemoListSortedByYearAndMonth(year,month)
-    }
-
     override suspend fun getMemoTypeListSortedByYearAndMonth(year: Int, month: Int): List<MemoType> {
         val group = dao.getMemoListSortedByYearAndMonth(year,month).groupBy { it.day }
         val memoTypeList = mutableListOf<MemoType>()
