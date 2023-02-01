@@ -64,5 +64,7 @@ class DefaultMemoRepository @Inject constructor(
         return dao.getMemoListSortedByAttrYearMonth(attr,year,month)
     }
 
-
+    override suspend fun updateMemo(memo: MemoType.Memo) {
+        dao.updateMemo(memo.toMemoEntity())
+    }
 }

@@ -10,6 +10,7 @@ import com.hegunhee.newsimplememoapp.data.entity.isIncomeAttr
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.InsertMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.DeleteMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.memoUsecase.UpdateMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -21,7 +22,7 @@ import javax.inject.Inject
 class DetailMemoViewModel @Inject constructor(
     private val getMemoUseCase : GetMemoUseCase,
     private val deleteMemoUseCase: DeleteMemoUseCase,
-    private val addMemoUseCase: InsertMemoUseCase
+    private val updateMemoUseCase : UpdateMemoUseCase
 ) : ViewModel() {
 
     private lateinit var memoEntity: MemoType.Memo
@@ -122,22 +123,10 @@ class DetailMemoViewModel @Inject constructor(
         }
     }
 
-    fun saveData() = viewModelScope.launch {
-        MemoEntity(
-            category.value,
-            year,
-            month,
-            day,
-            dayOfWeek,
-            ampm,
-            hour,
-            minute,
-            attr.value,
-            price.value.toString().toInt(),
-            asset.value,
-            desc.value,
-            memoEntity.id
-        ).apply { addMemoUseCase(this) }
+    fun updateMemo() = viewModelScope.launch {
+        memoEntity.copy(category.value,year,month,day,dayOfWeek,ampm,hour,minute,attr.value,price.value.toString().toInt(),asset.value,desc.value).also {
+            updateMemoUseCase(it)
+        }
     }
 
     fun back() = viewModelScope.launch{
@@ -160,13 +149,13 @@ class DetailMemoViewModel @Inject constructor(
         _memoState.emit(DetailMemoState.SetAttr)
     }
 
-    fun clickSave() = viewModelScope.launch{
+    fun clickUpdate() = viewModelScope.launch{
         if(asset.value.isBlank()){
             _memoState.emit(DetailMemoState.SetAsset)
         }else if(attr.value.isBlank()){
             _memoState.emit(DetailMemoState.SetAttr)
         }else{
-            _memoState.emit(DetailMemoState.Save)
+            _memoState.emit(DetailMemoState.Update)
         }
 
     }

@@ -22,4 +22,6 @@ interface MemoRepository {
     suspend fun getMemoListSortedByCategoryAndYearAndMonth(category : String,year : Int,month : Int) : List<MemoEntity>
 
     suspend fun getMemoListSortedByAttrYearMonth(attr : String,year : Int,month : Int) : List<MemoEntity>
+
+    suspend fun updateMemo(memo : MemoType.Memo)
 }
