@@ -47,11 +47,6 @@ class MemoFragment : Fragment() {
         viewModel.initDate()
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.initDate()
-    }
-
     private fun observeData()  {
         viewLifecycleOwner.lifecycleScope.launch{
             repeatOnLifecycle(Lifecycle.State.STARTED){
