@@ -11,8 +11,8 @@ import javax.inject.Singleton
 class DefaultMemoRepository @Inject constructor(
     private val dao : MemoDao
 ) : MemoRepository {
-    override suspend fun insertMemo(memoEntity: MemoEntity) {
-        dao.insertMemo(memoEntity)
+    override suspend fun insertMemo(memo: MemoType.Memo) {
+        dao.insertMemo(memo.toMemoEntity())
     }
 
     override suspend fun getMemo(memoId: Int) : MemoType.Memo {

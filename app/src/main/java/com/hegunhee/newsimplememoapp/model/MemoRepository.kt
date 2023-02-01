@@ -5,7 +5,7 @@ import com.hegunhee.newsimplememoapp.domain.model.MemoType
 
 interface MemoRepository {
 
-    suspend fun insertMemo(memoEntity : MemoEntity)
+    suspend fun insertMemo(memo : MemoType.Memo)
 
     suspend fun getMemo(memoId: Int) : MemoType.Memo
 
