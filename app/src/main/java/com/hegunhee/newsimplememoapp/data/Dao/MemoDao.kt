@@ -20,7 +20,7 @@ interface MemoDao {
     @Query("SELECT * FROM Memo where id = :id")
     suspend fun getMemo(id : Int) : MemoEntity
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAllMemo(vararg memoEntities : MemoEntity)
 
     @Query("SELECT * FROM Memo where year = :year AND month = :month ORDER BY day DESC")
