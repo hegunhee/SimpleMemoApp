@@ -57,8 +57,8 @@ class DetailMemoFragment : Fragment() {
                             DetailMemoState.Back -> {
                                 findNavController().popBackStack()
                             }
-                            DetailMemoState.Save -> {
-                                saveData()
+                            DetailMemoState.Update -> {
+                                updateMemo()
                             }
                             DetailMemoState.SetAsset -> {
                                 setAsset()
@@ -82,12 +82,12 @@ class DetailMemoFragment : Fragment() {
         }
     }
 
-    private fun saveData() {
+    private fun updateMemo() {
         with(viewModel) {
             if(price.value.isNullOrEmpty()){
                 Toast.makeText(requireContext(), "가격을 설정해주세요", Toast.LENGTH_SHORT).show()
             }else {
-                saveData()
+                updateMemo()
                 findNavController().popBackStack()
             }
         }

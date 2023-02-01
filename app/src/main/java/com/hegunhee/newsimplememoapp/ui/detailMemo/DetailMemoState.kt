@@ -8,5 +8,5 @@ sealed class DetailMemoState{
     object SetAsset : DetailMemoState()
     object SetAttr : DetailMemoState()
     object Remove : DetailMemoState()
-    object Save : DetailMemoState()
+    object Update : DetailMemoState()
 }
