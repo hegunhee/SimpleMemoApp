@@ -3,11 +3,9 @@ package com.hegunhee.newsimplememoapp.ui.detailMemo
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
 import com.hegunhee.newsimplememoapp.data.entity.changeKoreanDayOfWeek
 import com.hegunhee.newsimplememoapp.data.entity.isExpenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.isIncomeAttr
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.InsertMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.DeleteMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.UpdateMemoUseCase

@@ -7,6 +7,7 @@ import com.hegunhee.newsimplememoapp.data.entity.changeKoreanDayOfWeek
 import com.hegunhee.newsimplememoapp.data.entity.isExpenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.isIncomeAttr
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.InsertMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -100,8 +101,8 @@ class AddMemoViewModel @Inject constructor(
 
 
     fun saveData(price : Int, desc : String) = viewModelScope.launch {
-        val memoEntity = MemoEntity(category.value,year,month,day,dayOfWeek,ampm,hour,minute,attr.value,price,asset.value,desc)
-        addMemoUseCase(memoEntity)
+        val memo = MemoType.Memo(category.value,year,month,day,dayOfWeek,ampm,hour,minute,attr.value,price,asset.value,desc)
+        addMemoUseCase(memo)
     }
 
     fun back()= viewModelScope.launch{
