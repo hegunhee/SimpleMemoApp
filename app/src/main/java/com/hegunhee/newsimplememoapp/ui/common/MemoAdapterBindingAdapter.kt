@@ -1,5 +1,6 @@
 package com.hegunhee.newsimplememoapp.ui.common
 
+import android.annotation.SuppressLint
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -47,6 +48,7 @@ fun TextView.setDate(memoDate: MemoType.MemoDate){
     text = "" + memoDate.year +"." + memoDate.month
 }
 
+@SuppressLint("SetTextI18n")
 @BindingAdapter("setDay")
 fun TextView.setDay(day : Int){
     text = ""+ day

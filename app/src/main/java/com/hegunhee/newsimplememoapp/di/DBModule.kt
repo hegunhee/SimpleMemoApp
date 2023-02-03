@@ -2,8 +2,8 @@ package com.hegunhee.newsimplememoapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.hegunhee.newsimplememoapp.data.DB.MemoDatabase
-import com.hegunhee.newsimplememoapp.data.Dao.MemoDao
+import com.hegunhee.newsimplememoapp.data.db.MemoDatabase
+import com.hegunhee.newsimplememoapp.data.dao.MemoDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

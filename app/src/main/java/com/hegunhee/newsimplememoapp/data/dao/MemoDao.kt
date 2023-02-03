@@ -1,4 +1,4 @@
-package com.hegunhee.newsimplememoapp.data.Dao
+package com.hegunhee.newsimplememoapp.data.dao
 
 import androidx.room.*
 import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
