@@ -11,7 +11,7 @@
 시작할때, 가계부 화면  
 ![addMemoView](https://user-images.githubusercontent.com/57277631/215264017-3ddb73ae-253e-40ef-b05e-758300c69ebb.jpg)  
 가계부 추가, FloatingActionButton 클릭시 이동  
-![detailMemoView](https://user-images.githubusercontent.com/57277631/162414205-b1c013ed-4539-4ab9-936e-670cf2623a06.PNG)  
+![detailMemoView](https://user-images.githubusercontent.com/57277631/216805469-c6190b0d-e7ae-4219-9089-e54d311f3d12.png)  
 가계부 수정 및 삭제, 클릭시 이동  
 ![staticsMemoView](https://user-images.githubusercontent.com/57277631/162414213-39419874-cef4-48b9-8243-7b35ed9d9840.PNG)  
 통계 탭  
