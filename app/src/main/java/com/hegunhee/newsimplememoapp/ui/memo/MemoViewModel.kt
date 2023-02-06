@@ -2,7 +2,7 @@ package com.hegunhee.newsimplememoapp.ui.memo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoTypeListSortedByYearAndMonthUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.GetMemoTypeListSortedByYearAndMonthUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*

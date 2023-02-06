@@ -6,9 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.data.entity.changeKoreanDayOfWeek
 import com.hegunhee.newsimplememoapp.data.entity.isExpenseAttr
 import com.hegunhee.newsimplememoapp.data.entity.isIncomeAttr
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.DeleteMemoUseCase
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoUseCase
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.UpdateMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.DeleteMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.GetMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.UpdateMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*

@@ -3,7 +3,7 @@ package com.hegunhee.newsimplememoapp.ui.statics
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetStaticsDataUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.GetStaticsDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -76,15 +76,15 @@ class StaticViewModel @Inject constructor(
 
     fun setData(year: Int = yearDate.value!!, month: Int = monthDate.value!!) = viewModelScope.launch {
         val category = category.value!!
-        getStaticsDataUseCase(category,year,month).run {
-            if(this.isNullOrEmpty()){
-                recyclerViewVisible.value = false
-                _staticsData.postValue(StaticsState.EmptyOrNull)
-            }else{
-                recyclerViewVisible.value = true
-                totalText.value = "합계 : ${this.sumOf { it.price }} 원"
-                _staticsData.postValue(StaticsState.Success(this))
-            }
-        }
+//        getStaticsDataUseCase(category,year,month).run {
+//            if(this.isNullOrEmpty()){
+//                recyclerViewVisible.value = false
+//                _staticsData.postValue(StaticsState.EmptyOrNull)
+//            }else{
+//                recyclerViewVisible.value = true
+//                totalText.value = "합계 : ${this.sumOf { it.price }} 원"
+//                _staticsData.postValue(StaticsState.Success(this))
+//            }
+//        }
     }
 }

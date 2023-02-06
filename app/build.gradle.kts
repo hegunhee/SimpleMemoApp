@@ -41,6 +41,8 @@ android {
 
 dependencies {
 
+    implementation(project(":domain"))
+
     implementation(libs.bundles.ui)
 
     implementation(libs.bundles.navigation)

@@ -1,15 +1,19 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+
+    id ("kotlin-parcelize")
+    id ("kotlin-kapt")
+    id ("dagger.hilt.android.plugin")
+
 }
 
 android {
-    namespace = "com.hegunhee.newsimplememoapp.domain"
-    compileSdk = 33
+    compileSdk = 32
 
     defaultConfig {
-        minSdk = 24
-        targetSdk = 33
+        minSdk = 21
+        targetSdk = 32
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -35,10 +39,12 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.4.1")
-    implementation("com.google.android.material:material:1.5.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+    implementation(libs.core.ktx)
+
+    // Coroutines
+    implementation(libs.bundles.coroutine)
+    implementation(libs.coroutine.test)
+    // Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 }
