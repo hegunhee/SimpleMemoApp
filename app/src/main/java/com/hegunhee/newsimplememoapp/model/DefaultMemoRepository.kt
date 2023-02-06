@@ -19,20 +19,12 @@ class DefaultMemoRepository @Inject constructor(
         return dao.getMemo(memoId).toMemo()
     }
 
-    override suspend fun getAllMemo(): List<MemoEntity> {
-        return dao.getAllMemo()
-    }
-
     override suspend fun deleteAllMemo() {
         dao.deleteAllMemo()
     }
 
     override suspend fun deleteMemo(memo: MemoType.Memo) {
         dao.deleteMemo(memo.toMemoEntity())
-    }
-
-    override suspend fun insertMemoList(memoEntity: List<MemoEntity>) {
-        dao.insertAllMemo(*memoEntity.toTypedArray())
     }
 
     override suspend fun getMemoTypeListSortedByYearAndMonth(year: Int, month: Int): List<MemoType> {
@@ -46,22 +38,6 @@ class DefaultMemoRepository @Inject constructor(
             memoTypeList.addAll(list.map { it.toMemo() })
         }
         return memoTypeList.toList()
-    }
-
-    override suspend fun getMemoListSortedByCategoryAndYearAndMonth(
-        category: String,
-        year: Int,
-        month: Int
-    ): List<MemoEntity> {
-        return dao.getMemoListSortedByCategoryAndYearAndMonth(category,year,month)
-    }
-
-    override suspend fun getMemoListSortedByAttrYearMonth(
-        attr: String,
-        year: Int,
-        month: Int
-    ): List<MemoEntity> {
-        return dao.getMemoListSortedByAttrYearMonth(attr,year,month)
     }
 
     override suspend fun updateMemo(memo: MemoType.Memo) {
