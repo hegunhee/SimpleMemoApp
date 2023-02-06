@@ -9,6 +9,4 @@ class GetMemoTypeListSortedByYearAndMonthUseCase @Inject constructor(private val
     suspend operator fun invoke(year : Int,month : Int) : List<MemoType>{
         return repository.getMemoTypeListSortedByYearAndMonth(year,month)
     }
-
-
 }
