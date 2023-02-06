@@ -1,9 +1,9 @@
 package com.hegunhee.newsimplememoapp.model
 
 import com.hegunhee.newsimplememoapp.data.dao.MemoDao
-import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
 import com.hegunhee.newsimplememoapp.data.entity.toMemoEntity
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
+import com.hegunhee.newsimplememoapp.domain.repository.MemoRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 

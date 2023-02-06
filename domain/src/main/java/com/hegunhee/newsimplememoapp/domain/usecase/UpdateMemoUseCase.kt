@@ -1,7 +1,7 @@
-package com.hegunhee.newsimplememoapp.domain.memoUsecase
+package com.hegunhee.newsimplememoapp.domain.usecase
 
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
-import com.hegunhee.newsimplememoapp.model.MemoRepository
+import com.hegunhee.newsimplememoapp.domain.repository.MemoRepository
 import javax.inject.Inject
 
 class UpdateMemoUseCase @Inject constructor(private val repository: MemoRepository){

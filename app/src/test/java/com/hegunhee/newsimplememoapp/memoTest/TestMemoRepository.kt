@@ -1,7 +1,6 @@
 package com.hegunhee.newsimplememoapp.memoTest
 
 import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
-import com.hegunhee.newsimplememoapp.model.MemoRepository
 
 class TestMemoRepository() : MemoRepository {
 

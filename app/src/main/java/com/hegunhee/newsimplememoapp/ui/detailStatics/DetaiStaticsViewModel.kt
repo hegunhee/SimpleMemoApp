@@ -3,7 +3,7 @@ package com.hegunhee.newsimplememoapp.ui.detailStatics
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.domain.memoUsecase.GetMemoListSortedByAttrYearMonthUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.GetMemoListSortedByAttrYearMonthUseCase
 import com.hegunhee.newsimplememoapp.ui.statics.StaticsData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -60,17 +60,17 @@ class DetaiStaticsViewModel @Inject constructor(
 
     fun setData(year : Int = yearDate.value!!, month : Int = monthDate.value!!){
         viewModelScope.launch {
-            getMemoListSortedByAttrYearMonthUseCase(attrData.value!!,year,month).run {
-                if(this.isNullOrEmpty()){
-                    recyclerViewVisible.postValue(false)
-                    detailStaticsState.postValue(DetailStaticsState.NullOrEmpty)
-                }else{
-                    recyclerViewVisible.postValue(true)
-                    detailStaticsState.postValue(DetailStaticsState.Success(this))
-                    val sum = this.sumOf { it.price }
-                    totalText.postValue("이번 달 ${attrData.value!!}는 ${sum}원 입니다." )
-                }
-            }
+//            getMemoListSortedByAttrYearMonthUseCase(attrData.value!!,year,month).run {
+//                if(this.isNullOrEmpty()){
+//                    recyclerViewVisible.postValue(false)
+//                    detailStaticsState.postValue(DetailStaticsState.NullOrEmpty)
+//                }else{
+//                    recyclerViewVisible.postValue(true)
+//                    detailStaticsState.postValue(DetailStaticsState.Success(this))
+//                    val sum = this.sumOf { it.price }
+//                    totalText.postValue("이번 달 ${attrData.value!!}는 ${sum}원 입니다." )
+//                }
+//            }
 
         }
     }

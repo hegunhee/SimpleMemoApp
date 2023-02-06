@@ -1,11 +1,10 @@
-package com.hegunhee.newsimplememoapp.domain.memoUsecase
+package com.hegunhee.newsimplememoapp.domain.usecase
 
-import com.hegunhee.newsimplememoapp.model.MemoRepository
-import com.hegunhee.newsimplememoapp.ui.statics.StaticsData
+import com.hegunhee.newsimplememoapp.domain.repository.MemoRepository
 import javax.inject.Inject
 
 class GetStaticsDataUseCase @Inject constructor(private val repository : MemoRepository) {
-    suspend operator fun invoke(category : String,year : Int, month: Int) : List<StaticsData>{
+    suspend operator fun invoke(category : String,year : Int, month: Int) : List<Any>{
         /**
          * 현재 사용 안하는 UseCase, 리팩토링 예정
          */
