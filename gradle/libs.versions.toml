@@ -1,5 +1,6 @@
 [versions]
-kotlin-stdlib = "1.5.0"
+kotlin-stdlib = "1.7.10"
+javax-inject = "1"
 
 core = "1.7.0"
 appcompat = "1.4.1"
@@ -16,7 +17,7 @@ mockito = "3.4.0"
 
 lifecycle = "2.5.1"
 
-coroutine = "1.4.1"
+coroutine = "1.6.4"
 coroutine-test = "1.4.3"
 
 room = "2.4.2"
@@ -59,6 +60,8 @@ mockito-core ={module = "org.mockito:mockito-core",version.ref="mockito"}
 
 hilt-android ={module ="com.google.dagger:hilt-android",version.ref="hilt"}
 hilt-compiler = {module ="com.google.dagger:hilt-android-compiler",version.ref="hilt"}
+
+javax-inject = {module ="javax.inject:javax.inject",version.ref ="javax-inject"}
 
 [bundles]
 ui = ["kotlin-stdlib","core-ktx","appcompat","material","constraintlayout"]
