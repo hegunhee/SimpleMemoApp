@@ -1,4 +1,4 @@
-package com.hegunhee.newsimplememoapp.data.entity
+package com.hegunhee.newsimplememoapp.ui.common
 
 fun isAsset(asset: String): Boolean = assetArray.contains(asset)
 

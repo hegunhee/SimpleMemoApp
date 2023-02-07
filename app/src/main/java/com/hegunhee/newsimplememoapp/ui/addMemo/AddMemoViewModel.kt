@@ -2,9 +2,7 @@ package com.hegunhee.newsimplememoapp.ui.addMemo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.data.entity.changeKoreanDayOfWeek
-import com.hegunhee.newsimplememoapp.data.entity.isExpenseAttr
-import com.hegunhee.newsimplememoapp.data.entity.isIncomeAttr
+import com.hegunhee.newsimplememoapp.ui.common.*
 import com.hegunhee.newsimplememoapp.domain.usecase.InsertMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import dagger.hilt.android.lifecycle.HiltViewModel

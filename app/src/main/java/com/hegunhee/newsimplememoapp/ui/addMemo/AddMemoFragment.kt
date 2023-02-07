@@ -16,12 +16,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.hegunhee.newsimplememoapp.R
-import com.hegunhee.newsimplememoapp.data.entity.assetArray
-import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
-import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
+import com.hegunhee.newsimplememoapp.ui.common.*
 import com.hegunhee.newsimplememoapp.databinding.FragmentAddMemoBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
