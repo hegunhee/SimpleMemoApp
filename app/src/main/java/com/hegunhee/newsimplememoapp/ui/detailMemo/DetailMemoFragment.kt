@@ -17,9 +17,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.hegunhee.newsimplememoapp.R
-import com.hegunhee.newsimplememoapp.data.entity.assetArray
-import com.hegunhee.newsimplememoapp.data.entity.expenseAttr
-import com.hegunhee.newsimplememoapp.data.entity.incomeAttr
+import com.hegunhee.newsimplememoapp.ui.common.*
 import com.hegunhee.newsimplememoapp.databinding.FragmentDetailMemoBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
