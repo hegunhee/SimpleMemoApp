@@ -1,4 +1,4 @@
-package com.hegunhee.newsimplememoapp.di
+package com.hegunhee.newsimplememoapp.data.di
 
 import android.content.Context
 import androidx.room.Room

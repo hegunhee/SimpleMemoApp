@@ -1,4 +1,4 @@
-package com.hegunhee.newsimplememoapp.model
+package com.hegunhee.newsimplememoapp.data.repository
 
 import com.hegunhee.newsimplememoapp.data.dao.MemoDao
 import com.hegunhee.newsimplememoapp.data.entity.toMemoEntity
