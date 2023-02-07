@@ -1,7 +1,7 @@
-package com.hegunhee.newsimplememoapp.di
+package com.hegunhee.newsimplememoapp.data.di
 
+import com.hegunhee.newsimplememoapp.data.repository.DefaultMemoRepository
 import com.hegunhee.newsimplememoapp.domain.repository.MemoRepository
-import com.hegunhee.newsimplememoapp.model.DefaultMemoRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
