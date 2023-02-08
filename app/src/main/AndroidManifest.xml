@@ -10,13 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewSimpleMemoApp">
-        <activity android:name=".ui.detailStatics.DetailStaticsActivity"></activity>
-        <activity android:name=".ui.detailMemo.DetailMemoActivity" />
+        <activity android:name="com.hegunhee.newsimplememoapp.feature.detailStatics.DetailStaticsActivity" />
         <activity
-            android:name=".ui.addMemo.AddMemoActivity"
-            android:exported="true" />
-        <activity
-            android:name=".ui.main.MainActivity"
+            android:name="com.hegunhee.newsimplememoapp.feature.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

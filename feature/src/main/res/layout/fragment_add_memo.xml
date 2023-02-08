@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.hegunhee.newsimplememoapp.feature.addMemo.AddMemoViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.addMemo.AddMemoActivity">
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ic_back"
+            android:backgroundTint="@color/black"
+            android:onClick="@{() -> viewModel.back()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.category}"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toBottomOf="@id/backButton"
+            app:layout_constraintStart_toEndOf="@id/backButton"
+            app:layout_constraintTop_toTopOf="@id/backButton"
+            tools:text="지출" />
+
+        <Button
+            android:id="@+id/income_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/blue"
+            android:onClick="@{() -> viewModel.setCategoryIncome()}"
+            android:text="@string/income"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@id/expenses_button"
+            app:layout_constraintStart_toStartOf="@id/backButton"
+            app:layout_constraintTop_toBottomOf="@id/backButton" />
+
+
+        <Button
+            android:id="@+id/expenses_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="@color/red"
+            android:onClick="@{() -> viewModel.setCategoryExpense()}"
+            android:text="@string/expense"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/income_button"
+            app:layout_constraintTop_toTopOf="@id/income_button" />
+
+        <TextView
+            android:id="@+id/text_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/date"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/income_button"
+            app:layout_constraintTop_toBottomOf="@id/income_button" />
+
+        <TextView
+            android:id="@+id/day"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:maxLines="1"
+            android:onClick="@{() -> viewModel.clickDate()}"
+            android:text="@{viewModel.dateInfo}"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@id/time"
+            app:layout_constraintStart_toEndOf="@id/text_day"
+            app:layout_constraintTop_toTopOf="@id/text_day"
+            tools:text="2022/3/22 (화)" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="20dp"
+            android:onClick="@{() -> viewModel.clickTime()}"
+            android:text="@{viewModel.timeInfo}"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/day"
+            app:layout_constraintTop_toTopOf="@id/text_day"
+            tools:text="오후 9:33" />
+
+        <TextView
+            android:id="@+id/text_asset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/asset"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/text_day"
+            app:layout_constraintTop_toBottomOf="@id/text_day" />
+
+        <include layout="@layout/include_clickable_textview"
+            android:id="@+id/asset"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            app:layout_constraintEnd_toEndOf="@id/time"
+            app:layout_constraintStart_toEndOf="@id/text_day"
+            app:layout_constraintTop_toTopOf="@id/text_asset"
+            app:category="@{viewModel.asset}"
+            android:onClick="@{() -> viewModel.clickAsset()}"
+            />
+
+        <TextView
+            android:id="@+id/text_attr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/attr"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/text_day"
+            app:layout_constraintTop_toBottomOf="@id/text_asset" />
+
+        <include layout="@layout/include_clickable_textview"
+            android:id="@id/attr"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:onClick="@{() -> viewModel.clickAttr()}"
+            app:category="@{viewModel.attr}"
+            app:layout_constraintEnd_toEndOf="@id/time"
+            app:layout_constraintStart_toEndOf="@id/text_day"
+            app:layout_constraintTop_toTopOf="@id/text_attr"
+
+            />
+
+        <TextView
+            android:id="@+id/text_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/price"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/text_day"
+            app:layout_constraintTop_toBottomOf="@id/text_attr" />
+
+        <EditText
+            android:id="@+id/price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:inputType="number"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@id/attr"
+            app:layout_constraintStart_toEndOf="@id/text_day"
+            app:layout_constraintTop_toTopOf="@id/text_price"
+            tools:text="10000"
+            />
+
+        <TextView
+            android:id="@+id/text_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/description"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/text_day"
+            app:layout_constraintTop_toBottomOf="@id/text_price" />
+
+        <EditText
+            android:id="@+id/desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@id/price"
+            app:layout_constraintStart_toEndOf="@id/text_day"
+            app:layout_constraintTop_toTopOf="@id/text_desc"
+            tools:text="설명충" />
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:backgroundTint="@color/purple_200"
+            android:onClick="@{() -> viewModel.clickSave()}"
+            android:text="@string/save"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/text_desc" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

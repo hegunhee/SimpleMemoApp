@@ -43,6 +43,7 @@ dependencies {
 
     implementation(project(":data"))
     implementation(project(":domain"))
+    implementation(project(":feature"))
 
     implementation(libs.bundles.ui)
 
