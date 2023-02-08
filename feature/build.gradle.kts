@@ -1,15 +1,18 @@
 plugins {
     id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id ("kotlin-android")
+    id ("kotlin-parcelize")
+    id ("kotlin-kapt")
+    id ("androidx.navigation.safeargs.kotlin")
+    id ("dagger.hilt.android.plugin")
 }
 
 android {
-    namespace = "com.hegunhee.newsimplememoapp.feature"
-    compileSdk = 33
+    compileSdk = 32
 
     defaultConfig {
-        minSdk = 24
-        targetSdk = 33
+        minSdk = 21
+        targetSdk = 32
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -31,14 +34,31 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures{
+        viewBinding = true
+        dataBinding = true
+    }
 }
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.7.0")
-    implementation("androidx.appcompat:appcompat:1.6.0")
-    implementation("com.google.android.material:material:1.8.0")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation(project(":domain"))
+    implementation(libs.bundles.ui)
+
+    implementation(libs.bundles.navigation)
+
+    testImplementation(libs.junit.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
+    testImplementation(libs.mockito.inline)
+
+    implementation(libs.bundles.lifecycle)
+
+    // Coroutines
+    implementation(libs.bundles.coroutine)
+    implementation(libs.coroutine.test)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 }
