@@ -39,8 +39,8 @@ android {
         dataBinding = true
         compose = true
     }
-    composeOptions{
-        kotlinCompilerExtensionVersion = "1.3.1"
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.2.0-alpha07"
     }
 }
 
@@ -52,11 +52,6 @@ dependencies {
     implementation(libs.bundles.compose)
 
     implementation(libs.bundles.navigation)
-    implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.appcompat:appcompat:1.6.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.3")
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
 
     testImplementation(libs.junit.junit)
     androidTestImplementation(libs.ext.junit)
