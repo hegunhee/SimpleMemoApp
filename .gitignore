@@ -235,3 +235,6 @@ fabric.properties
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,android,androidstudio,kotlin
+.idea/compiler.xml
+.idea/misc.xml
+.idea/gradle.xml
