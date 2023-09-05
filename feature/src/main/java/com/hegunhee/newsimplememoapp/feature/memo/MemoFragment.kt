@@ -14,7 +14,6 @@ import com.hegunhee.newsimplememoapp.feature.R
 import com.hegunhee.newsimplememoapp.feature.common.MemoAdapter
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentMemoBinding
 import com.hegunhee.newsimplememoapp.feature.main.MainFragmentDirections
-import com.hegunhee.newsimplememoapp.feature.util.DateUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -45,7 +44,6 @@ class MemoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observeData()
         viewModel.initDate()
-        DateUtil.getYear()
     }
 
     private fun observeData()  {

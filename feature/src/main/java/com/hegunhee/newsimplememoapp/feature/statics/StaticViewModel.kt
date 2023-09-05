@@ -4,9 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.usecase.GetStaticsDataUseCase
-import com.hegunhee.newsimplememoapp.feature.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,12 +26,12 @@ class StaticViewModel @Inject constructor(
 
 
     fun initDate() {
-        val year = DateUtil.getYear()
-        val month = DateUtil.getMonth()
-        yearDate.value = year
-        monthDate.value = month
-        initCategory()
-        setData(year,month)
+        LocalDate.now()?.run{
+            yearDate.value = year
+            monthDate.value = monthValue
+            initCategory()
+            setData(year,monthValue)
+        }
     }
 
     private fun initCategory() {

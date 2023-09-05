@@ -23,6 +23,7 @@ import com.hegunhee.newsimplememoapp.feature.common.incomeAttr
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentDetailMemoBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 @AndroidEntryPoint
 class DetailMemoFragment : Fragment() {
@@ -118,7 +119,7 @@ class DetailMemoFragment : Fragment() {
 
     private fun setDate() {
         DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            viewModel.setDate(year,month+1,dayOfMonth)
+            viewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))
         }.let { listener ->
             with(viewModel) {
                 DatePickerDialog(requireContext(), listener, year, month - 1, day).show()
