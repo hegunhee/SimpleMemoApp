@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.usecase.GetMemoTypeListSortedByYearAndMonthUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
-import com.hegunhee.newsimplememoapp.feature.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,8 +18,8 @@ class MemoViewModel @Inject constructor(
     private val _memoNavigation : MutableSharedFlow<MemoNavigation> = MutableSharedFlow<MemoNavigation>()
     val memoNavigation : SharedFlow<MemoNavigation> = _memoNavigation.asSharedFlow()
 
-    val yearDate = MutableStateFlow<Int>(DateUtil.getYear())
-    val monthDate = MutableStateFlow<Int>(DateUtil.getMonth())
+    val yearDate = MutableStateFlow<Int>(LocalDate.now().year)
+    val monthDate = MutableStateFlow<Int>(LocalDate.now().monthValue)
 
     private val _memoList : MutableStateFlow<List<MemoType>> = MutableStateFlow(emptyList())
     val memoList : StateFlow<List<MemoType>> = _memoList.asStateFlow()
@@ -28,8 +28,10 @@ class MemoViewModel @Inject constructor(
     val expenseValue = MutableStateFlow<Int>(0)
     val totalValue = MutableStateFlow<Int>(0)
 
-    fun initDate() {
-        setData(DateUtil.getYear(),DateUtil.getMonth())
+    fun initDate() = LocalDate.now().run {
+        yearDate.value = year
+        monthDate.value = monthValue
+        setData(year, monthValue)
     }
 
     fun clickLeft() {

@@ -4,12 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.usecase.InsertMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
+import com.hegunhee.newsimplememoapp.feature.common.changeKoreanDayOfWeek
 import com.hegunhee.newsimplememoapp.feature.common.isExpenseAttr
 import com.hegunhee.newsimplememoapp.feature.common.isIncomeAttr
-import com.hegunhee.newsimplememoapp.feature.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,30 +50,24 @@ class AddMemoViewModel @Inject constructor(
         initTime()
     }
     private fun initTime() {
-        val currentHour = DateUtil.getHour()
-        val currentMinute = DateUtil.getMinute()
-        if (currentHour > 12) {
+        val day = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
+        if (day.hour > 12) {
             ampm = "오후"
-            hour = currentHour - 12
-            minute = currentMinute
+            hour = day.hour - 12
+            minute = day.minute
         } else {
             ampm = "오전"
-            hour = currentHour
-            minute = currentMinute
+            hour = day.hour
+            minute = day.minute
         }
         setTimeInfo()
     }
 
-    fun setDate(
-        year : Int = DateUtil.getYear(),
-        month : Int = DateUtil.getMonth(),
-        day : Int = DateUtil.getDayOfMonth(),
-        dayOfWeek : String = DateUtil.getDayOfWeek(year,month,day)
-    ) {
-        this.year = year
-        this.month = month
-        this.day = day
-        this.dayOfWeek = dayOfWeek
+    fun setDate(date: LocalDate = LocalDate.now(ZoneId.of("Asia/Seoul"))) {
+        year = date.year
+        month = date.monthValue
+        day = date.dayOfMonth
+        dayOfWeek = changeKoreanDayOfWeek(date.dayOfWeek.toString())
         _dateInfo.value = "${year}/${month}/${day} (${dayOfWeek})"
     }
 

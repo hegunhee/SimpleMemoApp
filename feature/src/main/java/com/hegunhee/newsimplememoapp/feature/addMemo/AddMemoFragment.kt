@@ -20,9 +20,11 @@ import com.hegunhee.newsimplememoapp.feature.common.assetArray
 import com.hegunhee.newsimplememoapp.feature.common.expenseAttr
 import com.hegunhee.newsimplememoapp.feature.common.incomeAttr
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentAddMemoBinding
-import com.hegunhee.newsimplememoapp.feature.util.DateUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 @AndroidEntryPoint
 class AddMemoFragment : Fragment(){
@@ -101,7 +103,7 @@ class AddMemoFragment : Fragment(){
 
     private fun setDate() {
         DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            viewModel.setDate(year,month + 1,dayOfMonth)}.let { listener->
+            viewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))}.let { listener->
             with(viewModel){
                 DatePickerDialog(requireContext(),listener,year,month-1,day).show()
             }
@@ -109,6 +111,7 @@ class AddMemoFragment : Fragment(){
     }
 
     private fun setTime() {
+        val time = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
         TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
             with(viewModel) {
                 if (hourOfDay > 12) {
@@ -123,7 +126,7 @@ class AddMemoFragment : Fragment(){
                 setTimeInfo()
             }
         }.let {
-            TimePickerDialog(requireContext(),it,DateUtil.getHour(),DateUtil.getMinute(),false).show()
+            TimePickerDialog(requireContext(),it,time.hour,time.minute,false).show()
         }
     }
 }
