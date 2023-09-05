@@ -7,13 +7,12 @@ import com.hegunhee.newsimplememoapp.domain.usecase.DeleteMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.usecase.GetMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.usecase.UpdateMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
-import com.hegunhee.newsimplememoapp.feature.common.changeKoreanDayOfWeek
 import com.hegunhee.newsimplememoapp.feature.common.isExpenseAttr
 import com.hegunhee.newsimplememoapp.feature.common.isIncomeAttr
+import com.hegunhee.newsimplememoapp.feature.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -92,13 +91,11 @@ class DetailMemoViewModel @Inject constructor(
         _timeInfo.value = "$ampm ${hour}:${minute}"
     }
 
-    fun setDate(date: LocalDate = LocalDate.now()) {
-        date.let {
-            year = it.year
-            month = it.monthValue
-            day = it.dayOfMonth
-            dayOfWeek = changeKoreanDayOfWeek(it.dayOfWeek.toString())
-        }
+    fun setDate(year : Int,month : Int,day : Int) {
+        this.year = year
+        this.month = month
+        this.day = day
+        dayOfWeek = DateUtil.getDayOfWeek(year,month,day)
 
         _dateInfo.value = "${year}/${month}/${day} (${dayOfWeek})"
     }
