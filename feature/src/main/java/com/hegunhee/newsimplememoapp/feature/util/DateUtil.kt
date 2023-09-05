@@ -2,7 +2,6 @@ package com.hegunhee.newsimplememoapp.feature.util
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.util.Calendar
@@ -31,6 +30,22 @@ object DateUtil {
             getKoreaLocalTime().monthValue
         }else {
             calendar.get(Calendar.MONTH)
+        }
+    }
+
+    fun getHour() : Int {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            getKoreaLocalTime().hour
+        }else {
+            calendar.get(Calendar.HOUR_OF_DAY)
+        }
+    }
+
+    fun getMinute() : Int {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            getKoreaLocalTime().minute
+        }else {
+            calendar.get(Calendar.MINUTE)
         }
     }
 }
