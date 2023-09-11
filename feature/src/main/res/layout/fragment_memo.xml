@@ -23,7 +23,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/ic_left"
             android:backgroundTint="@color/black"
-            android:onClick="@{() -> viewModel.clickLeft()}"
+            android:onClick="@{() -> viewModel.onPreviousMonthClick()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,7 +73,7 @@
             android:layout_height="30dp"
             android:background="@drawable/ic_right"
             android:backgroundTint="@color/black"
-            android:onClick="@{() -> viewModel.clickRight()}"
+            android:onClick="@{() -> viewModel.onNextMonthClick()}"
             app:layout_constraintStart_toEndOf="@id/month"
             app:layout_constraintTop_toTopOf="@id/left_button" />
 

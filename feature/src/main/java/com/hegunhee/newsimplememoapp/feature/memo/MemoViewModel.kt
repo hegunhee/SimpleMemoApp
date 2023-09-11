@@ -32,7 +32,7 @@ class MemoViewModel @Inject constructor(
         setData(DateUtil.getYear(),DateUtil.getMonth())
     }
 
-    fun clickLeft() {
+    fun onPreviousMonthClick() {
         if (monthDate.value <= 1) {
             yearDate.value = yearDate.value - 1
             monthDate.value = 12
@@ -42,7 +42,7 @@ class MemoViewModel @Inject constructor(
         setData(yearDate.value, monthDate.value)
     }
 
-    fun clickRight() {
+    fun onNextMonthClick() {
         if (monthDate.value >= 12) {
             yearDate.value = yearDate.value + 1
             monthDate.value = 1
