@@ -3,8 +3,6 @@ package com.hegunhee.newsimplememoapp.feature.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.navigation.fragment.NavHostFragment
-import com.hegunhee.newsimplememoapp.feature.R
 import com.hegunhee.newsimplememoapp.feature.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
