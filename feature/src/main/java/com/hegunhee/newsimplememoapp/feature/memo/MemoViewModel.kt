@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MemoViewModel @Inject constructor(
-    private val getAllMemoTypeBySort : GetMemoTypeListSortedByYearAndMonthUseCase
+    private val getAllMemoTypeBySortUseCase : GetMemoTypeListSortedByYearAndMonthUseCase
 ) : ViewModel(), MemoActionHandler {
 
     private val _memoNavigation : MutableSharedFlow<MemoNavigation> = MutableSharedFlow<MemoNavigation>()
@@ -21,16 +21,19 @@ class MemoViewModel @Inject constructor(
     val yearDate = MutableStateFlow<Int>(DateUtil.getYear())
     val monthDate = MutableStateFlow<Int>(DateUtil.getMonth())
 
-    private val _memoList : MutableStateFlow<List<MemoType>> = MutableStateFlow(emptyList())
-    val memoList : StateFlow<List<MemoType>> = _memoList.asStateFlow()
+    val memoList : StateFlow<List<MemoType>> = yearDate.combine(monthDate) { year, month ->
+        val memoList = getAllMemoTypeBySortUseCase(year,month)
+        setPrices(memoList.filterIsInstance<MemoType.Memo>())
+        memoList
+    }.stateIn(
+        scope =  viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000L),
+        initialValue = emptyList()
+    )
 
     val incomeValue = MutableStateFlow<Int>(0)
     val expenseValue = MutableStateFlow<Int>(0)
     val totalValue = MutableStateFlow<Int>(0)
-
-    fun initDate() {
-        setData(DateUtil.getYear(),DateUtil.getMonth())
-    }
 
     fun onPreviousMonthClick() {
         if (monthDate.value <= 1) {
@@ -39,7 +42,6 @@ class MemoViewModel @Inject constructor(
         } else {
             monthDate.value = monthDate.value - 1
         }
-        setData(yearDate.value, monthDate.value)
     }
 
     fun onNextMonthClick() {
@@ -49,23 +51,13 @@ class MemoViewModel @Inject constructor(
         } else {
             monthDate.value = monthDate.value + 1
         }
-        setData(yearDate.value, monthDate.value)
     }
 
-    private fun setData(year: Int, month: Int) {
-        viewModelScope.launch {
-            getAllMemoTypeBySort(year, month).let { data->
-                _memoList.emit(data)
-                data.filterIsInstance(MemoType.Memo::class.java).also { memoList ->
-                    incomeValue.value = memoList.filter { it.category == "수입" }.sumOf { it.price }
-                    expenseValue.value = memoList.filter { it.category != "수입" }.sumOf { it.price }
-                }
-                totalValue.value = incomeValue.value - expenseValue.value
-            }
-        }
-
+    private fun setPrices(memoList : List<MemoType.Memo>) {
+        incomeValue.value = memoList.filter { it.category == "수입" }.sumOf { it.price }
+        expenseValue.value = memoList.filter { it.category != "수입" }.sumOf { it.price }
+        totalValue.value = incomeValue.value - expenseValue.value
     }
-
     override fun addMemo() {
         viewModelScope.launch {
             _memoNavigation.emit(MemoNavigation.AddMemo)
