@@ -34,7 +34,7 @@ class MemoFragment : Fragment() {
         adapter = MemoAdapter(viewModel)
         viewDataBinding = FragmentMemoBinding.bind(root).apply {
             viewModel = this@MemoFragment.viewModel
-            recyclerview.adapter = adapter
+            memoRecyclerView.adapter = adapter
             lifecycleOwner = viewLifecycleOwner
         }
         return root
@@ -56,10 +56,10 @@ class MemoFragment : Fragment() {
                 launch {
                     viewModel.memoNavigation.collect { memoNavigation ->
                         when(memoNavigation){
-                            MemoNavigation.AddMemo -> {
+                            is MemoNavigation.AddMemo -> {
                                 findNavController().navigate(R.id.memo_to_add)
                             }
-                            memoNavigation as MemoNavigation.DetailMemo -> {
+                            is MemoNavigation.DetailMemo -> {
                                 MainFragmentDirections.memoToDetail(memoNavigation.memoId).also {
                                     findNavController().navigate(it)
                                 }
