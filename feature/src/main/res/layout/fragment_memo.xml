@@ -5,6 +5,7 @@
 
     <data>
         <import type="android.view.View"/>
+
         <variable
             name="viewModel"
             type="com.hegunhee.newsimplememoapp.feature.memo.MemoViewModel" />
@@ -148,7 +149,7 @@
             tools:text="1000" />
 
         <TextView
-            android:id="@+id/empty_recyclerview"
+            android:id="@+id/empty_memo_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center"
@@ -157,14 +158,12 @@
             android:visibility="@{viewModel.memoList.isEmpty() ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/expenses_text"
-            app:layout_constraintVertical_bias="0.0"
             tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
+            android:id="@+id/memo_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:visibility="@{viewModel.memoList.isEmpty() ? View.GONE : View.VISIBLE}"
@@ -173,12 +172,12 @@
             app:layout_constraintTop_toBottomOf="@+id/expenses_text" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingButton"
+            android:id="@+id/add_memo_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/ic_add"
+            android:src="@drawable/ic_add"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:onClick="@{() -> viewModel.addMemo()}" />
