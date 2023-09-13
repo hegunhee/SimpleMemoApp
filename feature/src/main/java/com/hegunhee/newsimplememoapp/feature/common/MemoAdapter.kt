@@ -15,23 +15,21 @@ import com.hegunhee.newsimplememoapp.feature.databinding.ItemMemoDateBinding
 class MemoAdapter(val actionHandler : MemoAdapterActionHandler) :
     ListAdapter<MemoType, MemoAdapter.MemoAdapterViewHolder>(diffUtil) {
 
-    sealed class MemoAdapterViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    sealed class MemoAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         abstract fun bindView(memo: MemoType)
 
     }
 
-    inner class MemoDateViewHolder(private val binding : ItemMemoDateBinding) : MemoAdapterViewHolder(binding.root){
-
-        override fun bindView(memo : MemoType) : Unit = with(binding){
+    inner class MemoDateViewHolder(private val binding: ItemMemoDateBinding) : MemoAdapterViewHolder(binding.root) {
+        override fun bindView(memo: MemoType): Unit = with(binding) {
             val memoDate = memo as MemoType.MemoDate
             this.memoDate = memoDate
         }
 
     }
 
-    inner class MemoViewHolder(private val binding: ItemMemoBinding) : MemoAdapterViewHolder(binding.root){
-
-        override fun bindView(memo: MemoType) : Unit = with(binding) {
+    inner class MemoViewHolder(private val binding: ItemMemoBinding) : MemoAdapterViewHolder(binding.root) {
+        override fun bindView(memo: MemoType): Unit = with(binding) {
             val memoEntity = memo as MemoType.Memo
             this.memo = memoEntity
             this.eventHandler = actionHandler
@@ -47,7 +45,6 @@ class MemoAdapter(val actionHandler : MemoAdapterActionHandler) :
                 MemoDateViewHolder(ItemMemoDateBinding.inflate(LayoutInflater.from(parent.context),parent,false))
             }
             else -> { throw IllegalArgumentException()}
-
         }
     }
 
@@ -57,19 +54,21 @@ class MemoAdapter(val actionHandler : MemoAdapterActionHandler) :
 
 
     override fun getItemViewType(position: Int): Int {
-        return when (getItem(position)){
+        return when (getItem(position)) {
             is MemoType.Memo -> R.layout.item_memo
             is MemoType.MemoDate -> R.layout.item_memo_date
         }
     }
-}
 
-internal object diffUtil : DiffUtil.ItemCallback<MemoType>(){
-    override fun areItemsTheSame(oldItem: MemoType, newItem: MemoType): Boolean {
-        return oldItem == newItem
-    }
+    companion object {
+        private val diffUtil = object : DiffUtil.ItemCallback<MemoType>() {
+            override fun areItemsTheSame(oldItem: MemoType, newItem: MemoType): Boolean {
+                return oldItem == newItem
+            }
 
-    override fun areContentsTheSame(oldItem: MemoType, newItem: MemoType): Boolean {
-        return oldItem == newItem
+            override fun areContentsTheSame(oldItem: MemoType, newItem: MemoType): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 }
