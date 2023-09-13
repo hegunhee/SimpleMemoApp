@@ -116,8 +116,8 @@
             android:layout_height="0dp"
             android:text="@{viewModel.incomeValue.toString()}"
             android:textSize="15sp"
-            app:layout_constraintEnd_toStartOf="@id/expenses"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/income"
+            app:layout_constraintEnd_toEndOf="@id/income"
             app:layout_constraintTop_toBottomOf="@id/income"
             tools:text="2000" />
 
@@ -127,8 +127,8 @@
             android:layout_height="0dp"
             android:text="@{viewModel.expenseValue.toString()}"
             android:textSize="15sp"
-            app:layout_constraintEnd_toStartOf="@id/total"
-            app:layout_constraintStart_toEndOf="@id/income"
+            app:layout_constraintStart_toStartOf="@id/expenses"
+            app:layout_constraintEnd_toEndOf="@id/expenses"
             app:layout_constraintTop_toTopOf="@id/income_text"
             tools:text="1000" />
 
@@ -138,8 +138,8 @@
             android:layout_height="0dp"
             android:text="@{viewModel.totalValue.toString()}"
             android:textSize="15sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/expenses"
+            app:layout_constraintStart_toStartOf="@id/total"
+            app:layout_constraintEnd_toEndOf="@id/total"
             app:layout_constraintTop_toBottomOf="@id/date_layout"
             app:layout_constraintTop_toTopOf="@id/income_text"
             tools:text="1000" />
