@@ -9,4 +9,8 @@
     <string name="price">가격</string>
     <string name="description">설명</string>
     <string name="save">저장하기</string>
+    <string name="year">년</string>
+    <string name="month">월</string>
+    <string name="total">합계</string>
+    <string name="empty_data">데이터가 존재하지 않습니다</string>
 </resources>

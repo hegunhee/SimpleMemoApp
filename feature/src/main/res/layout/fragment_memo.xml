@@ -42,7 +42,7 @@
             android:id="@+id/year"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="년"
+            android:text="@string/year"
             android:textSize="20sp"
             app:layout_constraintBaseline_toBaselineOf="@id/year_text"
             app:layout_constraintStart_toEndOf="@id/year_text"
@@ -63,9 +63,9 @@
             android:id="@+id/month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="월"
+            android:text="@string/month"
             android:textSize="20sp"
-            app:layout_constraintBaseline_toBaselineOf="@id/year_text"
+            app:layout_constraintBaseline_toBaselineOf="@id/month_text"
             app:layout_constraintStart_toEndOf="@id/month_text"
             app:layout_constraintTop_toTopOf="@id/year_text" />
 
@@ -79,43 +79,36 @@
             app:layout_constraintStart_toEndOf="@id/month"
             app:layout_constraintTop_toTopOf="@id/left_button" />
 
-
         <TextView
             android:id="@+id/income"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
-            android:text="수입"
+            android:text="@string/income"
             android:textSize="15sp"
             app:layout_constraintEnd_toStartOf="@id/expenses"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/left_button"
-
-            />
+            app:layout_constraintTop_toBottomOf="@id/left_button" />
 
         <TextView
             android:id="@+id/expenses"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="지출"
+            android:text="@string/expense"
             android:textSize="15sp"
             app:layout_constraintEnd_toStartOf="@id/total"
             app:layout_constraintStart_toEndOf="@id/income"
-            app:layout_constraintTop_toTopOf="@id/income"
-
-            />
+            app:layout_constraintTop_toTopOf="@id/income" />
 
         <TextView
             android:id="@+id/total"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:text="합계"
+            android:text="@string/total"
             android:textSize="15sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/expenses"
-            app:layout_constraintTop_toTopOf="@id/income"
-
-            />
+            app:layout_constraintTop_toTopOf="@id/income" />
 
         <TextView
             android:id="@+id/income_text"
@@ -126,9 +119,7 @@
             app:layout_constraintEnd_toStartOf="@id/expenses"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/income"
-            tools:text="2000"
-
-            />
+            tools:text="2000" />
 
         <TextView
             android:id="@+id/expenses_text"
@@ -139,9 +130,7 @@
             app:layout_constraintEnd_toStartOf="@id/total"
             app:layout_constraintStart_toEndOf="@id/income"
             app:layout_constraintTop_toTopOf="@id/income_text"
-            tools:text="1000"
-
-            />
+            tools:text="1000" />
 
         <TextView
             android:id="@+id/total_text"
@@ -160,7 +149,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:gravity="center"
-            android:text="데이터가 존재하지 않습니다"
+            android:text="@string/empty_data"
             android:textSize="20sp"
             android:visibility="@{viewModel.memoList.isEmpty() ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -189,8 +178,7 @@
             android:background="@drawable/ic_add"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{() -> viewModel.addMemo()}"
-            />
+            android:onClick="@{() -> viewModel.addMemo()}" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
