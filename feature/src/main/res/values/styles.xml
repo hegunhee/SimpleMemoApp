@@ -6,4 +6,13 @@
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
     </style>
+
+    <style name="datePickerTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="monthPickerStyle" parent="datePickerTextStyle">
+        <item name="android:gravity">center</item>
+    </style>
 </resources>
