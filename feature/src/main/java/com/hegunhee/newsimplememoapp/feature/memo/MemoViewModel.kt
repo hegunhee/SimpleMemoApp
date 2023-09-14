@@ -18,6 +18,9 @@ class MemoViewModel @Inject constructor(
     private val _memoNavigation : MutableSharedFlow<MemoNavigation> = MutableSharedFlow<MemoNavigation>()
     val memoNavigation : SharedFlow<MemoNavigation> = _memoNavigation.asSharedFlow()
 
+    private val _dateNavigation : MutableSharedFlow<DateNavigation> = MutableSharedFlow()
+    val dateNavigation : SharedFlow<DateNavigation> = _dateNavigation.asSharedFlow()
+
     val yearDate = MutableStateFlow<Int>(DateUtil.getYear())
     val monthDate = MutableStateFlow<Int>(DateUtil.getMonth())
 
@@ -67,6 +70,12 @@ class MemoViewModel @Inject constructor(
     override fun detailMemo(memoId: Int) {
         viewModelScope.launch {
             _memoNavigation.emit(MemoNavigation.DetailMemo(memoId))
+        }
+    }
+
+    fun onDateSelectClick() {
+        viewModelScope.launch {
+            _dateNavigation.emit(DateNavigation.SelectDate)
         }
     }
 }

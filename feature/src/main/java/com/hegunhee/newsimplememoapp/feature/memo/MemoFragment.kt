@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.hegunhee.newsimplememoapp.feature.R
 import com.hegunhee.newsimplememoapp.feature.common.MemoAdapter
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentMemoBinding
+import com.hegunhee.newsimplememoapp.feature.dateDialog.DateDialogFragment
 import com.hegunhee.newsimplememoapp.feature.main.MainFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -63,6 +64,15 @@ class MemoFragment : Fragment() {
                                 MainFragmentDirections.memoToDetail(memoNavigation.memoId).also {
                                     findNavController().navigate(it)
                                 }
+                            }
+                        }
+                    }
+                }
+                launch {
+                    viewModel.dateNavigation.collect{ dateNavigation ->
+                        when(dateNavigation) {
+                            is DateNavigation.SelectDate -> {
+                                DateDialogFragment.getInstance().show(childFragmentManager,DateDialogFragment.TAG)
                             }
                         }
                     }
