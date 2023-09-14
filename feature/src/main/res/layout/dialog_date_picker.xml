@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.hegunhee.newsimplememoapp.feature.dateDialog.DateDialogViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,6 +77,7 @@
             app:layout_constraintEnd_toEndOf="@id/next_month_button"
             app:layout_constraintStart_toStartOf="@id/date_text"
             app:layout_constraintTop_toTopOf="@id/previous_month_button"
+            android:text="@{viewModel.year}"
             tools:text="2023" />
 
         <ImageButton
