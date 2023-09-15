@@ -43,6 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
+            android:onClick="@{() -> viewModel.onCurrentMonthClick()}"
             android:text="@string/current_month"
             app:layout_constraintBottom_toBottomOf="@id/date_text"
             app:layout_constraintEnd_toStartOf="@id/exit_button"
@@ -55,6 +56,7 @@
             android:layout_marginEnd="10dp"
             android:background="@drawable/ic_exit"
             android:backgroundTint="@color/white"
+            android:onClick="@{() -> viewModel.onDismissButtonClick()}"
             app:layout_constraintBottom_toBottomOf="@id/date_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/date_text" />
@@ -65,6 +67,7 @@
             android:layout_height="48dp"
             android:background="@drawable/ic_left"
             android:backgroundTint="@color/white"
+            android:onClick="@{() -> viewModel.onPreviousYearClick()}"
             app:layout_constraintStart_toStartOf="@id/date_text"
             app:layout_constraintTop_toBottomOf="@id/date_text" />
 
@@ -73,11 +76,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:text="@{viewModel.year}"
             app:layout_constraintBottom_toBottomOf="@id/previous_month_button"
             app:layout_constraintEnd_toEndOf="@id/next_month_button"
             app:layout_constraintStart_toStartOf="@id/date_text"
             app:layout_constraintTop_toTopOf="@id/previous_month_button"
-            android:text="@{viewModel.year}"
             tools:text="2023" />
 
         <ImageButton
@@ -86,6 +89,7 @@
             android:layout_height="48dp"
             android:background="@drawable/ic_right"
             android:backgroundTint="@color/white"
+            android:onClick="@{() -> viewModel.onNextYearClick()}"
             app:layout_constraintBottom_toBottomOf="@id/previous_month_button"
             app:layout_constraintEnd_toEndOf="@id/exit_button"
             app:layout_constraintTop_toTopOf="@id/previous_month_button" />
@@ -103,6 +107,7 @@
                     style="@style/monthPickerStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onMonthClick(1)}"
                     android:paddingVertical="10dp"
                     android:text="@string/jan" />
 
@@ -110,6 +115,7 @@
                     style="@style/monthPickerStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onMonthClick(2)}"
                     android:paddingVertical="10dp"
                     android:text="@string/fab" />
 
@@ -117,6 +123,7 @@
                     style="@style/monthPickerStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onMonthClick(3)}"
                     android:paddingVertical="10dp"
                     android:text="@string/mar" />
 
@@ -124,6 +131,7 @@
                     style="@style/monthPickerStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onMonthClick(4)}"
                     android:paddingVertical="10dp"
                     android:text="@string/apr" />
 
@@ -135,6 +143,7 @@
                     style="@style/monthPickerStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onMonthClick(5)}"
                     android:paddingVertical="10dp"
                     android:text="@string/may" />
 
@@ -142,6 +151,7 @@
                     style="@style/monthPickerStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onMonthClick(6)}"
                     android:paddingVertical="10dp"
                     android:text="@string/jun" />
 
@@ -149,6 +159,7 @@
                     style="@style/monthPickerStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onMonthClick(7)}"
                     android:paddingVertical="10dp"
                     android:text="@string/jul" />
 
@@ -156,6 +167,7 @@
                     style="@style/monthPickerStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onMonthClick(8)}"
                     android:paddingVertical="10dp"
                     android:text="@string/aug" />
 
@@ -167,6 +179,7 @@
                     style="@style/monthPickerStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onMonthClick(9)}"
                     android:paddingVertical="10dp"
                     android:text="@string/sep" />
 
@@ -174,6 +187,7 @@
                     style="@style/monthPickerStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onMonthClick(10)}"
                     android:paddingVertical="10dp"
                     android:text="@string/oct" />
 
@@ -181,6 +195,7 @@
                     style="@style/monthPickerStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onMonthClick(11)}"
                     android:paddingVertical="10dp"
                     android:text="@string/nov" />
 
@@ -188,6 +203,7 @@
                     style="@style/monthPickerStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:onClick="@{() -> viewModel.onMonthClick(12)}"
                     android:paddingVertical="10dp"
                     android:text="@string/dec" />
 
