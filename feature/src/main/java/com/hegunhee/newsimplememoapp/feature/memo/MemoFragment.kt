@@ -44,6 +44,7 @@ class MemoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeData()
+        fragmentResultListener()
     }
 
     private fun observeData()  {
@@ -76,6 +77,18 @@ class MemoFragment : Fragment() {
                             }
                         }
                     }
+                }
+            }
+        }
+    }
+
+    private fun fragmentResultListener() {
+        childFragmentManager.setFragmentResultListener(DateDialogFragment.DATE_KEY,viewLifecycleOwner) { resultKey, result->
+            when(resultKey) {
+                DateDialogFragment.DATE_KEY -> {
+                    val year = result.getInt(DateDialogFragment.YEAR_RESULT_KEY)
+                    val month = result.getInt(DateDialogFragment.MONTH_RESULT_KEY)
+                    viewModel.setDate(year,month)
                 }
             }
         }
