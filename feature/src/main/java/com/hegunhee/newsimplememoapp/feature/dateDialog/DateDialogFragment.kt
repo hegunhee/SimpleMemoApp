@@ -6,9 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.hegunhee.newsimplememoapp.feature.R
 import com.hegunhee.newsimplememoapp.feature.databinding.DialogDatePickerBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DateDialogFragment : DialogFragment(){
@@ -23,9 +27,34 @@ class DateDialogFragment : DialogFragment(){
     ): View? {
         val root = inflater.inflate(R.layout.dialog_date_picker,container,false)
         binding = DialogDatePickerBinding.bind(root).apply {
+            lifecycleOwner = viewLifecycleOwner
             viewModel = this@DateDialogFragment.viewModel
         }
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeData()
+    }
+
+    private fun observeData() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.dateDialogNavigation.collect{
+                        when(it) {
+                            is DateDialogNavigation.Dismiss -> {
+                                dismissAllowingStateLoss()
+                            }
+                            is DateDialogNavigation.DisMissWithDate -> {
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     companion object {
