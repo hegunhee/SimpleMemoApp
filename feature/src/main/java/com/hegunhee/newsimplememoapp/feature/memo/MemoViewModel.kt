@@ -56,6 +56,11 @@ class MemoViewModel @Inject constructor(
         }
     }
 
+    fun setDate(year : Int,month : Int) {
+        yearDate.value = year
+        monthDate.value = month
+    }
+
     private fun setPrices(memoList : List<MemoType.Memo>) {
         incomeValue.value = memoList.filter { it.category == "수입" }.sumOf { it.price }
         expenseValue.value = memoList.filter { it.category != "수입" }.sumOf { it.price }

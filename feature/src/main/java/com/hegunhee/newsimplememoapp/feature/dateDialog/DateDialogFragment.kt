@@ -48,7 +48,12 @@ class DateDialogFragment : DialogFragment(){
                                 dismissAllowingStateLoss()
                             }
                             is DateDialogNavigation.DisMissWithDate -> {
-
+                                val resultBundle = Bundle().apply {
+                                    putInt(YEAR_RESULT_KEY,it.year)
+                                    putInt(MONTH_RESULT_KEY,it.month)
+                                }
+                                setFragmentResult(DATE_KEY,resultBundle)
+                                dismissAllowingStateLoss()
                             }
                         }
                     }
@@ -57,9 +62,18 @@ class DateDialogFragment : DialogFragment(){
         }
     }
 
+    private fun setFragmentResult(resultKey : String,bundle : Bundle) {
+        parentFragmentManager.setFragmentResult(resultKey,bundle)
+    }
+
     companion object {
 
         const val TAG = "date_dialog_tag"
+
+        const val DATE_KEY = "date_key"
+
+        const val YEAR_RESULT_KEY = "year_result_key"
+        const val MONTH_RESULT_KEY = "month_result_key"
 
         fun getInstance() : DateDialogFragment {
             return DateDialogFragment()
