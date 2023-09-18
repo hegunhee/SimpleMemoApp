@@ -3,12 +3,14 @@ package com.hegunhee.newsimplememoapp.feature.addMemo
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.fragment.app.viewModels
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -57,6 +59,7 @@ class AddMemoFragment : Fragment(){
                             AddMemoState.SetAttr -> setAttr()
                             AddMemoState.SetDate -> setDate()
                             AddMemoState.SetTime -> setTime()
+                            AddMemoState.SetPrice -> setPrice()
                         }
                     }
                 }
@@ -64,15 +67,7 @@ class AddMemoFragment : Fragment(){
         }
     }
     private fun saveData() {
-        with(viewDataBinding){
-            if(price.text.isNullOrEmpty()){
-                Toast.makeText(requireContext(), "가격을 설정해주세요", Toast.LENGTH_SHORT).show()
-            }else{
-                val description = if (desc.text.isNullOrEmpty()) "" else desc.text.toString()
-                this@AddMemoFragment.viewModel.saveData(price.text.toString().toInt(),description)
-                findNavController().popBackStack()
-            }
-        }
+        findNavController().popBackStack()
     }
 
     private fun setAsset() {
@@ -125,5 +120,16 @@ class AddMemoFragment : Fragment(){
         }.let {
             TimePickerDialog(requireContext(),it,DateUtil.getHour(),DateUtil.getMinute(),false).show()
         }
+    }
+
+    private fun setPrice() {
+        viewDataBinding.price.run {
+            requestFocus()
+            showKeyboard()
+        }
+    }
+
+    private fun EditText.showKeyboard() {
+        (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.showSoftInput(this,0)
     }
 }

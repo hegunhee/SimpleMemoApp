@@ -161,11 +161,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:inputType="number"
+            android:text="@={viewModel.price}"
             android:textSize="20sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_price"
             app:layout_constraintEnd_toEndOf="@id/attr"
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_price"
-            app:layout_constraintBaseline_toBaselineOf="@id/text_price"
             tools:text="10000" />
 
         <TextView
@@ -184,6 +185,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:textSize="20sp"
+            android:text="@={viewModel.description}"
             app:layout_constraintEnd_toEndOf="@id/price"
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_desc"
@@ -198,7 +200,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:backgroundTint="@color/purple_200"
-            android:onClick="@{() -> viewModel.clickSave()}"
+            android:onClick="@{() -> viewModel.onSaveButtonClick()}"
             android:text="@string/save"
             android:textSize="15sp"
             android:textColor="@color/white"
