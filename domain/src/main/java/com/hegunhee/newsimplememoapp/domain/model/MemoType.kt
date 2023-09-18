@@ -17,7 +17,12 @@ sealed class MemoType() {
         val asset : String,
         val description: String,
         var id: Int = 0
-    ) : MemoType()
+    ) : MemoType() {
+
+        companion object {
+            val empty = Memo("",0,0,0,"","",0,0,"",0,"","",0)
+        }
+    }
 
     data class MemoDate(
         val year : Int,
