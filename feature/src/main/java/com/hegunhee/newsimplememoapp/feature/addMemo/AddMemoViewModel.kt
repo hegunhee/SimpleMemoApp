@@ -41,7 +41,7 @@ class AddMemoViewModel @Inject constructor(
     private val _memoState: MutableSharedFlow<AddMemoState> = MutableSharedFlow<AddMemoState>()
     val memoState: SharedFlow<AddMemoState> = _memoState.asSharedFlow()
 
-    fun initData() {
+    init {
         setDate()
         setTime()
     }
