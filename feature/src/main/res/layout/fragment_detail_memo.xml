@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         tools:context=".ui.addMemo.AddMemoActivity">
 
-        <Button
+        <ImageButton
             android:id="@+id/backButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewmodel.category}"
-            android:textSize="30dp"
+            android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="@id/backButton"
             app:layout_constraintStart_toEndOf="@id/backButton"
             app:layout_constraintTop_toTopOf="@id/backButton"
@@ -45,7 +45,7 @@
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/blue"
             android:onClick="@{() -> viewmodel.setCategoryIncome()}"
-            android:text="수입"
+            android:text="@string/income"
             app:layout_constraintEnd_toStartOf="@id/expenses_button"
             app:layout_constraintStart_toStartOf="@id/backButton"
             app:layout_constraintTop_toBottomOf="@id/backButton" />
@@ -59,7 +59,7 @@
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/red"
             android:onClick="@{() -> viewmodel.setCategoryExpense()}"
-            android:text="지출"
+            android:text="@string/expense"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/income_button"
             app:layout_constraintTop_toTopOf="@id/income_button" />
@@ -70,8 +70,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
-            android:text="날짜"
-            android:textSize="20dp"
+            android:text="@string/date"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/income_button"
             app:layout_constraintTop_toBottomOf="@id/income_button" />
 
@@ -82,7 +82,7 @@
             android:layout_marginStart="30dp"
             android:maxLines="1"
             android:text="@{viewmodel.dateInfo}"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:onClick="@{() -> viewmodel.clickDate()}"
             app:layout_constraintEnd_toStartOf="@id/time"
             app:layout_constraintStart_toEndOf="@id/text_day"
@@ -96,7 +96,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginEnd="20dp"
             android:text="@{viewmodel.timeInfo}"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:onClick="@{()->viewmodel.clickTime()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/day"
@@ -108,8 +108,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="자산"
-            android:textSize="20dp"
+            android:text="@string/asset"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/text_day"
             app:layout_constraintTop_toBottomOf="@id/text_day" />
 
@@ -132,8 +132,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="분류"
-            android:textSize="20dp"
+            android:text="@string/attr"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/text_day"
             app:layout_constraintTop_toBottomOf="@id/text_asset" />
 
@@ -155,8 +155,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="가격"
-            android:textSize="20dp"
+            android:text="@string/price"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/text_day"
             app:layout_constraintTop_toBottomOf="@id/text_attr" />
 
@@ -167,10 +167,11 @@
             android:layout_marginStart="30dp"
             android:inputType="number"
             android:text="@={viewmodel.price}"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@id/attr"
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_price"
+            app:layout_constraintBaseline_toBaselineOf="@id/text_price"
             tools:text="10000" />
 
         <TextView
@@ -178,8 +179,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="내용"
-            android:textSize="20dp"
+            android:text="@string/description"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="@id/text_day"
             app:layout_constraintTop_toBottomOf="@id/text_price" />
 
@@ -189,11 +190,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:text="@={viewmodel.desc}"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="@id/price"
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_desc"
-            tools:text="설명충" />
+            app:layout_constraintBaseline_toBaselineOf="@id/text_desc"
+            tools:text="설명" />
 
         <Button
             android:id="@+id/remove"
@@ -203,7 +205,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/red"
-            android:text="삭제"
+            android:text="@string/remove"
             android:onClick="@{() -> viewmodel.clickRemove()}"
             android:textSize="15dp"
             app:layout_constraintEnd_toStartOf="@id/save"
@@ -217,8 +219,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/purple_200"
-            android:text="저장하기"
-            android:textSize="15dp"
+            android:text="@string/save"
+            android:textSize="15sp"
             android:onClick="@{() -> viewmodel.clickUpdate()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/remove"
