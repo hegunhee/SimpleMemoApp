@@ -6,5 +6,6 @@ sealed class AddMemoState {
     object SetTime : AddMemoState()
     object SetAsset : AddMemoState()
     object SetAttr : AddMemoState()
+    object SetPrice : AddMemoState()
     object Save : AddMemoState()
 }
