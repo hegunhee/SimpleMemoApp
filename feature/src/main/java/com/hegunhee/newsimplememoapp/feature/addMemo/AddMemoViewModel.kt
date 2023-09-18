@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.usecase.InsertMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
+import com.hegunhee.newsimplememoapp.feature.common.TimeInfo
 import com.hegunhee.newsimplememoapp.feature.common.isExpenseAttr
 import com.hegunhee.newsimplememoapp.feature.common.isIncomeAttr
 import com.hegunhee.newsimplememoapp.feature.util.DateUtil
@@ -27,11 +28,8 @@ class AddMemoViewModel @Inject constructor(
     private val _dateInfo: MutableStateFlow<String> = MutableStateFlow<String>("")
     val dateInfo: StateFlow<String> = _dateInfo.asStateFlow()
 
-    var ampm: String = ""
-    var hour: Int = 0
-    var minute: Int = 0
-    private val _timeInfo: MutableStateFlow<String> = MutableStateFlow<String>("")
-    val timeInfo: StateFlow<String> = _timeInfo.asStateFlow()
+    private val _timeInfo: MutableStateFlow<TimeInfo> = MutableStateFlow<TimeInfo>(TimeInfo.emptyInfo)
+    val timeInfo: StateFlow<TimeInfo> = _timeInfo.asStateFlow()
 
     private val _asset: MutableStateFlow<String> = MutableStateFlow<String>("")
     val asset: StateFlow<String> = _asset.asStateFlow()
@@ -48,22 +46,18 @@ class AddMemoViewModel @Inject constructor(
 
     fun initData() {
         setDate()
-        initTime()
+        setTime()
     }
 
-    private fun initTime() {
-        val currentHour = DateUtil.getHour()
-        val currentMinute = DateUtil.getMinute()
-        if (currentHour > 12) {
-            ampm = "오후"
-            hour = currentHour - 12
-            minute = currentMinute
-        } else {
-            ampm = "오전"
-            hour = currentHour
-            minute = currentMinute
+    fun setTime(
+        hour : Int = DateUtil.getHour(),
+        minute : Int = DateUtil.getMinute()
+    ) {
+        _timeInfo.value = if(hour > 12) {
+            TimeInfo(hour-12,minute,"오후")
+        }else {
+            TimeInfo(hour,minute,"오전")
         }
-        setTimeInfo()
     }
 
     fun setDate(
@@ -77,11 +71,6 @@ class AddMemoViewModel @Inject constructor(
         this.day = day
         this.dayOfWeek = dayOfWeek
         _dateInfo.value = "${year}/${month}/${day} (${dayOfWeek})"
-    }
-
-
-    fun setTimeInfo() {
-        _timeInfo.value = "$ampm ${hour}:${minute}"
     }
 
     fun setAsset(asset: String) {
@@ -139,7 +128,8 @@ class AddMemoViewModel @Inject constructor(
     }
 
     private suspend fun saveData() {
-        val memo = MemoType.Memo(category.value,year,month,day,dayOfWeek,ampm,hour,minute,attr.value,price.value.toInt(),asset.value,description.value)
+        val timeInfoValue = timeInfo.value
+        val memo = MemoType.Memo(category.value,year,month,day,dayOfWeek,timeInfoValue.ampm,timeInfoValue.hour,timeInfoValue.minute,attr.value,price.value.toInt(),asset.value,description.value)
         addMemoUseCase(memo)
         _memoState.emit(AddMemoState.Save)
     }
