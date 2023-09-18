@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.usecase.InsertMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
+import com.hegunhee.newsimplememoapp.feature.common.DateInfo
 import com.hegunhee.newsimplememoapp.feature.common.TimeInfo
 import com.hegunhee.newsimplememoapp.feature.common.isExpenseAttr
 import com.hegunhee.newsimplememoapp.feature.common.isIncomeAttr
@@ -21,12 +22,8 @@ class AddMemoViewModel @Inject constructor(
     private val _category: MutableStateFlow<String> = MutableStateFlow<String>("지출")
     val category: StateFlow<String> = _category.asStateFlow()
 
-    var year: Int = 0
-    var month: Int = 0
-    var day: Int = 0
-    var dayOfWeek: String = ""
-    private val _dateInfo: MutableStateFlow<String> = MutableStateFlow<String>("")
-    val dateInfo: StateFlow<String> = _dateInfo.asStateFlow()
+    private val _dateInfo: MutableStateFlow<DateInfo> = MutableStateFlow<DateInfo>(DateInfo.emptyInfo)
+    val dateInfo: StateFlow<DateInfo> = _dateInfo.asStateFlow()
 
     private val _timeInfo: MutableStateFlow<TimeInfo> = MutableStateFlow<TimeInfo>(TimeInfo.emptyInfo)
     val timeInfo: StateFlow<TimeInfo> = _timeInfo.asStateFlow()
@@ -66,11 +63,7 @@ class AddMemoViewModel @Inject constructor(
         day: Int = DateUtil.getDayOfMonth(),
         dayOfWeek: String = DateUtil.getDayOfWeek(year, month, day)
     ) {
-        this.year = year
-        this.month = month
-        this.day = day
-        this.dayOfWeek = dayOfWeek
-        _dateInfo.value = "${year}/${month}/${day} (${dayOfWeek})"
+        _dateInfo.value = DateInfo(year = year, month = month, day = day, dayOfWeek = dayOfWeek)
     }
 
     fun setAsset(asset: String) {
@@ -129,7 +122,8 @@ class AddMemoViewModel @Inject constructor(
 
     private suspend fun saveData() {
         val timeInfoValue = timeInfo.value
-        val memo = MemoType.Memo(category.value,year,month,day,dayOfWeek,timeInfoValue.ampm,timeInfoValue.hour,timeInfoValue.minute,attr.value,price.value.toInt(),asset.value,description.value)
+        val dateInfoValue = dateInfo.value
+        val memo = MemoType.Memo(category.value,dateInfoValue.year,dateInfoValue.month,dateInfoValue.day,dateInfoValue.dayOfWeek,timeInfoValue.ampm,timeInfoValue.hour,timeInfoValue.minute,attr.value,price.value.toInt(),asset.value,description.value)
         addMemoUseCase(memo)
         _memoState.emit(AddMemoState.Save)
     }

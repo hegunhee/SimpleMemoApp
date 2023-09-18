@@ -82,7 +82,7 @@
             android:layout_marginStart="30dp"
             android:maxLines="1"
             android:onClick="@{() -> viewModel.clickDate()}"
-            android:text="@{viewModel.dateInfo}"
+            android:text="@{viewModel.dateInfo.dateStamp}"
             android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@id/time"
             app:layout_constraintStart_toEndOf="@id/text_day"
