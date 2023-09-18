@@ -3,12 +3,14 @@ package com.hegunhee.newsimplememoapp.feature.detailMemo
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -28,7 +30,7 @@ import kotlinx.coroutines.launch
 class DetailMemoFragment : Fragment() {
 
     private val viewModel: DetailMemoViewModel by viewModels()
-    private lateinit var binding: FragmentDetailMemoBinding
+    private lateinit var viewDataBinding: FragmentDetailMemoBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,12 +38,13 @@ class DetailMemoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_detail_memo, container, false)
-        binding = FragmentDetailMemoBinding.bind(root).apply {
+        viewDataBinding = FragmentDetailMemoBinding.bind(root).apply {
             this.viewmodel = viewModel
             lifecycleOwner = viewLifecycleOwner
         }
-        val memoId = navArgs<DetailMemoFragmentArgs>().value.memoId
-        viewModel.initViewModel(memoId)
+        navArgs<DetailMemoFragmentArgs>().value.memoId.let {
+            viewModel.initViewModel(memoId = it)
+        }
         observeData()
         return root
     }
@@ -71,6 +74,9 @@ class DetailMemoFragment : Fragment() {
                             DetailMemoState.SetTime -> {
                                 setTime()
                             }
+                            DetailMemoState.SetPrice -> {
+                                setPrice()
+                            }
                             DetailMemoState.Remove -> {
                                 findNavController().popBackStack()
                             }
@@ -82,14 +88,7 @@ class DetailMemoFragment : Fragment() {
     }
 
     private fun updateMemo() {
-        with(viewModel) {
-            if(price.value.isNullOrEmpty()){
-                Toast.makeText(requireContext(), "가격을 설정해주세요", Toast.LENGTH_SHORT).show()
-            }else {
-                updateMemo()
-                findNavController().popBackStack()
-            }
-        }
+        findNavController().popBackStack()
     }
 
     private fun setAsset() {
@@ -120,7 +119,7 @@ class DetailMemoFragment : Fragment() {
         DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             viewModel.setDate(year,month+1,dayOfMonth)
         }.let { listener ->
-            with(viewModel) {
+            viewModel.dateInfo.value.run {
                 DatePickerDialog(requireContext(), listener, year, month - 1, day).show()
             }
         }
@@ -129,27 +128,22 @@ class DetailMemoFragment : Fragment() {
 
     private fun setTime() {
         TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-            with(viewModel) {
-                if (hourOfDay > 12) {
-                    ampm = "오후"
-                    hour = hourOfDay - 12
-                    this.minute = minute
-                } else {
-                    ampm = "오전"
-                    hour = hourOfDay
-                    this.minute = minute
-                }
-                setTimeInfo()
-            }
-
+            viewModel.setTime(hourOfDay,minute)
         }.let { listener ->
-            TimePickerDialog(
-                requireContext(),
-                listener,
-                viewModel.hour,
-                viewModel.minute,
-                false
-            ).show()
+            viewModel.timeInfo.value.let { timeInfo ->
+                TimePickerDialog(requireContext(), listener, timeInfo.hour, timeInfo.minute, false).show()
+            }
         }
+    }
+
+    private fun setPrice() {
+        viewDataBinding.price.run {
+            requestFocus()
+            showKeyboard()
+        }
+    }
+
+    private fun EditText.showKeyboard() {
+        (activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.showSoftInput(this,0)
     }
 }
