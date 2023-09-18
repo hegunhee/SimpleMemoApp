@@ -105,18 +105,7 @@ class AddMemoFragment : Fragment(){
 
     private fun setTime() {
         TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-            with(viewModel) {
-                if (hourOfDay > 12) {
-                    ampm = "오후"
-                    hour = hourOfDay - 12
-                    this.minute = minute
-                } else {
-                    ampm = "오전"
-                    hour = hourOfDay
-                    this.minute = minute
-                }
-                setTimeInfo()
-            }
+            viewModel.setTime(hourOfDay,minute)
         }.let {
             TimePickerDialog(requireContext(),it,DateUtil.getHour(),DateUtil.getMinute(),false).show()
         }

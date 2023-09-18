@@ -1,6 +1,5 @@
 package com.hegunhee.newsimplememoapp.feature
 
-import com.hegunhee.newsimplememoapp.feature.common.diffUtil
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
