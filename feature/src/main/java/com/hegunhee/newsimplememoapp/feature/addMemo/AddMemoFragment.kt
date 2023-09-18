@@ -42,9 +42,12 @@ class AddMemoFragment : Fragment(){
             viewModel = this@AddMemoFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
         }
-        viewModel.initData()
-        observeData()
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeData()
     }
 
     private fun observeData()  {
