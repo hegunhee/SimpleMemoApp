@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.hegunhee.newsimplememoapp.feature.addMemo.AddMemoViewModel" />
@@ -15,7 +14,7 @@
         android:layout_height="match_parent"
         tools:context=".ui.addMemo.AddMemoActivity">
 
-        <Button
+        <ImageButton
             android:id="@+id/backButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -50,7 +49,6 @@
             app:layout_constraintEnd_toStartOf="@id/expenses_button"
             app:layout_constraintStart_toStartOf="@id/backButton"
             app:layout_constraintTop_toBottomOf="@id/backButton" />
-
 
         <Button
             android:id="@+id/expenses_button"
@@ -124,8 +122,7 @@
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_asset"
             app:category="@{viewModel.asset}"
-            android:onClick="@{() -> viewModel.clickAsset()}"
-            />
+            android:onClick="@{() -> viewModel.clickAsset()}" />
 
         <TextView
             android:id="@+id/text_attr"
@@ -146,9 +143,7 @@
             app:category="@{viewModel.attr}"
             app:layout_constraintEnd_toEndOf="@id/time"
             app:layout_constraintStart_toEndOf="@id/text_day"
-            app:layout_constraintTop_toTopOf="@id/text_attr"
-
-            />
+            app:layout_constraintTop_toTopOf="@id/text_attr" />
 
         <TextView
             android:id="@+id/text_price"
@@ -170,8 +165,8 @@
             app:layout_constraintEnd_toEndOf="@id/attr"
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_price"
-            tools:text="10000"
-            />
+            app:layout_constraintBaseline_toBaselineOf="@id/text_price"
+            tools:text="10000" />
 
         <TextView
             android:id="@+id/text_desc"
@@ -192,7 +187,8 @@
             app:layout_constraintEnd_toEndOf="@id/price"
             app:layout_constraintStart_toEndOf="@id/text_day"
             app:layout_constraintTop_toTopOf="@id/text_desc"
-            tools:text="설명충" />
+            app:layout_constraintBaseline_toBaselineOf="@id/text_desc"
+            tools:text="설명" />
 
         <Button
             android:id="@+id/save"
@@ -207,7 +203,6 @@
             android:textSize="15sp"
             android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/text_desc" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
