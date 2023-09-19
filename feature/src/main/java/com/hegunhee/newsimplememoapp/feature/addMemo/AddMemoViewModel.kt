@@ -47,14 +47,15 @@ class AddMemoViewModel @Inject constructor(
     }
 
     fun setTime(
-        hour : Int = DateUtil.getHour(),
+        hourOfDay : Int = DateUtil.getHour(),
         minute : Int = DateUtil.getMinute()
     ) {
-        _timeInfo.value = if(hour > 12) {
-            TimeInfo(hour-12,minute,"오후")
+        val (hour,amPm) = if(hourOfDay > 12) {
+            Pair(hourOfDay-12,"오후")
         }else {
-            TimeInfo(hour,minute,"오전")
+            Pair(hourOfDay,"오전")
         }
+        _timeInfo.value = TimeInfo(hour,minute,amPm)
     }
 
     fun setDate(
@@ -123,8 +124,22 @@ class AddMemoViewModel @Inject constructor(
     private suspend fun saveData() {
         val timeInfoValue = timeInfo.value
         val dateInfoValue = dateInfo.value
-        val memo = MemoType.Memo(category.value,dateInfoValue.year,dateInfoValue.month,dateInfoValue.day,dateInfoValue.dayOfWeek,timeInfoValue.ampm,timeInfoValue.hour,timeInfoValue.minute,attr.value,price.value.toInt(),asset.value,description.value)
-        addMemoUseCase(memo)
+        MemoType.Memo(
+            category = category.value,
+            year = dateInfoValue.year,
+            month = dateInfoValue.month,
+            day = dateInfoValue.day,
+            dayOfWeek = dateInfoValue.dayOfWeek,
+            amPm = timeInfoValue.ampm,
+            hour = timeInfoValue.hour,
+            minute = timeInfoValue.minute,
+            attr = attr.value,
+            price = price.value.toInt(),
+            asset = asset.value,
+            description = description.value
+        ).let {memo ->
+            addMemoUseCase(memo)
+        }
         _memoState.emit(AddMemoState.Save)
     }
 }

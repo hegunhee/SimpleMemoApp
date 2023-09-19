@@ -1,6 +1,5 @@
 package com.hegunhee.newsimplememoapp.feature.detailMemo
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.usecase.DeleteMemoUseCase
@@ -124,8 +123,8 @@ class DetailMemoViewModel @Inject constructor(
             price = price.value.toInt(),
             asset = asset.value,
             description = desc.value
-        ).also {
-            updateMemoUseCase(it)
+        ).let { memo ->
+            updateMemoUseCase(memo)
         }
     }
 
