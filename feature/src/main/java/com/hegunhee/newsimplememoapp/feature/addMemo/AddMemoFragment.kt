@@ -22,6 +22,7 @@ import com.hegunhee.newsimplememoapp.feature.common.assetArray
 import com.hegunhee.newsimplememoapp.feature.common.expenseAttr
 import com.hegunhee.newsimplememoapp.feature.common.incomeAttr
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentAddMemoBinding
+import com.hegunhee.newsimplememoapp.feature.memo.MemoFragment
 import com.hegunhee.newsimplememoapp.feature.util.DateUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -51,7 +52,7 @@ class AddMemoFragment : Fragment(){
     }
 
     private fun observeData()  {
-        lifecycleScope.launch{
+        viewLifecycleOwner.lifecycleScope.launch{
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 launch {
                     viewModel.memoState.collect {

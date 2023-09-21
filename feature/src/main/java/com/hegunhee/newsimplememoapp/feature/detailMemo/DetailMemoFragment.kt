@@ -39,20 +39,24 @@ class DetailMemoFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_detail_memo, container, false)
         viewDataBinding = FragmentDetailMemoBinding.bind(root).apply {
-            this.viewmodel = viewModel
+            viewmodel = viewModel
             lifecycleOwner = viewLifecycleOwner
         }
         navArgs<DetailMemoFragmentArgs>().value.memoId.let {
             viewModel.initViewModel(memoId = it)
         }
-        observeData()
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        observeData()
     }
 
 
     private fun observeData() {
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.memoState.collect {
                         when (it) {
@@ -61,6 +65,9 @@ class DetailMemoFragment : Fragment() {
                             }
                             DetailMemoState.Update -> {
                                 updateMemo()
+                            }
+                            DetailMemoState.Remove -> {
+                                removeMemo()
                             }
                             DetailMemoState.SetAsset -> {
                                 setAsset()
@@ -77,9 +84,6 @@ class DetailMemoFragment : Fragment() {
                             DetailMemoState.SetPrice -> {
                                 setPrice()
                             }
-                            DetailMemoState.Remove -> {
-                                findNavController().popBackStack()
-                            }
                         }
                     }
                 }
@@ -88,6 +92,10 @@ class DetailMemoFragment : Fragment() {
     }
 
     private fun updateMemo() {
+        findNavController().popBackStack()
+    }
+
+    private fun removeMemo() {
         findNavController().popBackStack()
     }
 
