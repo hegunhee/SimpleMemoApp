@@ -39,7 +39,7 @@ class DetailMemoFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_detail_memo, container, false)
         viewDataBinding = FragmentDetailMemoBinding.bind(root).apply {
-            viewmodel = viewModel
+            viewModel = this@DetailMemoFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
         }
         navArgs<DetailMemoFragmentArgs>().value.memoId.let {
