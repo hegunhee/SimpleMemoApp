@@ -51,11 +51,11 @@ class DetailMemoViewModel @Inject constructor(
         if(memoEntity.value != MemoType.Memo.empty) return
         viewModelScope.launch {
             _memoEntity.value = getMemoUseCase(memoId)
-            initData()
+            initMemo()
         }
     }
 
-    private fun initData() {
+    private fun initMemo() {
         memoEntity.value.run {
             val hourOfDay = if(amPm == "오후") {
                 hour + 12
@@ -107,27 +107,6 @@ class DetailMemoViewModel @Inject constructor(
         }
     }
 
-    private fun updateMemo() = viewModelScope.launch {
-        val timeInfoValue = timeInfo.value
-        val dateInfoValue = dateInfo.value
-        memoEntity.value.copy(
-            category = category.value,
-            year = dateInfoValue.year,
-            month = dateInfoValue.month,
-            day = dateInfoValue.day,
-            dayOfWeek = dateInfoValue.dayOfWeek,
-            amPm = timeInfoValue.ampm,
-            hour = timeInfoValue.hour,
-            minute = timeInfoValue.minute,
-            attr = attr.value,
-            price = price.value.toInt(),
-            asset = asset.value,
-            description = desc.value
-        ).let { memo ->
-            updateMemoUseCase(memo)
-        }
-    }
-
     fun back() = viewModelScope.launch{
         _memoState.emit(DetailMemoState.Back)
     }
@@ -158,6 +137,27 @@ class DetailMemoViewModel @Inject constructor(
         }else {
             updateMemo()
             _memoState.emit(DetailMemoState.Update)
+        }
+    }
+
+    private suspend fun updateMemo() {
+        val timeInfoValue = timeInfo.value
+        val dateInfoValue = dateInfo.value
+        memoEntity.value.copy(
+            category = category.value,
+            year = dateInfoValue.year,
+            month = dateInfoValue.month,
+            day = dateInfoValue.day,
+            dayOfWeek = dateInfoValue.dayOfWeek,
+            amPm = timeInfoValue.ampm,
+            hour = timeInfoValue.hour,
+            minute = timeInfoValue.minute,
+            attr = attr.value,
+            price = price.value.toInt(),
+            asset = asset.value,
+            description = desc.value
+        ).let { memo ->
+            updateMemoUseCase(memo)
         }
     }
 
