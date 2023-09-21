@@ -30,7 +30,7 @@ class MemoViewModel @Inject constructor(
         memoList
     }.stateIn(
         scope =  viewModelScope,
-        started = SharingStarted.WhileSubscribed(5000L),
+        started = SharingStarted.WhileSubscribed(100L),
         initialValue = emptyList()
     )
 
