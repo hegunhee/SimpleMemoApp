@@ -23,8 +23,8 @@ class DefaultMemoRepository @Inject constructor(
         dao.deleteAllMemo()
     }
 
-    override suspend fun deleteMemo(memo: MemoType.Memo) {
-        dao.deleteMemo(memo.toMemoEntity())
+    override suspend fun deleteMemo(id : Int) {
+        dao.deleteMemo(id)
     }
 
     override suspend fun getMemoTypeListSortedByYearAndMonth(year: Int, month: Int): List<MemoType> {
