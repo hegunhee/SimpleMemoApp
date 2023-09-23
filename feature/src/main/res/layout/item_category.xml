@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="category"
+            type="String" />
+
+        <variable
+            name="categoryType"
+            type="com.hegunhee.newsimplememoapp.feature.common.CategoryType" />
+
+        <variable
+            name="actionHandler"
+            type="com.hegunhee.newsimplememoapp.feature.common.CategoryActionHandler" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/category_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="@{() -> actionHandler.onCategoryClick(categoryType,category)}"
+            android:paddingVertical="10dp"
+            android:text="@{category}"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="우리은행" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

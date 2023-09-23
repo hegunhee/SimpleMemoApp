@@ -4,9 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.usecase.InsertMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
+import com.hegunhee.newsimplememoapp.feature.common.CategoryActionHandler
+import com.hegunhee.newsimplememoapp.feature.common.CategoryType
 import com.hegunhee.newsimplememoapp.feature.common.DateInfo
 import com.hegunhee.newsimplememoapp.feature.common.MemoCategory
 import com.hegunhee.newsimplememoapp.feature.common.TimeInfo
+import com.hegunhee.newsimplememoapp.feature.common.assetArray
+import com.hegunhee.newsimplememoapp.feature.common.expenseAttr
+import com.hegunhee.newsimplememoapp.feature.common.incomeAttr
 import com.hegunhee.newsimplememoapp.feature.common.isExpenseAttr
 import com.hegunhee.newsimplememoapp.feature.common.isIncomeAttr
 import com.hegunhee.newsimplememoapp.feature.util.DateUtil
@@ -18,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddMemoViewModel @Inject constructor(
     private val addMemoUseCase : InsertMemoUseCase
-) : ViewModel() {
+) : ViewModel(), CategoryActionHandler {
 
     private val _memoCategory: MutableStateFlow<MemoCategory> = MutableStateFlow<MemoCategory>(MemoCategory.Expenses)
     val memoCategory: StateFlow<MemoCategory> = _memoCategory.asStateFlow()
@@ -41,6 +46,10 @@ class AddMemoViewModel @Inject constructor(
 
     private val _memoState: MutableSharedFlow<AddMemoState> = MutableSharedFlow<AddMemoState>()
     val memoState: SharedFlow<AddMemoState> = _memoState.asSharedFlow()
+
+    val categoryHeaderText : MutableStateFlow<String> = MutableStateFlow("")
+    val categoryList : MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
+    val categoryType : MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.Empty)
 
     init {
         setDate()
@@ -66,14 +75,6 @@ class AddMemoViewModel @Inject constructor(
         dayOfWeek: String = DateUtil.getDayOfWeek(year, month, day)
     ) {
         _dateInfo.value = DateInfo(year = year, month = month, day = day, dayOfWeek = dayOfWeek)
-    }
-
-    fun setAsset(asset: String) {
-        _asset.value = asset
-    }
-
-    fun setAttr(attr: String) {
-        _attr.value = attr
     }
 
     fun setCategoryIncome() {
@@ -103,18 +104,30 @@ class AddMemoViewModel @Inject constructor(
     }
 
     fun clickAsset() = viewModelScope.launch {
-        _memoState.emit(AddMemoState.SetAsset)
+        categoryHeaderText.value = "자산"
+        categoryList.value = assetArray.toList()
+        categoryType.value = CategoryType.Asset
     }
 
     fun clickAttr() = viewModelScope.launch {
-        _memoState.emit(AddMemoState.SetAttr)
+        categoryHeaderText.value = "분류"
+        when(memoCategory.value) {
+            MemoCategory.Income -> {
+                categoryList.value = incomeAttr.toList()
+                categoryType.value = CategoryType.AttrIncome
+            }
+            MemoCategory.Expenses -> {
+                categoryList.value = expenseAttr.toList()
+                categoryType.value = CategoryType.AttrExpenses
+            }
+        }
     }
 
     fun onSaveButtonClick() = viewModelScope.launch {
         if (asset.value.isBlank()) {
-            _memoState.emit(AddMemoState.SetAsset)
+            clickAsset()
         } else if (attr.value.isBlank()) {
-            _memoState.emit(AddMemoState.SetAttr)
+            clickAttr()
         } else if (price.value.isBlank()) {
             _memoState.emit(AddMemoState.SetPrice)
         } else {
@@ -126,7 +139,7 @@ class AddMemoViewModel @Inject constructor(
         val timeInfoValue = timeInfo.value
         val dateInfoValue = dateInfo.value
         MemoType.Memo(
-            category = category.value,
+            category = memoCategory.value.text,
             year = dateInfoValue.year,
             month = dateInfoValue.month,
             day = dateInfoValue.day,
@@ -142,5 +155,35 @@ class AddMemoViewModel @Inject constructor(
             addMemoUseCase(memo)
         }
         _memoState.emit(AddMemoState.Save)
+    }
+
+    override fun onBottomSheetDismiss() {
+        dismissBottomSheet()
+    }
+
+    override fun onCategoryAdd(categoryType: CategoryType) {
+
+    }
+
+    override fun onCategoryClick(type: CategoryType, category: String) {
+        when(type) {
+            CategoryType.Empty -> {}
+            CategoryType.Asset -> {
+                _asset.value = category
+            }
+            CategoryType.AttrExpenses -> {
+                _attr.value = category
+            }
+            CategoryType.AttrIncome -> {
+                _attr.value = category
+            }
+        }
+        dismissBottomSheet()
+    }
+
+    private fun dismissBottomSheet() {
+        categoryHeaderText.value = ""
+        categoryList.value = emptyList()
+        categoryType.value = CategoryType.Empty
     }
 }
