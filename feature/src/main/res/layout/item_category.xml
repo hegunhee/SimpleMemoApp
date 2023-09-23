@@ -11,11 +11,11 @@
 
         <variable
             name="categoryType"
-            type="com.hegunhee.newsimplememoapp.feature.common.CategoryType" />
+            type="com.hegunhee.newsimplememoapp.feature.common.category.CategoryType" />
 
         <variable
             name="actionHandler"
-            type="com.hegunhee.newsimplememoapp.feature.common.CategoryActionHandler" />
+            type="com.hegunhee.newsimplememoapp.feature.common.category.CategoryActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

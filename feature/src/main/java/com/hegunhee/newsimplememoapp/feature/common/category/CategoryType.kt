@@ -1,4 +1,4 @@
-package com.hegunhee.newsimplememoapp.feature.common
+package com.hegunhee.newsimplememoapp.feature.common.category
 
 sealed interface CategoryType {
 
