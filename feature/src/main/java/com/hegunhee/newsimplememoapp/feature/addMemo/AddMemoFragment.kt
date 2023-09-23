@@ -18,11 +18,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.hegunhee.newsimplememoapp.feature.R
+import com.hegunhee.newsimplememoapp.feature.common.MemoCategory
 import com.hegunhee.newsimplememoapp.feature.common.assetArray
 import com.hegunhee.newsimplememoapp.feature.common.expenseAttr
 import com.hegunhee.newsimplememoapp.feature.common.incomeAttr
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentAddMemoBinding
-import com.hegunhee.newsimplememoapp.feature.memo.MemoFragment
 import com.hegunhee.newsimplememoapp.feature.util.DateUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -85,7 +85,7 @@ class AddMemoFragment : Fragment(){
     }
 
     private fun setAttr() {
-        val attrType = if (viewModel.category.value == getString(R.string.income)) {
+        val attrType = if (viewModel.memoCategory.value == MemoCategory.Income) {
             incomeAttr
         } else {
             expenseAttr

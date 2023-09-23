@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.usecase.InsertMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.feature.common.DateInfo
+import com.hegunhee.newsimplememoapp.feature.common.MemoCategory
 import com.hegunhee.newsimplememoapp.feature.common.TimeInfo
 import com.hegunhee.newsimplememoapp.feature.common.isExpenseAttr
 import com.hegunhee.newsimplememoapp.feature.common.isIncomeAttr
@@ -19,8 +20,8 @@ class AddMemoViewModel @Inject constructor(
     private val addMemoUseCase : InsertMemoUseCase
 ) : ViewModel() {
 
-    private val _category: MutableStateFlow<String> = MutableStateFlow<String>("지출")
-    val category: StateFlow<String> = _category.asStateFlow()
+    private val _memoCategory: MutableStateFlow<MemoCategory> = MutableStateFlow<MemoCategory>(MemoCategory.Expenses)
+    val memoCategory: StateFlow<MemoCategory> = _memoCategory.asStateFlow()
 
     private val _dateInfo: MutableStateFlow<DateInfo> = MutableStateFlow<DateInfo>(DateInfo.emptyInfo)
     val dateInfo: StateFlow<DateInfo> = _dateInfo.asStateFlow()
@@ -76,14 +77,14 @@ class AddMemoViewModel @Inject constructor(
     }
 
     fun setCategoryIncome() {
-        _category.value = "수입"
+        _memoCategory.value = MemoCategory.Income
         if (isExpenseAttr(attr.value)) {
             _attr.value = ""
         }
     }
 
     fun setCategoryExpense() {
-        _category.value = "지출"
+        _memoCategory.value = MemoCategory.Expenses
         if (isIncomeAttr(attr.value)) {
             _attr.value = ""
         }
