@@ -1,10 +1,8 @@
 package com.hegunhee.newsimplememoapp.feature.detailMemo
 
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,9 +17,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.hegunhee.newsimplememoapp.feature.R
-import com.hegunhee.newsimplememoapp.feature.common.assetArray
-import com.hegunhee.newsimplememoapp.feature.common.expenseAttr
-import com.hegunhee.newsimplememoapp.feature.common.incomeAttr
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentDetailMemoBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -69,12 +64,8 @@ class DetailMemoFragment : Fragment() {
                             DetailMemoState.Remove -> {
                                 removeMemo()
                             }
-                            DetailMemoState.SetAsset -> {
-                                setAsset()
-                            }
-                            DetailMemoState.SetAttr -> {
-                                setAttr()
-                            }
+                            DetailMemoState.SetAsset -> {}
+                            DetailMemoState.SetAttr -> {}
                             DetailMemoState.SetDate -> {
                                 setDate()
                             }
@@ -97,30 +88,6 @@ class DetailMemoFragment : Fragment() {
 
     private fun removeMemo() {
         findNavController().popBackStack()
-    }
-
-    private fun setAsset() {
-        AlertDialog.Builder(requireContext())
-            .setTitle("자산")
-            .setItems(
-                assetArray,
-                DialogInterface.OnClickListener { _, which ->
-                    viewModel.setAsset(assetArray[which])
-                }).create().show()
-    }
-
-    private fun setAttr() {
-        val attrType = if (viewModel.category.value == "수입") {
-            incomeAttr
-        } else {
-            expenseAttr
-        }
-        AlertDialog.Builder(requireContext())
-            .setTitle("자산")
-            .setItems(attrType,
-                DialogInterface.OnClickListener { _, which ->
-                    viewModel.setAttr(attrType[which])
-                }).create().show()
     }
 
     private fun setDate() {
