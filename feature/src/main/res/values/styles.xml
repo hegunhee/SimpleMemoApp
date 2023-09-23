@@ -15,4 +15,7 @@
     <style name="monthPickerStyle" parent="datePickerTextStyle">
         <item name="android:gravity">center</item>
     </style>
+    
+    <dimen name="headerTextSize">20sp</dimen>
+    <dimen name="headerSize">60dp</dimen>
 </resources>
