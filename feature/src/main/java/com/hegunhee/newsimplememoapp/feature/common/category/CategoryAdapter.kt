@@ -1,4 +1,4 @@
-package com.hegunhee.newsimplememoapp.feature.common
+package com.hegunhee.newsimplememoapp.feature.common.category
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.hegunhee.newsimplememoapp.feature.databinding.ItemCategoryBinding
 
-class CategoryAdapter(val actionHandler: CategoryActionHandler,val categoryType : CategoryType) : ListAdapter<String,CategoryAdapter.CategoryViewHolder>(diffUtil) {
+class CategoryAdapter(val actionHandler: CategoryActionHandler, val categoryType : CategoryType) : ListAdapter<String, CategoryAdapter.CategoryViewHolder>(
+    diffUtil
+) {
 
     inner class CategoryViewHolder(private val binding : ItemCategoryBinding) : ViewHolder(binding.root) {
 
