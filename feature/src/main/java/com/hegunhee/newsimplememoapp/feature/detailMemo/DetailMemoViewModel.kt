@@ -7,7 +7,13 @@ import com.hegunhee.newsimplememoapp.domain.usecase.GetMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.usecase.UpdateMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.feature.common.DateInfo
+import com.hegunhee.newsimplememoapp.feature.common.MemoCategory
 import com.hegunhee.newsimplememoapp.feature.common.TimeInfo
+import com.hegunhee.newsimplememoapp.feature.common.assetArray
+import com.hegunhee.newsimplememoapp.feature.common.category.CategoryActionHandler
+import com.hegunhee.newsimplememoapp.feature.common.category.CategoryType
+import com.hegunhee.newsimplememoapp.feature.common.expenseAttr
+import com.hegunhee.newsimplememoapp.feature.common.incomeAttr
 import com.hegunhee.newsimplememoapp.feature.common.isExpenseAttr
 import com.hegunhee.newsimplememoapp.feature.common.isIncomeAttr
 import com.hegunhee.newsimplememoapp.feature.util.DateUtil
@@ -21,13 +27,13 @@ class DetailMemoViewModel @Inject constructor(
     private val getMemoUseCase : GetMemoUseCase,
     private val deleteMemoUseCase: DeleteMemoUseCase,
     private val updateMemoUseCase : UpdateMemoUseCase
-) : ViewModel() {
+) : ViewModel(), CategoryActionHandler {
 
     private val _memoEntity : MutableStateFlow<MemoType.Memo> = MutableStateFlow(MemoType.Memo.empty)
     val memoEntity : StateFlow<MemoType.Memo> = _memoEntity.asStateFlow()
 
-    private val _category : MutableStateFlow<String> = MutableStateFlow<String>("")
-    val category : StateFlow<String> = _category.asStateFlow()
+    private val _memoCategory : MutableStateFlow<MemoCategory> = MutableStateFlow<MemoCategory>(MemoCategory.Expenses)
+    val memoCategory : StateFlow<MemoCategory> = _memoCategory.asStateFlow()
 
     private val _dateInfo : MutableStateFlow<DateInfo> = MutableStateFlow<DateInfo>(DateInfo.emptyInfo)
     val dateInfo : StateFlow<DateInfo> = _dateInfo.asStateFlow()
@@ -47,6 +53,10 @@ class DetailMemoViewModel @Inject constructor(
     private val _memoState : MutableSharedFlow<DetailMemoState> = MutableSharedFlow<DetailMemoState>()
     val memoState : SharedFlow<DetailMemoState> = _memoState.asSharedFlow()
 
+    val categoryHeaderText : MutableStateFlow<String> = MutableStateFlow("")
+    val categoryList : MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
+    val categoryType : MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.Empty)
+
     fun initViewModel(memoId : Int) {
         if(memoEntity.value != MemoType.Memo.empty) return
         viewModelScope.launch {
@@ -64,7 +74,11 @@ class DetailMemoViewModel @Inject constructor(
             }
             setTime(hourOfDay,minute)
             setDate(year,month,day)
-            _category.value = category
+            _memoCategory.value = if(category == "지출") {
+                MemoCategory.Expenses
+            }else {
+                MemoCategory.Income
+            }
             _asset.value = asset
             _attr.value = attr
             this@DetailMemoViewModel.price.value = price.toString()
@@ -94,14 +108,14 @@ class DetailMemoViewModel @Inject constructor(
     }
 
     fun setCategoryIncome() {
-        _category.value = "수입"
+        _memoCategory.value = MemoCategory.Income
         if (isExpenseAttr(attr.value)) {
             _attr.value = ""
         }
     }
 
     fun setCategoryExpense() {
-        _category.value = "지출"
+        _memoCategory.value = MemoCategory.Expenses
         if (isIncomeAttr(attr.value)) {
             _attr.value = ""
         }
@@ -117,14 +131,6 @@ class DetailMemoViewModel @Inject constructor(
 
     fun clickTime() = viewModelScope.launch{
         _memoState.emit(DetailMemoState.SetTime)
-    }
-
-    fun clickAsset() = viewModelScope.launch{
-        _memoState.emit(DetailMemoState.SetAsset)
-    }
-
-    fun clickAttr() = viewModelScope.launch{
-        _memoState.emit(DetailMemoState.SetAttr)
     }
 
     fun clickUpdate() = viewModelScope.launch{
@@ -144,7 +150,7 @@ class DetailMemoViewModel @Inject constructor(
         val timeInfoValue = timeInfo.value
         val dateInfoValue = dateInfo.value
         memoEntity.value.copy(
-            category = category.value,
+            category = memoCategory.value.text,
             year = dateInfoValue.year,
             month = dateInfoValue.month,
             day = dateInfoValue.day,
@@ -170,11 +176,53 @@ class DetailMemoViewModel @Inject constructor(
         deleteMemoUseCase(memoEntity.value)
     }
 
-    fun setAsset(asset : String) = viewModelScope.launch {
-        _asset.value = asset
+    fun clickAsset() = viewModelScope.launch {
+        categoryHeaderText.value = "자산"
+        categoryList.value = assetArray.toList()
+        categoryType.value = CategoryType.Asset
     }
 
-    fun setAttr(attr : String) = viewModelScope.launch {
-        _attr.value = attr
+    fun clickAttr() = viewModelScope.launch {
+        categoryHeaderText.value = "분류"
+        when(memoCategory.value) {
+            MemoCategory.Income -> {
+                categoryList.value = incomeAttr.toList()
+                categoryType.value = CategoryType.AttrIncome
+            }
+            MemoCategory.Expenses -> {
+                categoryList.value = expenseAttr.toList()
+                categoryType.value = CategoryType.AttrExpenses
+            }
+        }
+    }
+
+    override fun onBottomSheetDismiss() {
+        dismissBottomSheet()
+    }
+
+    override fun onCategoryAdd(categoryType: CategoryType) {
+
+    }
+
+    override fun onCategoryClick(type: CategoryType, category: String) {
+        when(type) {
+            CategoryType.Empty -> {}
+            CategoryType.Asset -> {
+                _asset.value = category
+            }
+            CategoryType.AttrExpenses -> {
+                _attr.value = category
+            }
+            CategoryType.AttrIncome -> {
+                _attr.value = category
+            }
+        }
+        dismissBottomSheet()
+    }
+
+    private fun dismissBottomSheet() {
+        categoryHeaderText.value = ""
+        categoryList.value = emptyList()
+        categoryType.value = CategoryType.Empty
     }
 }
