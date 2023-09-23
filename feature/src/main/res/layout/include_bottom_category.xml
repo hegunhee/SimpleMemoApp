@@ -5,6 +5,22 @@
 
     <data>
 
+        <variable
+            name="headerText"
+            type="String" />
+
+        <variable
+            name="categoryType"
+            type="com.hegunhee.newsimplememoapp.feature.common.CategoryType" />
+
+        <variable
+            name="categoryList"
+            type="java.util.List&lt;String>" />
+
+        <variable
+            name="actionHandler"
+            type="com.hegunhee.newsimplememoapp.feature.common.CategoryActionHandler" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:textColor="@color/black"
+            android:text="@{headerText}"
             android:textSize="@dimen/headerTextSize"
             app:layout_constraintBottom_toBottomOf="@id/header_view"
             app:layout_constraintStart_toStartOf="@id/header_view"
@@ -36,6 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
+            android:onClick="@{() -> actionHandler.onBottomSheetDismiss()}"
             android:background="@drawable/ic_exit"
             app:layout_constraintBottom_toBottomOf="@id/header_view"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,6 +66,7 @@
             android:layout_marginEnd="30dp"
             android:background="@drawable/ic_draw"
             app:layout_constraintBottom_toBottomOf="@id/header_view"
+            android:onClick="@{() -> actionHandler.onCategoryAdd(categoryType)}"
             app:layout_constraintEnd_toStartOf="@id/hide_button"
             app:layout_constraintTop_toTopOf="@id/header_view" />
 
@@ -55,6 +74,9 @@
             android:id="@+id/category_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:categoryList="@{categoryList}"
+            app:categoryType="@{categoryType}"
+            app:actionHandler="@{actionHandler}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="4"
             app:layout_constraintTop_toBottomOf="@id/header_view" />
