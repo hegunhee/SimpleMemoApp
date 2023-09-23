@@ -173,7 +173,7 @@ class DetailMemoViewModel @Inject constructor(
     }
 
     private suspend fun removeMemo() {
-        deleteMemoUseCase(memoEntity.value)
+        deleteMemoUseCase(memoEntity.value.id)
     }
 
     fun clickAsset() = viewModelScope.launch {

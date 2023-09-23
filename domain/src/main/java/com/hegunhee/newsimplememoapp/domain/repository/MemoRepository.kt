@@ -10,7 +10,7 @@ interface MemoRepository {
 
     suspend fun deleteAllMemo()
 
-    suspend fun deleteMemo(memo : MemoType.Memo)
+    suspend fun deleteMemo(id : Int)
 
     suspend fun getMemoTypeListSortedByYearAndMonth(year : Int,month : Int) : List<MemoType>
     suspend fun updateMemo(memo : MemoType.Memo)
