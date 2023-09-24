@@ -1,7 +1,9 @@
 package com.hegunhee.newsimplememoapp.data.repository
 
 import com.hegunhee.newsimplememoapp.data.dataSource.LocalDataSource
+import com.hegunhee.newsimplememoapp.data.entity.CategoryEntity
 import com.hegunhee.newsimplememoapp.data.mapper.*
+import com.hegunhee.newsimplememoapp.domain.model.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.domain.repository.MemoRepository
 import javax.inject.Inject
@@ -42,5 +44,17 @@ class DefaultMemoRepository @Inject constructor(
 
     override suspend fun updateMemo(memo: MemoType.Memo) {
         localDataSource.updateMemo(memo.toMemoEntity())
+    }
+
+    override suspend fun getAllCategoryByType(categoryType: CategoryType): List<String> {
+        return localDataSource.getAllCategoryByType(categoryType.code).map { it.text }
+    }
+
+    override suspend fun deleteCategory(text: String) {
+        localDataSource.deleteCategory(text)
+    }
+
+    override suspend fun insertCategory(categoryType: CategoryType, text: String) {
+        localDataSource.insertCategory(CategoryEntity(categoryType.code,text))
     }
 }
