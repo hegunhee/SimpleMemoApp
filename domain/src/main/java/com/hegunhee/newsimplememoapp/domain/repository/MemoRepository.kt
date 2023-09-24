@@ -1,5 +1,6 @@
 package com.hegunhee.newsimplememoapp.domain.repository
 
+import com.hegunhee.newsimplememoapp.domain.model.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 
 interface MemoRepository {
@@ -13,5 +14,12 @@ interface MemoRepository {
     suspend fun deleteMemo(id : Int)
 
     suspend fun getMemoTypeListSortedByYearAndMonth(year : Int,month : Int) : List<MemoType>
+
     suspend fun updateMemo(memo : MemoType.Memo)
+
+    suspend fun getAllCategoryByType(categoryType : CategoryType) : List<String>
+
+    suspend fun deleteCategory(text : String)
+
+    suspend fun insertCategory(categoryType: CategoryType, text : String)
 }
