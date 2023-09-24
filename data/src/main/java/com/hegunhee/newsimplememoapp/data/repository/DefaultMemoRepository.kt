@@ -1,7 +1,7 @@
 package com.hegunhee.newsimplememoapp.data.repository
 
 import com.hegunhee.newsimplememoapp.data.dataSource.LocalDataSource
-import com.hegunhee.newsimplememoapp.data.entity.toMemoEntity
+import com.hegunhee.newsimplememoapp.data.mapper.*
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.domain.repository.MemoRepository
 import javax.inject.Inject
