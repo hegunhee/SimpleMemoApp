@@ -30,16 +30,15 @@ class DefaultMemoRepository @Inject constructor(
     }
 
     override suspend fun getMemoTypeListSortedByYearAndMonth(year: Int, month: Int): List<MemoType> {
-        val group = localDataSource.getMemoListSortedByYearAndMonth(year,month).groupBy { it.day }
-        val memoTypeList = mutableListOf<MemoType>()
-        group.forEach { (day, list) ->
-            val incomeSum = list.filter { it.category == "수입" }.map { it.price }.sum()
-            val expensesSum = list.filter { it.category == "지출" }.map { it.price }.sum()
-            val memoDate : MemoType = MemoType.MemoDate(year,month,day,list[0].dayOfWeek,incomeSum,expensesSum)
-            memoTypeList.add(memoDate)
-            memoTypeList.addAll(list.map { it.toMemo() })
-        }
-        return memoTypeList.toList()
+        val memoList = localDataSource.getMemoListSortedByYearAndMonth(year,month)
+        return memoList
+            .groupBy { it.day }
+            .flatMap { (day, list) ->
+                val incomeSum = list.filter { it.category == "수입" }.sumBy { it.price }
+                val expenseSum = list.filter { it.category == "지출"}.sumBy { it.price }
+                val memoDate = MemoType.MemoDate(year,month,day,list.firstOrNull()?.dayOfWeek ?: "월", incomeSum,expenseSum)
+                listOf(memoDate) + list.map { it.toMemo() }
+            }
     }
 
     override suspend fun updateMemo(memo: MemoType.Memo) {
