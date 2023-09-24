@@ -14,6 +14,9 @@ interface CategoryDao {
     @Query("DELETE FROM category where text = :text")
     suspend fun deleteCategory(text : String)
 
+    @Query("SELECT * FROM category where categoryCode = :categoryCode AND text = :text")
+    suspend fun getCategoryOrNull(categoryCode : Int, text : String) : CategoryEntity?
+
     @Insert
     suspend fun insertCategory(categoryEntity: CategoryEntity)
 }

@@ -19,6 +19,8 @@ interface MemoRepository {
 
     suspend fun getAllCategoryByType(categoryType : CategoryType) : List<String>
 
+    suspend fun checkIsCategory(categoryType: CategoryType,text : String) : Boolean
+
     suspend fun deleteCategory(text : String)
 
     suspend fun insertCategory(categoryType: CategoryType, text : String)

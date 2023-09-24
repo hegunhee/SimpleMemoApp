@@ -39,6 +39,10 @@ class DefaultLocalDataSource @Inject constructor(
         return categoryDao.getAllCategoryByType(categoryCode)
     }
 
+    override suspend fun checkIsCategory(categoryCode: Int,text : String): CategoryEntity? {
+        return categoryDao.getCategoryOrNull(categoryCode,text)
+    }
+
     override suspend fun deleteCategory(text: String) {
         categoryDao.deleteCategory(text)
     }
