@@ -9,13 +9,10 @@ import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.feature.common.DateInfo
 import com.hegunhee.newsimplememoapp.feature.common.MemoCategory
 import com.hegunhee.newsimplememoapp.feature.common.TimeInfo
-import com.hegunhee.newsimplememoapp.feature.common.assetArray
 import com.hegunhee.newsimplememoapp.feature.common.category.CategoryActionHandler
 import com.hegunhee.newsimplememoapp.domain.model.CategoryType
-import com.hegunhee.newsimplememoapp.feature.common.expenseAttr
-import com.hegunhee.newsimplememoapp.feature.common.incomeAttr
-import com.hegunhee.newsimplememoapp.feature.common.isExpenseAttr
-import com.hegunhee.newsimplememoapp.feature.common.isIncomeAttr
+import com.hegunhee.newsimplememoapp.domain.usecase.CheckIsCategoryUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.GetAllCategoryByTypeUseCase
 import com.hegunhee.newsimplememoapp.feature.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -26,7 +23,9 @@ import javax.inject.Inject
 class DetailMemoViewModel @Inject constructor(
     private val getMemoUseCase : GetMemoUseCase,
     private val deleteMemoUseCase: DeleteMemoUseCase,
-    private val updateMemoUseCase : UpdateMemoUseCase
+    private val updateMemoUseCase : UpdateMemoUseCase,
+    private val getAllCategoryByTypeUseCase: GetAllCategoryByTypeUseCase,
+    private val checkIsCategoryUseCase: CheckIsCategoryUseCase
 ) : ViewModel(), CategoryActionHandler {
 
     private val _memoEntity : MutableStateFlow<MemoType.Memo> = MutableStateFlow(MemoType.Memo.empty)
@@ -109,16 +108,21 @@ class DetailMemoViewModel @Inject constructor(
 
     fun setCategoryIncome() {
         _memoCategory.value = MemoCategory.Income
-        if (isExpenseAttr(attr.value)) {
-            _attr.value = ""
+        viewModelScope.launch {
+            if(checkIsCategoryUseCase(CategoryType.AttrExpenses,attr.value)) {
+                _attr.value = ""
+            }
         }
     }
 
     fun setCategoryExpense() {
         _memoCategory.value = MemoCategory.Expenses
-        if (isIncomeAttr(attr.value)) {
-            _attr.value = ""
+        viewModelScope.launch {
+            if (checkIsCategoryUseCase(CategoryType.AttrIncome,attr.value)) {
+                _attr.value = ""
+            }
         }
+
     }
 
     fun back() = viewModelScope.launch{
@@ -178,7 +182,7 @@ class DetailMemoViewModel @Inject constructor(
 
     fun clickAsset() = viewModelScope.launch {
         categoryHeaderText.value = "자산"
-        categoryList.value = assetArray.toList()
+        categoryList.value = getAllCategoryByTypeUseCase(CategoryType.Asset)
         categoryType.value = CategoryType.Asset
     }
 
@@ -186,11 +190,11 @@ class DetailMemoViewModel @Inject constructor(
         categoryHeaderText.value = "분류"
         when(memoCategory.value) {
             MemoCategory.Income -> {
-                categoryList.value = incomeAttr.toList()
+                categoryList.value = getAllCategoryByTypeUseCase(CategoryType.AttrIncome)
                 categoryType.value = CategoryType.AttrIncome
             }
             MemoCategory.Expenses -> {
-                categoryList.value = expenseAttr.toList()
+                categoryList.value = getAllCategoryByTypeUseCase(CategoryType.AttrExpenses)
                 categoryType.value = CategoryType.AttrExpenses
             }
         }
