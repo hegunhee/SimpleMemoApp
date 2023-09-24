@@ -50,6 +50,10 @@ class DefaultMemoRepository @Inject constructor(
         return localDataSource.getAllCategoryByType(categoryType.code).map { it.text }
     }
 
+    override suspend fun checkIsCategory(categoryType: CategoryType, text: String): Boolean {
+        return localDataSource.checkIsCategory(categoryType.code,text) != null
+    }
+
     override suspend fun deleteCategory(text: String) {
         localDataSource.deleteCategory(text)
     }

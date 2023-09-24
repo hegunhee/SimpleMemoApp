@@ -19,6 +19,8 @@ interface LocalDataSource {
 
     suspend fun getAllCategoryByType(categoryCode : Int) : List<CategoryEntity>
 
+    suspend fun checkIsCategory(categoryCode: Int, text : String) : CategoryEntity?
+
     suspend fun deleteCategory(text : String)
 
     suspend fun insertCategory(categoryEntity : CategoryEntity)
