@@ -11,7 +11,7 @@
 
         <variable
             name="categoryType"
-            type="com.hegunhee.newsimplememoapp.feature.common.category.CategoryType" />
+            type="com.hegunhee.newsimplememoapp.domain.model.CategoryType" />
 
         <variable
             name="actionHandler"

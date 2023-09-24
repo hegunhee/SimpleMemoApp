@@ -11,7 +11,7 @@ import com.hegunhee.newsimplememoapp.feature.common.MemoCategory
 import com.hegunhee.newsimplememoapp.feature.common.TimeInfo
 import com.hegunhee.newsimplememoapp.feature.common.assetArray
 import com.hegunhee.newsimplememoapp.feature.common.category.CategoryActionHandler
-import com.hegunhee.newsimplememoapp.feature.common.category.CategoryType
+import com.hegunhee.newsimplememoapp.domain.model.CategoryType
 import com.hegunhee.newsimplememoapp.feature.common.expenseAttr
 import com.hegunhee.newsimplememoapp.feature.common.incomeAttr
 import com.hegunhee.newsimplememoapp.feature.common.isExpenseAttr
