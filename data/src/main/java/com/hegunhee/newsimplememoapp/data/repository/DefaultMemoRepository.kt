@@ -1,6 +1,6 @@
 package com.hegunhee.newsimplememoapp.data.repository
 
-import com.hegunhee.newsimplememoapp.data.dao.MemoDao
+import com.hegunhee.newsimplememoapp.data.dataSource.LocalDataSource
 import com.hegunhee.newsimplememoapp.data.entity.toMemoEntity
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.domain.repository.MemoRepository
@@ -9,26 +9,26 @@ import javax.inject.Singleton
 
 @Singleton
 class DefaultMemoRepository @Inject constructor(
-    private val dao : MemoDao
+    private val localDataSource: LocalDataSource
 ) : MemoRepository {
     override suspend fun insertMemo(memo: MemoType.Memo) {
-        dao.insertMemo(memo.toMemoEntity())
+        localDataSource.insertMemo(memo.toMemoEntity())
     }
 
     override suspend fun getMemo(memoId: Int) : MemoType.Memo {
-        return dao.getMemo(memoId).toMemo()
+        return localDataSource.getMemo(memoId).toMemo()
     }
 
     override suspend fun deleteAllMemo() {
-        dao.deleteAllMemo()
+        localDataSource.deleteAllMemo()
     }
 
     override suspend fun deleteMemo(id : Int) {
-        dao.deleteMemo(id)
+        localDataSource.deleteMemo(id)
     }
 
     override suspend fun getMemoTypeListSortedByYearAndMonth(year: Int, month: Int): List<MemoType> {
-        val group = dao.getMemoListSortedByYearAndMonth(year,month).groupBy { it.day }
+        val group = localDataSource.getMemoListSortedByYearAndMonth(year,month).groupBy { it.day }
         val memoTypeList = mutableListOf<MemoType>()
         group.forEach { (day, list) ->
             val incomeSum = list.filter { it.category == "수입" }.map { it.price }.sum()
@@ -41,6 +41,6 @@ class DefaultMemoRepository @Inject constructor(
     }
 
     override suspend fun updateMemo(memo: MemoType.Memo) {
-        dao.updateMemo(memo.toMemoEntity())
+        localDataSource.updateMemo(memo.toMemoEntity())
     }
 }
