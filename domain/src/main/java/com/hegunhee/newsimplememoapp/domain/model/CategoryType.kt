@@ -10,3 +10,12 @@ sealed class CategoryType(val code : Int) {
 
     object AttrIncome : CategoryType(2)
 }
+
+fun Int.toCategoryType() : CategoryType{
+    return when(this) {
+        0 -> CategoryType.Asset
+        1 -> CategoryType.AttrExpenses
+        2 -> CategoryType.AttrIncome
+        else -> CategoryType.Empty
+    }
+}

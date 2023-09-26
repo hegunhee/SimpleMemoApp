@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.hegunhee.newsimplememoapp.feature.detailCategory.DetailCategoryViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,6 +26,7 @@
                 android:layout_height="48dp"
                 android:background="@drawable/ic_back"
                 android:backgroundTint="@color/black"
+                android:onClick="@{() -> viewModel.onBackButtonClick()}"
                 android:layout_gravity="center_vertical" />
             
             <TextView
@@ -53,12 +57,14 @@
                 android:layout_height="wrap_content"
                 tools:text="sdasd"
                 android:imeOptions="actionDone"
+                android:inputType="text"
                 android:textSize="15sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/detail_category_recycler_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"

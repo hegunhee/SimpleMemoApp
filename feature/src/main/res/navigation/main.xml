@@ -26,7 +26,12 @@
         android:id="@+id/addMemoFragment"
         android:name="com.hegunhee.newsimplememoapp.feature.addMemo.AddMemoFragment"
         android:label="AddMemoFragment"
-        tools:layout="@layout/fragment_add_memo" />
+        tools:layout="@layout/fragment_add_memo" >
+
+        <action
+            android:id="@+id/addMemo_to_detailCategory"
+            app:destination="@id/detailCategoryFragment" />
+    </fragment>
     <fragment
         android:id="@+id/detailMemoFragment"
         android:name="com.hegunhee.newsimplememoapp.feature.detailMemo.DetailMemoFragment"
@@ -36,6 +41,21 @@
             android:name="memoId"
             app:argType="integer"
             android:defaultValue="0"
+            />
+        <action
+            android:id="@+id/detailMemo_to_detailCategory"
+            app:destination="@id/detailCategoryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailCategoryFragment"
+        android:name="com.hegunhee.newsimplememoapp.feature.detailCategory.DetailCategoryFragment"
+        android:label="DetailCategoryFragment" >
+
+        <argument
+            android:name="categoryCode"
+            app:argType="integer"
+            android:defaultValue="-1"
             />
     </fragment>
 
