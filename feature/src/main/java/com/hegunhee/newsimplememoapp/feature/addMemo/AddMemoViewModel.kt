@@ -50,6 +50,9 @@ class AddMemoViewModel @Inject constructor(
     val categoryList : MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
     val categoryType : MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.Empty)
 
+    private val _detailCategoryNavigation : MutableSharedFlow<CategoryType> = MutableSharedFlow()
+    val detailCategoryNavigation : SharedFlow<CategoryType> = _detailCategoryNavigation.asSharedFlow()
+
     init {
         setDate()
         setTime()
@@ -166,6 +169,9 @@ class AddMemoViewModel @Inject constructor(
     }
 
     override fun onCategoryAdd(categoryType: CategoryType) {
+        viewModelScope.launch {
+            _detailCategoryNavigation.emit(categoryType)
+        }
     }
 
     override fun onCategoryClick(type: CategoryType, category: String) {
@@ -188,5 +194,11 @@ class AddMemoViewModel @Inject constructor(
         categoryHeaderText.value = ""
         categoryList.value = emptyList()
         categoryType.value = CategoryType.Empty
+    }
+
+    fun refreshCategory() = viewModelScope.launch{
+        if(categoryType.value !is CategoryType.Empty) {
+            categoryList.value = getAllCategoryByTypeUseCase(categoryType.value)
+        }
     }
 }

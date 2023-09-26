@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -17,7 +18,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.hegunhee.newsimplememoapp.feature.R
+import com.hegunhee.newsimplememoapp.feature.addMemo.AddMemoFragmentDirections
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentDetailMemoBinding
+import com.hegunhee.newsimplememoapp.feature.detailCategory.DetailCategoryFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -46,6 +49,11 @@ class DetailMemoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeData()
+        setFragmentResultListener(DetailCategoryFragment.REFRESH_KEY) { key, bundle ->
+            if(key == DetailCategoryFragment.REFRESH_KEY) {
+                viewModel.refreshCategory()
+            }
+        }
     }
 
 
@@ -75,6 +83,13 @@ class DetailMemoFragment : Fragment() {
                             DetailMemoState.SetPrice -> {
                                 setPrice()
                             }
+                        }
+                    }
+                }
+                launch {
+                    viewModel.detailCategoryNavigation.collect {
+                        DetailMemoFragmentDirections.detailMemoToDetailCategory(it.code).also { direction ->
+                            findNavController().navigate(direction)
                         }
                     }
                 }
