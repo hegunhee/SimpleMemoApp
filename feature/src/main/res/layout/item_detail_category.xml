@@ -5,6 +5,13 @@
 
     <data>
 
+        <variable
+            name="actionHandler"
+            type="com.hegunhee.newsimplememoapp.feature.detailCategory.DetailCategoryActionHandler" />
+
+        <variable
+            name="category"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,6 +24,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@drawable/ic_remove_circle_24"
+            android:onClick="@{() -> actionHandler.onCategoryRemoveClick(category)}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:textColor="@color/black"
+            android:text="@{category}"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/remove_button"
