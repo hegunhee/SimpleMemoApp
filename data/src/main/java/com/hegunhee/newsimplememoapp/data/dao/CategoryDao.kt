@@ -2,6 +2,7 @@ package com.hegunhee.newsimplememoapp.data.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.hegunhee.newsimplememoapp.data.entity.CategoryEntity
 
@@ -17,6 +18,6 @@ interface CategoryDao {
     @Query("SELECT * FROM category where categoryCode = :categoryCode AND text = :text")
     suspend fun getCategoryOrNull(categoryCode : Int, text : String) : CategoryEntity?
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCategory(categoryEntity: CategoryEntity)
 }
