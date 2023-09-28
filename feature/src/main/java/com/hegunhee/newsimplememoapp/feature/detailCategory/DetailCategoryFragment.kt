@@ -65,7 +65,7 @@ class DetailCategoryFragment() : Fragment() {
     }
 
     private fun actionListener() {
-        viewDataBinding.addCategoryEditText.setOnEditorActionListener {editText, actionId, event ->
+        viewDataBinding.addCategoryEditText.setOnEditorActionListener {editText, actionId, _ ->
             return@setOnEditorActionListener if(actionId == EditorInfo.IME_ACTION_DONE) {
                 val text = editText.text.toString()
                 if(text.isNotBlank()) {
