@@ -37,7 +37,7 @@ class AddMemoViewModel @Inject constructor(
     val asset: StateFlow<String> = _asset.asStateFlow()
 
     private val _attr: MutableStateFlow<String> = MutableStateFlow<String>("")
-    var attr: StateFlow<String> = _attr.asStateFlow()
+    val attr: StateFlow<String> = _attr.asStateFlow()
 
     val price: MutableStateFlow<String> = MutableStateFlow("")
 
@@ -84,9 +84,9 @@ class AddMemoViewModel @Inject constructor(
         viewModelScope.launch {
             if (checkIsCategoryUseCase(CategoryType.AttrExpenses,attr.value)) {
                 _attr.value = ""
+                dismissBottomSheet()
             }
         }
-
     }
 
     fun setCategoryExpense() {
@@ -94,6 +94,7 @@ class AddMemoViewModel @Inject constructor(
         viewModelScope.launch {
             if (checkIsCategoryUseCase(CategoryType.AttrIncome,attr.value)) {
                 _attr.value = ""
+                dismissBottomSheet()
             }
         }
     }
