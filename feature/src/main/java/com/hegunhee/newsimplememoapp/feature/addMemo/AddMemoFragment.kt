@@ -19,7 +19,6 @@ import androidx.navigation.fragment.findNavController
 import com.hegunhee.newsimplememoapp.feature.R
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentAddMemoBinding
 import com.hegunhee.newsimplememoapp.feature.detailCategory.DetailCategoryFragment
-import com.hegunhee.newsimplememoapp.feature.detailCategory.DetailCategoryFragmentDirections
 import com.hegunhee.newsimplememoapp.feature.util.DateUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -61,8 +60,6 @@ class AddMemoFragment : Fragment(){
                         when(it){
                             AddMemoState.Back -> findNavController().popBackStack()
                             AddMemoState.Save -> saveData()
-                            AddMemoState.SetAsset -> {}
-                            AddMemoState.SetAttr -> {}
                             AddMemoState.SetDate -> setDate()
                             AddMemoState.SetTime -> setTime()
                             AddMemoState.SetPrice -> setPrice()

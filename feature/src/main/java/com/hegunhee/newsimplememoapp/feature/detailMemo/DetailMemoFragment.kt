@@ -72,8 +72,6 @@ class DetailMemoFragment : Fragment() {
                             DetailMemoState.Remove -> {
                                 removeMemo()
                             }
-                            DetailMemoState.SetAsset -> {}
-                            DetailMemoState.SetAttr -> {}
                             DetailMemoState.SetDate -> {
                                 setDate()
                             }

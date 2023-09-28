@@ -142,9 +142,9 @@ class DetailMemoViewModel @Inject constructor(
 
     fun clickUpdate() = viewModelScope.launch{
         if(asset.value.isBlank()){
-            _memoState.emit(DetailMemoState.SetAsset)
+            clickAsset()
         }else if(attr.value.isBlank()){
-            _memoState.emit(DetailMemoState.SetAttr)
+            clickAttr()
         }else if (price.value.isBlank()) {
             _memoState.emit(DetailMemoState.SetPrice)
         }else {
