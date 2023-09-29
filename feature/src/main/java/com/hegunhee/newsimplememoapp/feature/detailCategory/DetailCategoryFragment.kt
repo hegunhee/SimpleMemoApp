@@ -50,12 +50,7 @@ class DetailCategoryFragment() : Fragment() {
             findNavController().popBackStack()
         }
         viewModel.setCategoryType(categoryType)
-        viewDataBinding.categoryText.text = when(categoryType) {
-            CategoryType.Asset -> "자산"
-            CategoryType.AttrExpenses -> "지출/분류"
-            CategoryType.AttrIncome -> "수입/분류"
-            CategoryType.Empty -> ""
-        }
+        viewDataBinding.categoryText.text = categoryType.subTitle
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
