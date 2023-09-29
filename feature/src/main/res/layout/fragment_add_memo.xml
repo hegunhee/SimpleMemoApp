@@ -232,8 +232,8 @@
             app:layout_constraintTop_toBottomOf="@id/scroll_view"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_weight="4"
-            android:visibility="@{viewModel.categoryHeaderText.empty ? View.GONE : View.VISIBLE}"
-            app:headerText="@{viewModel.categoryHeaderText}"
+            android:visibility="@{viewModel.categoryType.title.empty ? View.GONE : View.VISIBLE}"
+            app:headerText="@{viewModel.categoryType.title}"
             app:categoryList="@{viewModel.categoryList}"
             app:categoryType="@{viewModel.categoryType}"
             app:actionHandler="@{viewModel}" >

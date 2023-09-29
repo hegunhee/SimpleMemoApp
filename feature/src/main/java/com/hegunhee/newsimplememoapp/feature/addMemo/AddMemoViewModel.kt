@@ -46,7 +46,6 @@ class AddMemoViewModel @Inject constructor(
     private val _memoState: MutableSharedFlow<AddMemoState> = MutableSharedFlow<AddMemoState>()
     val memoState: SharedFlow<AddMemoState> = _memoState.asSharedFlow()
 
-    val categoryHeaderText : MutableStateFlow<String> = MutableStateFlow("")
     val categoryList : MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
     val categoryType : MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.Empty)
 
@@ -112,13 +111,11 @@ class AddMemoViewModel @Inject constructor(
     }
 
     fun clickAsset() = viewModelScope.launch {
-        categoryHeaderText.value = "자산"
         categoryList.value = getAllCategoryByTypeUseCase(CategoryType.Asset)
         categoryType.value = CategoryType.Asset
     }
 
     fun clickAttr() = viewModelScope.launch {
-        categoryHeaderText.value = "분류"
         when(memoCategory.value) {
             MemoCategory.Income -> {
                 categoryList.value = getAllCategoryByTypeUseCase(CategoryType.AttrIncome)
@@ -192,7 +189,6 @@ class AddMemoViewModel @Inject constructor(
     }
 
     private fun dismissBottomSheet() {
-        categoryHeaderText.value = ""
         categoryList.value = emptyList()
         categoryType.value = CategoryType.Empty
     }
