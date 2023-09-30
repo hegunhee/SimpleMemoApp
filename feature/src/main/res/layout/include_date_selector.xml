@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="yearDate"
+            type="Integer" />
+
+        <variable
+            name="monthDate"
+            type="Integer" />
+
+        <variable
+            name="actionHandler"
+            type="com.hegunhee.newsimplememoapp.feature.common.DateSelectorActionHandler" />
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> actionHandler.onDateSelectClick()}">
+
+
+        <Button
+            android:id="@+id/left_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_left"
+            android:backgroundTint="@color/black"
+            android:onClick="@{() -> actionHandler.onPreviousMonthClick()}" />
+
+        <TextView
+            android:id="@+id/year_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@{yearDate.toString()}"
+            android:textSize="20sp"
+            tools:text="2022" />
+
+        <TextView
+            android:id="@+id/year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/year"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/month_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:text="@{monthDate.toString()}"
+            android:textSize="20sp"
+            tools:text="3" />
+
+        <TextView
+            android:id="@+id/month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="@string/month"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/right_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_right"
+            android:backgroundTint="@color/black"
+            android:onClick="@{() -> actionHandler.onNextMonthClick()}" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>
