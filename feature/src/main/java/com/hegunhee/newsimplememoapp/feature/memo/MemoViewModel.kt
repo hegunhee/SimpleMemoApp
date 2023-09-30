@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.usecase.GetMemoTypeListSortedByYearAndMonthUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
+import com.hegunhee.newsimplememoapp.feature.common.DateSelectorActionHandler
 import com.hegunhee.newsimplememoapp.feature.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -13,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MemoViewModel @Inject constructor(
     private val getAllMemoTypeBySortUseCase : GetMemoTypeListSortedByYearAndMonthUseCase
-) : ViewModel(), MemoActionHandler {
+) : ViewModel(), MemoActionHandler, DateSelectorActionHandler {
 
     private val _memoNavigation : MutableSharedFlow<MemoNavigation> = MutableSharedFlow<MemoNavigation>()
     val memoNavigation : SharedFlow<MemoNavigation> = _memoNavigation.asSharedFlow()
@@ -38,7 +39,7 @@ class MemoViewModel @Inject constructor(
     val expenseValue = MutableStateFlow<Int>(0)
     val totalValue = MutableStateFlow<Int>(0)
 
-    fun onPreviousMonthClick() {
+    override fun onPreviousMonthClick() {
         if (monthDate.value <= 1) {
             yearDate.value = yearDate.value - 1
             monthDate.value = 12
@@ -47,7 +48,7 @@ class MemoViewModel @Inject constructor(
         }
     }
 
-    fun onNextMonthClick() {
+    override fun onNextMonthClick() {
         if (monthDate.value >= 12) {
             yearDate.value = yearDate.value + 1
             monthDate.value = 1
@@ -78,7 +79,7 @@ class MemoViewModel @Inject constructor(
         }
     }
 
-    fun onDateSelectClick() {
+    override fun onDateSelectClick() {
         viewModelScope.launch {
             _dateNavigation.emit(DateNavigation.SelectDate)
         }

@@ -16,70 +16,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <include
             android:id="@+id/date_layout"
+            layout="@layout/include_date_selector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-            android:onClick="@{() -> viewModel.onDateSelectClick()}"
-            android:orientation="horizontal"
+            app:actionHandler="@{viewModel}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <Button
-                android:id="@+id/left_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/ic_left"
-                android:backgroundTint="@color/black"
-                android:onClick="@{() -> viewModel.onPreviousMonthClick()}" />
-
-            <TextView
-                android:id="@+id/year_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@{viewModel.yearDate.toString()}"
-                android:textSize="20sp"
-                tools:text="2022" />
-
-            <TextView
-                android:id="@+id/year"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/year"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/month_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"
-                android:text="@{viewModel.monthDate.toString()}"
-                android:textSize="20sp"
-                tools:text="3" />
-
-            <TextView
-                android:id="@+id/month"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/month"
-                android:textSize="20sp"
-                app:layout_constraintBaseline_toBaselineOf="@id/month_text" />
-
-            <Button
-                android:id="@+id/right_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:background="@drawable/ic_right"
-                android:backgroundTint="@color/black"
-                android:onClick="@{() -> viewModel.onNextMonthClick()}" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+            app:layout_constraintTop_toTopOf="parent"
+            app:monthDate="@{viewModel.monthDate}"
+            app:yearDate="@{viewModel.yearDate}" />
 
         <TextView
             android:id="@+id/income"
