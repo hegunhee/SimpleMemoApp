@@ -4,21 +4,32 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.usecase.GetStaticsDataUseCase
+import com.hegunhee.newsimplememoapp.feature.common.DateSelectorActionHandler
+import com.hegunhee.newsimplememoapp.feature.memo.DateNavigation
 import com.hegunhee.newsimplememoapp.feature.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class StaticViewModel @Inject constructor(
     private val getStaticsDataUseCase: GetStaticsDataUseCase
-) : ViewModel() {
+) : ViewModel(), DateSelectorActionHandler {
 
     private var _staticsData = MutableLiveData<StaticsState>(StaticsState.Uninitialized)
     val staticsData = _staticsData
     val category = MutableLiveData<String>()
-    val yearDate = MutableLiveData<Int>()
-    val monthDate = MutableLiveData<Int>()
+
+    private val _dateNavigation : MutableSharedFlow<DateNavigation> = MutableSharedFlow()
+    val dateNavigation : SharedFlow<DateNavigation> = _dateNavigation.asSharedFlow()
+
+
+    val yearDate = MutableStateFlow<Int>(DateUtil.getYear())
+    val monthDate = MutableStateFlow<Int>(DateUtil.getMonth())
 
     val recyclerViewVisible = MutableLiveData<Boolean>(false)
     val totalText = MutableLiveData<String>()
@@ -38,24 +49,35 @@ class StaticViewModel @Inject constructor(
         category.value = "지출"
     }
 
-    fun clickLeft() {
-        if (monthDate.value!! <= 1) {
-            yearDate.value = yearDate.value!! - 1
+    override fun onPreviousMonthClick() {
+        if (monthDate.value <= 1) {
+            yearDate.value = yearDate.value - 1
             monthDate.value = 12
         } else {
-            monthDate.value = monthDate.value!! - 1
+            monthDate.value = monthDate.value - 1
         }
         setData()
     }
 
-    fun clickRight() {
-        if (monthDate.value!! >= 12) {
-            yearDate.value = yearDate.value!! + 1
+    override fun onNextMonthClick() {
+        if (monthDate.value >= 12) {
+            yearDate.value = yearDate.value + 1
             monthDate.value = 1
         } else {
-            monthDate.value = monthDate.value!! + 1
+            monthDate.value = monthDate.value + 1
         }
         setData()
+    }
+
+    override fun onDateSelectClick() {
+        viewModelScope.launch {
+            _dateNavigation.emit(DateNavigation.SelectDate)
+        }
+    }
+
+    fun setDate(year : Int,month : Int) {
+        yearDate.value = year
+        monthDate.value = month
     }
 
 
@@ -74,7 +96,7 @@ class StaticViewModel @Inject constructor(
         }
     }
 
-    fun setData(year: Int = yearDate.value!!, month: Int = monthDate.value!!) = viewModelScope.launch {
+    fun setData(year: Int = yearDate.value, month: Int = monthDate.value) = viewModelScope.launch {
         val category = category.value!!
 //        getStaticsDataUseCase(category,year,month).run {
 //            if(this.isNullOrEmpty()){

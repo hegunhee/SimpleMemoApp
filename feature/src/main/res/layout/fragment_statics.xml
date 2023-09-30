@@ -9,7 +9,7 @@
         <import type="android.view.View" />
 
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="com.hegunhee.newsimplememoapp.feature.statics.StaticViewModel" />
     </data>
 
@@ -17,67 +17,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/left_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+        <include
+            android:id="@+id/date_layout"
+            layout="@layout/include_date_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/ic_left"
-            android:backgroundTint="@color/black"
-            android:onClick="@{() -> viewmodel.clickLeft()}"
+            app:actionHandler="@{viewModel}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/year_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:text="@{viewmodel.yearDate.toString()}"
-            android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@id/left_button"
-            app:layout_constraintTop_toTopOf="@id/left_button"
-            tools:text="2022" />
-
-        <TextView
-            android:id="@+id/year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="년"
-            android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@id/year_text"
-            app:layout_constraintTop_toTopOf="@id/year_text" />
-
-        <TextView
-            android:id="@+id/month_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="@{viewmodel.monthDate.toString()}"
-            android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@id/year"
-            app:layout_constraintTop_toTopOf="@id/year_text"
-            tools:text="3" />
-
-        <TextView
-            android:id="@+id/month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="월"
-            android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@id/month_text"
-            app:layout_constraintTop_toTopOf="@id/year_text" />
-
-        <Button
-            android:id="@+id/right_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_right"
-            android:backgroundTint="@color/black"
-            android:onClick="@{() -> viewmodel.clickRight()}"
-            app:layout_constraintStart_toEndOf="@id/month"
-            app:layout_constraintTop_toTopOf="@id/left_button" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:monthDate="@{viewModel.monthDate}"
+            app:yearDate="@{viewModel.yearDate}" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/category_tab"
@@ -86,7 +37,7 @@
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/left_button">
+            app:layout_constraintTop_toBottomOf="@id/date_layout">
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/income_tab"
@@ -106,7 +57,7 @@
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:visibility="@{viewmodel.recyclerViewVisible ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.recyclerViewVisible ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/category_tab" />
@@ -117,7 +68,7 @@
             android:layout_height="wrap_content"
             android:text="데이터가 없습니다."
             android:textSize="20dp"
-            android:visibility="@{viewmodel.recyclerViewVisible ? View.GONE : View.VISIBLE}"
+            android:visibility="@{viewModel.recyclerViewVisible ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
