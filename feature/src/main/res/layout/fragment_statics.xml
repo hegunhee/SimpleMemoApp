@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:text="@{viewmodel.yearDate.toString()}"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@id/left_button"
             app:layout_constraintTop_toTopOf="@id/left_button"
             tools:text="2022" />
@@ -45,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="년"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@id/year_text"
             app:layout_constraintTop_toTopOf="@id/year_text" />
 
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="@{viewmodel.monthDate.toString()}"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@id/year"
             app:layout_constraintTop_toTopOf="@id/year_text"
             tools:text="3" />
@@ -65,10 +65,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="월"
-            android:textSize="20dp"
+            android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@id/month_text"
             app:layout_constraintTop_toTopOf="@id/year_text" />
-
 
         <Button
             android:id="@+id/right_button"
@@ -80,55 +79,28 @@
             app:layout_constraintStart_toEndOf="@id/month"
             app:layout_constraintTop_toTopOf="@id/left_button" />
 
-        <TextView
-            android:id="@+id/category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewmodel.category}"
-            android:textSize="20dp"
-            app:layout_constraintStart_toEndOf="@id/right_button"
-            app:layout_constraintTop_toTopOf="@id/year_text"
-            tools:text="지출"
-
-            />
-
-        <Button
-            android:id="@+id/income"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/category_tab"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:backgroundTint="@color/blue"
-            android:onClick="@{() -> viewmodel.setIncome()}"
-            android:text="수입"
-            app:layout_constraintEnd_toStartOf="@id/expense"
-            app:layout_constraintStart_toStartOf="@id/left_button"
-            app:layout_constraintTop_toBottomOf="@id/left_button" />
-
-        <Button
-            android:id="@+id/expense"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:backgroundTint="@color/red"
-            android:onClick="@{() -> viewmodel.setExpense()}"
-            android:text="지출"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/income"
-            app:layout_constraintTop_toTopOf="@id/income"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/left_button">
 
-            />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/income_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="수입" />
 
-        <TextView
-            android:id="@+id/total"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@{viewmodel.totalText}"
-            android:textSize="20dp"
-            android:visibility="@{viewmodel.recyclerViewVisible ? View.VISIBLE : View.GONE}"
-            app:layout_constraintTop_toBottomOf="@id/income"
-            tools:text="합계 : 30000원" />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/expense_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="지출" />
+
+        </com.google.android.material.tabs.TabLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
@@ -137,7 +109,7 @@
             android:visibility="@{viewmodel.recyclerViewVisible ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/total" />
+            app:layout_constraintTop_toBottomOf="@id/category_tab" />
 
         <TextView
             android:id="@+id/empty"
@@ -152,5 +124,4 @@
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>
