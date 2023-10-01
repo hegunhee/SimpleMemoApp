@@ -1,17 +1,23 @@
 package com.hegunhee.newsimplememoapp.feature.statics
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hegunhee.newsimplememoapp.domain.model.StaticsData
 import com.hegunhee.newsimplememoapp.domain.usecase.GetStaticsDataUseCase
 import com.hegunhee.newsimplememoapp.feature.common.DateSelectorActionHandler
+import com.hegunhee.newsimplememoapp.feature.common.MemoCategory
 import com.hegunhee.newsimplememoapp.feature.memo.DateNavigation
 import com.hegunhee.newsimplememoapp.feature.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,33 +26,38 @@ class StaticViewModel @Inject constructor(
     private val getStaticsDataUseCase: GetStaticsDataUseCase
 ) : ViewModel(), DateSelectorActionHandler {
 
-    private var _staticsData = MutableLiveData<StaticsState>(StaticsState.Uninitialized)
-    val staticsData = _staticsData
-    val category = MutableLiveData<String>()
-
     private val _dateNavigation : MutableSharedFlow<DateNavigation> = MutableSharedFlow()
     val dateNavigation : SharedFlow<DateNavigation> = _dateNavigation.asSharedFlow()
 
+    private val _categoryType : MutableStateFlow<MemoCategory> = MutableStateFlow(MemoCategory.Income)
+    val categoryType : StateFlow<MemoCategory> = _categoryType.asStateFlow()
 
     val yearDate = MutableStateFlow<Int>(DateUtil.getYear())
     val monthDate = MutableStateFlow<Int>(DateUtil.getMonth())
 
-    val recyclerViewVisible = MutableLiveData<Boolean>(false)
-    val totalText = MutableLiveData<String>()
+    private val staticsData : StateFlow<List<StaticsData>> = yearDate.combine(monthDate) { year, month ->
+        getStaticsDataUseCase(year,month)
+    }.stateIn(
+        scope = viewModelScope,
+        started= SharingStarted.WhileSubscribed(500L),
+        initialValue = emptyList()
+    )
 
-
+    val filteredStaticsData : StateFlow<List<StaticsData>> = staticsData.combine(categoryType) { staticsList, category ->
+        when(category) {
+            MemoCategory.Expenses -> staticsList.filter { it.category == MemoCategory.Expenses.text }
+            MemoCategory.Income -> staticsList.filter { it.category == MemoCategory.Income.text }
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started= SharingStarted.WhileSubscribed(500L),
+        initialValue = emptyList()
+    )
 
     fun initDate() {
-        val year = DateUtil.getYear()
-        val month = DateUtil.getMonth()
-        yearDate.value = year
-        monthDate.value = month
-        initCategory()
-        setData(year,month)
-    }
-
-    private fun initCategory() {
-        category.value = "지출"
+        _categoryType.value = MemoCategory.Income
+        yearDate.value = DateUtil.getYear()
+        monthDate.value = DateUtil.getMonth()
     }
 
     override fun onPreviousMonthClick() {
@@ -56,7 +67,6 @@ class StaticViewModel @Inject constructor(
         } else {
             monthDate.value = monthDate.value - 1
         }
-        setData()
     }
 
     override fun onNextMonthClick() {
@@ -66,7 +76,6 @@ class StaticViewModel @Inject constructor(
         } else {
             monthDate.value = monthDate.value + 1
         }
-        setData()
     }
 
     override fun onDateSelectClick() {
@@ -82,31 +91,11 @@ class StaticViewModel @Inject constructor(
 
 
     fun setIncome() {
-        if (category.value == "지출") {
-            category.value = "수입"
-            setData()
-        }
-
+        _categoryType.value = MemoCategory.Income
     }
 
     fun setExpense() {
-        if (category.value == "수입") {
-            category.value = "지출"
-            setData()
-        }
+        _categoryType.value = MemoCategory.Expenses
     }
 
-    fun setData(year: Int = yearDate.value, month: Int = monthDate.value) = viewModelScope.launch {
-        val category = category.value!!
-//        getStaticsDataUseCase(category,year,month).run {
-//            if(this.isNullOrEmpty()){
-//                recyclerViewVisible.value = false
-//                _staticsData.postValue(StaticsState.EmptyOrNull)
-//            }else{
-//                recyclerViewVisible.value = true
-//                totalText.value = "합계 : ${this.sumOf { it.price }} 원"
-//                _staticsData.postValue(StaticsState.Success(this))
-//            }
-//        }
-    }
 }
