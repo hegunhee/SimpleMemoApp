@@ -1,29 +1,20 @@
 package com.hegunhee.newsimplememoapp.feature.statics
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hegunhee.newsimplememoapp.domain.model.StaticsData
 import com.hegunhee.newsimplememoapp.feature.databinding.ItemStaticsBinding
 
-class StaticsAdapter(private val onStaticsClick: (StaticsData) -> Unit) :
-    RecyclerView.Adapter<StaticsAdapter.StaticsViewHolder>() {
-    private var staticsList = arrayListOf<StaticsData>()
+class StaticsAdapter(private val actionHandler : StaticsActionHandler) : ListAdapter<StaticsData,StaticsAdapter.StaticsViewHolder>(diffUtil) {
 
-    inner class StaticsViewHolder(private val binding: ItemStaticsBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class StaticsViewHolder(private val binding: ItemStaticsBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        @SuppressLint("SetTextI18n")
-        fun bind(statics: StaticsData) = with(binding) {
-            this.percent.text = "${statics.percent}%"
-            this.attr.text = statics.attr
-            this.price.text = "${statics.price}원"
-
-            root.setOnClickListener {
-                onStaticsClick(statics)
-            }
+        fun bindView(statics: StaticsData) = with(binding) {
+            staticsData = statics
+            actionHandler = this@StaticsAdapter.actionHandler
         }
     }
 
@@ -33,41 +24,19 @@ class StaticsAdapter(private val onStaticsClick: (StaticsData) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: StaticsViewHolder, position: Int) {
-        holder.bind(staticsList[position])
+        holder.bindView(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        return staticsList.size
-    }
+    companion object{
+        private val diffUtil = object : DiffUtil.ItemCallback<StaticsData>() {
+            override fun areItemsTheSame(oldItem: StaticsData, newItem: StaticsData): Boolean {
+                return oldItem.attr == newItem.attr
+            }
 
-    fun setData(list: List<StaticsData>) {
-        val diffCallBack = StaticsDiffUtil(this.staticsList.toList(), list)
-        val diffResult = DiffUtil.calculateDiff(diffCallBack)
+            override fun areContentsTheSame(oldItem: StaticsData, newItem: StaticsData): Boolean {
+                return oldItem == newItem
+            }
 
-        staticsList.run {
-            clear()
-            addAll(list)
-            diffResult.dispatchUpdatesTo(this@StaticsAdapter)
         }
     }
-}
-
-class StaticsDiffUtil(private val oldList: List<StaticsData>, private val newList : List<StaticsData>) : DiffUtil.Callback(){
-    override fun getOldListSize(): Int {
-        return oldList.size
-    }
-
-    override fun getNewListSize(): Int {
-        return newList.size
-    }
-
-    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList[newItemPosition]
-    }
-
-    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList[newItemPosition]
-    }
-
-
 }
