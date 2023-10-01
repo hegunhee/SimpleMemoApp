@@ -4,9 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.model.StaticsData
 import com.hegunhee.newsimplememoapp.domain.usecase.GetStaticsDataUseCase
-import com.hegunhee.newsimplememoapp.feature.common.DateSelectorActionHandler
 import com.hegunhee.newsimplememoapp.feature.common.MemoCategory
-import com.hegunhee.newsimplememoapp.feature.memo.DateNavigation
 import com.hegunhee.newsimplememoapp.feature.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -53,12 +51,6 @@ class StaticViewModel @Inject constructor(
         started= SharingStarted.WhileSubscribed(500L),
         initialValue = emptyList()
     )
-
-    fun initDate() {
-        _categoryType.value = MemoCategory.Income
-        yearDate.value = DateUtil.getYear()
-        monthDate.value = DateUtil.getMonth()
-    }
 
     override fun onPreviousMonthClick() {
         if (monthDate.value <= 1) {
