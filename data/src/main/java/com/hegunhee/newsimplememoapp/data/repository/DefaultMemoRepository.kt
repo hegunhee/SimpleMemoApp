@@ -72,7 +72,7 @@ class DefaultMemoRepository @Inject constructor(
             }else{
                 list.sumOf { it.price } / expenseTotalPrice.toFloat() * 100
             }
-            StaticsData(list[0].category,percent.toInt(),attr,list.sumOf { it.price })
+            StaticsData(list[0].category,percent.toInt(),attr,list.sumOf { it.price },year,month)
         }
     }
 }
