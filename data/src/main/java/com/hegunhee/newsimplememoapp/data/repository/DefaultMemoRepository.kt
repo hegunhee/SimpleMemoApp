@@ -5,6 +5,7 @@ import com.hegunhee.newsimplememoapp.data.entity.CategoryEntity
 import com.hegunhee.newsimplememoapp.data.mapper.*
 import com.hegunhee.newsimplememoapp.domain.model.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
+import com.hegunhee.newsimplememoapp.domain.model.StaticsData
 import com.hegunhee.newsimplememoapp.domain.repository.MemoRepository
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -59,5 +60,19 @@ class DefaultMemoRepository @Inject constructor(
 
     override suspend fun insertCategory(categoryType: CategoryType, text: String) {
         localDataSource.insertCategory(CategoryEntity(categoryType.code,text))
+    }
+
+    override suspend fun getStaticsData(year: Int, month: Int): List<StaticsData> {
+        val memoList = localDataSource.getMemoListSortedByYearAndMonth(year,month)
+        val incomeTotalPrice = memoList.filter { it.category == "수입" }.sumOf { it.price }
+        val expenseTotalPrice = memoList.filter { it.category == "지출" }.sumOf { it.price }
+        return memoList.groupBy { it.attr }.map { (attr,list) ->
+            val percent = if(list[0].category == "수입") {
+                list.sumOf { it.price } / incomeTotalPrice.toFloat() * 100
+            }else{
+                list.sumOf { it.price } / expenseTotalPrice.toFloat() * 100
+            }
+            StaticsData(list[0].category,percent.toInt(),attr,list.sumOf { it.price })
+        }
     }
 }
