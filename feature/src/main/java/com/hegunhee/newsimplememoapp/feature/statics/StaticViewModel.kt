@@ -90,11 +90,11 @@ class StaticViewModel @Inject constructor(
     }
 
 
-    fun setIncome() {
+    fun onIncomeTabClick() {
         _categoryType.value = MemoCategory.Income
     }
 
-    fun setExpense() {
+    fun onExpenseTabClick() {
         _categoryType.value = MemoCategory.Expenses
     }
 

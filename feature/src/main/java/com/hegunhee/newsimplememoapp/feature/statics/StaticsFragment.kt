@@ -1,6 +1,5 @@
 package com.hegunhee.newsimplememoapp.feature.statics
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +10,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.tabs.TabLayout
 import com.hegunhee.newsimplememoapp.feature.R
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentStaticsBinding
 import com.hegunhee.newsimplememoapp.feature.dateDialog.DateDialogFragment
@@ -53,6 +53,23 @@ class StaticsFragment : Fragment() {
             lifecycleOwner = this@StaticsFragment
             recyclerview.adapter = adapter
         }
+        viewDataBinding.categoryTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                when (tab.position) {
+                    0 -> {
+                        viewModel.onIncomeTabClick()
+                    }
+
+                    1 -> {
+                        viewModel.onExpenseTabClick()
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
         viewModel.initDate()
         observeData()
         fragmentResultListener()
@@ -89,14 +106,5 @@ class StaticsFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-    }
-
-    companion object {
-        const val TAG = "statics"
-        fun newInstance() = StaticsFragment()
     }
 }
