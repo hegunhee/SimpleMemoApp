@@ -25,7 +25,12 @@ class StaticsFragment : Fragment() {
     private lateinit var viewDataBinding: FragmentStaticsBinding
     private val viewModel: StaticViewModel by viewModels()
     private val adapter = StaticsAdapter { statics ->
-        StaticsFragmentDirections.staticsToDetailStatics(statics).also {
+        val navArgs = StaticsNavArgs(
+            attr = statics.attr,
+            year = viewModel.yearDate.value,
+            month = viewModel.monthDate.value
+        )
+        StaticsFragmentDirections.staticsToDetailStatics(navArgs).also {
             findNavController().navigate(it)
         }
 
@@ -49,7 +54,6 @@ class StaticsFragment : Fragment() {
             recyclerview.adapter = adapter
         }
         viewModel.initDate()
-        initObserver()
         observeData()
         fragmentResultListener()
     }
@@ -64,6 +68,11 @@ class StaticsFragment : Fragment() {
                                 DateDialogFragment.getInstance().show(childFragmentManager, DateDialogFragment.TAG)
                             }
                         }
+                    }
+                }
+                launch {
+                    viewModel.filteredStaticsData.collect{
+                        adapter.setData(it)
                     }
                 }
             }
@@ -84,23 +93,6 @@ class StaticsFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.setData()
-    }
-
-    @SuppressLint("SetTextI18n")
-    private fun initObserver() = viewModel.staticsData.observe(viewLifecycleOwner) {
-        when (it) {
-            StaticsState.Uninitialized -> {
-            }
-
-            is StaticsState.Success -> {
-                adapter.setData(it.list)
-            }
-
-            StaticsState.EmptyOrNull -> {
-            }
-
-        }
     }
 
     companion object {

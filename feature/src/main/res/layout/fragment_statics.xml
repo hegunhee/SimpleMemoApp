@@ -8,6 +8,8 @@
 
         <import type="android.view.View" />
 
+        <import type="com.hegunhee.newsimplememoapp.feature.common.MemoCategory"/>
+
         <variable
             name="viewModel"
             type="com.hegunhee.newsimplememoapp.feature.statics.StaticViewModel" />
@@ -57,7 +59,7 @@
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:visibility="@{viewModel.recyclerViewVisible ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.filteredStaticsData.empty ? View.GONE : View.VISIBLE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/category_tab" />
@@ -68,11 +70,11 @@
             android:layout_height="wrap_content"
             android:text="데이터가 없습니다."
             android:textSize="20dp"
-            android:visibility="@{viewModel.recyclerViewVisible ? View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:visibility="@{viewModel.filteredStaticsData.empty ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/recyclerview"
+            app:layout_constraintEnd_toEndOf="@id/recyclerview"
+            app:layout_constraintStart_toStartOf="@id/recyclerview"
+            app:layout_constraintTop_toTopOf="@id/recyclerview" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
