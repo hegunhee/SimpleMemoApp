@@ -2,6 +2,7 @@ package com.hegunhee.newsimplememoapp.domain.repository
 
 import com.hegunhee.newsimplememoapp.domain.model.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
+import com.hegunhee.newsimplememoapp.domain.model.StaticsData
 
 interface MemoRepository {
 
@@ -24,4 +25,6 @@ interface MemoRepository {
     suspend fun deleteCategory(text : String)
 
     suspend fun insertCategory(categoryType: CategoryType, text : String)
+
+    suspend fun getStaticsData(year : Int,month :Int) : List<StaticsData>
 }
