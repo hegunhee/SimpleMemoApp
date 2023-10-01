@@ -79,10 +79,15 @@ class StaticsFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch{
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 launch {
-                    viewModel.dateNavigation.collect { dateNavigation ->
-                        when (dateNavigation) {
-                            is DateNavigation.SelectDate -> {
+                    viewModel.staticsNavigation.collect { staticsNavigation ->
+                        when (staticsNavigation) {
+                            is StaticsNavigation.SelectDate -> {
                                 DateDialogFragment.getInstance().show(childFragmentManager, DateDialogFragment.TAG)
+                            }
+                            is StaticsNavigation.Detail -> {
+                                StaticsFragmentDirections.staticsToDetailStatics(staticsNavigation.navArgs).also {
+                                    findNavController().navigate(it)
+                                }
                             }
                         }
                     }
