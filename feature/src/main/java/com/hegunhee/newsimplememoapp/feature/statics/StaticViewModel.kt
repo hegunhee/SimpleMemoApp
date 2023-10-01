@@ -24,10 +24,10 @@ import javax.inject.Inject
 @HiltViewModel
 class StaticViewModel @Inject constructor(
     private val getStaticsDataUseCase: GetStaticsDataUseCase
-) : ViewModel(), DateSelectorActionHandler {
+) : ViewModel(), StaticsActionHandler {
 
-    private val _dateNavigation : MutableSharedFlow<DateNavigation> = MutableSharedFlow()
-    val dateNavigation : SharedFlow<DateNavigation> = _dateNavigation.asSharedFlow()
+    private val _staticsNavigation : MutableSharedFlow<StaticsNavigation> = MutableSharedFlow()
+    val staticsNavigation : SharedFlow<StaticsNavigation> = _staticsNavigation.asSharedFlow()
 
     private val _categoryType : MutableStateFlow<MemoCategory> = MutableStateFlow(MemoCategory.Income)
     val categoryType : StateFlow<MemoCategory> = _categoryType.asStateFlow()
@@ -80,7 +80,13 @@ class StaticViewModel @Inject constructor(
 
     override fun onDateSelectClick() {
         viewModelScope.launch {
-            _dateNavigation.emit(DateNavigation.SelectDate)
+            _staticsNavigation.emit(StaticsNavigation.SelectDate)
+        }
+    }
+
+    override fun onStaticsDetailClick(attr : String,year : Int,month : Int) {
+        viewModelScope.launch {
+            _staticsNavigation.emit(StaticsNavigation.Detail(StaticsNavArgs(attr,year,month)))
         }
     }
 
