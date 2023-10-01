@@ -14,7 +14,6 @@ import com.google.android.material.tabs.TabLayout
 import com.hegunhee.newsimplememoapp.feature.R
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentStaticsBinding
 import com.hegunhee.newsimplememoapp.feature.dateDialog.DateDialogFragment
-import com.hegunhee.newsimplememoapp.feature.memo.DateNavigation
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -24,17 +23,7 @@ class StaticsFragment : Fragment() {
 
     private lateinit var viewDataBinding: FragmentStaticsBinding
     private val viewModel: StaticViewModel by viewModels()
-    private val adapter = StaticsAdapter { statics ->
-        val navArgs = StaticsNavArgs(
-            attr = statics.attr,
-            year = viewModel.yearDate.value,
-            month = viewModel.monthDate.value
-        )
-        StaticsFragmentDirections.staticsToDetailStatics(navArgs).also {
-            findNavController().navigate(it)
-        }
-
-    }
+    private lateinit var staticsAdapter : StaticsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,17 +31,17 @@ class StaticsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_statics, container, false)
-        viewDataBinding = FragmentStaticsBinding.bind(root)
+        staticsAdapter = StaticsAdapter(viewModel)
+        viewDataBinding = FragmentStaticsBinding.bind(root).apply {
+            viewModel = this@StaticsFragment.viewModel
+            lifecycleOwner = viewLifecycleOwner
+            recyclerview.adapter = staticsAdapter
+        }
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewDataBinding.apply {
-            viewModel = this@StaticsFragment.viewModel
-            lifecycleOwner = this@StaticsFragment
-            recyclerview.adapter = adapter
-        }
         viewDataBinding.categoryTab.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
@@ -94,7 +83,7 @@ class StaticsFragment : Fragment() {
                 }
                 launch {
                     viewModel.filteredStaticsData.collect{
-                        adapter.setData(it)
+                        staticsAdapter.submitList(it)
                     }
                 }
             }

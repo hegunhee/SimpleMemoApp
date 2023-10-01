@@ -12,6 +12,11 @@ fun TextView.setPrice(price : Int){
     text = "${price.toMoneyFormat()}원"
 }
 
+@BindingAdapter("setPercent")
+fun TextView.setPercent(percent : Int){
+    text = "${percent}%"
+}
+
 @BindingAdapter("setPriceType")
 fun TextView.setPriceType(type : String){
     when (type){
