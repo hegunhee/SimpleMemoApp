@@ -59,7 +59,6 @@ class StaticsFragment : Fragment() {
 
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
-        viewModel.initDate()
         observeData()
         fragmentResultListener()
     }
