@@ -16,7 +16,7 @@
 
     <action
         android:id="@+id/statics_to_detailStatics"
-        app:destination="@id/detailStaticsActivity" />
+        app:destination="@id/detailStaticsFragment" />
 
 
     <fragment
@@ -70,16 +70,16 @@
         tools:layout="@layout/fragment_statics">
     </fragment>
 
-    <activity
-        android:id="@+id/detailStaticsActivity"
-        android:name="com.hegunhee.newsimplememoapp.feature.detailStatics.DetailStaticsActivity"
-        android:label="activity_detail_statics"
-        tools:layout="@layout/activity_detail_statics">
+    <fragment
+        android:id="@+id/detailStaticsFragment"
+        android:name="com.hegunhee.newsimplememoapp.feature.detailStatics.DetailStaticsFragment"
+        android:label="fragment_detail_statics"
+        tools:layout="@layout/fragment_detail_statics">
 
         <argument
             android:name="staticsArgs"
             app:argType="com.hegunhee.newsimplememoapp.feature.statics.StaticsNavArgs" />
-    </activity>
+    </fragment>
 
 
 </navigation>
