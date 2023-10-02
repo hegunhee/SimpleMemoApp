@@ -6,11 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.hegunhee.newsimplememoapp.feature.R
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentDetailStaticsBinding
+import com.hegunhee.newsimplememoapp.feature.dateDialog.DateDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 /**
  * Adapter의 경우 다시
@@ -43,32 +48,38 @@ class DetailStaticsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.initData(navArgs<DetailStaticsFragmentArgs>().value.staticsArgs)
-        initObserver()
+        observeData()
+        fragmentResultListener()
     }
 
-    private fun initObserver() {
-        initObserverData()
-        initBackButtonObserve()
-    }
-
-    private fun initObserverData() = viewModel.detailStaticsState.observe(this) {
-//        when (it) {
-//            DetailStaticsState.Uninitialized -> {}
-//            is DetailStaticsState.Success -> {
-//                adapter.submitList(it.data)
-//            }
-//            DetailStaticsState.NullOrEmpty -> {
-//
-//            }
-//        }
-    }
-
-    private fun initBackButtonObserve() = viewModel.backButton.observe(this) {
-        when (it) {
-            BackButtonState.Back -> {
-                findNavController().popBackStack()
+    private fun observeData() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                launch {
+                    viewModel.navigationEvent.collect {
+                        when(it) {
+                            is DetailStaticsNavigation.DateSelect -> {
+                                DateDialogFragment.getInstance().show(childFragmentManager, DateDialogFragment.TAG)
+                            }
+                            is DetailStaticsNavigation.Back -> {
+                                findNavController().popBackStack()
+                            }
+                        }
+                    }
+                }
             }
-            BackButtonState.Uninitialized -> {}
+        }
+    }
+
+    private fun fragmentResultListener() {
+        childFragmentManager.setFragmentResultListener(DateDialogFragment.DATE_KEY,viewLifecycleOwner) { resultKey, result->
+            when(resultKey) {
+                DateDialogFragment.DATE_KEY -> {
+                    val year = result.getInt(DateDialogFragment.YEAR_RESULT_KEY)
+                    val month = result.getInt(DateDialogFragment.MONTH_RESULT_KEY)
+                    viewModel.setDate(year,month)
+                }
+            }
         }
     }
 }
