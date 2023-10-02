@@ -51,5 +51,9 @@ class DefaultLocalDataSource @Inject constructor(
         categoryDao.insertCategory(categoryEntity)
     }
 
+    override suspend fun getMemoListSortedByAttrYearMonth(attr: String, year: Int, month: Int): List<MemoEntity> {
+        return memoDao.getMemoListSortedByAttrYearMonth(attr,year,month)
+    }
+
 
 }

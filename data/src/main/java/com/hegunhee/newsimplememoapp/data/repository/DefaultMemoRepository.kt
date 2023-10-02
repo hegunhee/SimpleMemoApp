@@ -75,4 +75,16 @@ class DefaultMemoRepository @Inject constructor(
             StaticsData(list[0].category,percent.toInt(),attr,list.sumOf { it.price },year,month)
         }
     }
+
+    override suspend fun getMemoTypeListByAttr(attr: String, year: Int, month: Int): List<MemoType> {
+        val memoList = localDataSource.getMemoListSortedByAttrYearMonth(attr,year,month)
+        return memoList
+            .groupBy { it.day }
+            .flatMap { (day, list) ->
+                val incomeSum = list.filter { it.category == "수입" }.sumBy { it.price }
+                val expenseSum = list.filter { it.category == "지출"}.sumBy { it.price }
+                val memoDate = MemoType.MemoDate(year,month,day,list.firstOrNull()?.dayOfWeek ?: "월", incomeSum,expenseSum)
+                listOf(memoDate) + list.map { it.toMemo() }
+            }
+    }
 }
