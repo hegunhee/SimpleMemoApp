@@ -10,7 +10,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NewSimpleMemoApp">
-        <activity android:name="com.hegunhee.newsimplememoapp.feature.detailStatics.DetailStaticsActivity" />
         <activity android:name=".feature.test_compose.ComposeTestActivity"
             android:exported="true">
         </activity>
