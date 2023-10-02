@@ -4,7 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.usecase.GetMemoListSortedByAttrYearMonthUseCase
-import com.hegunhee.newsimplememoapp.feature.statics.StaticsData
+import com.hegunhee.newsimplememoapp.domain.model.StaticsData
+import com.hegunhee.newsimplememoapp.feature.statics.StaticsNavArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,7 +30,7 @@ class DetaiStaticsViewModel @Inject constructor(
 
 
 
-    fun initData(staticsData : StaticsData){
+    fun initData(staticsData : StaticsNavArgs){
         staticsData.run {
             yearDate.value = year
             monthDate.value = month
