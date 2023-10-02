@@ -12,35 +12,30 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.hegunhee.newsimplememoapp.feature.R
+import com.hegunhee.newsimplememoapp.feature.common.MemoAdapter
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentDetailStaticsBinding
 import com.hegunhee.newsimplememoapp.feature.dateDialog.DateDialogFragment
+import com.hegunhee.newsimplememoapp.feature.main.MainFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-/**
- * Adapter의 경우 다시
- */
 @AndroidEntryPoint
 class DetailStaticsFragment : Fragment() {
 
-    private val viewModel: DetaiStaticsViewModel by viewModels()
+    private val viewModel: DetailStaticsViewModel by viewModels()
     private lateinit var binding: FragmentDetailStaticsBinding
-//    private val adapter = MemoAdapter() { memo ->
-//        Intent(this, DetailMemoActivity::class.java).apply {
-//            putExtra("Memo", memo)
-//            this@DetailStaticsActivity.startActivity(this)
-//        }
-//    }
-
+    private lateinit var memoAdapter : MemoAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_detail_statics,container,false)
+        memoAdapter = MemoAdapter(viewModel)
         binding = FragmentDetailStaticsBinding.bind(root).apply {
             viewModel = this@DetailStaticsFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
+            staticsRecyclerView.adapter = memoAdapter
         }
         return root
     }
@@ -64,7 +59,17 @@ class DetailStaticsFragment : Fragment() {
                             is DetailStaticsNavigation.Back -> {
                                 findNavController().popBackStack()
                             }
+                            is DetailStaticsNavigation.DetailMemo -> {
+                                MainFragmentDirections.memoToDetail(it.memoId).also { direction ->
+                                    findNavController().navigate(direction)
+                                }
+                            }
                         }
+                    }
+                }
+                launch {
+                    viewModel.memoList.collect {
+                        memoAdapter.submitList(it)
                     }
                 }
             }
