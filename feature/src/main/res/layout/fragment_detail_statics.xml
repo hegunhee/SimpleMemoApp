@@ -5,9 +5,11 @@
     tools:context=".ui.detailStatics.DetailStaticsActivity">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
-            name="viewmodel"
+            name="viewModel"
             type="com.hegunhee.newsimplememoapp.feature.detailStatics.DetaiStaticsViewModel" />
 
     </data>
@@ -18,15 +20,15 @@
         android:layout_height="match_parent">
 
 
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/ic_back"
             android:backgroundTint="@color/black"
-            android:onClick="@{() -> viewmodel.back()}"
+            android:onClick="@{() -> viewModel.back()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,108 +37,58 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:text="@{viewmodel.attrData.toString()}"
-            android:textSize="20dp"
-            app:layout_constraintStart_toEndOf="@id/backButton"
-            app:layout_constraintTop_toTopOf="@id/backButton"
-            tools:text="식비"
+            android:text="@{viewModel.attrData.toString()}"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@id/back_button"
+            app:layout_constraintStart_toEndOf="@id/back_button"
+            app:layout_constraintTop_toTopOf="@id/back_button"
+            tools:text="식비" />
 
-            />
-
-        <Button
-            android:id="@+id/left_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_left"
-            android:backgroundTint="@color/black"
-            android:onClick="@{() -> viewmodel.clickLeft()}"
-            app:layout_constraintEnd_toStartOf="@id/year_text"
-            app:layout_constraintTop_toTopOf="@id/attr" />
-
-        <TextView
-            android:id="@+id/year_text"
+        <include
+            android:id="@+id/date_layout"
+            layout="@layout/include_date_selector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:text="@{viewmodel.yearDate.toString()}"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toStartOf="@id/year"
-            app:layout_constraintTop_toTopOf="@id/attr"
-            tools:text="2022" />
-
-        <TextView
-            android:id="@+id/year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="년"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toStartOf="@id/month_text"
-            app:layout_constraintTop_toTopOf="@id/attr" />
-
-        <TextView
-            android:id="@+id/month_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="@{viewmodel.monthDate.toString()}"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toStartOf="@id/month"
-            app:layout_constraintTop_toTopOf="@id/attr"
-            tools:text="3" />
-
-        <TextView
-            android:id="@+id/month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="월"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toStartOf="@id/right_button"
-            app:layout_constraintTop_toTopOf="@id/attr" />
-
-        <Button
-            android:id="@+id/right_button"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/ic_right"
-            android:backgroundTint="@color/black"
-            android:onClick="@{() -> viewmodel.clickRight()}"
+            android:layout_marginEnd="20dp"
+            app:actionHandler="@{viewModel}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/attr" />
+            app:layout_constraintTop_toTopOf="@id/attr"
+            app:monthDate="@{viewModel.monthDate}"
+            app:yearDate="@{viewModel.yearDate}" />
 
         <TextView
             android:id="@+id/totalValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@{viewmodel.totalText.toString()}"
-            android:textSize="20dp"
-            android:visibility="@{viewmodel.recyclerViewVisible ? View.VISIBLE : View.GONE}"
-            app:layout_constraintTop_toBottomOf="@id/backButton" />
+            android:text="@{viewModel.totalText.toString()}"
+            android:textSize="20sp"
+            android:visibility="@{viewModel.recyclerViewVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/back_button" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerview"
+            android:id="@+id/statics_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="@{viewModel.recyclerViewVisible ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="@{viewmodel.recyclerViewVisible ? View.VISIBLE : View.GONE}"
             app:layout_constraintTop_toBottomOf="@id/totalValue" />
 
         <TextView
-            android:id="@+id/empty"
+            android:id="@+id/empty_text"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:gravity="center"
-            android:text="데이터가 존재하지 않습니다."
-            android:textSize="20dp"
-            android:visibility="@{viewmodel.recyclerViewVisible ? View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/backButton"
-            app:layout_constraintVertical_bias="1.0"
-            tools:layout_editor_absoluteX="0dp" />
-
+            android:text="@string/empty_data"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:visibility="@{viewModel.recyclerViewVisible ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@id/statics_recycler_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/statics_recycler_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>
