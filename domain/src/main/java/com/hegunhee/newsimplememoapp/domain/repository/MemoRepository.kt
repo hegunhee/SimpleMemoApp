@@ -27,4 +27,6 @@ interface MemoRepository {
     suspend fun insertCategory(categoryType: CategoryType, text : String)
 
     suspend fun getStaticsData(year : Int,month :Int) : List<StaticsData>
+
+    suspend fun getMemoTypeListByAttr(attr : String, year : Int,month : Int) : List<MemoType>
 }

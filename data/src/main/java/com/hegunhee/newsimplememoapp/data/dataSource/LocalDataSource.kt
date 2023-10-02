@@ -24,4 +24,6 @@ interface LocalDataSource {
     suspend fun deleteCategory(text : String)
 
     suspend fun insertCategory(categoryEntity : CategoryEntity)
+
+    suspend fun getMemoListSortedByAttrYearMonth(attr : String,year : Int,month : Int) : List<MemoEntity>
 }
