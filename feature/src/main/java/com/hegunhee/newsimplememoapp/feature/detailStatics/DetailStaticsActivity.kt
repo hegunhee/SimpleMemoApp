@@ -32,7 +32,7 @@ class DetailStaticsActivity : AppCompatActivity() {
             lifecycleOwner = this@DetailStaticsActivity
 //            recyclerview.adapter = adapter
         }
-        viewModel.initData(navArgs<DetailStaticsActivityArgs>().value.staticsData)
+        viewModel.initData(navArgs<DetailStaticsActivityArgs>().value.staticsArgs)
         initObserver()
     }
 
