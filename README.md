@@ -19,24 +19,21 @@
 
 ## 사용된 라이브러리  
 * JetPack
-  - AAC-ViewModel  
-  - LiveData  
+  - AAC-ViewModel
+  - Room
 * UI
   - ConstraintLayout  
   - RecyclerView  
   - Fragment  
-* Third Party  
-  - Kotlin Coroutine
-  - Koin  
-  - Room  
+* Kotlin
+  - Coroutine + Flows  
 ## 기술 정보  
   * **AAC-ViewModel** 적용  
     Activity나 Fragment 코드가 비대해지는것을 막고 데이터를 관리하는 데 사용합니다.  
     액티비티가 프래그먼트가 화면 회전 등의 이유로 Destroy 상태가 되어도 AAC-ViewModel은 Destroy 되지않기때문에  
     데이터를 쉽게 관리할 수 있습니다. 그리고 ViewModelScope를 사용해 Coroutine을 쉽게 사용할 수 있습니다.  
-  * **LiveData** 적용  
-    LiveData를 사용해서 View에서 ViewModel의 LiveData를 옵저빙해 Adapter에 데이터를 쉽게 set할 수 있게 하였습니다.  
-    DataBinding으로 xml과 코드를 결합시킬때 LiveData를 사용해 데이터를 쉽게 연동하였습니다.  
+  * **Coroutine Flows** 적용  
+    DataBinding으로 xml과 코드를 결합시킬때 Flows를 사용해 데이터를 쉽게 연동하였습니다.  
   * **DataBinding** 적용  
     dataBinding을 사용하여 findViewById를 사용하지 않으며 xml 파일과 데이터를 연결해줍니다.  
     그 이외에도 데이터바인딩 변수를 viewModel로 만들어 viewModel에서 만든 함수를 Button의 onClick메소드로 사용할 수 있습니다.  
@@ -48,12 +45,10 @@
   * **Coroutine** 적용  
     Room을 사용하거나 가계부 정보들을 정렬하는데 많은 시간이 필요하기때문에  
     Coroutine을 사용해서 main Thread의 부담을 줄일 수 있음
-  * ~~**Koin** 적용~~  
-    ~~Activity에서 ViewModel을 사용할때 의존성이나 Model의 Repository를 사용할때~~  
-    ~~의존성 주입을 위해 Koin을 사용하였습니다.~~  
-    ~~러닝커브가 낮고 사용하기 쉬웠습니다.~~  
   * **Hilt** 적용  
-    프로젝트의 크기가 커질경우에 Koin은 불편한점이 많기때문에 Koin을 Hilt로 migration함  
+    프로젝트의 크기가 커질경우에 Koin은 불편한점이 많기때문에 Koin을 Hilt로 migration하였습니다.  
+    의존성 주입을 위해 사용했습니다.  
+    Android를 위한 컴포넌트 제공하므로 보다 쉽게 사용  
     
 ## 진척도  
 1) 가계부에 관한 Test Code 작성  
@@ -71,9 +66,9 @@
 13) Adapter작성 및 DB코드 작성  
 14) DiffUtil 적용  
 15) 메모 화면 개편  
-----------------완료-------------------  
 16) 멀티 모듈 도입  
-17) 컴포즈 전환  
+----------------완료-------------------  
+18) 컴포즈 전환  
 16) 만들어놓은 사항 코드 개선  
 ## 이후 개선될 사항  
 현재 계획으로는 데이터 추가, 확인, 지출, 수입별 통계까지이지만 더 추가 예정  
