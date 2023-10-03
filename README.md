@@ -5,16 +5,16 @@
 가계부를 추가, 수정, 삭제를 할 수 있습니다.  
 통계 탭을통해 이번달에 어떤 항목(식비,교통,기타)으로 얼마를 사용했는지 볼 수 있습니다.  
 ## 앱 사진  
-![memoView](https://user-images.githubusercontent.com/57277631/215263981-e0d2ea6b-8cca-4f1d-a451-efcbbdb310a5.jpg)  
+![memoView](https://github.com/hegunhee/NewSimpleMemoApp/assets/57277631/bb3cd95c-8b07-4863-94c4-0d85f354d5a3)  
 시작할때, 가계부 화면  
-![addMemoView](https://user-images.githubusercontent.com/57277631/215264017-3ddb73ae-253e-40ef-b05e-758300c69ebb.jpg)  
+![detailMemoView](https://github.com/hegunhee/NewSimpleMemoApp/assets/57277631/cc188532-0357-4cfa-a189-5a0af26f3e2d)  
 가계부 추가, FloatingActionButton 클릭시 이동  
-![detailMemoView](https://user-images.githubusercontent.com/57277631/216805469-c6190b0d-e7ae-4219-9089-e54d311f3d12.png)  
-가계부 수정 및 삭제, 클릭시 이동  
-![staticsMemoView](https://user-images.githubusercontent.com/57277631/162414213-39419874-cef4-48b9-8243-7b35ed9d9840.PNG)  
+![staticsMemoView](https://github.com/hegunhee/NewSimpleMemoApp/assets/57277631/e64fb321-9e39-4b70-8aab-7db9fba5a0da)  
 통계 탭  
-![StaticDetailMemoView](https://user-images.githubusercontent.com/57277631/162414209-3b6abc0a-e110-4b67-b7b6-9737cb7033c3.PNG)  
+![detailStaticsView](https://github.com/hegunhee/NewSimpleMemoApp/assets/57277631/106ed6da-742c-4dcd-9f63-63840ebb7c8a)  
 통계 자세히보기 탭  
+![DateSelectorView](https://github.com/hegunhee/NewSimpleMemoApp/assets/57277631/d4ac22aa-3bbb-44ec-abb6-769ed4a84e96)  
+날짜 선택
 
 ## 사용된 라이브러리  
 * JetPack
