@@ -35,8 +35,8 @@ class DefaultMemoRepository @Inject constructor(
         return memoList
             .groupBy { it.day }
             .flatMap { (day, list) ->
-                val incomeSum = list.filter { it.category == "수입" }.sumBy { it.price }
-                val expenseSum = list.filter { it.category == "지출"}.sumBy { it.price }
+                val incomeSum = list.filter { it.category == "수입" }.sumOf { it.price }
+                val expenseSum = list.filter { it.category == "지출"}.sumOf { it.price }
                 val memoDate = MemoType.MemoDate(year,month,day,list.firstOrNull()?.dayOfWeek ?: "월", incomeSum,expenseSum)
                 listOf(memoDate) + list.map { it.toMemo() }
             }
@@ -81,8 +81,8 @@ class DefaultMemoRepository @Inject constructor(
         return memoList
             .groupBy { it.day }
             .flatMap { (day, list) ->
-                val incomeSum = list.filter { it.category == "수입" }.sumBy { it.price }
-                val expenseSum = list.filter { it.category == "지출"}.sumBy { it.price }
+                val incomeSum = list.filter { it.category == "수입" }.sumOf { it.price }
+                val expenseSum = list.filter { it.category == "지출"}.sumOf { it.price }
                 val memoDate = MemoType.MemoDate(year,month,day,list.firstOrNull()?.dayOfWeek ?: "월", incomeSum,expenseSum)
                 listOf(memoDate) + list.map { it.toMemo() }
             }
