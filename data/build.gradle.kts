@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
 
     defaultConfig {
-        minSdk = 21
-        targetSdk = 32
+        minSdk = 24
+        targetSdk = 33
     }
 
     compileOptions {
@@ -20,7 +20,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
 
