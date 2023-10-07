@@ -2,9 +2,8 @@ plugins {
     id ("hegunhee.android")
     id ("kotlin-android")
     id ("kotlin-parcelize")
-    id ("kotlin-kapt")
+    id ("hegunhee.hilt")
     id ("androidx.navigation.safeargs.kotlin")
-    id ("dagger.hilt.android.plugin")
 }
 
 android {
@@ -32,8 +31,4 @@ dependencies {
     // Coroutines
     implementation(libs.bundles.coroutine)
     implementation(libs.coroutine.test)
-
-    // Hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
 }

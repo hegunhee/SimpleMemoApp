@@ -1,10 +1,8 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-
     id ("kotlin-parcelize")
-    id ("kotlin-kapt")
-    id ("dagger.hilt.android.plugin")
+    id ("hegunhee.hilt")
 }
 
 android {
@@ -38,10 +36,4 @@ dependencies {
     //Room DB
     implementation(libs.bundles.room)
     kapt(libs.room.compiler)
-
-    // Hilt
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-
-
 }

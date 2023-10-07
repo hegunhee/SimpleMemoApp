@@ -25,5 +25,9 @@ gradlePlugin {
             id = "hegunhee.android"
             implementationClass = "com.hegunhee.build_logic.plugin.AndroidPlugin"
         }
+        register("Hilt") {
+            id = "hegunhee.hilt"
+            implementationClass = "com.hegunhee.build_logic.plugin.HiltPlugin"
+        }
     }
 }
