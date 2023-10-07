@@ -36,10 +36,6 @@ android {
     buildFeatures{
         viewBinding = true
         dataBinding = true
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.2.0-alpha07"
     }
 }
 
@@ -50,8 +46,6 @@ dependencies {
     implementation(project(":feature"))
 
     implementation(libs.bundles.ui)
-
-    implementation(libs.bundles.compose)
 
     implementation(libs.bundles.navigation)
 
