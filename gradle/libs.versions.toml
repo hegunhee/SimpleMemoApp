@@ -1,4 +1,7 @@
 [versions]
+androidGradleVersion = "7.4.2"
+kotlinGradleVersion = "1.8.0"
+
 kotlin-stdlib = "1.7.10"
 javax-inject = "1"
 
@@ -31,6 +34,11 @@ room-test = "2.2.3"
 hilt = "2.44.2"
 
 [libraries]
+androidGradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradleVersion" }
+kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradleVersion" }
+hiltGradlePlugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
+
+
 kotlin-stdlib = {module = "org.jetbrains.kotlin:kotlin-stdlib",version.ref = "kotlin-stdlib"}
 core-ktx = {module = "androidx.core:core-ktx",version.ref ="core"}
 appcompat = {module = "androidx.appcompat:appcompat",version.ref = "appcompat"}
