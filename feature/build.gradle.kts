@@ -49,6 +49,8 @@ dependencies {
     implementation(project(":domain"))
     implementation(libs.bundles.ui)
 
+    implementation(libs.fragment.ktx)
+
     implementation(libs.bundles.compose)
 
     implementation(libs.bundles.navigation)
