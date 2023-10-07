@@ -33,5 +33,9 @@ gradlePlugin {
             id = "hegunhee.view.feature"
             implementationClass = "com.hegunhee.build_logic.plugin.AndroidViewFeaturePlugin"
         }
+        register("AndroidApplication") {
+            id = "hegunhee.application"
+            implementationClass = "com.hegunhee.build_logic.plugin.AndroidApplicationPlugin"
+        }
     }
 }
