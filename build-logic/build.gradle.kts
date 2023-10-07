@@ -29,5 +29,9 @@ gradlePlugin {
             id = "hegunhee.hilt"
             implementationClass = "com.hegunhee.build_logic.plugin.HiltPlugin"
         }
+        register("AndroidViewFeature") {
+            id = "hegunhee.view.feature"
+            implementationClass = "com.hegunhee.build_logic.plugin.AndroidViewFeaturePlugin"
+        }
     }
 }
