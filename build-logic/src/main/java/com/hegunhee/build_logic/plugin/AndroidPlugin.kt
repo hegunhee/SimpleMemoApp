@@ -2,7 +2,6 @@ package com.hegunhee.build_logic.plugin
 
 import com.hegunhee.build_logic.setup.androidLibrary
 import com.hegunhee.build_logic.setup.setupAndroid
-import com.hegunhee.build_logic.setup.setupViewDataBinding
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -17,7 +16,6 @@ class AndroidPlugin : Plugin<Project> {
 
             androidLibrary {
                 setupAndroid()
-                setupViewDataBinding()
 
                 defaultConfig {
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
