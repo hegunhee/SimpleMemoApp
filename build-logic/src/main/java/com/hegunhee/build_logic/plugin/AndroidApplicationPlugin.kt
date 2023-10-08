@@ -57,7 +57,6 @@ class AndroidApplicationPlugin : Plugin<Project> {
                 add("kapt",libs.findLibrary("room-compiler").get())
 
                 add("androidTestImplementation",libs.findLibrary("room-testing").get())
-                add("androidTestImplementation",libs.findLibrary("test-ext-junit").get())
                 add("androidTestImplementation",libs.findLibrary("mockito-core").get())
 
             }
