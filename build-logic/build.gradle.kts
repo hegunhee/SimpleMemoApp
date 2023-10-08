@@ -9,8 +9,8 @@ repositories {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 dependencies {
@@ -36,6 +36,14 @@ gradlePlugin {
         register("AndroidApplication") {
             id = "hegunhee.application"
             implementationClass = "com.hegunhee.build_logic.plugin.AndroidApplicationPlugin"
+        }
+        register("AndroidCompose") {
+            id = "hegunhee.compose"
+            implementationClass = "com.hegunhee.build_logic.plugin.AndroidComposePlugin"
+        }
+        register("AndroidApplicationCompose") {
+            id = "hegunhee.application.compose"
+            implementationClass = "com.hegunhee.build_logic.plugin.AndroidComposeApplicationPlugin"
         }
     }
 }
