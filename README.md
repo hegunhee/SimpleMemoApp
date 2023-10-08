@@ -68,7 +68,6 @@
 16) 멀티 모듈 도입  
 ----------------완료-------------------  
 18) 컴포즈 전환  
-16) 만들어놓은 사항 코드 개선  
 ## 위기 및 극복  
 1) **RecyclerView Adapter** 데이터 변경 **(MemoFragment, StaticsFragment)**  
 https://github.com/hegunhee/NewSimpleMemoApp/issues/2  
