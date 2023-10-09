@@ -1,4 +1,4 @@
-package com.hegunhee.compose_feature
+package com.hegunhee.statics
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.hegunhee.compose_feature.test", appContext.packageName)
+        assertEquals("com.hegunhee.statics.test", appContext.packageName)
     }
 }

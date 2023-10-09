@@ -1,4 +1,4 @@
-package com.hegunhee.compose_feature
+package com.hegunhee.statics
 
 import org.junit.Test
 
