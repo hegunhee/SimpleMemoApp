@@ -11,6 +11,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":compose-feature"))
+    implementation(project(":compose-feature:memo"))
+    implementation(project(":compose-feature:statics"))
     implementation(project(":common_resource"))
 }
