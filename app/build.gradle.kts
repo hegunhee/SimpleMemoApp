@@ -15,5 +15,6 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
     implementation(project(":feature"))
+    implementation(project(":common_resource"))
 
 }

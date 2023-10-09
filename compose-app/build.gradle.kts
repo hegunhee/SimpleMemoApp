@@ -12,4 +12,5 @@ android {
 
 dependencies {
     implementation(project(":compose-feature"))
+    implementation(project(":common_resource"))
 }
