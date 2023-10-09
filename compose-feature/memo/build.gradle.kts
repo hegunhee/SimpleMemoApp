@@ -3,9 +3,9 @@ plugins {
 }
 
 android {
-    namespace = "com.hegunhee.compose-feature.memo"
+    namespace = "com.hegunhee.compose_feature.memo"
 }
 
 dependencies {
-    implementation(":common_resource")
+    implementation(project(":common_resource"))
 }
