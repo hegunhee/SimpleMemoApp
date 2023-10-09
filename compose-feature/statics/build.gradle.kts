@@ -3,9 +3,9 @@ plugins {
 }
 
 android {
-    namespace = "com.hegunhee.compose-feature.statics"
+    namespace = "com.hegunhee.compose_feature.statics"
 }
 
 dependencies {
-    implementation(":common_resource")
+    implementation(project(":common_resource"))
 }
