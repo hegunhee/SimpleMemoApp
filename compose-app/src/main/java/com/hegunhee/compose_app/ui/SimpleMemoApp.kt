@@ -1,4 +1,4 @@
-package com.hegunhee.compose_app
+package com.hegunhee.compose_app.ui
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -21,7 +21,7 @@ fun SimpleMemoApp(
     simpleMemoAppScaffoldState: SimpleMemoAppScaffoldState = rememberSimpleMemoAppScaffoldState()
 ) {
     NewSimpleMemoAppTheme() {
-        Scaffold(bottomBar = { AppBottomNavigation(backStackEntry = simpleMemoAppScaffoldState.navController.currentBackStackEntryAsState(), onBottomClick = simpleMemoAppScaffoldState::navigateBottomNavigation)}) { paddingValues ->
+        Scaffold(bottomBar = { AppBottomNavigation(backStackEntry = simpleMemoAppScaffoldState.navController.currentBackStackEntryAsState(), onBottomClick = simpleMemoAppScaffoldState::navigateBottomNavigation) }) { paddingValues ->
             NavHost(navController = simpleMemoAppScaffoldState.navController, startDestination = MemoNavGraph.memoRoute) {
 
                 memoNavGraph(paddingValues)

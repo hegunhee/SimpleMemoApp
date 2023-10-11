@@ -1,4 +1,4 @@
-package com.hegunhee.compose_app
+package com.hegunhee.compose_app.ui
 
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem

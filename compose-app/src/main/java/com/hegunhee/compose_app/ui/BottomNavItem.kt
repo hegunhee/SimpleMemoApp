@@ -1,4 +1,4 @@
-package com.hegunhee.compose_app
+package com.hegunhee.compose_app.ui
 
 import com.hegunhee.copose_memo.MemoNavGraph
 import com.hegunhee.statics.StaticsNavGraph
@@ -10,4 +10,4 @@ sealed class BottomNavItem(
     object Statics : BottomNavItem("통계",com.hegunhee.common_resource.R.drawable.ic_statistics,StaticsNavGraph.statics)
 
 }
-val bottomNavItems = listOf<BottomNavItem>(BottomNavItem.Memo,BottomNavItem.Statics)
+val bottomNavItems = listOf<BottomNavItem>(BottomNavItem.Memo, BottomNavItem.Statics)
