@@ -98,6 +98,7 @@ hilt-android ={module ="com.google.dagger:hilt-android",version.ref="hilt"}
 hilt-compiler = {module ="com.google.dagger:hilt-android-compiler",version.ref="hilt"}
 
 javax-inject = {module ="javax.inject:javax.inject",version.ref ="javax-inject"}
+annotation-jvm = { group = "androidx.annotation", name = "annotation-jvm", version = "1.7.0" }
 
 [bundles]
 ui = ["kotlin-stdlib","core-ktx","appcompat","material","constraintlayout"]
