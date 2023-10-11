@@ -1,4 +1,4 @@
-package com.hegunhee.compose_app.ui.theme
+package com.hegunhee.newsimplememoapp.core.designsystem
 
 import android.app.Activity
 import android.os.Build

@@ -1,4 +1,4 @@
-package com.hegunhee.compose_app.ui.theme
+package com.hegunhee.newsimplememoapp.core.designsystem
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
