@@ -8,7 +8,7 @@ fun NavGraphBuilder.memoNavGraph(
     paddingValues : PaddingValues,
 ) {
     composable(route = MemoNavGraph.memoRoute) {
-        MemoScreenRoot()
+        MemoScreenRoot(paddingValues)
     }
 }
 

@@ -9,9 +9,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.hegunhee.compose_app.ui.theme.NewSimpleMemoAppTheme
 import com.hegunhee.copose_memo.MemoNavGraph
 import com.hegunhee.copose_memo.memoNavGraph
+import com.hegunhee.newsimplememoapp.core.designsystem.NewSimpleMemoAppTheme
 import com.hegunhee.statics.staticsNavGraph
 import kotlinx.coroutines.CoroutineScope
 
