@@ -28,6 +28,7 @@ fun MemoScreenRoot(
         paddingValues = paddingValues,
         year = 2023,
         month =  10,
+        totalPrice = TotalPrice(5,3),
         onPreviousMonthClick = {},
         onNextMonthClick = {},
         onSelectorClick = {}
@@ -40,6 +41,7 @@ fun MemoScreen(
     paddingValues: PaddingValues,
     year : Int,
     month : Int,
+    totalPrice : TotalPrice,
     onPreviousMonthClick : () -> Unit,
     onNextMonthClick : () -> Unit,
     onSelectorClick : () -> Unit
@@ -62,14 +64,14 @@ fun MemoScreen(
         }
     ) { padding ->
         Column(modifier = Modifier.padding(padding)) {
-            TotalPriceGraph()
-
+            TotalPriceTable(totalPrice)
+            
         }
     }
 }
 
 @Composable
-private fun TotalPriceGraph() {
+private fun TotalPriceTable(totalPrice : TotalPrice) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -82,8 +84,17 @@ private fun TotalPriceGraph() {
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
-        Text(text = "123123", fontSize = 15.sp)
-        Text(text = "22222", fontSize = 15.sp)
-        Text(text = "222222", fontSize = 15.sp)
+        Text(text = totalPrice.incomePrice.toString(), fontSize = 15.sp)
+        Text(text = totalPrice.expensePrice.toString(), fontSize = 15.sp)
+        Text(text = totalPrice.sumPrice.toString(), fontSize = 15.sp)
+    }
+}
+
+@Composable
+@Preview
+private fun TotalPriceTablePreview() {
+    val totalPrice = TotalPrice(incomePrice = 32121, expensePrice = 44433)
+    Column {
+        TotalPriceTable(totalPrice = totalPrice)
     }
 }
