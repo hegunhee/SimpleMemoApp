@@ -1,5 +1,6 @@
 package com.hegunhee.build_logic.plugin
 
+import com.hegunhee.build_logic.setup.androidLibrary
 import com.hegunhee.build_logic.setup.setupAndroid
 import com.hegunhee.build_logic.setup.setupAndroidCompose
 import org.gradle.api.Plugin
@@ -17,7 +18,9 @@ class AndroidComposePlugin : Plugin<Project> {
                 apply("hegunhee.hilt")
             }
             setupAndroidCompose()
-
+            androidLibrary {
+                compileSdkPreview = "UpsideDownCake"
+            }
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             dependencies {
                 add("implementation",libs.findLibrary("core-ktx").get())
