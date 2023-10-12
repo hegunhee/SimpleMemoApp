@@ -61,6 +61,7 @@ class AndroidComposeApplicationPlugin : Plugin<Project> {
                 add("debugImplementation",libs.findLibrary("compose-ui-test-manifest").get())
 
                 add("implementation",libs.findBundle("lifecycle").get())
+                add("implementation",libs.findLibrary("lifecycle-compose").get())
 
                 add("implementation",libs.findBundle("coroutine").get())
                 add("implementation",libs.findLibrary("coroutine-test").get())

@@ -28,7 +28,7 @@ espresso = "3.4.0"
 
 mockito = "3.4.0"
 
-lifecycle = "2.5.1"
+lifecycle = "2.6.0"
 
 coroutine = "1.6.4"
 coroutine-test = "1.4.3"
@@ -83,6 +83,8 @@ mockito-core ={module = "org.mockito:mockito-core",version.ref="mockito"}
 
 lifecycle-viewmodel = {module = "androidx.lifecycle:lifecycle-viewmodel-ktx",version.ref = "lifecycle"}
 lifecycle-runtime = {module ="androidx.lifecycle:lifecycle-runtime-ktx",version.ref = "lifecycle"}
+
+lifecycle-compose = {module = "androidx.lifecycle:lifecycle-runtime-compose",version.ref = "lifecycle"}
 
 coroutine-core = {module ="org.jetbrains.kotlinx:kotlinx-coroutines-core",version.ref="coroutine"}
 coroutine-android = {module ="org.jetbrains.kotlinx:kotlinx-coroutines-android",version.ref ="coroutine"}
