@@ -55,7 +55,7 @@ fun MemoDateItem(memoDate : MemoType.MemoDate) {
 }
 
 @Composable
-fun MemoItem(memo : MemoType.Memo,onMemoClick : (Int) -> Unit) {
+fun MemoItem(memo : MemoType.Memo,onMemoClick : (String) -> Unit) {
     val description = memo.description.ifEmpty { memo.asset }
     val descriptionColor = if(memo.description.isEmpty()) {
         Color.Gray
@@ -64,7 +64,7 @@ fun MemoItem(memo : MemoType.Memo,onMemoClick : (Int) -> Unit) {
     }
     val timeInfo = "${memo.amPm} ${memo.hour}:${memo.minute}"
     Row(modifier = Modifier
-        .clickable { onMemoClick(memo.id) }
+        .clickable { onMemoClick(memo.id.toString()) }
         .background(Purple80)
         .padding(horizontal = 15.dp)
         .fillMaxWidth()
