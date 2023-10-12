@@ -6,11 +6,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -115,3 +118,51 @@ private fun MemoItemPreview() {
     )
     MemoItem(memo = memo, onMemoClick = onMemoClick)
 }
+
+@Preview
+@Composable
+private fun MemoListPreview() {
+    val memoList = getTestMemoList()
+    LazyColumn() {
+        itemsIndexed(memoList) { index, item ->
+            when(item) {
+                is MemoType.MemoDate -> {
+                    if(index != 0) {
+                        Spacer(Modifier.size(10.dp))
+                    }
+                    MemoDateItem(item)
+                }
+                is MemoType.Memo -> {
+                    MemoItem(item) { id: Int -> }
+                }
+            }
+        }
+    }
+}
+
+private fun getTestMemoList() : List<MemoType> {
+    val memo = MemoType.Memo(
+        category = "지출",
+        year = 2023,
+        month = 10,
+        day = 7,
+        dayOfWeek = "토",
+        amPm = "오전",
+        hour = 10,
+        minute = 30,
+        attr = "현금",
+        price = 23000,
+        asset = "식비",
+        description = "",
+        id = 5
+    )
+    val memoDate = MemoType.MemoDate(
+        year = 2023,
+        month = 10,
+        day = 7,
+        dayOfWeek = "토",
+        incomeSum = 0,
+        expenseSum = 231232
+    )
+    return listOf<MemoType>(memoDate.copy(day =8, dayOfWeek = "일"),memo.copy(day = 8,dayOfWeek = "일",description = "안녕하세요"),memo,memoDate.copy(day = 9, dayOfWeek = "월"),memo.copy(day = 9,dayOfWeek = "월"))
+} 
