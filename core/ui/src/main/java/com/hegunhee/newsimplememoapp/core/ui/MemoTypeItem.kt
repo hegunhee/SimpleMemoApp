@@ -98,8 +98,8 @@ private fun MemoDateItemPreview() {
 @Composable
 private fun MemoItemPreview() {
     val context = LocalContext.current
-    val onMemoClick = {id : Int ->
-        Toast.makeText(context, id.toString(), Toast.LENGTH_SHORT).show()
+    val onMemoClick = {id : String ->
+        Toast.makeText(context, id, Toast.LENGTH_SHORT).show()
     }
     val memo = MemoType.Memo(
         category = "지출",
@@ -133,7 +133,7 @@ private fun MemoListPreview() {
                     MemoDateItem(item)
                 }
                 is MemoType.Memo -> {
-                    MemoItem(item) { id: Int -> }
+                    MemoItem(item) { id: String -> }
                 }
             }
         }
