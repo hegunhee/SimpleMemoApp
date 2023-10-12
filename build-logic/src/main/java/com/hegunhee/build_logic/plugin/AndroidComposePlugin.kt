@@ -38,6 +38,8 @@ class AndroidComposePlugin : Plugin<Project> {
                 add("androidTestImplementation",libs.findLibrary("compose-ui-test-junit").get())
                 add("debugImplementation",libs.findLibrary("compose-ui-tooling").get())
                 add("debugImplementation",libs.findLibrary("compose-ui-test-manifest").get())
+
+                add("implementation",libs.findLibrary("lifecycle-compose").get())
             }
         }
     }
