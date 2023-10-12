@@ -5,6 +5,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -23,7 +24,7 @@ fun SimpleMemoApp(
     simpleMemoAppScaffoldState: SimpleMemoAppScaffoldState = rememberSimpleMemoAppScaffoldState()
 ) {
     NewSimpleMemoAppTheme() {
-        Scaffold(bottomBar = { AppBottomNavigation(backStackEntry = simpleMemoAppScaffoldState.navController.currentBackStackEntryAsState(), onBottomClick = simpleMemoAppScaffoldState::navigateBottomNavigation) }) { paddingValues ->
+        Scaffold(bottomBar = { AppBottomNavigation(visible = simpleMemoAppScaffoldState.shouldShowBottomNavigation(),currentItem = simpleMemoAppScaffoldState.currentTab, onBottomClick = simpleMemoAppScaffoldState::navigateBottomNavigation) }) { paddingValues ->
             NavHost(navController = simpleMemoAppScaffoldState.navController, startDestination = MemoNavGraph.memoRoute) {
 
                 memoNavGraph(
@@ -56,6 +57,15 @@ class SimpleMemoAppScaffoldState(
     val coroutineScope : CoroutineScope,
     val navController : NavHostController
 ) {
+    private val currentDestination: NavDestination?
+        @Composable get() = navController
+            .currentBackStackEntryAsState().value?.destination
+
+    val currentTab : BottomNavItem?
+        @Composable get() = currentDestination
+            ?.route
+            ?.let { bottomNavItems.find { item -> item.screenRoute == it } }
+
     fun navigateBottomNavigation(index : Int) {
         navController.navigate(bottomNavItems[index].screenRoute) {
             navController.graph.startDestinationRoute?.let {
@@ -72,5 +82,11 @@ class SimpleMemoAppScaffoldState(
 
     fun navigateDetailMemo(memoId : String) {
         navController.navigateDetailMemo(memoId)
+    }
+
+    @Composable
+    fun shouldShowBottomNavigation() : Boolean {
+        val currentRoute = currentDestination?.route ?: return false
+        return BottomNavItem.contains(currentRoute)
     }
 }
