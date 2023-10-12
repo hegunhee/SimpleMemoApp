@@ -41,7 +41,7 @@ fun MemoScreenRoot(
     paddingValues: PaddingValues,
     viewModel : MemoViewModel = hiltViewModel(),
     onAddMemoClick : () -> Unit,
-    onMemoClick : (Int) -> Unit,
+    onMemoClick : (String) -> Unit,
 ) {
     val uiState = (viewModel.uiState.collectAsStateWithLifecycle().value as? MemoUiState.Success) ?: MemoUiState.Success(
         year = DateUtil.getYear(),
@@ -77,7 +77,7 @@ fun MemoScreen(
     onDatePickerCurrentMonthClick : () -> Unit,
     onDatePickerMonthClick : (Int, Int) -> Unit,
     onAddMemoClick : () -> Unit,
-    onMemoClick : (Int) -> Unit,
+    onMemoClick : (String) -> Unit,
 ) {
     var datePickerDialogState by remember{mutableStateOf<Boolean>(false)}
     val showDatePickerDialog = { datePickerDialogState = true}
