@@ -11,6 +11,8 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.hegunhee.copose_memo.MemoNavGraph
 import com.hegunhee.copose_memo.memoNavGraph
+import com.hegunhee.copose_memo.navigateAddMemo
+import com.hegunhee.copose_memo.navigateDetailMemo
 import com.hegunhee.newsimplememoapp.core.designsystem.NewSimpleMemoAppTheme
 import com.hegunhee.statics.staticsNavGraph
 import kotlinx.coroutines.CoroutineScope
@@ -24,7 +26,11 @@ fun SimpleMemoApp(
         Scaffold(bottomBar = { AppBottomNavigation(backStackEntry = simpleMemoAppScaffoldState.navController.currentBackStackEntryAsState(), onBottomClick = simpleMemoAppScaffoldState::navigateBottomNavigation) }) { paddingValues ->
             NavHost(navController = simpleMemoAppScaffoldState.navController, startDestination = MemoNavGraph.memoRoute) {
 
-                memoNavGraph(paddingValues)
+                memoNavGraph(
+                    paddingValues = paddingValues,
+                    onAddMemoClick = simpleMemoAppScaffoldState::navigateAddMemo,
+                    onMemoClick = simpleMemoAppScaffoldState::navigateDetailMemo
+                )
 
                 staticsNavGraph(paddingValues)
             }
@@ -58,5 +64,13 @@ class SimpleMemoAppScaffoldState(
             launchSingleTop = true
             restoreState = true
         }
+    }
+
+    fun navigateAddMemo() {
+        navController.navigateAddMemo()
+    }
+
+    fun navigateDetailMemo(memoId : String) {
+        navController.navigateDetailMemo(memoId)
     }
 }
