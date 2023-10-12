@@ -16,4 +16,7 @@ dependencies {
     implementation(project(":compose-feature:memo"))
     implementation(project(":compose-feature:statics"))
     implementation(project(":common_resource"))
+
+    implementation(project(":domain"))
+    implementation(project(":data"))
 }
