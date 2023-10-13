@@ -29,6 +29,7 @@ fun SimpleMemoApp(
 
                 memoNavGraph(
                     paddingValues = paddingValues,
+                    onBackClick = simpleMemoAppScaffoldState::popBackStack,
                     onAddMemoClick = simpleMemoAppScaffoldState::navigateAddMemo,
                     onMemoClick = simpleMemoAppScaffoldState::navigateDetailMemo
                 )
@@ -65,6 +66,10 @@ class SimpleMemoAppScaffoldState(
         @Composable get() = currentDestination
             ?.route
             ?.let { bottomNavItems.find { item -> item.screenRoute == it } }
+
+    fun popBackStack() {
+        navController.popBackStack()
+    }
 
     fun navigateBottomNavigation(index : Int) {
         navController.navigate(bottomNavItems[index].screenRoute) {
