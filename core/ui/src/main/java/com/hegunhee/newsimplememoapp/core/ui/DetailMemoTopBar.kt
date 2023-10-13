@@ -20,7 +20,7 @@ fun DetailMemoTopBar(
     onBackClick : () -> Unit,
     category : String
 ) {
-    Row(verticalAlignment = Alignment.Bottom) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
         IconButton(onClick = onBackClick) {
             Icon(modifier = Modifier.size(50.dp),painter = painterResource(id = R.drawable.ic_back), contentDescription = null,tint = Color.Black)
         }
