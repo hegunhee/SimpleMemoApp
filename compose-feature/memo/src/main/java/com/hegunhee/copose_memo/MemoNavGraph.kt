@@ -19,6 +19,7 @@ fun NavController.navigateDetailMemo(memoId : String) {
 
 fun NavGraphBuilder.memoNavGraph(
     paddingValues : PaddingValues,
+    onBackClick : () -> Unit,
     onAddMemoClick : () -> Unit,
     onMemoClick : (String) -> Unit
 ) {
