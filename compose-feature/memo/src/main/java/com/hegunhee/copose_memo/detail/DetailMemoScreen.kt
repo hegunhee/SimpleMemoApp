@@ -1,9 +1,31 @@
 package com.hegunhee.copose_memo.detail
 
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import com.hegunhee.newsimplememoapp.core.ui.DetailMemoScreen
+import com.hegunhee.newsimplememoapp.core.ui.DetailMemoScreenType
 
 @Composable
-fun DetailMemoScreen(memoId : Int) {
-    Text(text = "디테일 메모 $memoId")
+fun DetailMemoScreenRoot(
+    paddingValues : PaddingValues,
+    onBackButtonClick : () -> Unit,
+    memoId : Int
+) {
+    val (category, setCategory) = remember{ mutableStateOf("지출") }
+    val memoScreenType = remember {
+        DetailMemoScreenType.Detail(
+            onUpdateMemoClick = {},
+            onDeleteMemoClick = {}
+        )
+    }
+    DetailMemoScreen(
+        paddingValues = paddingValues,
+        onBackButtonClick = onBackButtonClick,
+        category,
+        setCategory,
+        memoScreenType
+    )
+
 }
