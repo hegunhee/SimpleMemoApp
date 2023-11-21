@@ -7,7 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.hegunhee.copose_memo.add.AddMemoScreenRoot
-import com.hegunhee.copose_memo.detail.DetailMemoScreen
+import com.hegunhee.copose_memo.detail.DetailMemoScreenRoot
 
 fun NavController.navigateAddMemo() {
     navigate(MemoNavGraph.addMemoRoute)
@@ -27,7 +27,10 @@ fun NavGraphBuilder.memoNavGraph(
         MemoScreenRoot(paddingValues,onAddMemoClick = onAddMemoClick,onMemoClick = onMemoClick)
     }
     composable(route = MemoNavGraph.addMemoRoute) {
-        AddMemoScreenRoot()
+        AddMemoScreenRoot(
+            paddingValues,
+            onBackButtonClick = onBackClick
+        )
     }
     composable(
         route = MemoNavGraph.detailMemoRoute("{id}"),
@@ -38,7 +41,11 @@ fun NavGraphBuilder.memoNavGraph(
         )
     ) { navBackStackEntry ->
         val memoId = navBackStackEntry.arguments?.getString("id")?.toIntOrNull() ?: -1
-        DetailMemoScreen(memoId = memoId)
+        DetailMemoScreenRoot(
+            paddingValues,
+            onBackButtonClick = onBackClick,
+            memoId = memoId
+        )
     }
 }
 
