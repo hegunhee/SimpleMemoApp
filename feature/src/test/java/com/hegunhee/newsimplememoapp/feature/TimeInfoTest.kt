@@ -1,6 +1,6 @@
 package com.hegunhee.newsimplememoapp.feature
 
-import com.hegunhee.newsimplememoapp.feature.common.TimeInfo
+import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

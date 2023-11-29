@@ -6,9 +6,9 @@ import com.hegunhee.newsimplememoapp.domain.usecase.DeleteMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.usecase.GetMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.usecase.UpdateMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
-import com.hegunhee.newsimplememoapp.feature.common.DateInfo
+import com.hegunhee.newsimplememoapp.domain.model.DateInfo
 import com.hegunhee.newsimplememoapp.feature.common.MemoCategory
-import com.hegunhee.newsimplememoapp.feature.common.TimeInfo
+import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
 import com.hegunhee.newsimplememoapp.feature.common.category.CategoryActionHandler
 import com.hegunhee.newsimplememoapp.domain.model.CategoryType
 import com.hegunhee.newsimplememoapp.domain.usecase.CheckIsCategoryUseCase
