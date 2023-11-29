@@ -10,4 +10,6 @@ android {
 dependencies {
 
     implementation(libs.annotation.jvm)
+
+    implementation(project(":domain"))
 }

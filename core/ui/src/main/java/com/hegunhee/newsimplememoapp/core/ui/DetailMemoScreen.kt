@@ -1,11 +1,14 @@
 package com.hegunhee.newsimplememoapp.core.ui
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -27,17 +33,29 @@ fun DetailMemoScreen(
     onBackButtonClick : () -> Unit,
     category : String,
     dateInfo : String,
+    timeInfo : TimeInfo,
     onCategoryClick : (String) -> Unit,
     onSelectDateClick : (Int,Int,Int) -> Unit,
+    onSelectTimeClick : (Int,Int,String) -> Unit,
     memoScreenType : DetailMemoScreenType
 ) {
     val datePickerState = rememberDatePickerState()
     var showDatePicker by remember { mutableStateOf(false) }
     if(showDatePicker) {
-        showDatePickerDialog(
-            onDismissDialog = { showDatePicker = false},
+        ShowDatePickerDialog(
+            onDismissDialog = { showDatePicker = false },
             datePickerState = datePickerState,
             onSelectDateClick = onSelectDateClick
+        )
+    }
+
+    val timePickerState = rememberTimePickerState(initialHour = timeInfo.hour, initialMinute = timeInfo.minute)
+    var showTimePicker by remember { mutableStateOf(false) }
+    if(showTimePicker) {
+        ShowTimePickerDialog(
+            onDismissDialog = { showTimePicker = false },
+            timePickerState = timePickerState,
+            onSelectTimeClick =   onSelectTimeClick
         )
     }
     Scaffold(
@@ -65,9 +83,9 @@ fun DetailMemoScreen(
                         .weight(0.4f)
                         .clickable { showDatePicker = true }, fontSize = 20.sp,
                     maxLines = 1)
-                Text(text = "오전 11:19",modifier = Modifier
+                Text(text = timeInfo.timeStamp,modifier = Modifier
                     .weight(0.4f)
-                    .clickable {}, fontSize = 20.sp)
+                    .clickable { showTimePicker = true }, fontSize = 20.sp)
             }
 
             when(memoScreenType) {
@@ -84,7 +102,7 @@ fun DetailMemoScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun showDatePickerDialog(
+private fun ShowDatePickerDialog(
     onDismissDialog : () -> Unit,
     datePickerState : DatePickerState,
     onSelectDateClick : (Int,Int,Int) -> Unit
@@ -94,10 +112,11 @@ private fun showDatePickerDialog(
         confirmButton = {
             TextButton(onClick = {
                 datePickerState.selectedDateMillis?.let { timeStamp ->
-                    val sdf = SimpleDateFormat("YYYY/MM/dd")
-                    val netDate = Date(timeStamp)
-                    val (year, month, day) = sdf.format(netDate).split("/").map { it.toInt() }
-                    onSelectDateClick(year,month,day)
+                    SimpleDateFormat("YYYY/MM/dd").let { dateFormat ->
+                        val date = Date(timeStamp)
+                        val (year, month, day) = dateFormat.format(date).split("/").map { it.toInt() }
+                        onSelectDateClick(year,month,day)
+                    }
                     onDismissDialog()
                 }
             }) {
@@ -106,6 +125,70 @@ private fun showDatePickerDialog(
         },
     ) {
         DatePicker(datePickerState)
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ShowTimePickerDialog(
+    onDismissDialog: () -> Unit,
+    timePickerState: TimePickerState,
+    onSelectTimeClick : (Int,Int,String) -> Unit)
+{
+    AlertDialog(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                color = MaterialTheme.colorScheme.surface,
+                shape = RoundedCornerShape(size = 12.dp)
+            ),
+        onDismissRequest = onDismissDialog
+    ) {
+        Column(
+            modifier = Modifier
+                .background(
+                    color = Color.LightGray.copy(alpha = 0.3f)
+                )
+                .padding(top = 28.dp, start = 20.dp, end = 20.dp, bottom = 12.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // time picker
+            TimePicker(state = timePickerState)
+
+            // buttons
+            Row(
+                modifier = Modifier
+                    .padding(top = 12.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                // dismiss button
+                TextButton(onClick = onDismissDialog) {
+                    Text(text = "취소")
+                }
+
+                // confirm button
+                TextButton(
+                    onClick = {
+                        val hour = if(timePickerState.hour > 12)  {
+                            timePickerState.hour - 12
+                        }else {
+                            timePickerState.hour
+                        }
+                        val ampm = if(timePickerState.hour > 12) {
+                            "오후"
+                        }else {
+                            "오전"
+                        }
+                        onSelectTimeClick(hour,timePickerState.minute,ampm)
+                        onDismissDialog()
+                    }
+                ) {
+                    Text(text = "선택")
+                }
+            }
+        }
     }
 }
 
