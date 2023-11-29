@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.hegunhee.newsimplememoapp.core.ui.DetailMemoScreen
 import com.hegunhee.newsimplememoapp.core.ui.DetailMemoScreenType
 
 @Composable
@@ -20,12 +19,13 @@ fun DetailMemoScreenRoot(
             onDeleteMemoClick = {}
         )
     }
-    DetailMemoScreen(
-        paddingValues = paddingValues,
-        onBackButtonClick = onBackButtonClick,
-        category,
-        setCategory,
-        memoScreenType
-    )
+//    DetailMemoScreen(
+//        paddingValues = paddingValues,
+//        onBackButtonClick = onBackButtonClick,
+//        category,
+//        setCategory,
+//        {}
+//        memoScreenType,
+//    )
 
 }
