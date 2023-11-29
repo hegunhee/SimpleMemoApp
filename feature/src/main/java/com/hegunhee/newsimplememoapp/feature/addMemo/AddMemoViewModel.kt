@@ -8,9 +8,9 @@ import com.hegunhee.newsimplememoapp.feature.common.category.CategoryActionHandl
 import com.hegunhee.newsimplememoapp.domain.model.CategoryType
 import com.hegunhee.newsimplememoapp.domain.usecase.CheckIsCategoryUseCase
 import com.hegunhee.newsimplememoapp.domain.usecase.GetAllCategoryByTypeUseCase
-import com.hegunhee.newsimplememoapp.feature.common.DateInfo
+import com.hegunhee.newsimplememoapp.domain.model.DateInfo
 import com.hegunhee.newsimplememoapp.feature.common.MemoCategory
-import com.hegunhee.newsimplememoapp.feature.common.TimeInfo
+import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
 import com.hegunhee.newsimplememoapp.feature.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
