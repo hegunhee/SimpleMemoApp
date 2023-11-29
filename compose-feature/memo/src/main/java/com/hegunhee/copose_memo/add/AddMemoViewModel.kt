@@ -3,6 +3,7 @@ package com.hegunhee.copose_memo.add
 import androidx.lifecycle.ViewModel
 import com.hegunhee.compose_feature.util.DateUtil
 import com.hegunhee.newsimplememoapp.domain.model.DateInfo
+import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,11 +14,18 @@ import javax.inject.Inject
 class AddMemoViewModel @Inject constructor() : ViewModel(){
 
     // 추후 하나의 UiState로 관리 예정
-    private val _dateInfo : MutableStateFlow<DateInfo> = MutableStateFlow(DateInfo.emptyInfo)
+    private val _dateInfo : MutableStateFlow<DateInfo> = MutableStateFlow(DateUtil.getTodayDate())
     val dateInfo : StateFlow<DateInfo> = _dateInfo.asStateFlow()
+
+    private val _timeInfo : MutableStateFlow<TimeInfo> = MutableStateFlow(DateUtil.getTodayTime())
+    val timeInfo : StateFlow<TimeInfo> = _timeInfo.asStateFlow()
 
     fun onSelectDateClick(year : Int,month : Int,day : Int) {
         val dayOfWeek = DateUtil.getDayOfWeek(year,month,day)
         _dateInfo.value = DateInfo(year,month,day,dayOfWeek)
+    }
+
+    fun onSelectTimeClick(hour : Int,minute : Int,ampm : String) {
+        _timeInfo.value = TimeInfo(hour,minute,ampm)
     }
 }

@@ -2,6 +2,9 @@ package com.hegunhee.compose_feature.util
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.hegunhee.newsimplememoapp.domain.model.DateInfo
+import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -78,5 +81,28 @@ object DateUtil {
         }else {
             calendar.get(Calendar.MINUTE)
         }
+    }
+
+    fun getTodayDate() : DateInfo {
+        val year = getYear()
+        val month = getMonth()
+        val dayOfMonth = getDayOfMonth()
+        val dayOfWeek = getDayOfWeek(year,month,dayOfMonth)
+        return DateInfo(year,month,dayOfMonth,dayOfWeek)
+    }
+
+    fun getTodayTime() : TimeInfo {
+        val hour = if(getHour() > 12) {
+            getHour() - 12
+        }else {
+            getHour()
+        }
+        val minute = getMinute()
+        val ampm = if(getHour() <= 12) {
+            "오전"
+        }else {
+            "오후"
+        }
+        return TimeInfo(hour,minute,ampm)
     }
 }

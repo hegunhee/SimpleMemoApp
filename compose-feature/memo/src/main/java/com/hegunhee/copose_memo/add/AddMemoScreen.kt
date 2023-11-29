@@ -17,13 +17,16 @@ fun AddMemoScreenRoot(
 ) {
     val (category, setCategory) = remember{mutableStateOf("지출")}
     val memoScreenType = remember { DetailMemoScreenType.Add(onSaveMemoClick =  { })}
+
     DetailMemoScreen(
         paddingValues = paddingValues,
         onBackButtonClick = onBackButtonClick,
         category,
         dateInfo = viewModel.dateInfo.collectAsStateWithLifecycle().value.dateStamp,
+        timeInfo = viewModel.timeInfo.collectAsStateWithLifecycle().value,
         setCategory,
         onSelectDateClick = viewModel::onSelectDateClick,
+        onSelectTimeClick = viewModel::onSelectTimeClick,
         memoScreenType,
     )
 }
