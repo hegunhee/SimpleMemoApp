@@ -19,6 +19,7 @@ core = "1.8.0"
 appcompat = "1.4.1"
 material = "1.5.0"
 constraintlayout = "2.1.3"
+material3 = "1.2.0-alpha02"
 
 navigation = "2.5.3"
 
@@ -59,7 +60,7 @@ compose-ui-preview = {module = "androidx.compose.ui:ui-tooling-preview",version.
 compose-material = {module = "androidx.compose.material:material",version.ref="compose"}
 compose-bom = {module = "androidx.compose:compose-bom",version.ref ="compose-bom"}
 compose-graphics = {module = "androidx.compose.ui:ui-graphics"}
-compose-material3 = {module = "androidx.compose.material3:material3"}
+compose-material3 = {module = "androidx.compose.material3:material3",version.ref = "material3"}
 navigation-compose = {module = "androidx.navigation:navigation-compose",version.ref = "navigation-compose"}
 hilt-viewmodel = {module = "androidx.hilt:hilt-navigation-compose",version.ref="hilt-viewmodel"}
 compose-bottomsheetdialog = {module = "com.holix.android:bottomsheetdialog-compose",version.ref = "compose-bottomsheetdialog"}
