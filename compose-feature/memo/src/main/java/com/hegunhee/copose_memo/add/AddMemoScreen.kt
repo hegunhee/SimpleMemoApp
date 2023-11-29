@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hegunhee.newsimplememoapp.core.ui.DetailMemoScreen
 import com.hegunhee.newsimplememoapp.core.ui.DetailMemoScreenType
 
@@ -20,8 +21,9 @@ fun AddMemoScreenRoot(
         paddingValues = paddingValues,
         onBackButtonClick = onBackButtonClick,
         category,
+        dateInfo = viewModel.dateInfo.collectAsStateWithLifecycle().value.dateStamp,
         setCategory,
-        memoScreenType
+        onSelectDateClick = viewModel::onSelectDateClick,
+        memoScreenType,
     )
-
 }
