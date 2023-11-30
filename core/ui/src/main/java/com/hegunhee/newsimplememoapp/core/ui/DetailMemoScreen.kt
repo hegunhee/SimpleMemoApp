@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,12 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import com.hegunhee.newsimplememoapp.domain.model.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
-import java.text.SimpleDateFormat
-import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,7 +46,7 @@ fun DetailMemoScreen(
     val datePickerState = rememberDatePickerState()
     var showDatePicker by remember { mutableStateOf(false) }
     if(showDatePicker) {
-        ShowDatePickerDialog(
+        MemoDatePickerDialog(
             onDismissDialog = { showDatePicker = false },
             datePickerState = datePickerState,
             onSelectDateClick = onSelectDateClick
@@ -60,7 +56,7 @@ fun DetailMemoScreen(
     val timePickerState = rememberTimePickerState(initialHour = timeInfo.hour, initialMinute = timeInfo.minute)
     var showTimePicker by remember { mutableStateOf(false) }
     if(showTimePicker) {
-        ShowTimePickerDialog(
+        MemoTimePickerDialog(
             onDismissDialog = { showTimePicker = false },
             timePickerState = timePickerState,
             onSelectTimeClick =   onSelectTimeClick
@@ -167,98 +163,6 @@ private fun SubCategory(
                 .fillMaxWidth()
                 .height(1.dp)
                 .background(Color.Black))
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun ShowDatePickerDialog(
-    onDismissDialog : () -> Unit,
-    datePickerState : DatePickerState,
-    onSelectDateClick : (Int,Int,Int) -> Unit
-) {
-    DatePickerDialog(
-        onDismissRequest = onDismissDialog,
-        confirmButton = {
-            TextButton(onClick = {
-                datePickerState.selectedDateMillis?.let { timeStamp ->
-                    SimpleDateFormat("YYYY/MM/dd").let { dateFormat ->
-                        val date = Date(timeStamp)
-                        val (year, month, day) = dateFormat.format(date).split("/").map { it.toInt() }
-                        onSelectDateClick(year,month,day)
-                    }
-                    onDismissDialog()
-                }
-            }) {
-                Text(text = "선택")
-            }
-        },
-    ) {
-        DatePicker(datePickerState)
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun ShowTimePickerDialog(
-    onDismissDialog: () -> Unit,
-    timePickerState: TimePickerState,
-    onSelectTimeClick : (Int,Int,String) -> Unit)
-{
-    AlertDialog(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(
-                color = MaterialTheme.colorScheme.surface,
-                shape = RoundedCornerShape(size = 12.dp)
-            ),
-        onDismissRequest = onDismissDialog
-    ) {
-        Column(
-            modifier = Modifier
-                .background(
-                    color = Color.LightGray.copy(alpha = 0.3f)
-                )
-                .padding(top = 28.dp, start = 20.dp, end = 20.dp, bottom = 12.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            // time picker
-            TimePicker(state = timePickerState)
-
-            // buttons
-            Row(
-                modifier = Modifier
-                    .padding(top = 12.dp)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                // dismiss button
-                TextButton(onClick = onDismissDialog) {
-                    Text(text = "취소")
-                }
-
-                // confirm button
-                TextButton(
-                    onClick = {
-                        val hour = if(timePickerState.hour > 12)  {
-                            timePickerState.hour - 12
-                        }else {
-                            timePickerState.hour
-                        }
-                        val ampm = if(timePickerState.hour > 12) {
-                            "오후"
-                        }else {
-                            "오전"
-                        }
-                        onSelectTimeClick(hour,timePickerState.minute,ampm)
-                        onDismissDialog()
-                    }
-                ) {
-                    Text(text = "선택")
-                }
-            }
         }
     }
 }
