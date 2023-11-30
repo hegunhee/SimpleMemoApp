@@ -10,6 +10,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.hegunhee.category.categoryNavGraph
+import com.hegunhee.category.navigateAddCategory
 import com.hegunhee.copose_memo.MemoNavGraph
 import com.hegunhee.copose_memo.memoNavGraph
 import com.hegunhee.copose_memo.navigateAddMemo
@@ -31,10 +33,17 @@ fun SimpleMemoApp(
                     paddingValues = paddingValues,
                     onBackClick = simpleMemoAppScaffoldState::popBackStack,
                     onAddMemoClick = simpleMemoAppScaffoldState::navigateAddMemo,
-                    onMemoClick = simpleMemoAppScaffoldState::navigateDetailMemo
+                    onMemoClick = simpleMemoAppScaffoldState::navigateDetailMemo,
+                    onAddCategoryClick = simpleMemoAppScaffoldState::navigateAddCategory
                 )
 
                 staticsNavGraph(paddingValues)
+
+                categoryNavGraph(
+                    paddingValues = paddingValues,
+                    onBackClick = simpleMemoAppScaffoldState::popBackStack,
+
+                )
             }
         }
     }
@@ -87,6 +96,10 @@ class SimpleMemoAppScaffoldState(
 
     fun navigateDetailMemo(memoId : String) {
         navController.navigateDetailMemo(memoId)
+    }
+
+    fun navigateAddCategory(categoryId : String) {
+        navController.navigateAddCategory(categoryId)
     }
 
     @Composable

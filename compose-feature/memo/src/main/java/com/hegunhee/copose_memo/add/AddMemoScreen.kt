@@ -13,6 +13,7 @@ import com.hegunhee.newsimplememoapp.core.ui.DetailMemoScreenType
 fun AddMemoScreenRoot(
     paddingValues : PaddingValues,
     onBackButtonClick : () -> Unit,
+    onAddCategoryClick : (String) -> Unit,
     viewModel : AddMemoViewModel = hiltViewModel()
 ) {
     val (category, setCategory) = remember{mutableStateOf("지출")}
@@ -33,6 +34,7 @@ fun AddMemoScreenRoot(
         onSelectTimeClick = viewModel::onSelectTimeClick,
         onSubCategoryClick = viewModel::setCategoryType,
         onSubCategoryItemClick = viewModel::setSubCategoryItem,
+        onAddSubCategoryClick = onAddCategoryClick,
         memoScreenType = memoScreenType,
     )
 }

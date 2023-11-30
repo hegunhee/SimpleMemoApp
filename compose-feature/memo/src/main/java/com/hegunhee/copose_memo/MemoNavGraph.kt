@@ -21,7 +21,8 @@ fun NavGraphBuilder.memoNavGraph(
     paddingValues : PaddingValues,
     onBackClick : () -> Unit,
     onAddMemoClick : () -> Unit,
-    onMemoClick : (String) -> Unit
+    onMemoClick : (String) -> Unit,
+    onAddCategoryClick : (String) -> Unit
 ) {
     composable(route = MemoNavGraph.memoRoute) {
         MemoScreenRoot(paddingValues,onAddMemoClick = onAddMemoClick,onMemoClick = onMemoClick)
@@ -29,7 +30,8 @@ fun NavGraphBuilder.memoNavGraph(
     composable(route = MemoNavGraph.addMemoRoute) {
         AddMemoScreenRoot(
             paddingValues,
-            onBackButtonClick = onBackClick
+            onBackButtonClick = onBackClick,
+            onAddCategoryClick = onAddCategoryClick
         )
     }
     composable(

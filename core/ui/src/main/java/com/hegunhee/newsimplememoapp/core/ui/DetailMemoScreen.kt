@@ -41,6 +41,7 @@ fun DetailMemoScreen(
     onSelectTimeClick : (Int,Int,String) -> Unit,
     onSubCategoryClick : (CategoryType) -> Unit,
     onSubCategoryItemClick : (CategoryType, String) -> Unit,
+    onAddSubCategoryClick : (String) -> Unit,
     memoScreenType : DetailMemoScreenType
 ) {
     val datePickerState = rememberDatePickerState()
@@ -70,7 +71,8 @@ fun DetailMemoScreen(
             selectedCategoryType = selectedCategoryType,
             categoryList = subCategoryList,
             onSubCategoryClick = onSubCategoryClick,
-            onSubCategoryItemClick = onSubCategoryItemClick
+            onSubCategoryItemClick = onSubCategoryItemClick,
+            onAddSubCategoryClick = onAddSubCategoryClick,
         )
     }
     Scaffold(
