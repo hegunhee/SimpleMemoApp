@@ -17,7 +17,6 @@ fun AddMemoScreenRoot(
     onAddCategoryClick : (String) -> Unit,
     viewModel : AddMemoViewModel = hiltViewModel()
 ) {
-    val (category, setCategory) = remember{mutableStateOf("지출")}
     val memoScreenType = remember { DetailMemoScreenType.Add(onSaveMemoClick =  { })}
 
     LaunchedEffect(key1 = viewModel.categoryList) {
@@ -26,14 +25,14 @@ fun AddMemoScreenRoot(
     DetailMemoScreen(
         paddingValues = paddingValues,
         onBackButtonClick = onBackButtonClick,
-        category = category,
+        category = viewModel.category.collectAsStateWithLifecycle().value,
         dateInfo = viewModel.dateInfo.collectAsStateWithLifecycle().value.dateStamp,
         timeInfo = viewModel.timeInfo.collectAsStateWithLifecycle().value,
         asset = viewModel.asset.collectAsStateWithLifecycle().value,
         attr = viewModel.attr.collectAsStateWithLifecycle().value,
         selectedCategoryType = viewModel.subCategoryType.collectAsStateWithLifecycle().value,
         subCategoryList = viewModel.categoryList.collectAsStateWithLifecycle().value,
-        onCategoryClick = setCategory,
+        onCategoryClick = viewModel::setCategory,
         onSelectDateClick = viewModel::onSelectDateClick,
         onSelectTimeClick = viewModel::onSelectTimeClick,
         onSubCategoryClick = viewModel::setCategoryType,

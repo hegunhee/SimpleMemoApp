@@ -20,6 +20,9 @@ class AddMemoViewModel @Inject constructor(
 ) : ViewModel(){
 
     // 추후 하나의 UiState로 관리 예정
+    private val _category : MutableStateFlow<String> = MutableStateFlow("지출")
+    val category : StateFlow<String> = _category.asStateFlow()
+
     private val _dateInfo : MutableStateFlow<DateInfo> = MutableStateFlow(DateUtil.getTodayDate())
     val dateInfo : StateFlow<DateInfo> = _dateInfo.asStateFlow()
 
@@ -38,7 +41,19 @@ class AddMemoViewModel @Inject constructor(
     private val _attr : MutableStateFlow<String> = MutableStateFlow("")
     val attr : StateFlow<String> = _attr.asStateFlow()
 
+    private val attrType : MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.AttrExpenses)
 
+
+    fun setCategory(categoryName : String) {
+        _category.value = categoryName
+        if(categoryName == "지출" && attrType.value is CategoryType.AttrIncome) {
+            _attr.value = ""
+            attrType.value = CategoryType.AttrExpenses
+        }else if(categoryName == "수입" && attrType.value is CategoryType.AttrExpenses) {
+            _attr.value = ""
+            attrType.value = CategoryType.AttrIncome
+        }
+    }
 
     fun onSelectDateClick(year : Int,month : Int,day : Int) {
         val dayOfWeek = DateUtil.getDayOfWeek(year,month,day)
@@ -59,6 +74,7 @@ class AddMemoViewModel @Inject constructor(
     fun setSubCategoryItem(categoryType: CategoryType,categoryName : String) {
         when(categoryType) {
             is CategoryType.AttrExpenses, CategoryType.AttrIncome -> {
+                attrType.value = categoryType
                 _attr.value = categoryName
             }
             is CategoryType.Asset -> {
