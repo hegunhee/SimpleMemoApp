@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
@@ -22,7 +25,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import com.hegunhee.newsimplememoapp.domain.model.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
+import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -34,9 +39,11 @@ fun DetailMemoScreen(
     category : String,
     dateInfo : String,
     timeInfo : TimeInfo,
+    subCategoryList : List<String>,
     onCategoryClick : (String) -> Unit,
     onSelectDateClick : (Int,Int,Int) -> Unit,
     onSelectTimeClick : (Int,Int,String) -> Unit,
+    onSubCategoryClick : (CategoryType) -> Unit,
     memoScreenType : DetailMemoScreenType
 ) {
     val datePickerState = rememberDatePickerState()
@@ -58,6 +65,16 @@ fun DetailMemoScreen(
             onSelectTimeClick =   onSelectTimeClick
         )
     }
+
+    var showBottom by remember { mutableStateOf(false) }
+    if(showBottom && subCategoryList.isNotEmpty()) {
+        BottomSheetDialog(onDismissRequest = { showBottom = false }) {
+            Surface {
+                Text(text = "Hi")
+                Text(text = subCategoryList.toString())
+            }
+        }
+    }
     Scaffold(
         modifier = Modifier
             .padding(start = 10.dp, top = 10.dp)
@@ -74,7 +91,8 @@ fun DetailMemoScreen(
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .padding(10.dp)) {
+                    .padding(10.dp)
+            ) {
                 Text(text = "날짜",modifier = Modifier.weight(0.2f), fontSize = 20.sp)
                 Text(
                     text = dateInfo,
@@ -88,6 +106,25 @@ fun DetailMemoScreen(
                     .clickable { showTimePicker = true }, fontSize = 20.sp)
             }
 
+            SubCategory(
+                categoryType = CategoryType.Asset,
+                selectedCategory = "현금",
+                onSubCategoryClick = onSubCategoryClick,
+                showCategoryBottomSheet = { showBottom = true }
+            )
+
+            val attrType = if(category == "수입") {
+                CategoryType.AttrIncome
+            }else {
+                CategoryType.AttrExpenses
+            }
+            SubCategory(
+                categoryType = attrType,
+                selectedCategory = "식비",
+                onSubCategoryClick = onSubCategoryClick,
+                showCategoryBottomSheet = { showBottom = true }
+            )
+
             when(memoScreenType) {
                 is DetailMemoScreenType.Add -> {
 
@@ -96,6 +133,38 @@ fun DetailMemoScreen(
 
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun SubCategory(
+    categoryType : CategoryType,
+    selectedCategory : String,
+    onSubCategoryClick : (CategoryType) -> Unit,
+    showCategoryBottomSheet : () -> Unit
+) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(10.dp)
+    ) {
+        Text(text = categoryType.title,modifier = Modifier.weight(0.2f),fontSize = 20.sp)
+        Column(
+            modifier = Modifier
+                .padding(end = 10.dp)
+                .weight(0.8f)
+                .clickable {
+                    onSubCategoryClick(categoryType)
+                    showCategoryBottomSheet()
+                },
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            Text(selectedCategory,fontSize = 20.sp, maxLines = 1)
+            Divider(modifier = Modifier
+                .fillMaxWidth()
+                .height(1.dp)
+                .background(Color.Black))
         }
     }
 }
