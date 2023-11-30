@@ -9,10 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -27,11 +23,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import com.hegunhee.newsimplememoapp.domain.model.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
-import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -76,39 +69,13 @@ fun DetailMemoScreen(
 
     var showCategoryBottomSheet by remember { mutableStateOf(false) }
     if(showCategoryBottomSheet && (selectedCategoryType!is CategoryType.Empty)) {
-        BottomSheetDialog(onDismissRequest = {
-            showCategoryBottomSheet = false
-            onSubCategoryClick(CategoryType.Empty)
-        }) {
-            Surface {
-                Column(modifier = Modifier.fillMaxWidth()) {
-                    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                        Text(text = selectedCategoryType.title,modifier = Modifier.weight(0.8f).padding(start = 10.dp), fontSize = 20.sp)
-                        IconButton(onClick = {
-                            //TODO Detail Category로 이동
-                        }) {
-                            Icon(painter = painterResource(id = R.drawable.ic_draw),contentDescription = null)
-                        }
-                        IconButton(onClick = {
-                            showCategoryBottomSheet = false
-                            onSubCategoryClick(CategoryType.Empty)
-                        }) {
-                            Icon(painter = painterResource(id = R.drawable.ic_exit),contentDescription = null)
-                        }
-                    }
-                    LazyVerticalGrid(
-                        columns = GridCells.Fixed(4)
-                    ) {
-                        items(subCategoryList, key = { it }) { name ->
-                            Text(text = name,modifier = Modifier.clickable {
-                                onSubCategoryItemClick(selectedCategoryType,name)
-                                showCategoryBottomSheet = false
-                            }.padding(vertical = 10.dp),fontSize = 20.sp, textAlign = TextAlign.Center)
-                        }
-                    }
-                }
-            }
-        }
+        CategoryBottomSheet(
+            onDismissRequest = { showCategoryBottomSheet = false},
+            selectedCategoryType = selectedCategoryType,
+            categoryList = subCategoryList,
+            onSubCategoryClick = onSubCategoryClick,
+            onSubCategoryItemClick = onSubCategoryItemClick
+        )
     }
     Scaffold(
         modifier = Modifier
