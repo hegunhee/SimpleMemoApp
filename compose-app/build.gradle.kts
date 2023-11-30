@@ -13,6 +13,7 @@ android {
 dependencies {
 
     implementation(project(":core:designsystem"))
+    implementation(project(":compose-feature:category"))
     implementation(project(":compose-feature:memo"))
     implementation(project(":compose-feature:statics"))
     implementation(project(":common_resource"))
