@@ -52,8 +52,7 @@ class AddMemoViewModel @Inject constructor(
     fun setCategoryType(categoryType : CategoryType) {
         viewModelScope.launch {
             _subCategoryType.value = categoryType
-            _categoryList.value = listOf("식비","교통비","문화생활","건강","기타")
-            // TODO 데이터 추가 후 getAllCategoryByTypeUseCase(categoryType)
+            _categoryList.value = getAllCategoryByTypeUseCase(categoryType)
         }
     }
 
