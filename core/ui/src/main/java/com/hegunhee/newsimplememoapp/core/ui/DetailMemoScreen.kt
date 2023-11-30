@@ -6,11 +6,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -25,6 +27,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import com.hegunhee.newsimplememoapp.domain.model.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
@@ -39,11 +43,15 @@ fun DetailMemoScreen(
     category : String,
     dateInfo : String,
     timeInfo : TimeInfo,
+    asset : String,
+    attr : String,
+    selectedCategoryType : CategoryType,
     subCategoryList : List<String>,
     onCategoryClick : (String) -> Unit,
     onSelectDateClick : (Int,Int,Int) -> Unit,
     onSelectTimeClick : (Int,Int,String) -> Unit,
     onSubCategoryClick : (CategoryType) -> Unit,
+    onSubCategoryItemClick : (CategoryType, String) -> Unit,
     memoScreenType : DetailMemoScreenType
 ) {
     val datePickerState = rememberDatePickerState()
@@ -66,12 +74,39 @@ fun DetailMemoScreen(
         )
     }
 
-    var showBottom by remember { mutableStateOf(false) }
-    if(showBottom && subCategoryList.isNotEmpty()) {
-        BottomSheetDialog(onDismissRequest = { showBottom = false }) {
+    var showCategoryBottomSheet by remember { mutableStateOf(false) }
+    if(showCategoryBottomSheet && (selectedCategoryType!is CategoryType.Empty)) {
+        BottomSheetDialog(onDismissRequest = {
+            showCategoryBottomSheet = false
+            onSubCategoryClick(CategoryType.Empty)
+        }) {
             Surface {
-                Text(text = "Hi")
-                Text(text = subCategoryList.toString())
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                        Text(text = selectedCategoryType.title,modifier = Modifier.weight(0.8f).padding(start = 10.dp), fontSize = 20.sp)
+                        IconButton(onClick = {
+                            //TODO Detail Category로 이동
+                        }) {
+                            Icon(painter = painterResource(id = R.drawable.ic_draw),contentDescription = null)
+                        }
+                        IconButton(onClick = {
+                            showCategoryBottomSheet = false
+                            onSubCategoryClick(CategoryType.Empty)
+                        }) {
+                            Icon(painter = painterResource(id = R.drawable.ic_exit),contentDescription = null)
+                        }
+                    }
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(4)
+                    ) {
+                        items(subCategoryList, key = { it }) { name ->
+                            Text(text = name,modifier = Modifier.clickable {
+                                onSubCategoryItemClick(selectedCategoryType,name)
+                                showCategoryBottomSheet = false
+                            }.padding(vertical = 10.dp),fontSize = 20.sp, textAlign = TextAlign.Center)
+                        }
+                    }
+                }
             }
         }
     }
@@ -108,9 +143,9 @@ fun DetailMemoScreen(
 
             SubCategory(
                 categoryType = CategoryType.Asset,
-                selectedCategory = "현금",
+                selectedCategory = asset,
                 onSubCategoryClick = onSubCategoryClick,
-                showCategoryBottomSheet = { showBottom = true }
+                showCategoryBottomSheet = { showCategoryBottomSheet = true }
             )
 
             val attrType = if(category == "수입") {
@@ -120,9 +155,9 @@ fun DetailMemoScreen(
             }
             SubCategory(
                 categoryType = attrType,
-                selectedCategory = "식비",
+                selectedCategory = attr,
                 onSubCategoryClick = onSubCategoryClick,
-                showCategoryBottomSheet = { showBottom = true }
+                showCategoryBottomSheet = { showCategoryBottomSheet = true }
             )
 
             when(memoScreenType) {

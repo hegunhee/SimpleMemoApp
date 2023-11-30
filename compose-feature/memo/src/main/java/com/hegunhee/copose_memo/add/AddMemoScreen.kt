@@ -24,11 +24,15 @@ fun AddMemoScreenRoot(
         category = category,
         dateInfo = viewModel.dateInfo.collectAsStateWithLifecycle().value.dateStamp,
         timeInfo = viewModel.timeInfo.collectAsStateWithLifecycle().value,
+        asset = viewModel.asset.collectAsStateWithLifecycle().value,
+        attr = viewModel.attr.collectAsStateWithLifecycle().value,
+        selectedCategoryType = viewModel.subCategoryType.collectAsStateWithLifecycle().value,
         subCategoryList = viewModel.categoryList.collectAsStateWithLifecycle().value,
         onCategoryClick = setCategory,
         onSelectDateClick = viewModel::onSelectDateClick,
         onSelectTimeClick = viewModel::onSelectTimeClick,
-        onSubCategoryClick = viewModel::fetchCategoryList,
+        onSubCategoryClick = viewModel::setCategoryType,
+        onSubCategoryItemClick = viewModel::setSubCategoryItem,
         memoScreenType = memoScreenType,
     )
 }

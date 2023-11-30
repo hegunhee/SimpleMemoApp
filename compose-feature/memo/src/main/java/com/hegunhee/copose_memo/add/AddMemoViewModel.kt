@@ -32,6 +32,14 @@ class AddMemoViewModel @Inject constructor(
     private val _categoryList : MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
     val categoryList : StateFlow<List<String>> = _categoryList.asStateFlow()
 
+    private val _asset : MutableStateFlow<String> = MutableStateFlow("")
+    val asset : StateFlow<String> = _asset.asStateFlow()
+
+    private val _attr : MutableStateFlow<String> = MutableStateFlow("")
+    val attr : StateFlow<String> = _attr.asStateFlow()
+
+
+
     fun onSelectDateClick(year : Int,month : Int,day : Int) {
         val dayOfWeek = DateUtil.getDayOfWeek(year,month,day)
         _dateInfo.value = DateInfo(year,month,day,dayOfWeek)
@@ -41,12 +49,24 @@ class AddMemoViewModel @Inject constructor(
         _timeInfo.value = TimeInfo(hour,minute,ampm)
     }
 
-    fun fetchCategoryList(categoryType : CategoryType) {
-        if(categoryType !is CategoryType.Empty) {
-            viewModelScope.launch {
-                _subCategoryType.value = categoryType
-                _categoryList.value = listOf("식비","교통비","교육비")
-            }
+    fun setCategoryType(categoryType : CategoryType) {
+        viewModelScope.launch {
+            _subCategoryType.value = categoryType
+            _categoryList.value = listOf("식비","교통비","문화생활","건강","기타")
+            // TODO 데이터 추가 후 getAllCategoryByTypeUseCase(categoryType)
         }
+    }
+
+    fun setSubCategoryItem(categoryType: CategoryType,categoryName : String) {
+        when(categoryType) {
+            is CategoryType.AttrExpenses, CategoryType.AttrIncome -> {
+                _attr.value = categoryName
+            }
+            is CategoryType.Asset -> {
+                _asset.value = categoryName
+            }
+            else -> { }
+        }
+        setCategoryType(CategoryType.Empty)
     }
 }
