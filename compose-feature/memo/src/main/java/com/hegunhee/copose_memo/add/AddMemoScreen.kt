@@ -21,12 +21,14 @@ fun AddMemoScreenRoot(
     DetailMemoScreen(
         paddingValues = paddingValues,
         onBackButtonClick = onBackButtonClick,
-        category,
+        category = category,
         dateInfo = viewModel.dateInfo.collectAsStateWithLifecycle().value.dateStamp,
         timeInfo = viewModel.timeInfo.collectAsStateWithLifecycle().value,
-        setCategory,
+        subCategoryList = viewModel.categoryList.collectAsStateWithLifecycle().value,
+        onCategoryClick = setCategory,
         onSelectDateClick = viewModel::onSelectDateClick,
         onSelectTimeClick = viewModel::onSelectTimeClick,
-        memoScreenType,
+        onSubCategoryClick = viewModel::fetchCategoryList,
+        memoScreenType = memoScreenType,
     )
 }
