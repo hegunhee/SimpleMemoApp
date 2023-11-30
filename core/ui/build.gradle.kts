@@ -8,6 +8,8 @@ android {
 
 dependencies {
 
+    implementation(libs.compose.bottomsheetdialog)
+
     implementation(project(":core:designsystem"))
     implementation(project(":common_resource"))
 
