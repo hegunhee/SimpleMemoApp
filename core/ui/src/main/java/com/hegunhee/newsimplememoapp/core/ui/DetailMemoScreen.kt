@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.graphics.Color
 import com.hegunhee.newsimplememoapp.domain.model.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
@@ -64,7 +65,7 @@ fun DetailMemoScreen(
         )
     }
 
-    var showCategoryBottomSheet by remember { mutableStateOf(false) }
+    var showCategoryBottomSheet by rememberSaveable { mutableStateOf(false) }
     if(showCategoryBottomSheet && (selectedCategoryType!is CategoryType.Empty)) {
         CategoryBottomSheet(
             onDismissRequest = { showCategoryBottomSheet = false},
