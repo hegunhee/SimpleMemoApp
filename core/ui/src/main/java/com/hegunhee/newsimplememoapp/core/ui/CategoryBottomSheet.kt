@@ -13,6 +13,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -28,7 +29,8 @@ fun CategoryBottomSheet(
     selectedCategoryType : CategoryType,
     categoryList : List<String>,
     onSubCategoryClick : (CategoryType) -> Unit,
-    onSubCategoryItemClick : (CategoryType, String) -> Unit
+    onSubCategoryItemClick : (CategoryType, String) -> Unit,
+    onAddSubCategoryClick : (String) -> Unit
 ) {
 
     BottomSheetDialog(onDismissRequest = {
@@ -40,7 +42,7 @@ fun CategoryBottomSheet(
                 Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                     Text(text = selectedCategoryType.title,modifier = Modifier.weight(0.8f).padding(start = 10.dp), fontSize = 20.sp)
                     IconButton(onClick = {
-                        //TODO Detail Category로 이동
+                        onAddSubCategoryClick(selectedCategoryType.code.toString())
                     }) {
                         Icon(painter = painterResource(id = R.drawable.ic_draw),contentDescription = null)
                     }
@@ -57,7 +59,7 @@ fun CategoryBottomSheet(
                     items(categoryList, key = { it }) { name ->
                         Text(text = name,modifier = Modifier.clickable {
                             onSubCategoryItemClick(selectedCategoryType,name)
-                            onDismissRequest
+                            onDismissRequest()
                         }.padding(vertical = 10.dp),fontSize = 20.sp, textAlign = TextAlign.Center)
                     }
                 }
