@@ -33,3 +33,16 @@ sealed class MemoType() {
         val expenseSum : Int
     ): MemoType()
 }
+
+fun isStandardMemo(
+    category: String,
+    asset : String,
+    attr: String,
+    price : String,
+) : Boolean {
+    if(category.isBlank()) return false
+    if(asset.isBlank()) return false
+    if(attr.isBlank()) return false
+    if(price.toIntOrNull() == null || price.isBlank()) return false
+    return true
+}
