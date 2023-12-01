@@ -159,7 +159,11 @@ fun DetailMemoScreen(
                     AddMemo(memoScreenType.onSaveMemoClick,onBackButtonClick)
                 }
                 is DetailMemoScreenType.Detail -> {
-
+                    DetailMemo(
+                        memoScreenType.onUpdateMemoClick,
+                        memoScreenType.onDeleteMemoClick,
+                        onBackButtonClick
+                    )
                 }
             }
         }
@@ -209,6 +213,37 @@ private fun AddMemo(onSaveMemoClick : () -> Boolean,onBackButtonClick: () -> Uni
     }
 }
 
+@Composable
+private fun DetailMemo(
+    onUpdateMemoClick : () -> Boolean,
+    onDeleteMemoClick : () -> Unit,
+    onBackButtonClick: () -> Unit
+) {
+    Row( modifier = Modifier.fillMaxWidth().padding(10.dp)) {
+        Button(onClick = {
+            if(onUpdateMemoClick()) {
+                onBackButtonClick()
+            }
+        },modifier = Modifier.weight(0.5f).padding(end = 10.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Blue
+            )) {
+            Text(text = "수정하기")
+        }
+        Button(onClick = {
+            onDeleteMemoClick()
+            onBackButtonClick()
+         },
+            modifier = Modifier.weight(0.5f),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Red
+            )
+
+        ) {
+            Text(text = "삭제하기")
+        }
+    }
+}
 sealed class DetailMemoScreenType {
 
     data class Add(
@@ -216,7 +251,7 @@ sealed class DetailMemoScreenType {
     ) : DetailMemoScreenType()
 
     data class Detail(
-        val onUpdateMemoClick : () -> Unit,
+        val onUpdateMemoClick : () -> Boolean,
         val onDeleteMemoClick : () -> Unit
     ) : DetailMemoScreenType()
 }
