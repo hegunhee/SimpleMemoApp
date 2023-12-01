@@ -46,6 +46,7 @@ fun NavGraphBuilder.memoNavGraph(
         DetailMemoScreenRoot(
             paddingValues,
             onBackButtonClick = onBackClick,
+            onAddCategoryClick = onAddCategoryClick,
             memoId = memoId
         )
     }
