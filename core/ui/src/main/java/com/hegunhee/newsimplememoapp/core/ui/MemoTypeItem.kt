@@ -62,6 +62,11 @@ fun MemoItem(memo : MemoType.Memo,onMemoClick : (String) -> Unit) {
     }else {
         Color.Black
     }
+    val priceColor = if(memo.category == "지출") {
+        Color.Red
+    }else {
+        Color.Blue
+    }
     val timeInfo = "${memo.amPm} ${memo.hour}:${memo.minute}"
     Row(modifier = Modifier
         .clickable { onMemoClick(memo.id.toString()) }
@@ -76,7 +81,7 @@ fun MemoItem(memo : MemoType.Memo,onMemoClick : (String) -> Unit) {
             Text(modifier = Modifier.padding(top = 5.dp),text = description,color = descriptionColor, fontSize = 17.sp, maxLines = 1)
             Text(text = timeInfo,color = Color.Gray,fontSize = 13.sp)
         }
-        Text(modifier = Modifier.weight(5f),text = "${memo.price}원", textAlign = TextAlign.End, fontSize = 15.sp,maxLines = 1)
+        Text(modifier = Modifier.weight(5f),text = "${memo.price}원", textAlign = TextAlign.End, fontSize = 15.sp,maxLines = 1,color = priceColor)
     }
 }
 
