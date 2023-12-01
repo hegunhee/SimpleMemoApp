@@ -1,15 +1,22 @@
 package com.hegunhee.copose_memo.add
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.compose_feature.util.DateUtil
 import com.hegunhee.newsimplememoapp.domain.model.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.DateInfo
+import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
+import com.hegunhee.newsimplememoapp.domain.model.isStandardMemo
 import com.hegunhee.newsimplememoapp.domain.usecase.GetAllCategoryByTypeUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.InsertMemoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,6 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddMemoViewModel @Inject constructor(
     private val getAllCategoryByTypeUseCase: GetAllCategoryByTypeUseCase,
+    private val insertMemoUseCase : InsertMemoUseCase
 ) : ViewModel(){
 
     // 추후 하나의 UiState로 관리 예정
@@ -43,6 +51,11 @@ class AddMemoViewModel @Inject constructor(
 
     private val attrType : MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.AttrExpenses)
 
+    private val _price : MutableStateFlow<String> = MutableStateFlow("")
+    val price : StateFlow<String> = _price.asStateFlow()
+
+    private val _description : MutableStateFlow<String> = MutableStateFlow("")
+    val description : StateFlow<String> = _description.asStateFlow()
 
     fun setCategory(categoryName : String) {
         _category.value = categoryName
@@ -83,5 +96,41 @@ class AddMemoViewModel @Inject constructor(
             else -> { }
         }
         setCategoryType(CategoryType.Empty)
+    }
+
+    fun setPrice(price : String) {
+        _price.value = price
+    }
+
+    fun setDescription(description : String) {
+        _description.value = description
+    }
+
+    fun saveMemo() : Boolean {
+        if (!isStandardMemo(category = category.value, asset = asset.value, attr = attr.value, price = price.value)) {
+            return false
+        }
+
+        viewModelScope.launch {
+            val timeInfoValue = timeInfo.value
+            val dateInfoValue = dateInfo.value
+            MemoType.Memo(
+                category = category.value,
+                year = dateInfoValue.year,
+                month = dateInfoValue.month,
+                day = dateInfoValue.day,
+                dayOfWeek = dateInfoValue.dayOfWeek,
+                amPm = timeInfoValue.ampm,
+                hour = timeInfoValue.hour,
+                minute = timeInfoValue.minute,
+                attr = attr.value,
+                price = price.value.toInt(),
+                asset = asset.value,
+                description = description.value
+            ).let {memo ->
+                insertMemoUseCase(memo)
+            }
+        }
+        return true
     }
 }

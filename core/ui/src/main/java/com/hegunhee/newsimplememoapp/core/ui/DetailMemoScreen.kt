@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +22,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import com.hegunhee.newsimplememoapp.domain.model.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
 
@@ -35,6 +38,8 @@ fun DetailMemoScreen(
     timeInfo : TimeInfo,
     asset : String,
     attr : String,
+    price : String,
+    description : String,
     selectedCategoryType : CategoryType,
     subCategoryList : List<String>,
     onCategoryClick : (String) -> Unit,
@@ -43,6 +48,8 @@ fun DetailMemoScreen(
     onSubCategoryClick : (CategoryType) -> Unit,
     onSubCategoryItemClick : (CategoryType, String) -> Unit,
     onAddSubCategoryClick : (String) -> Unit,
+    onPriceValueChanged : (String) -> Unit,
+    onDescriptionValueChanged : (String) -> Unit,
     memoScreenType : DetailMemoScreenType
 ) {
     val datePickerState = rememberDatePickerState()
@@ -126,9 +133,30 @@ fun DetailMemoScreen(
                 showCategoryBottomSheet = { showCategoryBottomSheet = true }
             )
 
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = "가격",modifier = Modifier.weight(0.2f), fontSize = 20.sp)
+                OutlinedTextField(value = price, onValueChange = onPriceValueChanged, singleLine = true,keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
+            }
+
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp)
+            ) {
+                Text(text = "설명",modifier = Modifier.weight(0.2f), fontSize = 20.sp)
+                OutlinedTextField(value = description, onValueChange = onDescriptionValueChanged, singleLine = true)
+            }
+
+
+
             when(memoScreenType) {
                 is DetailMemoScreenType.Add -> {
-
+                    AddMemo(memoScreenType.onSaveMemoClick,onBackButtonClick)
                 }
                 is DetailMemoScreenType.Detail -> {
 
@@ -170,10 +198,21 @@ private fun SubCategory(
     }
 }
 
+@Composable
+private fun AddMemo(onSaveMemoClick : () -> Boolean,onBackButtonClick: () -> Unit) {
+    Button(onClick = {
+        if(onSaveMemoClick()) {
+            onBackButtonClick()
+        }
+    },modifier = Modifier.fillMaxWidth().padding(10.dp)) {
+        Text(text = "저장하기")
+    }
+}
+
 sealed class DetailMemoScreenType {
 
     data class Add(
-        val onSaveMemoClick : () -> Unit
+        val onSaveMemoClick : () -> Boolean
     ) : DetailMemoScreenType()
 
     data class Detail(

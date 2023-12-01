@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hegunhee.newsimplememoapp.core.ui.DetailMemoScreen
@@ -17,11 +18,10 @@ fun AddMemoScreenRoot(
     onAddCategoryClick : (String) -> Unit,
     viewModel : AddMemoViewModel = hiltViewModel()
 ) {
-    val memoScreenType = remember { DetailMemoScreenType.Add(onSaveMemoClick =  { })}
-
     LaunchedEffect(key1 = viewModel.categoryList) {
         viewModel.setCategoryType(viewModel.subCategoryType.value)
     }
+    val memoScreenType = remember { DetailMemoScreenType.Add(onSaveMemoClick = viewModel::saveMemo) }
     DetailMemoScreen(
         paddingValues = paddingValues,
         onBackButtonClick = onBackButtonClick,
@@ -30,6 +30,8 @@ fun AddMemoScreenRoot(
         timeInfo = viewModel.timeInfo.collectAsStateWithLifecycle().value,
         asset = viewModel.asset.collectAsStateWithLifecycle().value,
         attr = viewModel.attr.collectAsStateWithLifecycle().value,
+        price = viewModel.price.collectAsStateWithLifecycle().value,
+        description = viewModel.description.collectAsStateWithLifecycle().value,
         selectedCategoryType = viewModel.subCategoryType.collectAsStateWithLifecycle().value,
         subCategoryList = viewModel.categoryList.collectAsStateWithLifecycle().value,
         onCategoryClick = viewModel::setCategory,
@@ -38,6 +40,8 @@ fun AddMemoScreenRoot(
         onSubCategoryClick = viewModel::setCategoryType,
         onSubCategoryItemClick = viewModel::setSubCategoryItem,
         onAddSubCategoryClick = onAddCategoryClick,
+        onPriceValueChanged = viewModel::setPrice,
+        onDescriptionValueChanged = viewModel::setDescription,
         memoScreenType = memoScreenType,
     )
 }
