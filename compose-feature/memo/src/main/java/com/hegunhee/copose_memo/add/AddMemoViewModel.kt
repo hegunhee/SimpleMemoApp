@@ -1,6 +1,5 @@
 package com.hegunhee.copose_memo.add
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.compose_feature.util.DateUtil
@@ -12,11 +11,8 @@ import com.hegunhee.newsimplememoapp.domain.model.isStandardMemo
 import com.hegunhee.newsimplememoapp.domain.usecase.GetAllCategoryByTypeUseCase
 import com.hegunhee.newsimplememoapp.domain.usecase.InsertMemoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,8 +22,7 @@ class AddMemoViewModel @Inject constructor(
     private val getAllCategoryByTypeUseCase: GetAllCategoryByTypeUseCase,
     private val insertMemoUseCase : InsertMemoUseCase
 ) : ViewModel(){
-
-    // 추후 하나의 UiState로 관리 예정
+    
     private val _category : MutableStateFlow<String> = MutableStateFlow("지출")
     val category : StateFlow<String> = _category.asStateFlow()
 
