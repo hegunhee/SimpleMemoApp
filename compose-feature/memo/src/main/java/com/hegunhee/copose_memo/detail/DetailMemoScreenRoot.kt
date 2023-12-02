@@ -17,6 +17,9 @@ fun DetailMemoScreenRoot(
     onAddCategoryClick : (String) -> Unit,
     memoId : Int
 ) {
+    LaunchedEffect(key1 = viewModel.categoryList) {
+        viewModel.setCategoryType(viewModel.subCategoryType.value)
+    }
     LaunchedEffect(key1 = memoId) {
         viewModel.fetchMemo(memoId)
     }
