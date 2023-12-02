@@ -27,7 +27,7 @@ class DetailMemoViewModel @Inject constructor(
     private val getMemoUseCase: GetMemoUseCase
 ) : ViewModel() {
 
-    private var memoId : Int = 0
+    private var memoId : Int = Loading_MemoId
 
     private val _category : MutableStateFlow<String> = MutableStateFlow("지출")
     val category : StateFlow<String> = _category.asStateFlow()
@@ -59,6 +59,9 @@ class DetailMemoViewModel @Inject constructor(
     val description : StateFlow<String> = _description.asStateFlow()
 
     fun fetchMemo(id : Int) {
+        if(memoId != Loading_MemoId) {
+            return
+        }
         viewModelScope.launch {
             getMemoUseCase(id).let { memo ->
                 memoId = memo.id
@@ -155,5 +158,9 @@ class DetailMemoViewModel @Inject constructor(
         viewModelScope.launch {
             deleteMemoUseCase(memoId)
         }
+    }
+
+    companion object {
+        private const val Loading_MemoId = -1
     }
 }
