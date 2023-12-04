@@ -17,6 +17,7 @@ import com.hegunhee.copose_memo.memoNavGraph
 import com.hegunhee.copose_memo.navigateAddMemo
 import com.hegunhee.copose_memo.navigateDetailMemo
 import com.hegunhee.newsimplememoapp.core.designsystem.NewSimpleMemoAppTheme
+import com.hegunhee.statics.navigateDetailStatics
 import com.hegunhee.statics.staticsNavGraph
 import kotlinx.coroutines.CoroutineScope
 
@@ -37,7 +38,12 @@ fun SimpleMemoApp(
                     onAddCategoryClick = simpleMemoAppScaffoldState::navigateAddCategory
                 )
 
-                staticsNavGraph(paddingValues)
+                staticsNavGraph(
+                    paddingValues = paddingValues,
+                    onBackClick = simpleMemoAppScaffoldState::popBackStack,
+                    onDetailStaticsClick = simpleMemoAppScaffoldState::navigateDetailStatics
+
+                )
 
                 categoryNavGraph(
                     paddingValues = paddingValues,
@@ -100,6 +106,10 @@ class SimpleMemoAppScaffoldState(
 
     fun navigateAddCategory(categoryId : String) {
         navController.navigateAddCategory(categoryId)
+    }
+
+    fun navigateDetailStatics(attr : String) {
+        navController.navigateDetailStatics(attr)
     }
 
     @Composable
