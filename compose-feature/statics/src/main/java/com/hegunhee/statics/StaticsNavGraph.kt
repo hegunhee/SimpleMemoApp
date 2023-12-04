@@ -14,7 +14,8 @@ fun NavController.navigateDetailStatics(attr : String) {
 fun NavGraphBuilder.staticsNavGraph(
     paddingValues: PaddingValues,
     onBackClick : () -> Unit,
-    onDetailStaticsClick : (String) -> Unit
+    onDetailStaticsClick : (String) -> Unit,
+    onMemoClick : (String) -> Unit
 ){
     composable(route = StaticsNavGraph.statics) {
         StaticsScreenRoot(
@@ -36,7 +37,8 @@ fun NavGraphBuilder.staticsNavGraph(
         }else {
             DetailStaticsScreenRoot(
                 paddingValues = paddingValues,
-                attr = attr
+                attr = attr,
+                onMemoClick = onMemoClick
             )
         }
     }

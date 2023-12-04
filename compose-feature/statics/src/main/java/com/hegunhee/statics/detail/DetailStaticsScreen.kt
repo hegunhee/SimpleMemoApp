@@ -4,8 +4,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,13 +25,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hegunhee.newsimplememoapp.core.ui.DatePickerDialog
 import com.hegunhee.newsimplememoapp.core.ui.DateSelector
+import com.hegunhee.newsimplememoapp.core.ui.MemoDateItem
+import com.hegunhee.newsimplememoapp.core.ui.MemoItem
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 
 @Composable
 fun DetailStaticsScreenRoot(
     paddingValues: PaddingValues,
     viewModel : DetailStaticsViewModel = hiltViewModel(),
-    attr : String
+    attr : String,
+    onMemoClick: (String) -> Unit
 ) {
     LaunchedEffect(key1 = attr) {
         viewModel.initAttr(attr)
@@ -49,6 +56,7 @@ fun DetailStaticsScreenRoot(
                 onNextMonthClick = viewModel::onNextMonthClick,
                 onDatePickerCurrentMonthClick = viewModel::onDatePickerCurrentMonthClick,
                 onDatePickerMonthClick =viewModel::onDatePickerMonthClick,
+                onMemoClick = onMemoClick
             )
         }
     }
@@ -66,6 +74,7 @@ fun DetailStaticsScreen(
     onNextMonthClick : () -> Unit,
     onDatePickerCurrentMonthClick : () -> Unit,
     onDatePickerMonthClick : (Int, Int) -> Unit,
+    onMemoClick : (String) -> Unit
 ) {
     var datePickerDialogState by remember{ mutableStateOf<Boolean>(false) }
     val showDatePickerDialog = { datePickerDialogState = true}
@@ -100,8 +109,23 @@ fun DetailStaticsScreen(
         Column(
             modifier = Modifier.padding(padding)
         ) {
-            Text(text = memoList.toString())
-            Text(text = totalPrice)
+            Text(text = "총 합계는", fontSize = 20.sp)
+            Text(text = totalPrice +"원 입니다.", fontSize = 20.sp)
+            LazyColumn() {
+                itemsIndexed(memoList) {index, item ->
+                    when(item) {
+                        is MemoType.MemoDate -> {
+                            if(index != 0) {
+                                Spacer(Modifier.size(10.dp))
+                            }
+                            MemoDateItem(memoDate = item)
+                        }
+                        is MemoType.Memo -> {
+                            MemoItem(memo = item, onMemoClick = onMemoClick)
+                        }
+                    }
+                }
+            }
         }
     }
 }

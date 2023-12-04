@@ -41,8 +41,8 @@ fun SimpleMemoApp(
                 staticsNavGraph(
                     paddingValues = paddingValues,
                     onBackClick = simpleMemoAppScaffoldState::popBackStack,
-                    onDetailStaticsClick = simpleMemoAppScaffoldState::navigateDetailStatics
-
+                    onDetailStaticsClick = simpleMemoAppScaffoldState::navigateDetailStatics,
+                    onMemoClick = simpleMemoAppScaffoldState::navigateDetailMemo
                 )
 
                 categoryNavGraph(
