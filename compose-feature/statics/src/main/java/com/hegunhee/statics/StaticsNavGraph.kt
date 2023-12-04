@@ -8,7 +8,7 @@ fun NavGraphBuilder.staticsNavGraph(
     paddingValues: PaddingValues
 ){
     composable(route = StaticsNavGraph.statics) {
-        StaticsScreenRoot()
+        StaticsScreenRoot(paddingValues)
     }
 }
 
