@@ -46,3 +46,9 @@ fun isStandardMemo(
     if(price.toIntOrNull() == null || price.isBlank()) return false
     return true
 }
+
+fun List<MemoType>.getMemoListTotalPrice() : Int {
+    return filterIsInstance<MemoType.MemoDate>().fold(0) { total, dayMemo ->
+        total + dayMemo.incomeSum - dayMemo.expenseSum
+    }
+}
