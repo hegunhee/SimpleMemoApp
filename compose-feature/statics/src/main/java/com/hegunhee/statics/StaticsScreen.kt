@@ -26,7 +26,8 @@ import com.hegunhee.newsimplememoapp.domain.model.StaticsData
 @Composable
 fun StaticsScreenRoot(
     paddingValues: PaddingValues,
-    viewModel : StaticsViewModel = hiltViewModel()
+    viewModel : StaticsViewModel = hiltViewModel(),
+    onDetailStaticsClick : (String) -> Unit
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 
@@ -43,7 +44,8 @@ fun StaticsScreenRoot(
                 onNextMonthClick = viewModel::onNextMonthClick,
                 onDatePickerCurrentMonthClick = viewModel::onDatePickerCurrentMonthClick,
                 onDatePickerMonthClick =viewModel::onDatePickerMonthClick,
-                onCategoryClick = viewModel::setCategory
+                onCategoryClick = viewModel::setCategory,
+                onDetailStaticsClick = onDetailStaticsClick
             )
         }
     }
@@ -61,6 +63,7 @@ fun StaticsScreen(
     onDatePickerCurrentMonthClick : () -> Unit,
     onDatePickerMonthClick : (Int, Int) -> Unit,
     onCategoryClick : (String) -> Unit,
+    onDetailStaticsClick: (String) -> Unit
 ) {
     var datePickerDialogState by remember{ mutableStateOf<Boolean>(false) }
     val showDatePickerDialog = { datePickerDialogState = true}
@@ -93,7 +96,7 @@ fun StaticsScreen(
             )
             LazyColumn() {
                 items(staticsList,key = {it.attr}) {
-                    PercentStatics(it, { })
+                    PercentStatics(it,onDetailStaticsClick)
                 }
             }
         }
