@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +20,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hegunhee.newsimplememoapp.core.ui.CategorySelector
 import com.hegunhee.newsimplememoapp.core.ui.DatePickerDialog
 import com.hegunhee.newsimplememoapp.core.ui.DateSelector
+import com.hegunhee.newsimplememoapp.core.ui.PercentStatics
 import com.hegunhee.newsimplememoapp.domain.model.StaticsData
 
 @Composable
@@ -83,12 +86,16 @@ fun StaticsScreen(
             onSelectorClick = showDatePickerDialog
         ) }
     ) { padding ->
-        Column(modifier = Modifier.fillMaxWidth().padding(padding)) {
+        Column(modifier = Modifier.fillMaxWidth().padding(padding).padding(horizontal = 10.dp)) {
             CategorySelector(
                 selectedCategory = category,
                 onCategoryClick = onCategoryClick
             )
-            Text(text = staticsList.toString(),modifier = Modifier.padding(padding))
+            LazyColumn() {
+                items(staticsList,key = {it.attr}) {
+                    PercentStatics(it, { })
+                }
+            }
         }
     }
 }
