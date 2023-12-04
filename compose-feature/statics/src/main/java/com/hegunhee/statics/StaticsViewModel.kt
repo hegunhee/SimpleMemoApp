@@ -65,4 +65,8 @@ class StaticsViewModel @Inject constructor(
         monthDate.value = DateUtil.getMonth()
     }
 
+    fun setCategory(category : String) {
+        memoCategory.value = category
+    }
+
 }
