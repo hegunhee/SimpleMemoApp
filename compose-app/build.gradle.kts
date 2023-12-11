@@ -18,6 +18,6 @@ dependencies {
     implementation(project(":compose-feature:statics"))
     implementation(project(":common_resource"))
 
-    implementation(project(":domain"))
+    implementation(project(":core:domain"))
     implementation(project(":data"))
 }

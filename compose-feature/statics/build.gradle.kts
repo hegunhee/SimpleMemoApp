@@ -13,5 +13,5 @@ dependencies {
     implementation(project(":common_resource"))
     implementation(project(":compose-feature:util"))
 
-    implementation(project(":domain"))
+    implementation(project(":core:domain"))
 }

@@ -6,7 +6,7 @@ plugins {
 
 dependencies {
 
-    implementation(project(":domain"))
+    implementation(project(":core:domain"))
 
 
     implementation(libs.core.ktx)

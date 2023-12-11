@@ -15,7 +15,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "NewSimpleMemoApp"
 include (":app")
-include(":domain")
 include(":data")
 include(":feature")
 include(":compose-app")
@@ -26,3 +25,4 @@ include(":core:designsystem")
 include(":core:ui")
 include(":compose-feature:util")
 include(":compose-feature:category")
+include(":core:domain")

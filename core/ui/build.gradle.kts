@@ -13,6 +13,6 @@ dependencies {
     implementation(project(":core:designsystem"))
     implementation(project(":common_resource"))
 
-    implementation(project(":domain"))
+    implementation(project(":core:domain"))
 
 }

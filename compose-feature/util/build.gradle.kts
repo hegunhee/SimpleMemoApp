@@ -11,5 +11,5 @@ dependencies {
 
     implementation(libs.annotation.jvm)
 
-    implementation(project(":domain"))
+    implementation(project(":core:domain"))
 }
