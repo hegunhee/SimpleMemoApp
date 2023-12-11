@@ -11,6 +11,10 @@ class DefaultLocalDataSource @Inject constructor(
     private val categoryDao : CategoryDao
 ) : LocalDataSource{
 
+    override suspend fun insertCategory(categoryEntity: CategoryEntity) {
+        categoryDao.insertCategory(categoryEntity)
+    }
+
     override suspend fun insertMemo(memo: MemoEntity) {
         memoDao.insertMemo(memo)
     }
@@ -19,20 +23,12 @@ class DefaultLocalDataSource @Inject constructor(
         return memoDao.getMemo(memoId)
     }
 
-    override suspend fun deleteAllMemo() {
-        memoDao.deleteAllMemo()
-    }
-
-    override suspend fun deleteMemo(id: Int) {
-        memoDao.deleteMemo(id)
-    }
-
     override suspend fun getMemoListSortedByYearAndMonth(year: Int, month: Int): List<MemoEntity> {
         return memoDao.getMemoListSortedByYearAndMonth(year,month)
     }
 
-    override suspend fun updateMemo(memo: MemoEntity) {
-        memoDao.updateMemo(memo)
+    override suspend fun getMemoListSortedByAttrYearMonth(attr: String, year: Int, month: Int): List<MemoEntity> {
+        return memoDao.getMemoListSortedByAttrYearMonth(attr,year,month)
     }
 
     override suspend fun getAllCategoryByType(categoryCode: Int): List<CategoryEntity> {
@@ -43,15 +39,19 @@ class DefaultLocalDataSource @Inject constructor(
         return categoryDao.getCategoryOrNull(categoryCode,text)
     }
 
+    override suspend fun updateMemo(memo: MemoEntity) {
+        memoDao.updateMemo(memo)
+    }
+
+    override suspend fun deleteAllMemo() {
+        memoDao.deleteAllMemo()
+    }
+
+    override suspend fun deleteMemo(id: Int) {
+        memoDao.deleteMemo(id)
+    }
+
     override suspend fun deleteCategory(text: String) {
         categoryDao.deleteCategory(text)
-    }
-
-    override suspend fun insertCategory(categoryEntity: CategoryEntity) {
-        categoryDao.insertCategory(categoryEntity)
-    }
-
-    override suspend fun getMemoListSortedByAttrYearMonth(attr: String, year: Int, month: Int): List<MemoEntity> {
-        return memoDao.getMemoListSortedByAttrYearMonth(attr,year,month)
     }
 }

@@ -7,23 +7,24 @@ interface LocalDataSource {
 
     suspend fun insertMemo(memo : MemoEntity)
 
+    suspend fun insertCategory(categoryEntity : CategoryEntity)
+
     suspend fun getMemo(memoId : Int) : MemoEntity
-
-    suspend fun deleteAllMemo()
-
-    suspend fun deleteMemo(id : Int)
-
-    suspend fun getMemoListSortedByYearAndMonth(year : Int, month : Int) : List<MemoEntity>
-
-    suspend fun updateMemo(memo : MemoEntity)
 
     suspend fun getAllCategoryByType(categoryCode : Int) : List<CategoryEntity>
 
     suspend fun checkIsCategory(categoryCode: Int, text : String) : CategoryEntity?
 
-    suspend fun deleteCategory(text : String)
-
-    suspend fun insertCategory(categoryEntity : CategoryEntity)
+    suspend fun getMemoListSortedByYearAndMonth(year : Int, month : Int) : List<MemoEntity>
 
     suspend fun getMemoListSortedByAttrYearMonth(attr : String,year : Int,month : Int) : List<MemoEntity>
+
+    suspend fun updateMemo(memo : MemoEntity)
+
+    suspend fun deleteAllMemo()
+
+    suspend fun deleteMemo(id : Int)
+
+    suspend fun deleteCategory(text : String)
+
 }
