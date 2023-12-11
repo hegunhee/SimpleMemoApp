@@ -2,12 +2,12 @@ package com.hegunhee.newsimplememoapp.feature.addMemo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.domain.usecase.InsertMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.InsertMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.feature.common.category.CategoryActionHandler
 import com.hegunhee.newsimplememoapp.domain.model.CategoryType
-import com.hegunhee.newsimplememoapp.domain.usecase.CheckIsCategoryUseCase
-import com.hegunhee.newsimplememoapp.domain.usecase.GetAllCategoryByTypeUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.category.CheckIsCategoryUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.category.GetAllCategoryByTypeUseCase
 import com.hegunhee.newsimplememoapp.domain.model.DateInfo
 import com.hegunhee.newsimplememoapp.feature.common.MemoCategory
 import com.hegunhee.newsimplememoapp.domain.model.TimeInfo

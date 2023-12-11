@@ -1,4 +1,4 @@
-package com.hegunhee.newsimplememoapp.domain.usecase
+package com.hegunhee.newsimplememoapp.domain.usecase.memo
 
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.domain.repository.MemoRepository

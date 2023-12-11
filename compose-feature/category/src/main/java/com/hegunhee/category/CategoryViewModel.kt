@@ -3,9 +3,9 @@ package com.hegunhee.category
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.model.CategoryType
-import com.hegunhee.newsimplememoapp.domain.usecase.DeleteCategoryUseCase
-import com.hegunhee.newsimplememoapp.domain.usecase.GetAllCategoryByTypeUseCase
-import com.hegunhee.newsimplememoapp.domain.usecase.InsertCategoryUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.category.DeleteCategoryUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.category.GetAllCategoryByTypeUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.category.InsertCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

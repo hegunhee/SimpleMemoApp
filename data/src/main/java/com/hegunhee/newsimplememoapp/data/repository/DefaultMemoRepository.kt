@@ -14,20 +14,17 @@ import javax.inject.Singleton
 class DefaultMemoRepository @Inject constructor(
     private val localDataSource: LocalDataSource
 ) : MemoRepository {
+
     override suspend fun insertMemo(memo: MemoType.Memo) {
         localDataSource.insertMemo(memo.toMemoEntity())
     }
 
+    override suspend fun insertCategory(categoryType: CategoryType, text: String) {
+        localDataSource.insertCategory(CategoryEntity(categoryType.code,text))
+    }
+
     override suspend fun getMemo(memoId: Int) : MemoType.Memo {
         return localDataSource.getMemo(memoId).toMemo()
-    }
-
-    override suspend fun deleteAllMemo() {
-        localDataSource.deleteAllMemo()
-    }
-
-    override suspend fun deleteMemo(id : Int) {
-        localDataSource.deleteMemo(id)
     }
 
     override suspend fun getMemoTypeListSortedByYearAndMonth(year: Int, month: Int): List<MemoType> {
@@ -40,26 +37,6 @@ class DefaultMemoRepository @Inject constructor(
                 val memoDate = MemoType.MemoDate(year,month,day,list.firstOrNull()?.dayOfWeek ?: "월", incomeSum,expenseSum)
                 listOf(memoDate) + list.map { it.toMemo() }
             }
-    }
-
-    override suspend fun updateMemo(memo: MemoType.Memo) {
-        localDataSource.updateMemo(memo.toMemoEntity())
-    }
-
-    override suspend fun getAllCategoryByType(categoryType: CategoryType): List<String> {
-        return localDataSource.getAllCategoryByType(categoryType.code).map { it.text }
-    }
-
-    override suspend fun checkIsCategory(categoryType: CategoryType, text: String): Boolean {
-        return localDataSource.checkIsCategory(categoryType.code,text) != null
-    }
-
-    override suspend fun deleteCategory(text: String) {
-        localDataSource.deleteCategory(text)
-    }
-
-    override suspend fun insertCategory(categoryType: CategoryType, text: String) {
-        localDataSource.insertCategory(CategoryEntity(categoryType.code,text))
     }
 
     override suspend fun getStaticsData(year: Int, month: Int): List<StaticsData> {
@@ -86,5 +63,30 @@ class DefaultMemoRepository @Inject constructor(
                 val memoDate = MemoType.MemoDate(year,month,day,list.firstOrNull()?.dayOfWeek ?: "월", incomeSum,expenseSum)
                 listOf(memoDate) + list.map { it.toMemo() }
             }
+    }
+
+    override suspend fun getAllCategoryByType(categoryType: CategoryType): List<String> {
+        return localDataSource.getAllCategoryByType(categoryType.code).map { it.text }
+    }
+
+    override suspend fun updateMemo(memo: MemoType.Memo) {
+        localDataSource.updateMemo(memo.toMemoEntity())
+    }
+
+    override suspend fun checkIsCategory(categoryType: CategoryType, text: String): Boolean {
+        return localDataSource.checkIsCategory(categoryType.code,text) != null
+    }
+
+
+    override suspend fun deleteAllMemo() {
+        localDataSource.deleteAllMemo()
+    }
+
+    override suspend fun deleteMemo(id : Int) {
+        localDataSource.deleteMemo(id)
+    }
+
+    override suspend fun deleteCategory(text: String) {
+        localDataSource.deleteCategory(text)
     }
 }

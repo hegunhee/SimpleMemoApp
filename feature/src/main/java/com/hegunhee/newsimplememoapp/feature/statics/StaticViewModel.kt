@@ -3,7 +3,7 @@ package com.hegunhee.newsimplememoapp.feature.statics
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.model.StaticsData
-import com.hegunhee.newsimplememoapp.domain.usecase.GetStaticsDataUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetStaticsDataUseCase
 import com.hegunhee.newsimplememoapp.feature.common.MemoCategory
 import com.hegunhee.newsimplememoapp.feature.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel

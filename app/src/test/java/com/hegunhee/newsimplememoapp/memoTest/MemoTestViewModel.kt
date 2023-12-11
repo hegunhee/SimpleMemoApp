@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
 import com.hegunhee.newsimplememoapp.domain.memoUsecase.*
-import com.hegunhee.newsimplememoapp.domain.usecase.DeleteAllMemoUseCase
-import com.hegunhee.newsimplememoapp.domain.usecase.DeleteMemoUseCase
-import com.hegunhee.newsimplememoapp.domain.usecase.InsertMemoListUseCase
-import com.hegunhee.newsimplememoapp.domain.usecase.InsertMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.DeleteAllMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.DeleteMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.InsertMemoListUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.InsertMemoUseCase
 import kotlinx.coroutines.launch
 
 class MemoTestViewModel(

@@ -1,4 +1,4 @@
-package com.hegunhee.newsimplememoapp.domain.usecase
+package com.hegunhee.newsimplememoapp.domain.usecase.category
 
 import com.hegunhee.newsimplememoapp.domain.repository.MemoRepository
 import javax.inject.Inject

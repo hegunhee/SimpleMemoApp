@@ -4,10 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.compose_feature.util.DateUtil
 import com.hegunhee.newsimplememoapp.core.ui.toMoneyFormat
-import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.domain.model.getMemoListTotalPrice
-import com.hegunhee.newsimplememoapp.domain.usecase.GetMemoListSortedByAttrYearMonthUseCase
-import com.hegunhee.statics.StaticsUiState
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetMemoListSortedByAttrYearMonthUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

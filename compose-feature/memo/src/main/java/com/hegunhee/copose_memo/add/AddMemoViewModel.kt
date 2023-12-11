@@ -8,8 +8,8 @@ import com.hegunhee.newsimplememoapp.domain.model.DateInfo
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
 import com.hegunhee.newsimplememoapp.domain.model.isStandardMemo
-import com.hegunhee.newsimplememoapp.domain.usecase.GetAllCategoryByTypeUseCase
-import com.hegunhee.newsimplememoapp.domain.usecase.InsertMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.category.GetAllCategoryByTypeUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.InsertMemoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

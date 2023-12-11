@@ -3,7 +3,7 @@ package com.hegunhee.statics
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.compose_feature.util.DateUtil
-import com.hegunhee.newsimplememoapp.domain.usecase.GetStaticsDataUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetStaticsDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

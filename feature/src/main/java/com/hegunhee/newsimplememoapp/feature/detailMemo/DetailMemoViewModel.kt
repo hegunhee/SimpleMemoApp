@@ -2,17 +2,17 @@ package com.hegunhee.newsimplememoapp.feature.detailMemo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.domain.usecase.DeleteMemoUseCase
-import com.hegunhee.newsimplememoapp.domain.usecase.GetMemoUseCase
-import com.hegunhee.newsimplememoapp.domain.usecase.UpdateMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.DeleteMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.UpdateMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.domain.model.DateInfo
 import com.hegunhee.newsimplememoapp.feature.common.MemoCategory
 import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
 import com.hegunhee.newsimplememoapp.feature.common.category.CategoryActionHandler
 import com.hegunhee.newsimplememoapp.domain.model.CategoryType
-import com.hegunhee.newsimplememoapp.domain.usecase.CheckIsCategoryUseCase
-import com.hegunhee.newsimplememoapp.domain.usecase.GetAllCategoryByTypeUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.category.CheckIsCategoryUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.category.GetAllCategoryByTypeUseCase
 import com.hegunhee.newsimplememoapp.feature.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
