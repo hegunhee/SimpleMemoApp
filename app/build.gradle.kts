@@ -12,7 +12,7 @@ android {
 
 dependencies {
 
-    implementation(project(":data"))
+    implementation(project(":core:data"))
     implementation(project(":core:domain"))
     implementation(project(":feature"))
     implementation(project(":common_resource"))
