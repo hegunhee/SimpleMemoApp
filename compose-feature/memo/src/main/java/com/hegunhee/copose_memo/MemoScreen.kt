@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hegunhee.compose_feature.memo.R
-import com.hegunhee.compose_feature.util.DateUtil
+import com.hegunhee.newsimplememoapp.util.DateUtil
 import com.hegunhee.newsimplememoapp.core.ui.DatePickerDialog
 import com.hegunhee.newsimplememoapp.core.ui.DateSelector
 import com.hegunhee.newsimplememoapp.core.ui.MemoDateItem
@@ -43,8 +43,8 @@ fun MemoScreenRoot(
     onMemoClick : (String) -> Unit,
 ) {
     val uiState = (viewModel.uiState.collectAsStateWithLifecycle().value as? MemoUiState.Success) ?: MemoUiState.Success(
-        year = DateUtil.getYear(),
-        month = DateUtil.getMonth(),
+        year = com.hegunhee.newsimplememoapp.util.DateUtil.getYear(),
+        month = com.hegunhee.newsimplememoapp.util.DateUtil.getMonth(),
         memoTypeList = emptyList(),
         totalPrice = TotalPrice(0,0)
     )

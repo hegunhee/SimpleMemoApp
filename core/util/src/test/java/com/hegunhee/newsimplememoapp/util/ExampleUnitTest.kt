@@ -1,4 +1,4 @@
-package com.hegunhee.compose_feature.util
+package com.hegunhee.newsimplememoapp.util
 
 import org.junit.Test
 

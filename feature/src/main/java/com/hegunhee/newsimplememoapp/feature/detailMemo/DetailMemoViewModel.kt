@@ -13,7 +13,7 @@ import com.hegunhee.newsimplememoapp.feature.common.category.CategoryActionHandl
 import com.hegunhee.newsimplememoapp.domain.model.CategoryType
 import com.hegunhee.newsimplememoapp.domain.usecase.category.CheckIsCategoryUseCase
 import com.hegunhee.newsimplememoapp.domain.usecase.category.GetAllCategoryByTypeUseCase
-import com.hegunhee.newsimplememoapp.feature.util.DateUtil
+import com.hegunhee.newsimplememoapp.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

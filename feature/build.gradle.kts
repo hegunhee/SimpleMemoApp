@@ -15,4 +15,6 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":common_resource"))
 
+    implementation(project(":core:util"))
+
 }

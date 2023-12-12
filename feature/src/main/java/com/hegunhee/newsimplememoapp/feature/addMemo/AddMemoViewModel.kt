@@ -11,7 +11,7 @@ import com.hegunhee.newsimplememoapp.domain.usecase.category.GetAllCategoryByTyp
 import com.hegunhee.newsimplememoapp.domain.model.DateInfo
 import com.hegunhee.newsimplememoapp.feature.common.MemoCategory
 import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
-import com.hegunhee.newsimplememoapp.feature.util.DateUtil
+import com.hegunhee.newsimplememoapp.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch

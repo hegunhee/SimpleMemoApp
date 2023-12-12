@@ -19,7 +19,7 @@ import androidx.navigation.fragment.findNavController
 import com.hegunhee.newsimplememoapp.feature.R
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentAddMemoBinding
 import com.hegunhee.newsimplememoapp.feature.detailCategory.DetailCategoryFragment
-import com.hegunhee.newsimplememoapp.feature.util.DateUtil
+import com.hegunhee.newsimplememoapp.util.DateUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

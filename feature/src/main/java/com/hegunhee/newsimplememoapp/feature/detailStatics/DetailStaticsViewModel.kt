@@ -8,7 +8,7 @@ import com.hegunhee.newsimplememoapp.feature.common.DateSelectorActionHandler
 import com.hegunhee.newsimplememoapp.feature.common.MemoAdapterActionHandler
 import com.hegunhee.newsimplememoapp.feature.common.toMoneyFormat
 import com.hegunhee.newsimplememoapp.feature.statics.StaticsNavArgs
-import com.hegunhee.newsimplememoapp.feature.util.DateUtil
+import com.hegunhee.newsimplememoapp.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

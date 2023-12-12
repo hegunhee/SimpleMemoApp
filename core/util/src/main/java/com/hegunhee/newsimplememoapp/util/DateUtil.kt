@@ -1,10 +1,9 @@
-package com.hegunhee.compose_feature.util
+package com.hegunhee.newsimplememoapp.util
 
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.hegunhee.newsimplememoapp.domain.model.DateInfo
 import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -46,7 +45,7 @@ object DateUtil {
     }
     fun getDayOfWeek(year : Int,month : Int,day : Int) : String {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            LocalDate.of(year,month,day).dayOfWeek.toString().changeKoreanDayOfWeek()
+            LocalDate.of(year, month, day).dayOfWeek.toString().changeKoreanDayOfWeek()
         } else {
             val diffCalendar = Calendar.getInstance().apply {
                 set(year,month-1,day)

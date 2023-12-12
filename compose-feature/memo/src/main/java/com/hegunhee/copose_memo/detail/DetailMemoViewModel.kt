@@ -2,7 +2,7 @@ package com.hegunhee.copose_memo.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.compose_feature.util.DateUtil
+import com.hegunhee.newsimplememoapp.util.DateUtil
 import com.hegunhee.newsimplememoapp.domain.model.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.DateInfo
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
@@ -32,10 +32,10 @@ class DetailMemoViewModel @Inject constructor(
     private val _category : MutableStateFlow<String> = MutableStateFlow("지출")
     val category : StateFlow<String> = _category.asStateFlow()
 
-    private val _dateInfo : MutableStateFlow<DateInfo> = MutableStateFlow(DateUtil.getTodayDate())
+    private val _dateInfo : MutableStateFlow<DateInfo> = MutableStateFlow(com.hegunhee.newsimplememoapp.util.DateUtil.getTodayDate())
     val dateInfo : StateFlow<DateInfo> = _dateInfo.asStateFlow()
 
-    private val _timeInfo : MutableStateFlow<TimeInfo> = MutableStateFlow(DateUtil.getTodayTime())
+    private val _timeInfo : MutableStateFlow<TimeInfo> = MutableStateFlow(com.hegunhee.newsimplememoapp.util.DateUtil.getTodayTime())
     val timeInfo : StateFlow<TimeInfo> = _timeInfo.asStateFlow()
 
     private val _subCategoryType : MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.Empty)
@@ -88,7 +88,7 @@ class DetailMemoViewModel @Inject constructor(
     }
 
     fun onSelectDateClick(year : Int,month : Int,day : Int) {
-        val dayOfWeek = DateUtil.getDayOfWeek(year,month,day)
+        val dayOfWeek = com.hegunhee.newsimplememoapp.util.DateUtil.getDayOfWeek(year,month,day)
         _dateInfo.value = DateInfo(year,month,day,dayOfWeek)
     }
 

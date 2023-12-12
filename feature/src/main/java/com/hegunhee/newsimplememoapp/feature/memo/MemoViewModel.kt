@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetMemoTypeListSortedByYearAndMonthUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.feature.common.DateSelectorActionHandler
-import com.hegunhee.newsimplememoapp.feature.util.DateUtil
+import com.hegunhee.newsimplememoapp.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
