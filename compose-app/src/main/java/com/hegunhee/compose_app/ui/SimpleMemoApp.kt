@@ -1,6 +1,5 @@
 package com.hegunhee.compose_app.ui
 
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -21,7 +20,6 @@ import com.hegunhee.statics.navigateDetailStatics
 import com.hegunhee.statics.staticsNavGraph
 import kotlinx.coroutines.CoroutineScope
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SimpleMemoApp(
     simpleMemoAppScaffoldState: SimpleMemoAppScaffoldState = rememberSimpleMemoAppScaffoldState()
@@ -48,7 +46,6 @@ fun SimpleMemoApp(
                 categoryNavGraph(
                     paddingValues = paddingValues,
                     onBackClick = simpleMemoAppScaffoldState::popBackStack,
-
                 )
             }
         }

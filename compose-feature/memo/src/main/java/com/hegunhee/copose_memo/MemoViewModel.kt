@@ -19,8 +19,8 @@ class MemoViewModel @Inject constructor(
     private val getAllMemoTypeBySortUseCase : GetMemoTypeListSortedByYearAndMonthUseCase
 ) : ViewModel() {
 
-    private val yearDate = MutableStateFlow<Int>(com.hegunhee.newsimplememoapp.util.DateUtil.getYear())
-    private val monthDate = MutableStateFlow<Int>(com.hegunhee.newsimplememoapp.util.DateUtil.getMonth())
+    private val yearDate = MutableStateFlow<Int>(DateUtil.getYear())
+    private val monthDate = MutableStateFlow<Int>(DateUtil.getMonth())
 
     val uiState: StateFlow<MemoUiState> = yearDate.combine(monthDate) { year, month ->
         val memoList = getAllMemoTypeBySortUseCase(year, month)
@@ -68,7 +68,7 @@ class MemoViewModel @Inject constructor(
     }
 
     fun onDatePickerCurrentMonthClick() {
-        yearDate.value = com.hegunhee.newsimplememoapp.util.DateUtil.getYear()
-        monthDate.value = com.hegunhee.newsimplememoapp.util.DateUtil.getMonth()
+        yearDate.value = DateUtil.getYear()
+        monthDate.value = DateUtil.getMonth()
     }
 }

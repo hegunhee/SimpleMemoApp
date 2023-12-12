@@ -32,10 +32,10 @@ class DetailMemoViewModel @Inject constructor(
     private val _category : MutableStateFlow<String> = MutableStateFlow("지출")
     val category : StateFlow<String> = _category.asStateFlow()
 
-    private val _dateInfo : MutableStateFlow<DateInfo> = MutableStateFlow(com.hegunhee.newsimplememoapp.util.DateUtil.getTodayDate())
+    private val _dateInfo : MutableStateFlow<DateInfo> = MutableStateFlow(DateUtil.getTodayDate())
     val dateInfo : StateFlow<DateInfo> = _dateInfo.asStateFlow()
 
-    private val _timeInfo : MutableStateFlow<TimeInfo> = MutableStateFlow(com.hegunhee.newsimplememoapp.util.DateUtil.getTodayTime())
+    private val _timeInfo : MutableStateFlow<TimeInfo> = MutableStateFlow(DateUtil.getTodayTime())
     val timeInfo : StateFlow<TimeInfo> = _timeInfo.asStateFlow()
 
     private val _subCategoryType : MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.Empty)
@@ -88,7 +88,7 @@ class DetailMemoViewModel @Inject constructor(
     }
 
     fun onSelectDateClick(year : Int,month : Int,day : Int) {
-        val dayOfWeek = com.hegunhee.newsimplememoapp.util.DateUtil.getDayOfWeek(year,month,day)
+        val dayOfWeek = DateUtil.getDayOfWeek(year,month,day)
         _dateInfo.value = DateInfo(year,month,day,dayOfWeek)
     }
 

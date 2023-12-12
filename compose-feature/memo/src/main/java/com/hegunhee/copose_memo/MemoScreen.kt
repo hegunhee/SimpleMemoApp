@@ -43,8 +43,8 @@ fun MemoScreenRoot(
     onMemoClick : (String) -> Unit,
 ) {
     val uiState = (viewModel.uiState.collectAsStateWithLifecycle().value as? MemoUiState.Success) ?: MemoUiState.Success(
-        year = com.hegunhee.newsimplememoapp.util.DateUtil.getYear(),
-        month = com.hegunhee.newsimplememoapp.util.DateUtil.getMonth(),
+        year = DateUtil.getYear(),
+        month = DateUtil.getMonth(),
         memoTypeList = emptyList(),
         totalPrice = TotalPrice(0,0)
     )

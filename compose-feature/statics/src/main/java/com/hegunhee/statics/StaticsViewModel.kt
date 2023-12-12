@@ -61,8 +61,8 @@ class StaticsViewModel @Inject constructor(
     }
 
     fun onDatePickerCurrentMonthClick() {
-        yearDate.value = com.hegunhee.newsimplememoapp.util.DateUtil.getYear()
-        monthDate.value = com.hegunhee.newsimplememoapp.util.DateUtil.getMonth()
+        yearDate.value = DateUtil.getYear()
+        monthDate.value = DateUtil.getMonth()
     }
 
     fun setCategory(category : String) {
