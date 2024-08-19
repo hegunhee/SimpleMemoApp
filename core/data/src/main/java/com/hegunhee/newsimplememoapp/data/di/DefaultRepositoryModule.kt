@@ -1,6 +1,8 @@
 package com.hegunhee.newsimplememoapp.data.di
 
+import com.hegunhee.newsimplememoapp.data.repository.DefaultCategoryRepository
 import com.hegunhee.newsimplememoapp.data.repository.DefaultMemoRepository
+import com.hegunhee.newsimplememoapp.domain.repository.CategoryRepository
 import com.hegunhee.newsimplememoapp.domain.repository.MemoRepository
 import dagger.Binds
 import dagger.Module
@@ -18,4 +20,10 @@ abstract class DefaultRepositoryModule {
     abstract fun provideDefaultRepository(
         defaultMemoRepository: DefaultMemoRepository
     ) : MemoRepository
+
+    @Singleton
+    @Binds
+    abstract fun provideDefaultCategoryRepository(
+        defaultCategoryRepository: DefaultCategoryRepository
+    ) : CategoryRepository
 }
