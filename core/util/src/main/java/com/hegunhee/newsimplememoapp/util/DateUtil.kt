@@ -1,7 +1,6 @@
 package com.hegunhee.newsimplememoapp.util
 
 import android.os.Build
-import androidx.annotation.RequiresApi
 import com.hegunhee.newsimplememoapp.domain.model.DateInfo
 import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
 import java.time.LocalDate
@@ -16,7 +15,6 @@ object DateUtil {
         time = Date()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun getKoreaLocalTime() = LocalDateTime.now(ZoneId.of("Asia/Seoul"))
 
     private val koreanDayOfWeek = listOf<String>("일","월","화","수","목","금","토")
