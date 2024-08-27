@@ -1,10 +1,8 @@
 package com.hegunhee.newsimplememoapp.data.repository
 
 import com.hegunhee.newsimplememoapp.data.dataSource.LocalDataSource
-import com.hegunhee.newsimplememoapp.data.entity.CategoryEntity
 import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
 import com.hegunhee.newsimplememoapp.data.mapper.*
-import com.hegunhee.newsimplememoapp.domain.model.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.domain.model.StaticsData
 import com.hegunhee.newsimplememoapp.domain.repository.MemoRepository
