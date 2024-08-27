@@ -39,6 +39,14 @@ room-test = "2.2.3"
 
 hilt = "2.44.2"
 
+retrofit = "2.9.0"
+retrofit-kotlinx = "1.0.0"
+
+kotlinx = "1.5.1"
+
+okhttp = "4.9.3"
+
+
 [libraries]
 androidGradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "androidGradleVersion" }
 kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradleVersion" }
@@ -103,6 +111,15 @@ hilt-compiler = {module ="com.google.dagger:hilt-android-compiler",version.ref="
 javax-inject = {module ="javax.inject:javax.inject",version.ref ="javax-inject"}
 annotation-jvm = { group = "androidx.annotation", name = "annotation-jvm", version = "1.7.0" }
 
+retrofit = {module = "com.squareup.retrofit2:retrofit",version.ref = "retrofit"}
+
+retrofit-kotlinx = {module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter",version.ref = "retrofit-kotlinx"}
+
+kotlinx-serialization = {module = "org.jetbrains.kotlinx:kotlinx-serialization-json",version.ref ="kotlinx"}
+
+okhttp3 = {module = "com.squareup.okhttp3:okhttp",version.ref ="okhttp"}
+okhttp3-logging = {module = "com.squareup.okhttp3:logging-interceptor",version.ref="okhttp"}
+
 [bundles]
 ui = ["kotlin-stdlib","core-ktx","appcompat","material","constraintlayout"]
 compose-ui = ["compose-activity","compose-ui","compose-ui-preview","compose-material","compose-material3","compose-graphics"]
@@ -110,3 +127,5 @@ navigation = ["navigation-fragment","navigation-ui"]
 lifecycle = ["lifecycle-viewmodel","lifecycle-runtime"]
 coroutine = ["coroutine-core","coroutine-android"]
 room = ["room-runtime","room-kts"]
+
+retrofit = ["retrofit","retrofit-kotlinx","okhttp3","okhttp3-logging","kotlinx-serialization"]
