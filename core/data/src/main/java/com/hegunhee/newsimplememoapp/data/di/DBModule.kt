@@ -2,7 +2,6 @@ package com.hegunhee.newsimplememoapp.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.hegunhee.newsimplememoapp.data.dao.CategoryDao
 import com.hegunhee.newsimplememoapp.data.db.MemoDatabase
 import com.hegunhee.newsimplememoapp.data.dao.MemoDao
 import dagger.Module
@@ -27,8 +26,4 @@ object DBModule {
     @Singleton
     @Provides
     fun provideMemoDao(memoDatabase: MemoDatabase) : MemoDao = memoDatabase.memoDao()
-
-    @Singleton
-    @Provides
-    fun provideCategoryDao(memoDatabase: MemoDatabase) : CategoryDao = memoDatabase.categoryDao()
 }
