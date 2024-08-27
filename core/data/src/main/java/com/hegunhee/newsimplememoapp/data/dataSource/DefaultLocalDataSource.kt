@@ -1,14 +1,11 @@
 package com.hegunhee.newsimplememoapp.data.dataSource
 
-import com.hegunhee.newsimplememoapp.data.dao.CategoryDao
 import com.hegunhee.newsimplememoapp.data.dao.MemoDao
-import com.hegunhee.newsimplememoapp.data.entity.CategoryEntity
 import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
 import javax.inject.Inject
 
 class DefaultLocalDataSource @Inject constructor(
-    private val memoDao : MemoDao,
-    private val categoryDao : CategoryDao
+    private val memoDao : MemoDao
 ) : LocalDataSource{
 
     override suspend fun insertMemo(memo: MemoEntity) {
@@ -37,21 +34,5 @@ class DefaultLocalDataSource @Inject constructor(
 
     override suspend fun deleteMemo(id: Int) {
         memoDao.deleteMemo(id)
-    }
-
-    override suspend fun getAllCategoryByType(categoryCode: Int): List<CategoryEntity> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun checkIsCategory(categoryCode: Int, text: String): CategoryEntity? {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun insertCategory(categoryEntity: CategoryEntity) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun deleteCategory(text: String) {
-        TODO("Not yet implemented")
     }
 }
