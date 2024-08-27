@@ -3,7 +3,7 @@ package com.hegunhee.copose_memo.add
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.util.DateUtil
-import com.hegunhee.newsimplememoapp.domain.model.CategoryType
+import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.DateInfo
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
@@ -79,7 +79,7 @@ class AddMemoViewModel @Inject constructor(
         }
     }
 
-    fun setSubCategoryItem(categoryType: CategoryType,categoryName : String) {
+    fun setSubCategoryItem(categoryType: CategoryType, categoryName : String) {
         when(categoryType) {
             is CategoryType.AttrExpenses, CategoryType.AttrIncome -> {
                 attrType.value = categoryType

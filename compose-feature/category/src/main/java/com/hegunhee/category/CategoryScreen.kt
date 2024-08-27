@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.hegunhee.newsimplememoapp.domain.model.CategoryType
-import com.hegunhee.newsimplememoapp.domain.model.toCategoryType
+import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
+import com.hegunhee.newsimplememoapp.domain.model.category.toCategoryType
 
 @Composable
 fun CategoryScreenRoot(

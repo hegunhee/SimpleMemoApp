@@ -2,7 +2,7 @@ package com.hegunhee.newsimplememoapp.feature.detailCategory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.domain.model.CategoryType
+import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
 import com.hegunhee.newsimplememoapp.domain.usecase.category.DeleteCategoryUseCase
 import com.hegunhee.newsimplememoapp.domain.usecase.category.GetAllCategoryByTypeUseCase
 import com.hegunhee.newsimplememoapp.domain.usecase.category.InsertCategoryUseCase
@@ -23,7 +23,7 @@ class DetailCategoryViewModel @Inject constructor(
     private val deleteCategoryUseCase: DeleteCategoryUseCase
 ) : ViewModel(),DetailCategoryActionHandler {
 
-    private val _categoryType : MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.Empty)
+    private val _categoryType : MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.EMPTY)
     val categoryType : StateFlow<CategoryType> = _categoryType.asStateFlow()
 
     private val _categoryList : MutableStateFlow<List<String>> = MutableStateFlow(emptyList())

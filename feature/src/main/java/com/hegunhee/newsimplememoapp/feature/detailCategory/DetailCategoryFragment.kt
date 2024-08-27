@@ -14,8 +14,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.hegunhee.newsimplememoapp.domain.model.CategoryType
-import com.hegunhee.newsimplememoapp.domain.model.toCategoryType
+import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
+import com.hegunhee.newsimplememoapp.domain.model.category.toCategoryType
 import com.hegunhee.newsimplememoapp.feature.R
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentDetailCategoryBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,7 +46,7 @@ class DetailCategoryFragment() : Fragment() {
 
     private fun fetchCategoryType(code : Int) {
         val categoryType = code.toCategoryType()
-        if(categoryType is CategoryType.Empty){
+        if(categoryType == CategoryType.EMPTY){
             findNavController().popBackStack()
         }
         viewModel.setCategoryType(categoryType)

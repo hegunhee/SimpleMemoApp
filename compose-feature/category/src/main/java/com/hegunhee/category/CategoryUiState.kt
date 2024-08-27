@@ -1,6 +1,6 @@
 package com.hegunhee.category
 
-import com.hegunhee.newsimplememoapp.domain.model.CategoryType
+import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
 
 sealed interface CategoryUiState {
 

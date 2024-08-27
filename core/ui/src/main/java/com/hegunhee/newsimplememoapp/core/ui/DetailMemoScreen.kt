@@ -25,7 +25,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
-import com.hegunhee.newsimplememoapp.domain.model.CategoryType
+import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
 
 @OptIn(ExperimentalMaterial3Api::class)

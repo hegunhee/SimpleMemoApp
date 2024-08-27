@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.usecase.memo.InsertMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.feature.common.category.CategoryActionHandler
-import com.hegunhee.newsimplememoapp.domain.model.CategoryType
+import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
 import com.hegunhee.newsimplememoapp.domain.usecase.category.CheckIsCategoryUseCase
 import com.hegunhee.newsimplememoapp.domain.usecase.category.GetAllCategoryByTypeUseCase
 import com.hegunhee.newsimplememoapp.domain.model.DateInfo
@@ -47,7 +47,7 @@ class AddMemoViewModel @Inject constructor(
     val memoState: SharedFlow<AddMemoState> = _memoState.asSharedFlow()
 
     val categoryList : MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
-    val categoryType : MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.Empty)
+    val categoryType : MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.EMPTY)
 
     private val _detailCategoryNavigation : MutableSharedFlow<CategoryType> = MutableSharedFlow()
     val detailCategoryNavigation : SharedFlow<CategoryType> = _detailCategoryNavigation.asSharedFlow()
@@ -81,7 +81,7 @@ class AddMemoViewModel @Inject constructor(
     fun setCategoryIncome() {
         _memoCategory.value = MemoCategory.Income
         viewModelScope.launch {
-            if (checkIsCategoryUseCase(CategoryType.AttrExpenses,attr.value)) {
+            if (checkIsCategoryUseCase(attr.value)) {
                 _attr.value = ""
                 dismissBottomSheet()
             }
@@ -91,7 +91,7 @@ class AddMemoViewModel @Inject constructor(
     fun setCategoryExpense() {
         _memoCategory.value = MemoCategory.Expenses
         viewModelScope.launch {
-            if (checkIsCategoryUseCase(CategoryType.AttrIncome,attr.value)) {
+            if (checkIsCategoryUseCase(attr.value)) {
                 _attr.value = ""
                 dismissBottomSheet()
             }
@@ -111,19 +111,19 @@ class AddMemoViewModel @Inject constructor(
     }
 
     fun clickAsset() = viewModelScope.launch {
-        categoryList.value = getAllCategoryByTypeUseCase(CategoryType.Asset)
-        categoryType.value = CategoryType.Asset
+        categoryList.value = getAllCategoryByTypeUseCase(CategoryType.ASSET)
+        categoryType.value = CategoryType.ASSET
     }
 
     fun clickAttr() = viewModelScope.launch {
         when(memoCategory.value) {
             MemoCategory.Income -> {
-                categoryList.value = getAllCategoryByTypeUseCase(CategoryType.AttrIncome)
-                categoryType.value = CategoryType.AttrIncome
+                categoryList.value = getAllCategoryByTypeUseCase(CategoryType.ATTR_INCOME)
+                categoryType.value = CategoryType.ATTR_INCOME
             }
             MemoCategory.Expenses -> {
-                categoryList.value = getAllCategoryByTypeUseCase(CategoryType.AttrExpenses)
-                categoryType.value = CategoryType.AttrExpenses
+                categoryList.value = getAllCategoryByTypeUseCase(CategoryType.ATTR_EXPENSE)
+                categoryType.value = CategoryType.ATTR_EXPENSE
             }
         }
     }
@@ -174,14 +174,14 @@ class AddMemoViewModel @Inject constructor(
 
     override fun onCategoryClick(type: CategoryType, category: String) {
         when(type) {
-            CategoryType.Empty -> {}
-            CategoryType.Asset -> {
+            CategoryType.EMPTY -> {}
+            CategoryType.ASSET -> {
                 _asset.value = category
             }
-            CategoryType.AttrExpenses -> {
+            CategoryType.ATTR_EXPENSE -> {
                 _attr.value = category
             }
-            CategoryType.AttrIncome -> {
+            CategoryType.ATTR_INCOME -> {
                 _attr.value = category
             }
         }
@@ -190,11 +190,11 @@ class AddMemoViewModel @Inject constructor(
 
     private fun dismissBottomSheet() {
         categoryList.value = emptyList()
-        categoryType.value = CategoryType.Empty
+        categoryType.value = CategoryType.EMPTY
     }
 
     fun refreshCategory() = viewModelScope.launch{
-        if(categoryType.value !is CategoryType.Empty) {
+        if(categoryType.value !=  CategoryType.EMPTY) {
             categoryList.value = getAllCategoryByTypeUseCase(categoryType.value)
         }
     }

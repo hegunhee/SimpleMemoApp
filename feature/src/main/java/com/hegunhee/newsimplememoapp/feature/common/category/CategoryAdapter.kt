@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.hegunhee.newsimplememoapp.domain.model.CategoryType
+import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
 import com.hegunhee.newsimplememoapp.feature.databinding.ItemCategoryBinding
 
 class CategoryAdapter(val actionHandler: CategoryActionHandler, val categoryType : CategoryType) : ListAdapter<String, CategoryAdapter.CategoryViewHolder>(
