@@ -2,6 +2,7 @@ plugins {
     id ("hegunhee.android")
     id ("kotlin-parcelize")
     id ("hegunhee.hilt")
+    id ("org.jetbrains.kotlin.plugin.serialization")
 }
 android {
     namespace = "com.hegunhee.newsimplememoapp.data"
@@ -20,4 +21,10 @@ dependencies {
     //Room DB
     implementation(libs.bundles.room)
     kapt(libs.room.compiler)
+
+    implementation(libs.bundles.retrofit)
+
+    testImplementation(libs.junit.junit)
+    androidTestImplementation(libs.ext.junit)
+
 }
