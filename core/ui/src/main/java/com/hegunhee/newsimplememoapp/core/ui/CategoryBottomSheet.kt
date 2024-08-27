@@ -13,14 +13,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hegunhee.newsimplememoapp.domain.model.CategoryType
+import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 
 @Composable
@@ -35,7 +34,7 @@ fun CategoryBottomSheet(
 
     BottomSheetDialog(onDismissRequest = {
         onDismissRequest()
-        onSubCategoryClick(CategoryType.Empty)
+        onSubCategoryClick(CategoryType.EMPTY)
     }) {
         Surface {
             Column(modifier = Modifier.fillMaxWidth()) {
@@ -48,7 +47,7 @@ fun CategoryBottomSheet(
                     }
                     IconButton(onClick = {
                         onDismissRequest()
-                        onSubCategoryClick(CategoryType.Empty)
+                        onSubCategoryClick(CategoryType.EMPTY)
                     }) {
                         Icon(painter = painterResource(id = R.drawable.ic_exit),contentDescription = null)
                     }

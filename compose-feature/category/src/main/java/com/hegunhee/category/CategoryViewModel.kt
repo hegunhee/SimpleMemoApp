@@ -2,7 +2,7 @@ package com.hegunhee.category
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.domain.model.CategoryType
+import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
 import com.hegunhee.newsimplememoapp.domain.usecase.category.DeleteCategoryUseCase
 import com.hegunhee.newsimplememoapp.domain.usecase.category.GetAllCategoryByTypeUseCase
 import com.hegunhee.newsimplememoapp.domain.usecase.category.InsertCategoryUseCase
@@ -40,7 +40,7 @@ class CategoryViewModel @Inject constructor(
         }
     }
 
-    fun deleteCategory(categoryType : CategoryType,category : String) {
+    fun deleteCategory(categoryType : CategoryType, category : String) {
         viewModelScope.launch {
             deleteCategoryUseCase(category)
             fetchCategoryList(categoryType)

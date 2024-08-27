@@ -3,7 +3,7 @@ package com.hegunhee.copose_memo.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.util.DateUtil
-import com.hegunhee.newsimplememoapp.domain.model.CategoryType
+import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.DateInfo
 import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
@@ -38,7 +38,7 @@ class DetailMemoViewModel @Inject constructor(
     private val _timeInfo : MutableStateFlow<TimeInfo> = MutableStateFlow(DateUtil.getTodayTime())
     val timeInfo : StateFlow<TimeInfo> = _timeInfo.asStateFlow()
 
-    private val _subCategoryType : MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.Empty)
+    private val _subCategoryType : MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.EMPTY)
     val subCategoryType : StateFlow<CategoryType> = _subCategoryType.asStateFlow()
 
     private val _categoryList : MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
@@ -50,7 +50,7 @@ class DetailMemoViewModel @Inject constructor(
     private val _attr : MutableStateFlow<String> = MutableStateFlow("")
     val attr : StateFlow<String> = _attr.asStateFlow()
 
-    private val attrType : MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.AttrExpenses)
+    private val attrType : MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.ATTR_EXPENSE)
 
     private val _price : MutableStateFlow<String> = MutableStateFlow("")
     val price : StateFlow<String> = _price.asStateFlow()
@@ -78,12 +78,12 @@ class DetailMemoViewModel @Inject constructor(
 
     fun setCategory(categoryName : String) {
         _category.value = categoryName
-        if(categoryName == "지출" && attrType.value is CategoryType.AttrIncome) {
+        if(categoryName == "지출" && attrType.value == CategoryType.ATTR_INCOME) {
             _attr.value = ""
-            attrType.value = CategoryType.AttrExpenses
-        }else if(categoryName == "수입" && attrType.value is CategoryType.AttrExpenses) {
+            attrType.value = CategoryType.ATTR_EXPENSE
+        }else if(categoryName == "수입" && attrType.value == CategoryType.ATTR_EXPENSE) {
             _attr.value = ""
-            attrType.value = CategoryType.AttrIncome
+            attrType.value = CategoryType.ATTR_INCOME
         }
     }
 
@@ -104,17 +104,13 @@ class DetailMemoViewModel @Inject constructor(
     }
 
     fun setSubCategoryItem(categoryType: CategoryType, categoryName : String) {
-        when(categoryType) {
-            is CategoryType.AttrExpenses, CategoryType.AttrIncome -> {
-                attrType.value = categoryType
-                _attr.value = categoryName
-            }
-            is CategoryType.Asset -> {
-                _asset.value = categoryName
-            }
-            else -> { }
+        if(categoryType == CategoryType.ATTR_INCOME || categoryType == CategoryType.ATTR_EXPENSE)  {
+            attrType.value = categoryType
+            _attr.value = categoryName
+        } else if(categoryType == CategoryType.ASSET) {
+            _asset.value = categoryName
         }
-        setCategoryType(CategoryType.Empty)
+        setCategoryType(CategoryType.EMPTY)
     }
 
     fun setPrice(price : String) {
