@@ -11,10 +11,6 @@ class DefaultLocalDataSource @Inject constructor(
     private val categoryDao : CategoryDao
 ) : LocalDataSource{
 
-    override suspend fun insertCategory(categoryEntity: CategoryEntity) {
-        categoryDao.insertCategory(categoryEntity)
-    }
-
     override suspend fun insertMemo(memo: MemoEntity) {
         memoDao.insertMemo(memo)
     }
@@ -31,14 +27,6 @@ class DefaultLocalDataSource @Inject constructor(
         return memoDao.getMemoListSortedByAttrYearMonth(attr,year,month)
     }
 
-    override suspend fun getAllCategoryByType(categoryCode: Int): List<CategoryEntity> {
-        return categoryDao.getAllCategoryByType(categoryCode)
-    }
-
-    override suspend fun checkIsCategory(categoryCode: Int,text : String): CategoryEntity? {
-        return categoryDao.getCategoryOrNull(categoryCode,text)
-    }
-
     override suspend fun updateMemo(memo: MemoEntity) {
         memoDao.updateMemo(memo)
     }
@@ -51,7 +39,19 @@ class DefaultLocalDataSource @Inject constructor(
         memoDao.deleteMemo(id)
     }
 
+    override suspend fun getAllCategoryByType(categoryCode: Int): List<CategoryEntity> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun checkIsCategory(categoryCode: Int, text: String): CategoryEntity? {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun insertCategory(categoryEntity: CategoryEntity) {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun deleteCategory(text: String) {
-        categoryDao.deleteCategory(text)
+        TODO("Not yet implemented")
     }
 }
