@@ -45,7 +45,7 @@ class MemoApiTest {
                 memoApi.findMemos(2024,9)
             }.onSuccess { result ->
                 Assert.assertEquals(2,result.memos.memos.size)
-                Assert.assertEquals(0,result.totalSum.totalSum.intValueExact())
+                Assert.assertEquals(0,result.totalSumResponse.totalSum.intValueExact())
             }.onFailure {
                 println("exception = "+it.message)
                 assert(false)
