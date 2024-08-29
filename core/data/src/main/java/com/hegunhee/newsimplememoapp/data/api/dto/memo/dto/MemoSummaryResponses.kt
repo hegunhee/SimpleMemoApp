@@ -5,6 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class MemoSummaryResponses(
-    @SerialName("totalSum") val totalSum: TotalSum,
+    @SerialName("totalSum") val totalSumResponse: TotalSumResponse,
     @SerialName("memos") val memos: MemoEntities
 )

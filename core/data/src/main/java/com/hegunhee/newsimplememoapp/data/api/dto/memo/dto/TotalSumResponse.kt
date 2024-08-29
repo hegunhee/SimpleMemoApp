@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 import java.math.BigDecimal
 
 @Serializable
-data class TotalSum(
+data class TotalSumResponse(
     @Serializable(with = BigDecimalSerializer::class)
     @SerialName("incomeSum") val incomeSum: BigDecimal,
     @Serializable(with = BigDecimalSerializer::class)
