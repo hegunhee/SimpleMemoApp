@@ -19,16 +19,16 @@ class DefaultCategoryRepository @Inject constructor(
     }
 
     // 현재 작성되어있는 카테고리가 존재하는 카테고리 이름인지 체크하는 로직
-    override suspend fun checkIsCategory(name: String): Boolean {
-        return remoteDataSource.isExistCategory(name)
+    override suspend fun isExistCategory(name: String): Result<Boolean> {
+        return runCatching{ remoteDataSource.isExistCategory(name) }
     }
 
-    override suspend fun insertCategory(categoryType: CategoryType, name: String) : String {
-        return remoteDataSource.insertCategory(CategoryEntity(categoryType,name)).name
+    override suspend fun insertCategory(categoryType: CategoryType, name: String) : Result<String> {
+        return runCatching { remoteDataSource.insertCategory(CategoryEntity(categoryType, name)).name }
     }
 
-    override suspend fun deleteCategory(name: String) : String {
-        return remoteDataSource.deleteCategory(name).name
+    override suspend fun deleteCategory(name: String) : Result<String> {
+        return runCatching{ remoteDataSource.deleteCategory(name).name }
     }
 
 }

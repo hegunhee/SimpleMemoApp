@@ -7,9 +7,9 @@ interface CategoryRepository {
 
     suspend fun findCategoryNamesByType(categoryType: CategoryType): Result<CategoryNamesByType>
 
-    suspend fun checkIsCategory(name: String): Boolean
+    suspend fun isExistCategory(name: String): Result<Boolean>
 
-    suspend fun insertCategory(categoryType: CategoryType, name: String) : String
+    suspend fun insertCategory(categoryType: CategoryType, name: String) : Result<String>
 
-    suspend fun deleteCategory(name: String) : String
+    suspend fun deleteCategory(name: String) : Result<String>
 }

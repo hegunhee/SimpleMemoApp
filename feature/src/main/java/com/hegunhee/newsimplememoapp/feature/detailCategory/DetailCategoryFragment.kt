@@ -49,7 +49,7 @@ class DetailCategoryFragment() : Fragment() {
         if(categoryType == CategoryType.EMPTY){
             findNavController().popBackStack()
         }
-        viewModel.setCategoryType(categoryType)
+        viewModel.initCategoryType(categoryType)
         viewDataBinding.categoryText.text = categoryType.subTitle
     }
 
