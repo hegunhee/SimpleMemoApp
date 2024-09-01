@@ -1,5 +1,7 @@
 package com.hegunhee.newsimplememoapp.data.mapper
 
+import com.hegunhee.newsimplememoapp.data.api.dto.category.CategoryEntity
+import com.hegunhee.newsimplememoapp.data.api.dto.category.dto.CategoryNamesByTypeResponse
 import com.hegunhee.newsimplememoapp.data.api.dto.memo.MemoEntity
 import com.hegunhee.newsimplememoapp.data.api.dto.memo.dto.AttributeMemosResponse
 import com.hegunhee.newsimplememoapp.data.api.dto.memo.dto.MemoEntities
@@ -9,6 +11,8 @@ import com.hegunhee.newsimplememoapp.data.api.dto.memo.dto.StaticsMemoResponse
 import com.hegunhee.newsimplememoapp.data.api.dto.memo.dto.StaticsMemoResponses
 import com.hegunhee.newsimplememoapp.data.api.dto.memo.dto.TotalSumResponse
 import com.hegunhee.newsimplememoapp.domain.model.TotalSum
+import com.hegunhee.newsimplememoapp.domain.model.category.CategoryNamesByType
+import com.hegunhee.newsimplememoapp.domain.model.category.Category
 import com.hegunhee.newsimplememoapp.domain.model.memo.AttributeMemos
 import com.hegunhee.newsimplememoapp.domain.model.memo.MemoForm
 import com.hegunhee.newsimplememoapp.domain.model.memo.MemoServer
@@ -49,4 +53,12 @@ fun TotalSumResponse.toTotalSum() : TotalSum {
 }
 fun MemoSummaryResponses.toMemosSummary() : MemosSummary {
     return MemosSummary(totalSumResponse.toTotalSum(),memos.toMemos())
+}
+
+fun CategoryEntity.toCategory() : Category {
+    return Category(type,name)
+}
+
+fun CategoryNamesByTypeResponse.toCategoriesByType() : CategoryNamesByType {
+    return CategoryNamesByType(type,names)
 }
