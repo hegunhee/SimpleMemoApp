@@ -22,6 +22,8 @@ import com.hegunhee.newsimplememoapp.feature.detailCategory.DetailCategoryFragme
 import com.hegunhee.newsimplememoapp.util.DateUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.LocalTime
 
 @AndroidEntryPoint
 class AddMemoFragment : Fragment(){
@@ -45,6 +47,7 @@ class AddMemoFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeData()
+        clickListener()
         setFragmentResultListener(DetailCategoryFragment.REFRESH_KEY) { key, bundle ->
             if(key == DetailCategoryFragment.REFRESH_KEY) {
                 viewModel.refreshCategory()
@@ -58,11 +61,8 @@ class AddMemoFragment : Fragment(){
                 launch {
                     viewModel.memoState.collect {
                         when(it){
-                            AddMemoState.Back -> findNavController().popBackStack()
                             AddMemoState.Save -> saveData()
-                            AddMemoState.SetDate -> setDate()
-                            AddMemoState.SetTime -> setTime()
-                            AddMemoState.SetPrice -> setPrice()
+                            AddMemoState.SetPrice -> focusPrice()
                         }
                     }
                 }
@@ -76,29 +76,42 @@ class AddMemoFragment : Fragment(){
             }
         }
     }
+
+    private fun clickListener() {
+        viewDataBinding.backButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
+        viewDataBinding.day.setOnClickListener {
+            setDate()
+        }
+        viewDataBinding.time.setOnClickListener {
+            setTime()
+        }
+    }
+
     private fun saveData() {
         findNavController().popBackStack()
     }
 
     private fun setDate() {
         DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            viewModel.setDate(year, month + 1, dayOfMonth)
+            viewModel.setDate(LocalDate.of (year, month + 1, dayOfMonth))
         }.let { listener ->
-            viewModel.dateInfo.value.let {  dateInfo ->
-                DatePickerDialog(requireContext(),listener,dateInfo.year,dateInfo.month-1,dateInfo.day).show()
+            viewModel.memoForm.value.memoDate.let {  memoDate ->
+                DatePickerDialog(requireContext(),listener,memoDate.year,memoDate.monthValue,memoDate.dayOfMonth).show()
             }
         }
     }
 
     private fun setTime() {
         TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-            viewModel.setTime(hourOfDay,minute)
+            viewModel.setTime(LocalTime.of(hourOfDay,minute,0))
         }.let {
-            TimePickerDialog(requireContext(),it,DateUtil.getHour(),DateUtil.getMinute(),false).show()
+            TimePickerDialog(requireContext(),it,DateUtil.getHour(),DateUtil.getMinute(),true).show()
         }
     }
 
-    private fun setPrice() {
+    private fun focusPrice() {
         viewDataBinding.price.run {
             requestFocus()
             showKeyboard()

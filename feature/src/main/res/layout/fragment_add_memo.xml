@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType"/>
         <variable
             name="viewModel"
             type="com.hegunhee.newsimplememoapp.feature.addMemo.AddMemoViewModel" />
@@ -37,7 +39,6 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/ic_back"
                     android:backgroundTint="@color/black"
-                    android:onClick="@{() -> viewModel.back()}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +46,7 @@
                     android:id="@+id/category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{viewModel.memoCategory.text}"
+                    android:text="@{viewModel.memoForm.incomeExpenseType.toString()}"
                     android:textSize="30sp"
                     app:layout_constraintBottom_toBottomOf="@id/backButton"
                     app:layout_constraintStart_toEndOf="@id/backButton"
@@ -58,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="20dp"
                     android:backgroundTint="@color/blue"
-                    android:onClick="@{() -> viewModel.setCategoryIncome()}"
+                    android:onClick="@{() -> viewModel.setIncomeExpenseType(IncomeExpenseType.INCOME)}"
                     android:text="@string/income"
                     android:textColor="@color/white"
                     app:layout_constraintEnd_toStartOf="@id/expenses_button"
@@ -72,7 +73,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:backgroundTint="@color/red"
-                    android:onClick="@{() -> viewModel.setCategoryExpense()}"
+                    android:onClick="@{() -> viewModel.setIncomeExpenseType(IncomeExpenseType.EXPENSE)}"
                     android:text="@string/expense"
                     android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -96,8 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:maxLines="1"
-                    android:onClick="@{() -> viewModel.clickDate()}"
-                    android:text="@{viewModel.dateInfo.dateStamp}"
+                    android:text="@{viewModel.memoForm.dateStamp}"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toStartOf="@id/time"
                     app:layout_constraintStart_toEndOf="@id/text_day"
@@ -110,8 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="20dp"
-                    android:onClick="@{() -> viewModel.clickTime()}"
-                    android:text="@{viewModel.timeInfo.timeStamp}"
+                    android:text="@{viewModel.memoForm.timeStamp}"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/day"
@@ -136,7 +135,7 @@
                     app:layout_constraintEnd_toEndOf="@id/time"
                     app:layout_constraintStart_toEndOf="@id/text_day"
                     app:layout_constraintTop_toTopOf="@id/text_asset"
-                    app:category="@{viewModel.asset}"
+                    app:category="@{viewModel.memoForm.asset}"
                     android:onClick="@{() -> viewModel.clickAsset()}" />
 
                 <TextView
@@ -155,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
                     android:onClick="@{() -> viewModel.clickAttr()}"
-                    app:category="@{viewModel.attr}"
+                    app:category="@{viewModel.memoForm.attribute}"
                     app:layout_constraintEnd_toEndOf="@id/time"
                     app:layout_constraintStart_toEndOf="@id/text_day"
                     app:layout_constraintTop_toTopOf="@id/text_attr" />
