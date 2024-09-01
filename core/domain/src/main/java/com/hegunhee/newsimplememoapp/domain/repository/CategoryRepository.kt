@@ -1,10 +1,11 @@
 package com.hegunhee.newsimplememoapp.domain.repository
 
+import com.hegunhee.newsimplememoapp.domain.model.category.CategoryNamesByType
 import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
 
 interface CategoryRepository {
 
-    suspend fun findAllCategoryByType(categoryType: CategoryType): List<String>
+    suspend fun findCategoryNamesByType(categoryType: CategoryType): Result<CategoryNamesByType>
 
     suspend fun checkIsCategory(name: String): Boolean
 

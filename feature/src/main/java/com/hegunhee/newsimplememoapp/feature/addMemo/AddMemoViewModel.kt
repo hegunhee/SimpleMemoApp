@@ -2,46 +2,33 @@ package com.hegunhee.newsimplememoapp.feature.addMemo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.domain.usecase.memo.InsertMemoUseCase
-import com.hegunhee.newsimplememoapp.domain.model.MemoType
 import com.hegunhee.newsimplememoapp.feature.common.category.CategoryActionHandler
 import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
-import com.hegunhee.newsimplememoapp.domain.usecase.category.CheckIsCategoryUseCase
 import com.hegunhee.newsimplememoapp.domain.usecase.category.GetAllCategoryByTypeUseCase
-import com.hegunhee.newsimplememoapp.domain.model.DateInfo
-import com.hegunhee.newsimplememoapp.feature.common.MemoCategory
-import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
-import com.hegunhee.newsimplememoapp.util.DateUtil
+import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
+import com.hegunhee.newsimplememoapp.domain.model.memo.MemoForm
+import com.hegunhee.newsimplememoapp.domain.usecase.category.GetCategoryNamesByType
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.InsertServerMemoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.LocalTime
 import javax.inject.Inject
 
 @HiltViewModel
 class AddMemoViewModel @Inject constructor(
-    private val addMemoUseCase : InsertMemoUseCase,
-    private val getAllCategoryByTypeUseCase: GetAllCategoryByTypeUseCase,
-    private val checkIsCategoryUseCase: CheckIsCategoryUseCase
+    private val insertMemoUseCase : InsertServerMemoUseCase,
+    private val getCategoryNamesByTypeUseCase: GetCategoryNamesByType,
+    private val getAllCategoryByTypeUseCase: GetAllCategoryByTypeUseCase
 ) : ViewModel(), CategoryActionHandler {
 
-    private val _memoCategory: MutableStateFlow<MemoCategory> = MutableStateFlow<MemoCategory>(MemoCategory.Expenses)
-    val memoCategory: StateFlow<MemoCategory> = _memoCategory.asStateFlow()
+    private val _memoForm : MutableStateFlow<MemoForm> = MutableStateFlow(MemoForm.init())
+    val memoForm : StateFlow<MemoForm> = _memoForm.asStateFlow()
 
-    private val _dateInfo: MutableStateFlow<DateInfo> = MutableStateFlow<DateInfo>(DateInfo.emptyInfo)
-    val dateInfo: StateFlow<DateInfo> = _dateInfo.asStateFlow()
+    val price : MutableStateFlow<String> = MutableStateFlow("")
 
-    private val _timeInfo: MutableStateFlow<TimeInfo> = MutableStateFlow<TimeInfo>(TimeInfo.emptyInfo)
-    val timeInfo: StateFlow<TimeInfo> = _timeInfo.asStateFlow()
-
-    private val _asset: MutableStateFlow<String> = MutableStateFlow<String>("")
-    val asset: StateFlow<String> = _asset.asStateFlow()
-
-    private val _attr: MutableStateFlow<String> = MutableStateFlow<String>("")
-    val attr: StateFlow<String> = _attr.asStateFlow()
-
-    val price: MutableStateFlow<String> = MutableStateFlow("")
-
-    val description: MutableStateFlow<String> = MutableStateFlow("")
+    val description : MutableStateFlow<String> = MutableStateFlow("")
 
     private val _memoState: MutableSharedFlow<AddMemoState> = MutableSharedFlow<AddMemoState>()
     val memoState: SharedFlow<AddMemoState> = _memoState.asSharedFlow()
@@ -52,113 +39,66 @@ class AddMemoViewModel @Inject constructor(
     private val _detailCategoryNavigation : MutableSharedFlow<CategoryType> = MutableSharedFlow()
     val detailCategoryNavigation : SharedFlow<CategoryType> = _detailCategoryNavigation.asSharedFlow()
 
-    init {
-        setDate()
-        setTime()
+    fun setTime(time : LocalTime) {
+        _memoForm.value = memoForm.value.updateTime(time)
     }
 
-    fun setTime(
-        hourOfDay : Int = DateUtil.getHour(),
-        minute : Int = DateUtil.getMinute()
-    ) {
-        val (hour,amPm) = if(hourOfDay > 12) {
-            Pair(hourOfDay-12,"오후")
-        }else {
-            Pair(hourOfDay,"오전")
+    fun setDate(date : LocalDate) {
+        _memoForm.value = memoForm.value.updateDate(date)
+    }
+
+    fun setIncomeExpenseType(type : IncomeExpenseType) {
+        val currentType = memoForm.value.incomeExpenseType
+        if(type != currentType) {
+            _memoForm.value = memoForm.value.copy(attribute = "", incomeExpenseType = type)
         }
-        _timeInfo.value = TimeInfo(hour,minute,amPm)
-    }
-
-    fun setDate(
-        year: Int = DateUtil.getYear(),
-        month: Int = DateUtil.getMonth(),
-        day: Int = DateUtil.getDayOfMonth(),
-        dayOfWeek: String = DateUtil.getDayOfWeek(year, month, day)
-    ) {
-        _dateInfo.value = DateInfo(year = year, month = month, day = day, dayOfWeek = dayOfWeek)
-    }
-
-    fun setCategoryIncome() {
-        _memoCategory.value = MemoCategory.Income
-        viewModelScope.launch {
-            if (checkIsCategoryUseCase(attr.value)) {
-                _attr.value = ""
-                dismissBottomSheet()
-            }
-        }
-    }
-
-    fun setCategoryExpense() {
-        _memoCategory.value = MemoCategory.Expenses
-        viewModelScope.launch {
-            if (checkIsCategoryUseCase(attr.value)) {
-                _attr.value = ""
-                dismissBottomSheet()
-            }
-        }
-    }
-
-    fun back() = viewModelScope.launch {
-        _memoState.emit(AddMemoState.Back)
-    }
-
-    fun clickDate() = viewModelScope.launch {
-        _memoState.emit(AddMemoState.SetDate)
-    }
-
-    fun clickTime() = viewModelScope.launch {
-        _memoState.emit(AddMemoState.SetTime)
+        dismissBottomSheet()
     }
 
     fun clickAsset() = viewModelScope.launch {
-        categoryList.value = getAllCategoryByTypeUseCase(CategoryType.ASSET)
-        categoryType.value = CategoryType.ASSET
+        getCategoryNamesByTypeUseCase(CategoryType.ASSET)
+            .onSuccess {
+                categoryList.value = it.names
+                categoryType.value = it.type
+            }.onFailure {
+
+            }
     }
 
     fun clickAttr() = viewModelScope.launch {
-        when(memoCategory.value) {
-            MemoCategory.Income -> {
-                categoryList.value = getAllCategoryByTypeUseCase(CategoryType.ATTR_INCOME)
-                categoryType.value = CategoryType.ATTR_INCOME
-            }
-            MemoCategory.Expenses -> {
-                categoryList.value = getAllCategoryByTypeUseCase(CategoryType.ATTR_EXPENSE)
-                categoryType.value = CategoryType.ATTR_EXPENSE
-            }
+        val type = if(memoForm.value.incomeExpenseType == IncomeExpenseType.INCOME) {
+            CategoryType.ATTR_INCOME
+        }else {
+            CategoryType.ATTR_EXPENSE
         }
+        getCategoryNamesByTypeUseCase(type)
+            .onSuccess {
+                categoryList.value = it.names
+                categoryType.value = it.type
+            }.onFailure {
+
+            }
     }
 
     fun onSaveButtonClick() = viewModelScope.launch {
-        if (asset.value.isBlank()) {
-            clickAsset()
-        } else if (attr.value.isBlank()) {
-            clickAttr()
-        } else if (price.value.isBlank()) {
-            _memoState.emit(AddMemoState.SetPrice)
-        } else {
-            saveData()
+        if(price.value.toIntOrNull() != null) {
+            _memoForm.value = memoForm.value.updatePrice(price.value.toInt())
+        }
+        _memoForm.value = memoForm.value.updateDesc(description.value)
+
+        val (isFullForm,emptyType) = memoForm.value.isFullForm()
+        if(isFullForm) {
+            saveMemo()
+        }
+        when (emptyType) {
+            "asset" -> { clickAsset() }
+            "attribute" -> { clickAttr() }
+            "price" -> { _memoState.emit(AddMemoState.SetPrice) }
         }
     }
 
-    private suspend fun saveData() {
-        val timeInfoValue = timeInfo.value
-        val dateInfoValue = dateInfo.value
-        MemoType.Memo(
-            category = memoCategory.value.text,
-            year = dateInfoValue.year,
-            month = dateInfoValue.month,
-            day = dateInfoValue.day,
-            dayOfWeek = dateInfoValue.dayOfWeek,
-            amPm = timeInfoValue.ampm,
-            hour = timeInfoValue.hour,
-            minute = timeInfoValue.minute,
-            attr = attr.value,
-            price = price.value.toInt(),
-            asset = asset.value,
-            description = description.value
-        ).let {memo ->
-            addMemoUseCase(memo)
-        }
+    private suspend fun saveMemo() {
+        insertMemoUseCase(memoForm.value)
         _memoState.emit(AddMemoState.Save)
     }
 
@@ -176,13 +116,13 @@ class AddMemoViewModel @Inject constructor(
         when(type) {
             CategoryType.EMPTY -> {}
             CategoryType.ASSET -> {
-                _asset.value = category
+                _memoForm.value = memoForm.value.copy(asset = category)
             }
             CategoryType.ATTR_EXPENSE -> {
-                _attr.value = category
+                _memoForm.value = memoForm.value.copy(attribute = category)
             }
             CategoryType.ATTR_INCOME -> {
-                _attr.value = category
+                _memoForm.value = memoForm.value.copy(attribute = category)
             }
         }
         dismissBottomSheet()
