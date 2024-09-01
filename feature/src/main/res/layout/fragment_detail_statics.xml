@@ -73,7 +73,7 @@
             android:id="@+id/total_value"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.totalText.toString()}"
+            android:text="@{viewModel.totalSum.toString()}"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:visibility="@{viewModel.memoList.empty ? View.GONE : View.VISIBLE}"

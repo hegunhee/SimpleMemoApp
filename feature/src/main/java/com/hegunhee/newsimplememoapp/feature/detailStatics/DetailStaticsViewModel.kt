@@ -2,10 +2,12 @@ package com.hegunhee.newsimplememoapp.feature.detailStatics
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.domain.model.MemoType
-import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetMemoListSortedByAttrYearMonthUseCase
+import com.hegunhee.newsimplememoapp.domain.model.memo.MemoServer
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetMemosByAttrUseCase
 import com.hegunhee.newsimplememoapp.feature.common.DateSelectorActionHandler
 import com.hegunhee.newsimplememoapp.feature.common.MemoAdapterActionHandler
+import com.hegunhee.newsimplememoapp.feature.common.memo.MemoType
+import com.hegunhee.newsimplememoapp.feature.common.memo.toMemoTypes
 import com.hegunhee.newsimplememoapp.feature.common.toMoneyFormat
 import com.hegunhee.newsimplememoapp.feature.statics.StaticsNavArgs
 import com.hegunhee.newsimplememoapp.util.DateUtil
@@ -18,14 +20,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailStaticsViewModel @Inject constructor(
-    private val getMemoListSortedByAttrYearMonthUseCase: GetMemoListSortedByAttrYearMonthUseCase
+    private val getMemosByAttrYearMonthUseCase: GetMemosByAttrUseCase
 ) : ViewModel(), DateSelectorActionHandler, MemoAdapterActionHandler {
 
     val yearDate : MutableStateFlow<Int> = MutableStateFlow(DateUtil.getYear())
@@ -38,30 +39,28 @@ class DetailStaticsViewModel @Inject constructor(
     val navigationEvent : SharedFlow<DetailStaticsNavigation> = _navigationEvent.asSharedFlow()
 
     val memoList : StateFlow<List<MemoType>> = yearDate.combine(monthDate) { year, month ->
-        getMemoListSortedByAttrYearMonthUseCase(attr.value,year,month)
+        getMemosByAttrYearMonthUseCase(attr.value,year,month)
+            .onSuccess { attributeMemos ->
+                _totalSum.value = attributeMemos.price.intValueExact().toMoneyFormat() + "원"
+                return@combine attributeMemos.memos.toMemoTypes()
+            }.onFailure {
+
+            }
+        return@combine emptyList<MemoType>()
     }.stateIn(
         scope = viewModelScope,
         started= SharingStarted.WhileSubscribed(100L),
         initialValue = emptyList()
     )
 
-    val totalText : StateFlow<String> = memoList.map {
-        if(it.isEmpty()) {
-            ""
-        }else {
-            it.filterIsInstance<MemoType.Memo>().sumOf { it.price }.toMoneyFormat() +"원"
-        }
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(100L),
-        initialValue = ""
-    )
+    private val _totalSum : MutableStateFlow<String> = MutableStateFlow("")
+    val totalSum : StateFlow<String> = _totalSum.asStateFlow()
 
     fun initData(staticsData : StaticsNavArgs){
         staticsData.run {
+            _attr.value = attr
             yearDate.value = year
             monthDate.value = month
-            _attr.value = attr
         }
     }
 
