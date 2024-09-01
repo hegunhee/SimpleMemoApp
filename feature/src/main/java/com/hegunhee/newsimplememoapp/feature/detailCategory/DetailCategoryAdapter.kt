@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.hegunhee.newsimplememoapp.feature.databinding.ItemDetailCategoryBinding
 
-class DetailCategoryAdapter(private val actionHandler : DetailCategoryActionHandler) : ListAdapter<String,DetailCategoryAdapter.DetailCategoryViewHolder>(diffUtil) {
+class DetailCategoryAdapter(private val actionHandler : DetailCategoryActionHandler)
+    : ListAdapter<String,DetailCategoryAdapter.DetailCategoryViewHolder>(diffUtil) {
 
     inner class DetailCategoryViewHolder(private val binding : ItemDetailCategoryBinding) : ViewHolder(binding.root) {
         fun bindView(category : String) {

@@ -8,12 +8,10 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
 import com.hegunhee.newsimplememoapp.feature.databinding.ItemCategoryBinding
 
-class CategoryAdapter(val actionHandler: CategoryActionHandler, val categoryType : CategoryType) : ListAdapter<String, CategoryAdapter.CategoryViewHolder>(
-    diffUtil
-) {
+class CategoryAdapter(val actionHandler: CategoryActionHandler, val categoryType : CategoryType)
+    : ListAdapter<String, CategoryAdapter.CategoryViewHolder>(diffUtil) {
 
     inner class CategoryViewHolder(private val binding : ItemCategoryBinding) : ViewHolder(binding.root) {
-
         fun bindView(category : String) {
             binding.category = category
             binding.categoryType = categoryType
