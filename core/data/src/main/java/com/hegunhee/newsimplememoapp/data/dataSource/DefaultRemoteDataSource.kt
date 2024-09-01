@@ -4,7 +4,7 @@ import com.hegunhee.newsimplememoapp.data.api.CategoryApi
 import com.hegunhee.newsimplememoapp.data.api.MemoApi
 import com.hegunhee.newsimplememoapp.data.api.dto.category.CategoryEntity
 import com.hegunhee.newsimplememoapp.data.api.dto.category.dto.CategoryNameResponse
-import com.hegunhee.newsimplememoapp.data.api.dto.category.dto.CategoryNamesResponse
+import com.hegunhee.newsimplememoapp.data.api.dto.category.dto.CategoryNamesByTypeResponse
 import com.hegunhee.newsimplememoapp.data.api.dto.memo.MemoEntity
 import com.hegunhee.newsimplememoapp.data.api.dto.memo.dto.AttributeMemosResponse
 import com.hegunhee.newsimplememoapp.data.api.dto.memo.dto.MemoIdResponse
@@ -55,7 +55,7 @@ class DefaultRemoteDataSource @Inject constructor(
         return memoApi.delete(memoId)
     }
 
-    override suspend fun findAllCategoryByType(categoryType: CategoryType): CategoryNamesResponse {
+    override suspend fun findAllCategoryByType(categoryType: CategoryType): CategoryNamesByTypeResponse {
         return categoryApi.findAllBy(categoryType)
     }
 

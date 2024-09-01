@@ -7,6 +7,6 @@ import javax.inject.Inject
 class GetAllCategoryByTypeUseCase @Inject constructor(private val repository: CategoryRepository) {
 
     suspend operator fun invoke(categoryType: CategoryType) : List<String> {
-        return repository.findAllCategoryByType(categoryType)
+        return emptyList()
     }
 }

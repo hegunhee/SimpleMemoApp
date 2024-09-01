@@ -43,7 +43,9 @@ class DefaultMemoTempRepository @Inject constructor(
     }
 
     override suspend fun insertMemo(memoForm: MemoForm): Result<Int> {
-        return runCatching { remoteDataSource.insertMemo(memoForm.toMemoRequest()).memoId }
+        return runCatching {
+            remoteDataSource.insertMemo(memoForm.toMemoRequest()).memoId
+        }
     }
 
     override suspend fun updateMemo(memoId: Int, memoForm: MemoForm): Result<Int> {

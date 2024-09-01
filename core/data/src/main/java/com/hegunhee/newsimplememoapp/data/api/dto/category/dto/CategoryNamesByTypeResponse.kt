@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CategoryNamesResponse(
+data class CategoryNamesByTypeResponse(
     @SerialName("type") val type : CategoryType,
     @SerialName("names") val names : List<String>
 )

@@ -2,7 +2,7 @@ package com.hegunhee.newsimplememoapp.data.dataSource
 
 import com.hegunhee.newsimplememoapp.data.api.dto.category.CategoryEntity
 import com.hegunhee.newsimplememoapp.data.api.dto.category.dto.CategoryNameResponse
-import com.hegunhee.newsimplememoapp.data.api.dto.category.dto.CategoryNamesResponse
+import com.hegunhee.newsimplememoapp.data.api.dto.category.dto.CategoryNamesByTypeResponse
 import com.hegunhee.newsimplememoapp.data.api.dto.memo.MemoEntity
 import com.hegunhee.newsimplememoapp.data.api.dto.memo.dto.AttributeMemosResponse
 import com.hegunhee.newsimplememoapp.data.api.dto.memo.dto.MemoIdResponse
@@ -29,7 +29,7 @@ interface RemoteDataSource {
 
     suspend fun deleteMemo(memoId : Int) : MemoIdResponse
 
-    suspend fun findAllCategoryByType(categoryType : CategoryType) : CategoryNamesResponse
+    suspend fun findAllCategoryByType(categoryType : CategoryType) : CategoryNamesByTypeResponse
 
     suspend fun isExistCategory(categoryName : String) : Boolean
 

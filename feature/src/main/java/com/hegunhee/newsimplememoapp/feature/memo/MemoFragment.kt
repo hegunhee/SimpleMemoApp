@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.hegunhee.newsimplememoapp.feature.R
-import com.hegunhee.newsimplememoapp.feature.common.MemoAdapter
+import com.hegunhee.newsimplememoapp.feature.common.memo.MemoServerAdapter
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentMemoBinding
 import com.hegunhee.newsimplememoapp.feature.dateDialog.DateDialogFragment
 import com.hegunhee.newsimplememoapp.feature.main.MainFragmentDirections
@@ -24,7 +24,7 @@ class MemoFragment : Fragment() {
     private val viewModel : MemoViewModel by viewModels()
     private lateinit var viewDataBinding : FragmentMemoBinding
 
-    private lateinit var adapter : MemoAdapter
+    private lateinit var adapter : MemoServerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,7 +32,7 @@ class MemoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_memo,container,false)
-        adapter = MemoAdapter(viewModel)
+        adapter = MemoServerAdapter(viewModel)
         viewDataBinding = FragmentMemoBinding.bind(root).apply {
             viewModel = this@MemoFragment.viewModel
             memoRecyclerView.adapter = adapter
@@ -51,8 +51,8 @@ class MemoFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch{
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 launch {
-                    viewModel.memoList.collect {
-                        adapter.submitList(it)
+                    viewModel.memoList.collect { memos ->
+                        adapter.submitList(memos)
                     }
                 }
                 launch {
