@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class InsertCategoryUseCase @Inject constructor(private val repository: CategoryRepository) {
 
-    suspend operator fun invoke(categoryType: CategoryType, text : String) {
-        repository.insertCategory(categoryType,text)
+    suspend operator fun invoke(categoryType: CategoryType, text : String) : String {
+        return repository.insertCategory(categoryType,text).getOrElse { "" }
     }
 }

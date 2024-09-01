@@ -3,9 +3,10 @@ package com.hegunhee.newsimplememoapp.feature.detailCategory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
-import com.hegunhee.newsimplememoapp.domain.usecase.category.DeleteCategoryUseCase
-import com.hegunhee.newsimplememoapp.domain.usecase.category.GetAllCategoryByTypeUseCase
-import com.hegunhee.newsimplememoapp.domain.usecase.category.InsertCategoryUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.category.isExistCategoryUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.category.DeleteServerCategoryUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.category.GetCategoryNamesByType
+import com.hegunhee.newsimplememoapp.domain.usecase.category.InsertServerCategoryUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,9 +19,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailCategoryViewModel @Inject constructor(
-    private val getAllCategoryByTypeUseCase: GetAllCategoryByTypeUseCase,
-    private val insertCategoryUseCase: InsertCategoryUseCase,
-    private val deleteCategoryUseCase: DeleteCategoryUseCase
+    private val getCategoryNamesByType: GetCategoryNamesByType,
+    private val insertServerCategoryUseCase : InsertServerCategoryUsecase,
+    private val deleteServerCategoryUseCase: DeleteServerCategoryUseCase,
+    private val isExistCategoryUseCase: isExistCategoryUseCase,
 ) : ViewModel(),DetailCategoryActionHandler {
 
     private val _categoryType : MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.EMPTY)
@@ -38,30 +40,50 @@ class DetailCategoryViewModel @Inject constructor(
         }
     }
 
-    fun setCategoryType(categoryType: CategoryType) {
+    fun initCategoryType(categoryType: CategoryType) {
         _categoryType.value = categoryType
         setCategoryList()
     }
 
     private fun setCategoryList() = viewModelScope.launch{
-        _categoryList.value = getAllCategoryByTypeUseCase(categoryType.value)
+        getCategoryNamesByType(categoryType.value)
+            .onSuccess { categoryNames ->
+                _categoryList.value = categoryNames.names
+            }.onFailure {
+
+            }
     }
 
     override fun onCategoryRemoveClick(category: String) {
         viewModelScope.launch {
-            deleteCategoryUseCase(category)
-            _categoryNavigation.emit(DetailCategoryNavigation.Refresh)
-            setCategoryList()
+            deleteServerCategoryUseCase(category)
+                .onSuccess {
+                    _categoryNavigation.emit(DetailCategoryNavigation.Refresh)
+                    setCategoryList()
+                }.onFailure {
+
+                }
+
         }
     }
 
     fun addCategory(category : String) {
         viewModelScope.launch {
-            insertCategoryUseCase(categoryType.value,category)
-            _categoryNavigation.emit(DetailCategoryNavigation.Refresh)
-            setCategoryList()
+            isExistCategoryUseCase(category)
+                .onSuccess { isExist ->
+                    if(isExist) {
+                        return@launch
+                    }
+                    insertServerCategoryUseCase(categoryType.value,category)
+                        .onSuccess {
+                            _categoryNavigation.emit(DetailCategoryNavigation.Refresh)
+                            setCategoryList()
+                        }.onFailure {
+
+                        }
+                }.onFailure {
+
+                }
         }
     }
-
-
 }
