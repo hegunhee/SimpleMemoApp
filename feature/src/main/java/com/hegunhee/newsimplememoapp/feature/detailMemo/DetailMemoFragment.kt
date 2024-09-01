@@ -18,11 +18,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.hegunhee.newsimplememoapp.feature.R
-import com.hegunhee.newsimplememoapp.feature.addMemo.AddMemoFragmentDirections
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentDetailMemoBinding
 import com.hegunhee.newsimplememoapp.feature.detailCategory.DetailCategoryFragment
+import com.hegunhee.newsimplememoapp.util.DateUtil
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.LocalTime
 
 @AndroidEntryPoint
 class DetailMemoFragment : Fragment() {
@@ -41,7 +43,7 @@ class DetailMemoFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
         navArgs<DetailMemoFragmentArgs>().value.memoId.let {
-            viewModel.initViewModel(memoId = it)
+            viewModel.initMemo(id = it)
         }
         return root
     }
@@ -49,6 +51,7 @@ class DetailMemoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         observeData()
+        clickListener()
         setFragmentResultListener(DetailCategoryFragment.REFRESH_KEY) { key, bundle ->
             if(key == DetailCategoryFragment.REFRESH_KEY) {
                 viewModel.refreshCategory()
@@ -63,23 +66,14 @@ class DetailMemoFragment : Fragment() {
                 launch {
                     viewModel.memoState.collect {
                         when (it) {
-                            DetailMemoState.Back -> {
-                                findNavController().popBackStack()
+                            DetailMemoState.SetPrice -> {
+                                focusPrice()
                             }
                             DetailMemoState.Update -> {
                                 updateMemo()
                             }
                             DetailMemoState.Remove -> {
                                 removeMemo()
-                            }
-                            DetailMemoState.SetDate -> {
-                                setDate()
-                            }
-                            DetailMemoState.SetTime -> {
-                                setTime()
-                            }
-                            DetailMemoState.SetPrice -> {
-                                setPrice()
                             }
                         }
                     }
@@ -95,6 +89,18 @@ class DetailMemoFragment : Fragment() {
         }
     }
 
+    private fun clickListener() {
+        viewDataBinding.backButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
+        viewDataBinding.day.setOnClickListener {
+            setDate()
+        }
+        viewDataBinding.time.setOnClickListener {
+            setTime()
+        }
+    }
+
     private fun updateMemo() {
         findNavController().popBackStack()
     }
@@ -105,10 +111,10 @@ class DetailMemoFragment : Fragment() {
 
     private fun setDate() {
         DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            viewModel.setDate(year,month+1,dayOfMonth)
+            viewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))
         }.let { listener ->
-            viewModel.dateInfo.value.run {
-                DatePickerDialog(requireContext(), listener, year, month - 1, day).show()
+            viewModel.memoForm.value.memoDate.let {  memoDate ->
+                DatePickerDialog(requireContext(),listener,memoDate.year,memoDate.monthValue -1,memoDate.dayOfMonth).show()
             }
         }
 
@@ -116,15 +122,13 @@ class DetailMemoFragment : Fragment() {
 
     private fun setTime() {
         TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-            viewModel.setTime(hourOfDay,minute)
-        }.let { listener ->
-            viewModel.timeInfo.value.let { timeInfo ->
-                TimePickerDialog(requireContext(), listener, timeInfo.hour, timeInfo.minute, false).show()
-            }
+            viewModel.setTime(LocalTime.of(hourOfDay,minute,0))
+        }.let {
+            TimePickerDialog(requireContext(),it, DateUtil.getHour(), DateUtil.getMinute(),true).show()
         }
     }
 
-    private fun setPrice() {
+    private fun focusPrice() {
         viewDataBinding.price.run {
             requestFocus()
             showKeyboard()
