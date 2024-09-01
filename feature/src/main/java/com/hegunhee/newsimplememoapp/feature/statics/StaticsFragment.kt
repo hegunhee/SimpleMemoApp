@@ -81,7 +81,7 @@ class StaticsFragment : Fragment() {
                     }
                 }
                 launch {
-                    viewModel.filteredStaticsData.collect{
+                    viewModel.staticsMemo.collect{
                         staticsAdapter.submitList(it)
                     }
                 }

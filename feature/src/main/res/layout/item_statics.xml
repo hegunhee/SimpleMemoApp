@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
-            name="staticsData"
-            type="com.hegunhee.newsimplememoapp.domain.model.StaticsData" />
+            name="staticsMemo"
+            type="com.hegunhee.newsimplememoapp.domain.model.memo.StaticsMemo"/>
 
         <variable
             name="actionHandler"
@@ -18,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> actionHandler.onStaticsDetailClick(staticsData.attr,staticsData.year,staticsData.month)}">
+        android:onClick="@{() -> actionHandler.onStaticsDetailClick(staticsMemo.attribute)}">
 
         <View
             android:id="@+id/topPanel"
@@ -41,7 +40,7 @@
             android:layout_marginTop="5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/topPanel"
-            app:setPercent="@{staticsData.percent}"
+            app:setPercent="@{staticsMemo.percent}"
             tools:ignore="MissingConstraints"
             tools:text="63%" />
 
@@ -52,7 +51,7 @@
             android:layout_marginStart="10dp"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@id/percent"
-            android:text="@{staticsData.attr}"
+            android:text="@{staticsMemo.attribute}"
             app:layout_constraintTop_toTopOf="@id/percent"
             tools:text="통신" />
 
@@ -64,7 +63,7 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/percent"
-            app:setPrice="@{staticsData.price}"
+            app:setPrice="@{staticsMemo.priceIntValue()}"
             tools:text="50000원" />
 
         <View
