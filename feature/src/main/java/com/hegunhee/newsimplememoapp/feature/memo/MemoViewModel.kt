@@ -3,12 +3,9 @@ package com.hegunhee.newsimplememoapp.feature.memo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.model.TotalSum
-import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
-import com.hegunhee.newsimplememoapp.domain.model.memo.MemoServer
 import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetMemosSummaryUseCase
 import com.hegunhee.newsimplememoapp.feature.common.DateSelectorActionHandler
 import com.hegunhee.newsimplememoapp.feature.common.memo.MemoType
-import com.hegunhee.newsimplememoapp.feature.common.memo.toMemo
 import com.hegunhee.newsimplememoapp.feature.common.memo.toMemoTypes
 import com.hegunhee.newsimplememoapp.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel

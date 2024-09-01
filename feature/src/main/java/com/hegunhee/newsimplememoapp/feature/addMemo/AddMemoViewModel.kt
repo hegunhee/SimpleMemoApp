@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.feature.common.category.CategoryActionHandler
 import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
-import com.hegunhee.newsimplememoapp.domain.usecase.category.GetAllCategoryByTypeUseCase
 import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
 import com.hegunhee.newsimplememoapp.domain.model.memo.MemoForm
 import com.hegunhee.newsimplememoapp.domain.usecase.category.GetCategoryNamesByType
@@ -98,7 +97,11 @@ class AddMemoViewModel @Inject constructor(
 
     private suspend fun saveMemo() {
         insertMemoUseCase(memoForm.value)
-        _memoState.emit(AddMemoState.Save)
+            .onSuccess {
+                _memoState.emit(AddMemoState.Save)
+            }.onFailure {
+
+            }
     }
 
     override fun onBottomSheetDismiss() {

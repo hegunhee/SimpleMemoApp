@@ -6,7 +6,7 @@
 
         <variable
             name="memoDate"
-            type="com.hegunhee.newsimplememoapp.domain.model.MemoType.MemoDate" />
+            type="com.hegunhee.newsimplememoapp.feature.common.memo.MemoType.MemoDate" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -44,7 +44,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setDay="@{memoDate.day}"
+            android:text="@{Integer.toString(memoDate.date.dayOfMonth)}"
             tools:text="20" />
 
         <TextView
@@ -59,7 +59,7 @@
             app:layout_constraintBottom_toBottomOf="@id/day"
             app:layout_constraintStart_toEndOf="@id/day"
             app:layout_constraintTop_toTopOf="@id/day"
-            app:setDayOfWeek="@{memoDate.dayOfWeek}"
+            app:setDayOfWeek="@{memoDate.dayOfWeek().toString()}"
             tools:text="목요일" />
 
         <TextView
@@ -72,7 +72,7 @@
             app:layout_constraintBaseline_toBaselineOf="@id/day_of_week"
             app:layout_constraintBottom_toBottomOf="@id/day"
             app:layout_constraintStart_toEndOf="@id/day_of_week"
-            app:setDate="@{memoDate}"
+            android:text="@{memoDate.dateStamp()}"
             tools:text="2023.01" />
 
         <TextView
@@ -89,7 +89,7 @@
             app:layout_constraintEnd_toStartOf="@id/expense"
             app:layout_constraintStart_toEndOf="@id/year_and_month"
             app:layout_constraintTop_toTopOf="@id/day"
-            app:setPrice="@{memoDate.incomeSum}"
+            android:text="@{Integer.toString(memoDate.incomeSum)}"
             tools:text="33원" />
 
         <TextView
@@ -105,7 +105,7 @@
             app:layout_constraintBottom_toBottomOf="@id/day"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/day"
-            app:setPrice="@{memoDate.expenseSum}"
+            android:text="@{Integer.toString(memoDate.expenseSum)}"
             tools:text="3030원" />
 
 

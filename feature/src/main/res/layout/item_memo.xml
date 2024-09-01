@@ -9,7 +9,9 @@
 
         <variable
             name="memo"
-            type="com.hegunhee.newsimplememoapp.domain.model.MemoType.Memo" />
+            type="com.hegunhee.newsimplememoapp.feature.common.memo.MemoType.Memo" />
+
+        <import type="com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType"/>
 
         <import type="android.view.View"></import>
     </data>
@@ -45,8 +47,8 @@
             android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="@{memo.description.isEmpty ? memo.asset : memo.description}"
-            android:textColor="@{memo.description.isEmpty ? @color/gray : @color/black}"
+            android:text="@{memo.desc.isEmpty ? memo.asset : memo.desc}"
+            android:textColor="@{memo.desc.isEmpty ? @color/gray : @color/black}"
             android:textSize="17sp"
             app:layout_constraintEnd_toStartOf="@id/price"
             app:layout_constraintStart_toEndOf="@id/attr"
@@ -59,7 +61,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/gray"
             android:textSize="13sp"
-            app:setTime="@{memo}"
+            android:text="@{memo.timeStamp()}"
             app:layout_constraintStart_toStartOf="@id/desc"
             app:layout_constraintTop_toBottomOf="@id/desc"
             tools:text="sdasd" />
@@ -72,7 +74,7 @@
             android:text="@{memo.asset}"
             android:textColor="@color/gray"
             android:textSize="13sp"
-            android:visibility="@{memo.description.isEmpty ? View.GONE : View.VISIBLE}"
+            android:visibility="@{memo.desc.isEmpty ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/time"
             app:layout_constraintStart_toEndOf="@id/time"
             app:layout_constraintTop_toTopOf="@id/time"
@@ -91,7 +93,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/attr"
             app:setPrice="@{memo.price}"
-            app:setPriceType="@{memo.category}"
+            android:textColor="@{memo.incomeExpenseType == IncomeExpenseType.INCOME ? @color/blue: @color/red}"
             tools:text="333000원" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

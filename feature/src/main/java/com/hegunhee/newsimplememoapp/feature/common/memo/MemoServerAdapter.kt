@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.hegunhee.newsimplememoapp.feature.R
 import com.hegunhee.newsimplememoapp.feature.common.MemoAdapterActionHandler
-import com.hegunhee.newsimplememoapp.feature.databinding.ItemServerMemoBinding
-import com.hegunhee.newsimplememoapp.feature.databinding.ItemServerMemoDateBinding
+import com.hegunhee.newsimplememoapp.feature.databinding.ItemMemoBinding
+import com.hegunhee.newsimplememoapp.feature.databinding.ItemMemoDateBinding
 
 class MemoServerAdapter(val actionHandler : MemoAdapterActionHandler) :
     ListAdapter<MemoType,MemoServerAdapter.MemoAdapterViewHolder>(diffUtil){
@@ -19,7 +19,7 @@ class MemoServerAdapter(val actionHandler : MemoAdapterActionHandler) :
 
     }
 
-    inner class MemoDateViewHolder(private val binding: ItemServerMemoDateBinding) : MemoAdapterViewHolder(binding.root) {
+    inner class MemoDateViewHolder(private val binding: ItemMemoDateBinding) : MemoAdapterViewHolder(binding.root) {
         override fun bindView(memo: MemoType): Unit = with(binding) {
             val memoDate = memo as MemoType.MemoDate
             this.memoDate = memoDate
@@ -27,7 +27,7 @@ class MemoServerAdapter(val actionHandler : MemoAdapterActionHandler) :
 
     }
 
-    inner class MemoViewHolder(private val binding: ItemServerMemoBinding) : MemoAdapterViewHolder(binding.root) {
+    inner class MemoViewHolder(private val binding: ItemMemoBinding) : MemoAdapterViewHolder(binding.root) {
         override fun bindView(memo: MemoType): Unit = with(binding) {
             val memoEntity = memo as MemoType.Memo
             this.memo = memoEntity
@@ -37,11 +37,11 @@ class MemoServerAdapter(val actionHandler : MemoAdapterActionHandler) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemoAdapterViewHolder {
         return when(viewType) {
-            R.layout.item_server_memo ->{
-                MemoViewHolder(ItemServerMemoBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+            R.layout.item_memo ->{
+                MemoViewHolder(ItemMemoBinding.inflate(LayoutInflater.from(parent.context),parent,false))
             }
-            R.layout.item_server_memo_date -> {
-                MemoDateViewHolder(ItemServerMemoDateBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+            R.layout.item_memo_date -> {
+                MemoDateViewHolder(ItemMemoDateBinding.inflate(LayoutInflater.from(parent.context),parent,false))
             }
             else -> { throw IllegalArgumentException()}
         }
@@ -54,8 +54,8 @@ class MemoServerAdapter(val actionHandler : MemoAdapterActionHandler) :
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is MemoType.Memo -> R.layout.item_server_memo
-            is MemoType.MemoDate -> R.layout.item_server_memo_date
+            is MemoType.Memo -> R.layout.item_memo
+            is MemoType.MemoDate -> R.layout.item_memo_date
         }
     }
 
