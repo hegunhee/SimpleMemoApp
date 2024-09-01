@@ -3,6 +3,7 @@ package com.hegunhee.newsimplememoapp.feature.common.memo
 import com.hegunhee.newsimplememoapp.domain.model.getTimeStamp
 import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
 import com.hegunhee.newsimplememoapp.domain.model.memo.MemoServer
+import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -32,6 +33,22 @@ sealed class MemoType() {
 
         fun dateStamp() : String {
             return "${date.year}.${date.monthValue}"
+        }
+
+        fun dayOfWeek() : String {
+            return englishToKoreanDayOfWeek()
+        }
+
+        private fun englishToKoreanDayOfWeek() : String {
+            return when(date.dayOfWeek) {
+                DayOfWeek.MONDAY -> "월"
+                DayOfWeek.TUESDAY -> "화"
+                DayOfWeek.WEDNESDAY -> "수"
+                DayOfWeek.THURSDAY -> "목"
+                DayOfWeek.FRIDAY -> "금"
+                DayOfWeek.SATURDAY -> "토"
+                DayOfWeek.SUNDAY -> "일"
+            }
         }
     }
 }

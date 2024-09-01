@@ -95,10 +95,10 @@ class AddMemoFragment : Fragment(){
 
     private fun setDate() {
         DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            viewModel.setDate(LocalDate.of (year, month + 1, dayOfMonth))
+            viewModel.setDate(LocalDate.of(year, month + 1, dayOfMonth))
         }.let { listener ->
             viewModel.memoForm.value.memoDate.let {  memoDate ->
-                DatePickerDialog(requireContext(),listener,memoDate.year,memoDate.monthValue,memoDate.dayOfMonth).show()
+                DatePickerDialog(requireContext(),listener,memoDate.year,memoDate.monthValue -1,memoDate.dayOfMonth).show()
             }
         }
     }

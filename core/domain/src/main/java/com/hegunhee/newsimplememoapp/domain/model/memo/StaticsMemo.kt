@@ -6,4 +6,8 @@ data class StaticsMemo(
     val percent : Int,
     val attribute : String,
     val price : BigDecimal
-)
+){
+    fun priceIntValue() : Int {
+        return price.intValueExact()
+    }
+}

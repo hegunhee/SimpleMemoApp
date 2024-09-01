@@ -8,8 +8,6 @@
 
         <import type="android.view.View" />
 
-        <import type="com.hegunhee.newsimplememoapp.feature.common.MemoCategory"/>
-
         <variable
             name="viewModel"
             type="com.hegunhee.newsimplememoapp.feature.statics.StaticViewModel" />
