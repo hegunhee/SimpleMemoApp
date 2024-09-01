@@ -40,7 +40,7 @@
             android:layout_marginTop="5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/topPanel"
-            app:setPercent="@{staticsMemo.percent}"
+            android:text='@{staticsMemo.percent + "%"}'
             tools:ignore="MissingConstraints"
             tools:text="63%" />
 
