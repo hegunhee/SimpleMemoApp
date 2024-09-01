@@ -4,6 +4,6 @@ import com.hegunhee.newsimplememoapp.feature.common.DateSelectorActionHandler
 
 interface StaticsActionHandler : DateSelectorActionHandler{
 
-    fun onStaticsDetailClick(attr : String,year : Int,month : Int)
+    fun onStaticsDetailClick(attr : String)
 
 }

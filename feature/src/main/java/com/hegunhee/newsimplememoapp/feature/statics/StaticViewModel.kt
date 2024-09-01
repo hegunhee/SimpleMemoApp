@@ -2,9 +2,10 @@ package com.hegunhee.newsimplememoapp.feature.statics
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.domain.model.StaticsData
+import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
+import com.hegunhee.newsimplememoapp.domain.model.memo.StaticsMemo
 import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetStaticsDataUseCase
-import com.hegunhee.newsimplememoapp.feature.common.MemoCategory
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetStaticsMemosUseCase
 import com.hegunhee.newsimplememoapp.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -21,31 +22,27 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StaticViewModel @Inject constructor(
+    private val getStaticsMemosUseCase: GetStaticsMemosUseCase,
     private val getStaticsDataUseCase: GetStaticsDataUseCase
 ) : ViewModel(), StaticsActionHandler {
 
     private val _staticsNavigation : MutableSharedFlow<StaticsNavigation> = MutableSharedFlow()
     val staticsNavigation : SharedFlow<StaticsNavigation> = _staticsNavigation.asSharedFlow()
 
-    private val _categoryType : MutableStateFlow<MemoCategory> = MutableStateFlow(MemoCategory.Income)
-    val categoryType : StateFlow<MemoCategory> = _categoryType.asStateFlow()
+    private val _incomeExpenseType : MutableStateFlow<IncomeExpenseType> = MutableStateFlow(IncomeExpenseType.INCOME)
+    val incomeExpenseType : StateFlow<IncomeExpenseType> = _incomeExpenseType.asStateFlow()
 
-    val yearDate = MutableStateFlow<Int>(DateUtil.getYear())
-    val monthDate = MutableStateFlow<Int>(DateUtil.getMonth())
+    val yearDate = MutableStateFlow(DateUtil.getYear())
+    val monthDate = MutableStateFlow(DateUtil.getMonth())
 
-    private val staticsData : StateFlow<List<StaticsData>> = yearDate.combine(monthDate) { year, month ->
-        getStaticsDataUseCase(year,month)
-    }.stateIn(
-        scope = viewModelScope,
-        started= SharingStarted.WhileSubscribed(500L),
-        initialValue = emptyList()
-    )
+    val staticsMemo : StateFlow<List<StaticsMemo>> = combine(incomeExpenseType,yearDate,monthDate) { type, year, month ->
+        getStaticsMemosUseCase(type,year,month)
+            .onSuccess { memos ->
+                return@combine memos.staticsMemos
+            }.onFailure {
 
-    val filteredStaticsData : StateFlow<List<StaticsData>> = staticsData.combine(categoryType) { staticsList, category ->
-        when(category) {
-            MemoCategory.Expenses -> staticsList.filter { it.category == MemoCategory.Expenses.text }
-            MemoCategory.Income -> staticsList.filter { it.category == MemoCategory.Income.text }
-        }
+            }
+        return@combine emptyList<StaticsMemo>()
     }.stateIn(
         scope = viewModelScope,
         started= SharingStarted.WhileSubscribed(500L),
@@ -76,9 +73,9 @@ class StaticViewModel @Inject constructor(
         }
     }
 
-    override fun onStaticsDetailClick(attr : String,year : Int,month : Int) {
+    override fun onStaticsDetailClick(attr : String) {
         viewModelScope.launch {
-            _staticsNavigation.emit(StaticsNavigation.Detail(StaticsNavArgs(attr,year,month)))
+            _staticsNavigation.emit(StaticsNavigation.Detail(StaticsNavArgs(attr,yearDate.value,monthDate.value)))
         }
     }
 
@@ -89,11 +86,11 @@ class StaticViewModel @Inject constructor(
 
 
     fun onIncomeTabClick() {
-        _categoryType.value = MemoCategory.Income
+        _incomeExpenseType.value = IncomeExpenseType.INCOME
     }
 
     fun onExpenseTabClick() {
-        _categoryType.value = MemoCategory.Expenses
+        _incomeExpenseType.value = IncomeExpenseType.EXPENSE
     }
 
 }

@@ -19,8 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddMemoViewModel @Inject constructor(
     private val insertMemoUseCase : InsertServerMemoUseCase,
-    private val getCategoryNamesByTypeUseCase: GetCategoryNamesByType,
-    private val getAllCategoryByTypeUseCase: GetAllCategoryByTypeUseCase
+    private val getCategoryNamesByTypeUseCase: GetCategoryNamesByType
 ) : ViewModel(), CategoryActionHandler {
 
     private val _memoForm : MutableStateFlow<MemoForm> = MutableStateFlow(MemoForm.init())
@@ -135,7 +134,10 @@ class AddMemoViewModel @Inject constructor(
 
     fun refreshCategory() = viewModelScope.launch{
         if(categoryType.value !=  CategoryType.EMPTY) {
-            categoryList.value = getAllCategoryByTypeUseCase(categoryType.value)
+            getCategoryNamesByTypeUseCase(categoryType.value)
+                .onSuccess { categoryNames ->
+                    categoryList.value = categoryNames.names
+                }
         }
     }
 }

@@ -5,15 +5,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.hegunhee.newsimplememoapp.domain.model.StaticsData
+import com.hegunhee.newsimplememoapp.domain.model.memo.StaticsMemo
 import com.hegunhee.newsimplememoapp.feature.databinding.ItemStaticsBinding
 
-class StaticsAdapter(private val actionHandler : StaticsActionHandler) : ListAdapter<StaticsData,StaticsAdapter.StaticsViewHolder>(diffUtil) {
+class StaticsAdapter(private val actionHandler : StaticsActionHandler) : ListAdapter<StaticsMemo,StaticsAdapter.StaticsViewHolder>(diffUtil) {
 
     inner class StaticsViewHolder(private val binding: ItemStaticsBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bindView(statics: StaticsData) = with(binding) {
-            staticsData = statics
+        fun bindView(staticsMemo: StaticsMemo) = with(binding) {
+            this.staticsMemo = staticsMemo
             actionHandler = this@StaticsAdapter.actionHandler
         }
     }
@@ -28,12 +28,12 @@ class StaticsAdapter(private val actionHandler : StaticsActionHandler) : ListAda
     }
 
     companion object{
-        private val diffUtil = object : DiffUtil.ItemCallback<StaticsData>() {
-            override fun areItemsTheSame(oldItem: StaticsData, newItem: StaticsData): Boolean {
-                return oldItem.attr == newItem.attr
+        private val diffUtil = object : DiffUtil.ItemCallback<StaticsMemo>() {
+            override fun areItemsTheSame(oldItem: StaticsMemo, newItem: StaticsMemo): Boolean {
+                return oldItem.attribute == newItem.attribute
             }
 
-            override fun areContentsTheSame(oldItem: StaticsData, newItem: StaticsData): Boolean {
+            override fun areContentsTheSame(oldItem: StaticsMemo, newItem: StaticsMemo): Boolean {
                 return oldItem == newItem
             }
 
