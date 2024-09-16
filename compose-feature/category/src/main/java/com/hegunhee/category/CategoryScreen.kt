@@ -38,7 +38,7 @@ fun CategoryScreenRoot(
     categoryId : Int,
 ) {
     val categoryType = categoryId.toCategoryType()
-    if(categoryType == CategoryType.Empty) {
+    if(categoryType == CategoryType.EMPTY) {
         onBackButtonClick()
     }
     viewModel.fetchCategoryList(categoryId.toCategoryType())
