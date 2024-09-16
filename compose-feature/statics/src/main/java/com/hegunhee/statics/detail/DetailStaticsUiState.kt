@@ -1,6 +1,6 @@
 package com.hegunhee.statics.detail
 
-import com.hegunhee.newsimplememoapp.domain.model.MemoType
+import com.hegunhee.newsimplememoapp.domain.model.memo.MemoType
 
 sealed interface DetailStaticsUiState {
 

@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.util.DateUtil
 import com.hegunhee.newsimplememoapp.core.ui.toMoneyFormat
-import com.hegunhee.newsimplememoapp.domain.model.getMemoListTotalPrice
-import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetMemoListSortedByAttrYearMonthUseCase
+import com.hegunhee.newsimplememoapp.domain.model.memo.toMemoTypes
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetMemosByAttrUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -16,24 +16,28 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailStaticsViewModel @Inject constructor(
-    private val getMemoListSortedByAttrYearMonthUseCase: GetMemoListSortedByAttrYearMonthUseCase
+    private val getMemosByAttrYearMonthUseCase: GetMemosByAttrUseCase
 ) : ViewModel() {
 
     private val yearDate = MutableStateFlow(DateUtil.getYear())
     private val monthDate = MutableStateFlow(DateUtil.getMonth())
     private val attr = MutableStateFlow("")
 
-    val uiState : StateFlow<DetailStaticsUiState> = combine(flow = yearDate,flow2 = monthDate,flow3 = attr,transform = { year, month, attr ->
-        val memoList = getMemoListSortedByAttrYearMonthUseCase(attr,year,month)
-        val totalPrice = memoList.getMemoListTotalPrice()
-        return@combine DetailStaticsUiState.Success(
-            year,
-            month,
-            attr,
-            memoList,
-            totalPrice.toMoneyFormat()
-        )
-    }).stateIn(
+    val uiState : StateFlow<DetailStaticsUiState> = combine(yearDate,monthDate,attr) { year, month, attr ->
+        getMemosByAttrYearMonthUseCase(attr,year,month)
+            .onSuccess { memos ->
+                return@combine DetailStaticsUiState.Success(
+                    year,
+                    month,
+                    attr,
+                    memos.memos.toMemoTypes(),
+                    memos.price.intValueExact().toMoneyFormat()
+                )
+            }.onFailure {
+
+            }
+        DetailStaticsUiState.Loading
+    }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(500L),
         initialValue = DetailStaticsUiState.Loading
