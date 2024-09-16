@@ -27,7 +27,7 @@ import com.hegunhee.newsimplememoapp.core.ui.DatePickerDialog
 import com.hegunhee.newsimplememoapp.core.ui.DateSelector
 import com.hegunhee.newsimplememoapp.core.ui.MemoDateItem
 import com.hegunhee.newsimplememoapp.core.ui.MemoItem
-import com.hegunhee.newsimplememoapp.domain.model.MemoType
+import com.hegunhee.newsimplememoapp.domain.model.memo.MemoType
 
 @Composable
 fun DetailStaticsScreenRoot(
@@ -112,19 +112,19 @@ fun DetailStaticsScreen(
             Text(text = "총 합계는", fontSize = 20.sp)
             Text(text = totalPrice +"원 입니다.", fontSize = 20.sp)
             LazyColumn() {
-//                itemsIndexed(memoList) {index, item ->
-//                    when(item) {
-//                        is MemoType.MemoDate -> {
-//                            if(index != 0) {
-//                                Spacer(Modifier.size(10.dp))
-//                            }
-//                            MemoDateItem(memoDate = item)
-//                        }
-//                        is MemoType.Memo -> {
-//                            MemoItem(memo = item, onMemoClick = onMemoClick)
-//                        }
-//                    }
-//                }
+                itemsIndexed(memoList) {index, item ->
+                    when(item) {
+                        is MemoType.MemoDate -> {
+                            if(index != 0) {
+                                Spacer(Modifier.size(10.dp))
+                            }
+                            MemoDateItem(memoDate = item)
+                        }
+                        is MemoType.Memo -> {
+                            MemoItem(memo = item, onMemoClick = onMemoClick)
+                        }
+                    }
+                }
             }
         }
     }
