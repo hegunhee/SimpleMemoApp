@@ -1,14 +1,14 @@
 package com.hegunhee.newsimplememoapp.domain.usecase.memo
 
 import com.hegunhee.newsimplememoapp.domain.model.memo.AttributeMemos
-import com.hegunhee.newsimplememoapp.domain.repository.MemoTempRepository
+import com.hegunhee.newsimplememoapp.domain.repository.MemoRepository
 import javax.inject.Inject
 
 class GetMemosByAttrUseCase @Inject constructor(
-    private val memoTempRepository: MemoTempRepository
+    private val memoRepository: MemoRepository
 ) {
 
     suspend operator fun invoke(attr : String,year : Int,month : Int) : Result<AttributeMemos> {
-        return memoTempRepository.getMemosByAttr(attr,year,month)
+        return memoRepository.getMemosByAttr(attr,year,month)
     }
 }
