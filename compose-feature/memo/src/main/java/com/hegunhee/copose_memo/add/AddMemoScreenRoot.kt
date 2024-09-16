@@ -17,24 +17,20 @@ fun AddMemoScreenRoot(
     viewModel : AddMemoViewModel = hiltViewModel()
 ) {
     LaunchedEffect(key1 = viewModel.categoryList) {
-        viewModel.setCategoryType(viewModel.subCategoryType.value)
+        viewModel.setCategoryType(viewModel.categoryType.value)
     }
     val memoScreenType = remember { DetailMemoScreenType.Add(onSaveMemoClick = viewModel::saveMemo) }
     DetailMemoScreen(
         paddingValues = paddingValues,
         onBackButtonClick = onBackButtonClick,
-        category = viewModel.category.collectAsStateWithLifecycle().value,
-        dateInfo = viewModel.dateInfo.collectAsStateWithLifecycle().value.dateStamp,
-        timeInfo = viewModel.timeInfo.collectAsStateWithLifecycle().value,
-        asset = viewModel.asset.collectAsStateWithLifecycle().value,
-        attr = viewModel.attr.collectAsStateWithLifecycle().value,
+        memoForm = viewModel.memoForm.collectAsStateWithLifecycle().value,
         price = viewModel.price.collectAsStateWithLifecycle().value,
         description = viewModel.description.collectAsStateWithLifecycle().value,
-        selectedCategoryType = viewModel.subCategoryType.collectAsStateWithLifecycle().value,
+        selectedCategoryType = viewModel.categoryType.collectAsStateWithLifecycle().value,
         subCategoryList = viewModel.categoryList.collectAsStateWithLifecycle().value,
-        onCategoryClick = viewModel::setCategory,
-        onSelectDateClick = viewModel::onSelectDateClick,
-        onSelectTimeClick = viewModel::onSelectTimeClick,
+        onCategoryClick = viewModel::setIncomeExpenseType,
+        onSelectDateClick = viewModel::setDate,
+        onSelectTimeClick = viewModel::setTime,
         onSubCategoryClick = viewModel::setCategoryType,
         onSubCategoryItemClick = viewModel::setSubCategoryItem,
         onAddSubCategoryClick = onAddCategoryClick,
