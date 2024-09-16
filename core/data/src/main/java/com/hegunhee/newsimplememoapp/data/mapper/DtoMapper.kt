@@ -15,7 +15,7 @@ import com.hegunhee.newsimplememoapp.domain.model.category.CategoryNamesByType
 import com.hegunhee.newsimplememoapp.domain.model.category.Category
 import com.hegunhee.newsimplememoapp.domain.model.memo.AttributeMemos
 import com.hegunhee.newsimplememoapp.domain.model.memo.MemoForm
-import com.hegunhee.newsimplememoapp.domain.model.memo.MemoServer
+import com.hegunhee.newsimplememoapp.domain.model.memo.Memo
 import com.hegunhee.newsimplememoapp.domain.model.memo.MemosSummary
 import com.hegunhee.newsimplememoapp.domain.model.memo.StaticsMemo
 import com.hegunhee.newsimplememoapp.domain.model.memo.StaticsMemos
@@ -24,11 +24,11 @@ fun MemoForm.toMemoRequest() : MemoRequestDto {
     return MemoRequestDto(memoDate,incomeExpenseType, attribute, asset, description, price)
 }
 
-fun MemoEntity.toMemo() : MemoServer {
-    return MemoServer(id,memoDate,incomeExpenseType, attribute, asset, description, price)
+fun MemoEntity.toMemo() : Memo {
+    return Memo(id,memoDate,incomeExpenseType, attribute, asset, description, price)
 }
 
-fun MemoEntities.toMemos() : List<MemoServer> {
+fun MemoEntities.toMemos() : List<Memo> {
     return this.memos.map { it.toMemo() }
 }
 

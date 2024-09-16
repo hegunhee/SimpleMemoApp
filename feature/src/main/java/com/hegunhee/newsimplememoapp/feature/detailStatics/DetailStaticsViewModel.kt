@@ -2,7 +2,6 @@ package com.hegunhee.newsimplememoapp.feature.detailStatics
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.hegunhee.newsimplememoapp.domain.model.memo.MemoServer
 import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetMemosByAttrUseCase
 import com.hegunhee.newsimplememoapp.feature.common.DateSelectorActionHandler
 import com.hegunhee.newsimplememoapp.feature.common.MemoAdapterActionHandler

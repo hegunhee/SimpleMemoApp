@@ -2,7 +2,7 @@ package com.hegunhee.newsimplememoapp.feature.common.memo
 
 import com.hegunhee.newsimplememoapp.domain.model.getTimeStamp
 import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
-import com.hegunhee.newsimplememoapp.domain.model.memo.MemoServer
+import com.hegunhee.newsimplememoapp.domain.model.memo.Memo
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -53,11 +53,11 @@ sealed class MemoType() {
     }
 }
 
-fun MemoServer.toMemo() : MemoType.Memo {
+fun Memo.toMemo() : MemoType.Memo {
     return MemoType.Memo(id,incomeExpenseType,memoDate,asset,attribute,price.intValueExact(),description)
 }
 
-fun List<MemoServer>.toMemoTypes() : List<MemoType>{
+fun List<Memo>.toMemoTypes() : List<MemoType>{
     return this.groupBy { it.memoDate.dayOfMonth }
         .flatMap { (day, list) ->
             val date = list[0].memoDate.toLocalDate()

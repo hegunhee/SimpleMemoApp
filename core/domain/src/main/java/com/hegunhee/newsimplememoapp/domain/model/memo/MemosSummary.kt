@@ -4,5 +4,5 @@ import com.hegunhee.newsimplememoapp.domain.model.TotalSum
 
 data class MemosSummary(
     val totalSum : TotalSum,
-    val memos : List<MemoServer>
+    val memos : List<Memo>
 )
