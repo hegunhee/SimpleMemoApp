@@ -22,6 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.Date
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,7 +31,7 @@ import java.util.Date
 internal fun MemoTimePickerDialog(
     onDismissDialog: () -> Unit,
     timePickerState: TimePickerState,
-    onSelectTimeClick : (Int,Int,String) -> Unit)
+    onSelectTimeClick : (LocalTime) -> Unit)
 {
     AlertDialog(
         modifier = Modifier
@@ -77,7 +79,8 @@ internal fun MemoTimePickerDialog(
                         }else {
                             "오전"
                         }
-                        onSelectTimeClick(hour,timePickerState.minute,ampm)
+                        val time = LocalTime.of(hour, timePickerState.minute)
+                        onSelectTimeClick(time)
                         onDismissDialog()
                     }
                 ) {
@@ -93,7 +96,7 @@ internal fun MemoTimePickerDialog(
 fun MemoDatePickerDialog(
     onDismissDialog : () -> Unit,
     datePickerState : DatePickerState,
-    onSelectDateClick : (Int,Int,Int) -> Unit
+    onSelectDateClick : (LocalDate) -> Unit
 ) {
     androidx.compose.material3.DatePickerDialog(
         onDismissRequest = onDismissDialog,
@@ -104,7 +107,7 @@ fun MemoDatePickerDialog(
                         val date = Date(timeStamp)
                         val (year, month, day) = dateFormat.format(date).split("/")
                             .map { it.toInt() }
-                        onSelectDateClick(year, month, day)
+                        onSelectDateClick(LocalDate.of(year,month,day))
                     }
                     onDismissDialog()
                 }
