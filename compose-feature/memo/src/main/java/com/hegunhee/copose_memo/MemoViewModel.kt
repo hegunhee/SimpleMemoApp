@@ -3,9 +3,8 @@ package com.hegunhee.copose_memo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.util.DateUtil
-import com.hegunhee.newsimplememoapp.domain.model.MemoType
-import com.hegunhee.newsimplememoapp.domain.model.TotalPrice
-import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetMemoTypeListSortedByYearAndMonthUseCase
+import com.hegunhee.newsimplememoapp.domain.model.memo.toMemoTypes
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetMemosSummaryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -16,33 +15,28 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MemoViewModel @Inject constructor(
-    private val getAllMemoTypeBySortUseCase : GetMemoTypeListSortedByYearAndMonthUseCase
+    private val getMemosSummaryUseCase: GetMemosSummaryUseCase
 ) : ViewModel() {
 
-    private val yearDate = MutableStateFlow<Int>(DateUtil.getYear())
-    private val monthDate = MutableStateFlow<Int>(DateUtil.getMonth())
+    private val yearDate = MutableStateFlow(DateUtil.getYear())
+    private val monthDate = MutableStateFlow(DateUtil.getMonth())
 
     val uiState: StateFlow<MemoUiState> = yearDate.combine(monthDate) { year, month ->
-        val memoList = getAllMemoTypeBySortUseCase(year, month)
-        val totalPrice = memoList.filterIsInstance<MemoType.Memo>().getTotalPrice()
+        val summary = getMemosSummaryUseCase(year, month).getOrElse {
+            val message = it.message ?: ""
+            return@combine MemoUiState.Error(message)
+        }
         MemoUiState.Success(
             year = year,
             month = month,
-            memoTypeList = memoList,
-            totalPrice = totalPrice
+            memoTypeList = summary.memos.toMemoTypes(),
+            totalSum = summary.totalSum
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(500L),
         initialValue = MemoUiState.Loading
     )
-
-
-    private fun List<MemoType.Memo>.getTotalPrice(): TotalPrice {
-        val incomeTotal = this.filter { it.category == "수입" }.sumOf { it.price }
-        val expenseTotal = this.filter { it.category == "지출" }.sumOf { it.price }
-        return TotalPrice(incomeTotal, expenseTotal)
-    }
 
     fun onPreviousMonthClick() {
         if (monthDate.value <= 1) {
@@ -62,7 +56,7 @@ class MemoViewModel @Inject constructor(
         }
     }
 
-    fun onDatePickerMonthClick(year : Int, month : Int) {
+    fun onDatePickerMonthClick(year: Int, month: Int) {
         yearDate.value = year
         monthDate.value = month
     }

@@ -1,7 +1,6 @@
 package com.hegunhee.copose_memo
-
-import com.hegunhee.newsimplememoapp.domain.model.MemoType
-import com.hegunhee.newsimplememoapp.domain.model.TotalPrice
+import com.hegunhee.newsimplememoapp.domain.model.TotalSum
+import com.hegunhee.newsimplememoapp.domain.model.memo.MemoType
 
 sealed interface MemoUiState {
 
@@ -11,7 +10,7 @@ sealed interface MemoUiState {
         val year : Int,
         val month : Int,
         val memoTypeList : List<MemoType>,
-        val totalPrice : TotalPrice
+        val totalSum : TotalSum
     ) : MemoUiState
 
     data class Error(

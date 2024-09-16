@@ -17,19 +17,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
 
 @Composable
-fun CategorySelector(
-    selectedCategory: String,
-    onCategoryClick: (String) -> Unit,
-    categoryList : List<String> = listOf("수입","지출"),
+fun IncomeExpenseTypeSelector(
+    selectedCategory: IncomeExpenseType,
+    onCategoryClick: (IncomeExpenseType) -> Unit,
     categoryColor : List<Color> = listOf(Color.Blue,Color.Red)
 ) {
     Row(
         modifier = Modifier.fillMaxWidth().padding(10.dp),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        categoryList.zip(categoryColor) {  category, selectedColor ->
+        IncomeExpenseType.values().toList().zip(categoryColor) {  category, selectedColor ->
             val fontColor = if(category == selectedCategory) {
                 selectedColor
             }else {
@@ -42,8 +42,8 @@ fun CategorySelector(
 
 @Composable
 fun RowScope.CategoryButton(
-    onClick : (String) -> Unit,
-    category : String,
+    onClick : (IncomeExpenseType) -> Unit,
+    category : IncomeExpenseType,
     fontColor : Color
 ) {
     Button(
@@ -52,15 +52,15 @@ fun RowScope.CategoryButton(
         shape = RectangleShape,
         colors = ButtonDefaults.buttonColors(containerColor = Color.White,contentColor = fontColor)
     ) {
-        Text(text = category)
+        Text(text = category.toString())
     }
 }
 
 @Preview
 @Composable
-private fun CategorySelector() {
-    val (category, setCategory) = remember { mutableStateOf("") }
-    CategorySelector(
+private fun IncomeExpenseTypeSelector() {
+    val (category, setCategory) = remember { mutableStateOf(IncomeExpenseType.INCOME) }
+    IncomeExpenseTypeSelector(
         selectedCategory = category,
         onCategoryClick = setCategory
     )

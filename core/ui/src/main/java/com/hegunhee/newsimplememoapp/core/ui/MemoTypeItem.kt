@@ -27,47 +27,92 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hegunhee.newsimplememoapp.core.designsystem.Purple80
-import com.hegunhee.newsimplememoapp.domain.model.MemoType
+import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
+import com.hegunhee.newsimplememoapp.domain.model.memo.MemoType
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Composable
-fun MemoDateItem(memoDate : MemoType.MemoDate) {
-    val dayOfWeekColor = when(memoDate.dayOfWeek) {
+fun MemoDateItem(memoDate: MemoType.MemoDate) {
+    val dayOfWeekColor = when (memoDate.dayOfWeek()) {
         "토" -> Color.Blue
         "일" -> Color.Red
         else -> Color.Black
     }
-    val dateInfo = "${memoDate.year%100}.${memoDate.month}"
+    val dateInfo = memoDate.dateStamp()
     Column {
-        Divider(color = Color.Black,modifier = Modifier.fillMaxWidth().height(1.dp))
-        Row(modifier = Modifier
-            .padding(horizontal = 10.dp, vertical = 5.dp)
-            .fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+        Divider(
+            color = Color.Black, modifier = Modifier
+                .fillMaxWidth()
+                .height(1.dp)
+        )
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 5.dp)
+                .fillMaxWidth(), horizontalArrangement = Arrangement.End
+        ) {
             val baselineModifier = Modifier.alignByBaseline()
-            Text(modifier = baselineModifier ,text = memoDate.day.toString(), fontSize = 20.sp)
-            Text(modifier = Modifier.padding(3.dp).background(dayOfWeekColor).then(baselineModifier),text = memoDate.dayOfWeek +"요일", fontSize = 15.sp,color = Color.White)
-            Text(modifier = Modifier.padding(5.dp).then(baselineModifier),text = dateInfo)
-            Text(modifier = Modifier.weight(3.5f).then(baselineModifier),text = "${memoDate.incomeSum}원",color = Color.Blue,style = TextStyle(textAlign = TextAlign.End), maxLines = 1)
-            Text(modifier = Modifier.weight(3.5f).then(baselineModifier),text = "${memoDate.expenseSum}원",color = Color.Red,style = TextStyle(textAlign = TextAlign.End), maxLines = 1)
+            Text(
+                modifier = baselineModifier,
+                text = memoDate.date.dayOfMonth.toString(),
+                fontSize = 20.sp
+            )
+            Text(
+                modifier = Modifier
+                    .padding(3.dp)
+                    .background(dayOfWeekColor)
+                    .then(baselineModifier),
+                text = memoDate.dayOfWeek() + "요일",
+                fontSize = 15.sp,
+                color = Color.White
+            )
+            Text(
+                modifier = Modifier
+                    .padding(5.dp)
+                    .then(baselineModifier), text = dateInfo
+            )
+            Text(
+                modifier = Modifier
+                    .weight(3.5f)
+                    .then(baselineModifier),
+                text = "${memoDate.incomeSum}원",
+                color = Color.Blue,
+                style = TextStyle(textAlign = TextAlign.End),
+                maxLines = 1
+            )
+            Text(
+                modifier = Modifier
+                    .weight(3.5f)
+                    .then(baselineModifier),
+                text = "${memoDate.expenseSum}원",
+                color = Color.Red,
+                style = TextStyle(textAlign = TextAlign.End),
+                maxLines = 1
+            )
         }
-        Divider(color = Color.Black,modifier = Modifier.fillMaxWidth().height(1.dp))
+        Divider(
+            color = Color.Black, modifier = Modifier
+                .fillMaxWidth()
+                .height(1.dp)
+        )
     }
 
 }
 
 @Composable
-fun MemoItem(memo : MemoType.Memo,onMemoClick : (String) -> Unit) {
-    val description = memo.description.ifEmpty { memo.asset }
-    val descriptionColor = if(memo.description.isEmpty()) {
+fun MemoItem(memo: MemoType.Memo, onMemoClick: (String) -> Unit) {
+    val description = memo.desc.ifEmpty { memo.asset }
+    val descriptionColor = if (memo.desc.isEmpty()) {
         Color.Gray
-    }else {
+    } else {
         Color.Black
     }
-    val priceColor = if(memo.category == "지출") {
+    val priceColor = if (memo.incomeExpenseType.name == "EXPENSE") {
         Color.Red
-    }else {
+    } else {
         Color.Blue
     }
-    val timeInfo = "${memo.amPm} ${memo.hour}:${memo.minute}"
+    val timeInfo = memo.timeStamp()
     Row(modifier = Modifier
         .clickable { onMemoClick(memo.id.toString()) }
         .background(Purple80)
@@ -76,12 +121,36 @@ fun MemoItem(memo : MemoType.Memo,onMemoClick : (String) -> Unit) {
         .requiredHeight(50.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(modifier = Modifier.weight(1f),text = memo.attr, textAlign = TextAlign.Center, fontSize = 13.sp,color = Color.Black)
-        Column(modifier = Modifier.weight(4f).padding(start = 5.dp), horizontalAlignment = Alignment.Start) {
-            Text(modifier = Modifier.padding(top = 5.dp),text = description,color = descriptionColor, fontSize = 17.sp, maxLines = 1)
-            Text(text = timeInfo,color = Color.Gray,fontSize = 13.sp)
+        Text(
+            modifier = Modifier.weight(1f),
+            text = memo.attr,
+            textAlign = TextAlign.Center,
+            fontSize = 13.sp,
+            color = Color.Black
+        )
+        Column(
+            modifier = Modifier
+                .weight(4f)
+                .padding(start = 5.dp),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Text(
+                modifier = Modifier.padding(top = 5.dp),
+                text = description,
+                color = descriptionColor,
+                fontSize = 17.sp,
+                maxLines = 1
+            )
+            Text(text = timeInfo, color = Color.Gray, fontSize = 13.sp)
         }
-        Text(modifier = Modifier.weight(5f),text = "${memo.price}원", textAlign = TextAlign.End, fontSize = 15.sp,maxLines = 1,color = priceColor)
+        Text(
+            modifier = Modifier.weight(5f),
+            text = "${memo.price}원",
+            textAlign = TextAlign.End,
+            fontSize = 15.sp,
+            maxLines = 1,
+            color = priceColor
+        )
     }
 }
 
@@ -89,12 +158,9 @@ fun MemoItem(memo : MemoType.Memo,onMemoClick : (String) -> Unit) {
 @Composable
 private fun MemoDateItemPreview() {
     val memoDate = MemoType.MemoDate(
-        year = 2023,
-        month = 10,
-        day = 7,
-        dayOfWeek = "토",
+        date = LocalDate.now(),
         incomeSum = 0,
-        expenseSum = 231232
+        expenseSum = 123123
     )
     MemoDateItem(memoDate = memoDate)
 }
@@ -103,23 +169,17 @@ private fun MemoDateItemPreview() {
 @Composable
 private fun MemoItemPreview() {
     val context = LocalContext.current
-    val onMemoClick = {id : String ->
+    val onMemoClick = { id: String ->
         Toast.makeText(context, id, Toast.LENGTH_SHORT).show()
     }
     val memo = MemoType.Memo(
-        category = "지출",
-        year = 2023,
-        month = 10,
-        day = 7,
-        dayOfWeek = "토",
-        amPm = "오전",
-        hour = 10,
-        minute = 30,
-        attr = "현금",
-        price = 23000,
-        asset = "식비",
-        description = "",
-        id = 5
+        id = 5,
+        incomeExpenseType = IncomeExpenseType.INCOME,
+        date = LocalDateTime.now(),
+        asset = "자산",
+        attr = "분류",
+        price = 10000,
+        desc = "설명임당"
     )
     MemoItem(memo = memo, onMemoClick = onMemoClick)
 }
@@ -130,13 +190,14 @@ private fun MemoListPreview() {
     val memoList = getTestMemoList()
     LazyColumn() {
         itemsIndexed(memoList) { index, item ->
-            when(item) {
+            when (item) {
                 is MemoType.MemoDate -> {
-                    if(index != 0) {
+                    if (index != 0) {
                         Spacer(Modifier.size(10.dp))
                     }
                     MemoDateItem(item)
                 }
+
                 is MemoType.Memo -> {
                     MemoItem(item) { id: String -> }
                 }
@@ -145,29 +206,26 @@ private fun MemoListPreview() {
     }
 }
 
-private fun getTestMemoList() : List<MemoType> {
+private fun getTestMemoList(): List<MemoType> {
     val memo = MemoType.Memo(
-        category = "지출",
-        year = 2023,
-        month = 10,
-        day = 7,
-        dayOfWeek = "토",
-        amPm = "오전",
-        hour = 10,
-        minute = 30,
-        attr = "현금",
-        price = 23000,
-        asset = "식비",
-        description = "",
-        id = 5
+        id = 5,
+        incomeExpenseType = IncomeExpenseType.INCOME,
+        date = LocalDateTime.now(),
+        asset = "자산",
+        attr = "분류",
+        price = 10000,
+        desc = "설명임당"
     )
     val memoDate = MemoType.MemoDate(
-        year = 2023,
-        month = 10,
-        day = 7,
-        dayOfWeek = "토",
+        date = LocalDate.now(),
         incomeSum = 0,
-        expenseSum = 231232
+        expenseSum = 123123
     )
-    return listOf<MemoType>(memoDate.copy(day =8, dayOfWeek = "일"),memo.copy(day = 8,dayOfWeek = "일",description = "안녕하세요"),memo,memoDate.copy(day = 9, dayOfWeek = "월"),memo.copy(day = 9,dayOfWeek = "월"))
+    return listOf(
+        memoDate,
+        memo,
+        memo,
+        memoDate,
+        memo
+    )
 } 

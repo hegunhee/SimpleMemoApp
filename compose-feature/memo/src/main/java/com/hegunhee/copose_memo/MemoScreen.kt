@@ -32,8 +32,9 @@ import com.hegunhee.newsimplememoapp.core.ui.DatePickerDialog
 import com.hegunhee.newsimplememoapp.core.ui.DateSelector
 import com.hegunhee.newsimplememoapp.core.ui.MemoDateItem
 import com.hegunhee.newsimplememoapp.core.ui.MemoItem
-import com.hegunhee.newsimplememoapp.domain.model.MemoType
-import com.hegunhee.newsimplememoapp.domain.model.TotalPrice
+import com.hegunhee.newsimplememoapp.domain.model.TotalSum
+import com.hegunhee.newsimplememoapp.domain.model.memo.MemoType
+import java.math.BigDecimal
 
 @Composable
 fun MemoScreenRoot(
@@ -46,13 +47,13 @@ fun MemoScreenRoot(
         year = DateUtil.getYear(),
         month = DateUtil.getMonth(),
         memoTypeList = emptyList(),
-        totalPrice = TotalPrice(0,0)
+        totalSum = TotalSum(BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO)
     )
     MemoScreen(
         paddingValues = paddingValues,
         year = uiState.year,
         month =  uiState.month,
-        totalPrice = uiState.totalPrice,
+        totalSum = uiState.totalSum,
         memoTypeList = uiState.memoTypeList,
         onPreviousMonthClick = viewModel::onPreviousMonthClick,
         onNextMonthClick = viewModel::onNextMonthClick,
@@ -68,7 +69,7 @@ fun MemoScreen(
     paddingValues: PaddingValues,
     year : Int,
     month : Int,
-    totalPrice : TotalPrice,
+    totalSum : TotalSum,
     memoTypeList : List<MemoType>,
     onPreviousMonthClick : () -> Unit,
     onNextMonthClick : () -> Unit,
@@ -77,7 +78,7 @@ fun MemoScreen(
     onAddMemoClick : () -> Unit,
     onMemoClick : (String) -> Unit,
 ) {
-    var datePickerDialogState by remember{mutableStateOf<Boolean>(false)}
+    var datePickerDialogState by remember{mutableStateOf(false)}
     val showDatePickerDialog = { datePickerDialogState = true}
     val dismissDatePickerDialog = { datePickerDialogState = false}
 
@@ -108,7 +109,7 @@ fun MemoScreen(
         }
     ) { padding ->
         Column(modifier = Modifier.padding(padding)) {
-            TotalPriceTable(totalPrice)
+            TotalPriceTable(totalSum)
             LazyColumn() {
                 itemsIndexed(memoTypeList) {index, item ->
                     when(item) {
@@ -129,7 +130,7 @@ fun MemoScreen(
 }
 
 @Composable
-private fun TotalPriceTable(totalPrice : TotalPrice) {
+private fun TotalPriceTable(totalSum : TotalSum) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -142,17 +143,17 @@ private fun TotalPriceTable(totalPrice : TotalPrice) {
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
-        Text(text = totalPrice.incomePrice.toString(), fontSize = 15.sp)
-        Text(text = totalPrice.expensePrice.toString(), fontSize = 15.sp)
-        Text(text = totalPrice.sumPrice.toString(), fontSize = 15.sp)
+        Text(text = totalSum.incomeSum.toString(), fontSize = 15.sp)
+        Text(text = totalSum.expenseSum.toString(), fontSize = 15.sp)
+        Text(text = totalSum.totalSum.toString(), fontSize = 15.sp)
     }
 }
 
 @Composable
 @Preview
 private fun TotalPriceTablePreview() {
-    val totalPrice = TotalPrice(incomePrice = 32121, expensePrice = 44433)
+    val totalSum = TotalSum(incomeSum = BigDecimal.valueOf(32121), expenseSum = BigDecimal.valueOf(44433), totalSum = BigDecimal.valueOf(-10000))
     Column {
-        TotalPriceTable(totalPrice = totalPrice)
+        TotalPriceTable(totalSum = totalSum)
     }
 }

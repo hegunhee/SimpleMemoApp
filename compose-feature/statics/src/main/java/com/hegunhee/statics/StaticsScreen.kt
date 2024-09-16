@@ -16,7 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.hegunhee.newsimplememoapp.core.ui.CategorySelector
+import com.hegunhee.newsimplememoapp.core.ui.IncomeExpenseTypeSelector
 import com.hegunhee.newsimplememoapp.core.ui.DatePickerDialog
 import com.hegunhee.newsimplememoapp.core.ui.DateSelector
 import com.hegunhee.newsimplememoapp.core.ui.PercentStatics
@@ -89,7 +89,7 @@ fun StaticsScreen(
         ) }
     ) { padding ->
         Column(modifier = Modifier.fillMaxWidth().padding(padding).padding(horizontal = 10.dp)) {
-            CategorySelector(
+            IncomeExpenseTypeSelector(
                 selectedCategory = category,
                 onCategoryClick = onCategoryClick
             )

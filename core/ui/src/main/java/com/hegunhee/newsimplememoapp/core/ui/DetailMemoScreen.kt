@@ -27,24 +27,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
+import com.hegunhee.newsimplememoapp.domain.model.getDateStamp
+import com.hegunhee.newsimplememoapp.domain.model.getTimeStamp
+import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
+import com.hegunhee.newsimplememoapp.domain.model.memo.MemoForm
+import java.time.LocalDate
+import java.time.LocalTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailMemoScreen(
     paddingValues: PaddingValues,
     onBackButtonClick : () -> Unit,
-    category : String,
-    dateInfo : String,
-    timeInfo : TimeInfo,
-    asset : String,
-    attr : String,
+    memoForm : MemoForm,
     price : String,
     description : String,
     selectedCategoryType : CategoryType,
     subCategoryList : List<String>,
-    onCategoryClick : (String) -> Unit,
-    onSelectDateClick : (Int,Int,Int) -> Unit,
-    onSelectTimeClick : (Int,Int,String) -> Unit,
+    onCategoryClick : (IncomeExpenseType) -> Unit,
+    onSelectDateClick : (LocalDate) -> Unit,
+    onSelectTimeClick : (LocalTime) -> Unit,
     onSubCategoryClick : (CategoryType) -> Unit,
     onSubCategoryItemClick : (CategoryType, String) -> Unit,
     onAddSubCategoryClick : (String) -> Unit,
@@ -62,7 +64,7 @@ fun DetailMemoScreen(
         )
     }
 
-    val timePickerState = rememberTimePickerState(initialHour = timeInfo.hour, initialMinute = timeInfo.minute)
+    val timePickerState = rememberTimePickerState(initialHour = memoForm.memoDate.hour, initialMinute = memoForm.memoDate.minute)
     var showTimePicker by remember { mutableStateOf(false) }
     if(showTimePicker) {
         MemoTimePickerDialog(
@@ -73,7 +75,7 @@ fun DetailMemoScreen(
     }
 
     var showCategoryBottomSheet by rememberSaveable { mutableStateOf(false) }
-    if(showCategoryBottomSheet && (selectedCategoryType!is CategoryType.Empty)) {
+    if(showCategoryBottomSheet && (selectedCategoryType != CategoryType.EMPTY)) {
         CategoryBottomSheet(
             onDismissRequest = { showCategoryBottomSheet = false},
             selectedCategoryType = selectedCategoryType,
@@ -88,12 +90,12 @@ fun DetailMemoScreen(
             .padding(start = 10.dp, top = 10.dp)
             .padding(paddingValues),
         topBar =  {
-            DetailMemoTopBar(onBackButtonClick,category)
+            DetailMemoTopBar(onBackButtonClick,memoForm.incomeExpenseType.toString())
         }
     ) { padding ->
         Column(modifier = Modifier.padding(padding)) {
-            CategorySelector(
-                selectedCategory = category,
+            IncomeExpenseTypeSelector(
+                selectedCategory = memoForm.incomeExpenseType,
                 onCategoryClick = onCategoryClick
             )
             Row(
@@ -103,32 +105,32 @@ fun DetailMemoScreen(
             ) {
                 Text(text = "날짜",modifier = Modifier.weight(0.2f), fontSize = 20.sp)
                 Text(
-                    text = dateInfo,
+                    text = memoForm.memoDate.getDateStamp(),
                     modifier = Modifier
                         .padding(end = 10.dp)
                         .weight(0.4f)
                         .clickable { showDatePicker = true }, fontSize = 20.sp,
                     maxLines = 1)
-                Text(text = timeInfo.timeStamp,modifier = Modifier
+                Text(text = memoForm.memoDate.getTimeStamp(),modifier = Modifier
                     .weight(0.4f)
                     .clickable { showTimePicker = true }, fontSize = 20.sp)
             }
 
             SubCategory(
-                categoryType = CategoryType.Asset,
-                selectedCategory = asset,
+                categoryType = CategoryType.ASSET,
+                selectedCategory = memoForm.asset,
                 onSubCategoryClick = onSubCategoryClick,
                 showCategoryBottomSheet = { showCategoryBottomSheet = true }
             )
 
-            val attrType = if(category == "수입") {
-                CategoryType.AttrIncome
+            val attrType = if(memoForm.incomeExpenseType == IncomeExpenseType.INCOME) {
+                CategoryType.ATTR_INCOME
             }else {
-                CategoryType.AttrExpenses
+                CategoryType.ATTR_EXPENSE
             }
             SubCategory(
                 categoryType = attrType,
-                selectedCategory = attr,
+                selectedCategory = memoForm.attribute,
                 onSubCategoryClick = onSubCategoryClick,
                 showCategoryBottomSheet = { showCategoryBottomSheet = true }
             )
