@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
 import com.hegunhee.newsimplememoapp.domain.model.memo.StaticsMemo
-import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetStaticsDataUseCase
 import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetStaticsMemosUseCase
 import com.hegunhee.newsimplememoapp.util.DateUtil
 import dagger.hilt.android.lifecycle.HiltViewModel

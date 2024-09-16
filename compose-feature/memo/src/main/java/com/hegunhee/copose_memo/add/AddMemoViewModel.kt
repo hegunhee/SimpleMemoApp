@@ -5,12 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
 import com.hegunhee.newsimplememoapp.domain.model.memo.MemoForm
-import com.hegunhee.newsimplememoapp.domain.usecase.category.GetCategoryNamesByType
-import com.hegunhee.newsimplememoapp.domain.usecase.memo.InsertServerMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.category.GetCategoryNamesByTypeUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.InsertMemoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -19,8 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddMemoViewModel @Inject constructor(
-    private val insertMemoUseCase: InsertServerMemoUseCase,
-    private val getCategoryNamesByTypeUseCase: GetCategoryNamesByType
+    private val insertMemoUseCase: InsertMemoUseCase,
+    private val getCategoryNamesByTypeUseCase: GetCategoryNamesByTypeUseCase
 ) : ViewModel() {
 
     private val _memoForm: MutableStateFlow<MemoForm> = MutableStateFlow(MemoForm.init())

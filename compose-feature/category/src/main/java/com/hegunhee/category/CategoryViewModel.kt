@@ -3,10 +3,10 @@ package com.hegunhee.category
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
-import com.hegunhee.newsimplememoapp.domain.usecase.category.DeleteServerCategoryUseCase
-import com.hegunhee.newsimplememoapp.domain.usecase.category.GetCategoryNamesByType
-import com.hegunhee.newsimplememoapp.domain.usecase.category.InsertServerCategoryUsecase
-import com.hegunhee.newsimplememoapp.domain.usecase.category.isExistCategoryUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.category.DeleteCategoryUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.category.GetCategoryNamesByTypeUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.category.InsertCategoryUsecase
+import com.hegunhee.newsimplememoapp.domain.usecase.category.IsExistCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,10 +16,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CategoryViewModel @Inject constructor(
-    private val getCategoryNamesByType: GetCategoryNamesByType,
-    private val insertServerCategoryUseCase : InsertServerCategoryUsecase,
-    private val deleteServerCategoryUseCase: DeleteServerCategoryUseCase,
-    private val isExistCategoryUseCase: isExistCategoryUseCase,
+    private val getCategoryNamesByTypeUseCase: GetCategoryNamesByTypeUseCase,
+    private val insertServerCategoryUseCase : InsertCategoryUsecase,
+    private val deleteCategoryUseCase: DeleteCategoryUseCase,
+    private val isExistCategoryUseCase: IsExistCategoryUseCase,
 ) : ViewModel() {
 
     private val _uiState : MutableStateFlow<CategoryUiState> = MutableStateFlow(CategoryUiState.Loading)
@@ -27,7 +27,7 @@ class CategoryViewModel @Inject constructor(
 
     fun fetchCategoryList(categoryType: CategoryType) {
         viewModelScope.launch {
-            getCategoryNamesByType(categoryType)
+            getCategoryNamesByTypeUseCase(categoryType)
                 .onSuccess { categoryNames ->
                     _uiState.value = CategoryUiState.Success(categoryType,categoryNames.names)
                 }.onFailure {
@@ -57,7 +57,7 @@ class CategoryViewModel @Inject constructor(
 
     fun deleteCategory(categoryType : CategoryType, category : String) {
         viewModelScope.launch {
-            deleteServerCategoryUseCase(category)
+            deleteCategoryUseCase(category)
                 .onSuccess {
                     fetchCategoryList(categoryType)
                 }.onFailure {

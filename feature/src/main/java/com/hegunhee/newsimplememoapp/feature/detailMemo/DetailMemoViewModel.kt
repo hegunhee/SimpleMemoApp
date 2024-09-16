@@ -7,10 +7,10 @@ import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
 import com.hegunhee.newsimplememoapp.domain.model.memo.MemoForm
 import com.hegunhee.newsimplememoapp.domain.model.memo.MemoServer
-import com.hegunhee.newsimplememoapp.domain.usecase.category.GetCategoryNamesByType
-import com.hegunhee.newsimplememoapp.domain.usecase.memo.DeleteMemoServerUseCase
-import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetMemoServerUseCase
-import com.hegunhee.newsimplememoapp.domain.usecase.memo.UpdateMemoServerUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.category.GetCategoryNamesByTypeUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.DeleteMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetMemoUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.UpdateMemoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -20,10 +20,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailMemoViewModel @Inject constructor(
-    private val getServerMemoUseCase : GetMemoServerUseCase,
-    private val deleteServerMemoUseCase : DeleteMemoServerUseCase,
-    private val updateServerMemoUseCase : UpdateMemoServerUseCase,
-    private val getCategoryNamesByTypeUseCase : GetCategoryNamesByType
+    private val getServerMemoUseCase : GetMemoUseCase,
+    private val deleteServerMemoUseCase : DeleteMemoUseCase,
+    private val updateServerMemoUseCase : UpdateMemoUseCase,
+    private val getCategoryNamesByTypeUseCase : GetCategoryNamesByTypeUseCase
 ) : ViewModel(), CategoryActionHandler {
 
     private val memoId : MutableStateFlow<Int> = MutableStateFlow(0)

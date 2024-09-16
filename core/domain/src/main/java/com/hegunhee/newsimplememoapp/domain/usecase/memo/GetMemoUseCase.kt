@@ -1,14 +1,14 @@
 package com.hegunhee.newsimplememoapp.domain.usecase.memo
 
-import com.hegunhee.newsimplememoapp.domain.model.MemoType
-import com.hegunhee.newsimplememoapp.domain.repository.MemoRepository
+import com.hegunhee.newsimplememoapp.domain.model.memo.MemoServer
+import com.hegunhee.newsimplememoapp.domain.repository.MemoTempRepository
 import javax.inject.Inject
 
-class GetMemoUseCase @Inject constructor(private val repository: MemoRepository) {
+class GetMemoUseCase @Inject constructor(
+    private val memoTempRepository: MemoTempRepository
+) {
 
-    suspend operator fun invoke(memoId : Int) : MemoType.Memo{
-        return repository.getMemo(memoId)
+    suspend operator fun invoke(memoId : Int) : Result<MemoServer> {
+        return memoTempRepository.getMemo(memoId)
     }
-
-
 }

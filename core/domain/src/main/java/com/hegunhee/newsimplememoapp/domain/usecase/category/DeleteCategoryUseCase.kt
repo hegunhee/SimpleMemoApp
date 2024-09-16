@@ -3,9 +3,11 @@ package com.hegunhee.newsimplememoapp.domain.usecase.category
 import com.hegunhee.newsimplememoapp.domain.repository.CategoryRepository
 import javax.inject.Inject
 
-class DeleteCategoryUseCase @Inject constructor(private val repository: CategoryRepository){
+class DeleteCategoryUseCase @Inject constructor(
+    private val categoryRepository: CategoryRepository
+) {
 
-    suspend operator fun invoke(text : String) : String {
-        return repository.deleteCategory(text).getOrElse { "" }
+    suspend operator fun invoke(name : String) : Result<String> {
+        return categoryRepository.deleteCategory(name)
     }
 }
