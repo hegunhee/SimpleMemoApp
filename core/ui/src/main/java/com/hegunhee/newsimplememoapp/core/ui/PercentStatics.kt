@@ -11,18 +11,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hegunhee.newsimplememoapp.domain.model.StaticsData
+import com.hegunhee.newsimplememoapp.domain.model.memo.StaticsMemo
 
 @Composable
 fun PercentStatics(
-    staticsData: StaticsData,
+    staticsData: StaticsMemo,
     onClickStaticsItem : (String) -> Unit,
 ) {
     val textSize = 20.sp
-    Row(modifier = Modifier.clickable { onClickStaticsItem(staticsData.attr) }.fillMaxWidth().heightIn(30.dp)) {
+    Row(modifier = Modifier.clickable { onClickStaticsItem(staticsData.attribute) }.fillMaxWidth().heightIn(30.dp)) {
         Text(text = staticsData.percent.toString() + "%",modifier = Modifier.weight(0.2f), fontSize = textSize)
-        Text(text = staticsData.attr,modifier = Modifier.weight(0.3f), textAlign = TextAlign.Start, fontSize = textSize, maxLines = 1)
-        Text(text = staticsData.price.toMoneyFormat() + "원",modifier = Modifier.weight(0.5f),textAlign = TextAlign.End, fontSize = 20.sp, maxLines = 1)
+        Text(text = staticsData.attribute,modifier = Modifier.weight(0.3f), textAlign = TextAlign.Start, fontSize = textSize, maxLines = 1)
+        Text(text = staticsData.price.intValueExact().toMoneyFormat() + "원",modifier = Modifier.weight(0.5f),textAlign = TextAlign.End, fontSize = 20.sp, maxLines = 1)
     }
 }
 

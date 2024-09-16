@@ -1,6 +1,7 @@
 package com.hegunhee.statics
 
-import com.hegunhee.newsimplememoapp.domain.model.StaticsData
+import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
+import com.hegunhee.newsimplememoapp.domain.model.memo.StaticsMemo
 
 sealed interface StaticsUiState {
 
@@ -9,7 +10,7 @@ sealed interface StaticsUiState {
     data class Success(
         val year : Int,
         val month : Int,
-        val category : String,
-        val staticsList : List<StaticsData>
+        val incomeExpenseType : IncomeExpenseType,
+        val staticsList : List<StaticsMemo>
     ) : StaticsUiState
 }

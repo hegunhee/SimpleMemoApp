@@ -2,39 +2,49 @@ package com.hegunhee.statics
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
 import com.hegunhee.newsimplememoapp.util.DateUtil
-import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetStaticsDataUseCase
+import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetStaticsMemosUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 class StaticsViewModel @Inject constructor(
-    private val getStaticsDataUseCase: GetStaticsDataUseCase
+    private val getStaticsMemosUseCase: GetStaticsMemosUseCase,
 ) : ViewModel() {
 
-    private val yearDate = MutableStateFlow(DateUtil.getYear())
-    private val monthDate = MutableStateFlow(DateUtil.getMonth())
-    private val memoCategory = MutableStateFlow("수입")
+    private val _incomeExpenseType: MutableStateFlow<IncomeExpenseType> = MutableStateFlow(
+        IncomeExpenseType.INCOME
+    )
+    val incomeExpenseType: StateFlow<IncomeExpenseType> = _incomeExpenseType.asStateFlow()
+
+    val yearDate = MutableStateFlow(DateUtil.getYear())
+    val monthDate = MutableStateFlow(DateUtil.getMonth())
 
 
-    val uiState : StateFlow<StaticsUiState> = combine(flow = yearDate,flow2 = monthDate,flow3 = memoCategory,transform = { year, month,category ->
-        val staticsList = getStaticsDataUseCase(year,month).filter { it.category == category }
-        StaticsUiState.Success(
-            year,
-            month,
-            category,
-            staticsList
-        )
-    }
-    ).stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(500L),
-        initialValue = StaticsUiState.Loading
+    val uiState: StateFlow<StaticsUiState> = combine(yearDate, monthDate, incomeExpenseType) { year, month, incomeExpenseType ->
+        getStaticsMemosUseCase(incomeExpenseType, year, month)
+            .onSuccess {
+                return@combine StaticsUiState.Success(
+                    it.year,
+                    it.month,
+                    it.type,
+                    it.staticsMemos
+                )
+            }.onFailure {
+
+            }
+        return@combine StaticsUiState.Loading
+    }.stateIn(
+    scope = viewModelScope,
+    started = SharingStarted.WhileSubscribed(500L),
+    initialValue = StaticsUiState.Loading
     )
 
     fun onPreviousMonthClick() {
@@ -55,7 +65,7 @@ class StaticsViewModel @Inject constructor(
         }
     }
 
-    fun onDatePickerMonthClick(year : Int, month : Int) {
+    fun onDatePickerMonthClick(year: Int, month: Int) {
         yearDate.value = year
         monthDate.value = month
     }
@@ -65,8 +75,8 @@ class StaticsViewModel @Inject constructor(
         monthDate.value = DateUtil.getMonth()
     }
 
-    fun setCategory(category : String) {
-        memoCategory.value = category
+    fun setIncomeExpenseType(type: IncomeExpenseType) {
+        _incomeExpenseType.value = type
     }
 
 }

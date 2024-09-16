@@ -23,7 +23,6 @@ import javax.inject.Inject
 @HiltViewModel
 class StaticViewModel @Inject constructor(
     private val getStaticsMemosUseCase: GetStaticsMemosUseCase,
-    private val getStaticsDataUseCase: GetStaticsDataUseCase
 ) : ViewModel(), StaticsActionHandler {
 
     private val _staticsNavigation : MutableSharedFlow<StaticsNavigation> = MutableSharedFlow()
