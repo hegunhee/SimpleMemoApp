@@ -2,14 +2,6 @@ package com.hegunhee.newsimplememoapp.domain.model
 
 import java.time.LocalDateTime
 
-public object LocalDateTimeUtil {
-
-}
-
-public fun LocalDateTime.isMorning() : Boolean {
-    return hour <= 12
-}
-
 public fun LocalDateTime.getDateStamp() : String {
     return "${year}/${monthValue}/${dayOfMonth} (${dayOfWeek.name})"
 }

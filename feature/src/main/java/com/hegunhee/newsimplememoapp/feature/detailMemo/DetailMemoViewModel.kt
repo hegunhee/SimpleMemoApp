@@ -6,7 +6,7 @@ import com.hegunhee.newsimplememoapp.feature.common.category.CategoryActionHandl
 import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
 import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
 import com.hegunhee.newsimplememoapp.domain.model.memo.MemoForm
-import com.hegunhee.newsimplememoapp.domain.model.memo.MemoServer
+import com.hegunhee.newsimplememoapp.domain.model.memo.Memo
 import com.hegunhee.newsimplememoapp.domain.usecase.category.GetCategoryNamesByTypeUseCase
 import com.hegunhee.newsimplememoapp.domain.usecase.memo.DeleteMemoUseCase
 import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetMemoUseCase
@@ -58,7 +58,7 @@ class DetailMemoViewModel @Inject constructor(
         }
     }
 
-    private fun MemoServer.toMemoForm() : MemoForm {
+    private fun Memo.toMemoForm() : MemoForm {
         return MemoForm(memoDate,incomeExpenseType,attribute,asset,description, price)
     }
 

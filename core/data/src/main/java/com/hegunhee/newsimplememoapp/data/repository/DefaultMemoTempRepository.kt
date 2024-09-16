@@ -9,7 +9,7 @@ import com.hegunhee.newsimplememoapp.data.mapper.toStaticsMemos
 import com.hegunhee.newsimplememoapp.domain.model.memo.AttributeMemos
 import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
 import com.hegunhee.newsimplememoapp.domain.model.memo.MemoForm
-import com.hegunhee.newsimplememoapp.domain.model.memo.MemoServer
+import com.hegunhee.newsimplememoapp.domain.model.memo.Memo
 import com.hegunhee.newsimplememoapp.domain.model.memo.MemosSummary
 import com.hegunhee.newsimplememoapp.domain.model.memo.StaticsMemos
 import com.hegunhee.newsimplememoapp.domain.repository.MemoTempRepository
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class DefaultMemoTempRepository @Inject constructor(
     private val remoteDataSource : RemoteDataSource
 ) : MemoTempRepository {
-    override suspend fun getMemo(memoId: Int): Result<MemoServer> {
+    override suspend fun getMemo(memoId: Int): Result<Memo> {
         return runCatching { remoteDataSource.findMemo(memoId).toMemo() }
     }
 

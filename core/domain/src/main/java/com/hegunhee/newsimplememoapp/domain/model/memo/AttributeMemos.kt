@@ -5,5 +5,5 @@ import java.math.BigDecimal
 data class AttributeMemos(
     val price : BigDecimal,
     val attribute : String,
-    val memos : List<MemoServer>
+    val memos : List<Memo>
 )
