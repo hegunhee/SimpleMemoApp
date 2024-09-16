@@ -4,9 +4,11 @@ import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
 import com.hegunhee.newsimplememoapp.domain.repository.CategoryRepository
 import javax.inject.Inject
 
-class InsertCategoryUseCase @Inject constructor(private val repository: CategoryRepository) {
+class InsertCategoryUsecase @Inject constructor(
+    private val categoryRepository: CategoryRepository
+) {
 
-    suspend operator fun invoke(categoryType: CategoryType, text : String) : String {
-        return repository.insertCategory(categoryType,text).getOrElse { "" }
+    suspend operator fun invoke(categoryType: CategoryType,name : String) : Result<String> {
+        return categoryRepository.insertCategory(categoryType,name)
     }
 }
