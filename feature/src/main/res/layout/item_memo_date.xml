@@ -6,7 +6,7 @@
 
         <variable
             name="memoDate"
-            type="com.hegunhee.newsimplememoapp.feature.common.memo.MemoType.MemoDate" />
+            type="com.hegunhee.newsimplememoapp.domain.model.memo.MemoType.MemoDate" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"

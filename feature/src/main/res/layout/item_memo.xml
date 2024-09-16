@@ -9,7 +9,7 @@
 
         <variable
             name="memo"
-            type="com.hegunhee.newsimplememoapp.feature.common.memo.MemoType.Memo" />
+            type="com.hegunhee.newsimplememoapp.domain.model.memo.MemoType.Memo" />
 
         <import type="com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType"/>
 

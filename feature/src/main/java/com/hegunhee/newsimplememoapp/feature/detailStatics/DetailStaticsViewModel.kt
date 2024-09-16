@@ -2,11 +2,11 @@ package com.hegunhee.newsimplememoapp.feature.detailStatics
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.hegunhee.newsimplememoapp.domain.model.memo.MemoType
+import com.hegunhee.newsimplememoapp.domain.model.memo.toMemoTypes
 import com.hegunhee.newsimplememoapp.domain.usecase.memo.GetMemosByAttrUseCase
 import com.hegunhee.newsimplememoapp.feature.common.DateSelectorActionHandler
 import com.hegunhee.newsimplememoapp.feature.common.MemoAdapterActionHandler
-import com.hegunhee.newsimplememoapp.feature.common.memo.MemoType
-import com.hegunhee.newsimplememoapp.feature.common.memo.toMemoTypes
 import com.hegunhee.newsimplememoapp.feature.common.toMoneyFormat
 import com.hegunhee.newsimplememoapp.feature.statics.StaticsNavArgs
 import com.hegunhee.newsimplememoapp.util.DateUtil
