@@ -26,7 +26,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import com.hegunhee.newsimplememoapp.domain.model.category.CategoryType
-import com.hegunhee.newsimplememoapp.domain.model.TimeInfo
 import com.hegunhee.newsimplememoapp.domain.model.getDateStamp
 import com.hegunhee.newsimplememoapp.domain.model.getTimeStamp
 import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
@@ -43,12 +42,12 @@ fun DetailMemoScreen(
     price : String,
     description : String,
     selectedCategoryType : CategoryType,
-    subCategoryList : List<String>,
-    onCategoryClick : (IncomeExpenseType) -> Unit,
+    categoryList : List<String>,
+    onIncomeExpenseTypeClick : (IncomeExpenseType) -> Unit,
     onSelectDateClick : (LocalDate) -> Unit,
     onSelectTimeClick : (LocalTime) -> Unit,
-    onSubCategoryClick : (CategoryType) -> Unit,
-    onSubCategoryItemClick : (CategoryType, String) -> Unit,
+    onCategoryClick : (CategoryType) -> Unit,
+    onCategoryItemClick : (CategoryType, String) -> Unit,
     onAddSubCategoryClick : (String) -> Unit,
     onPriceValueChanged : (String) -> Unit,
     onDescriptionValueChanged : (String) -> Unit,
@@ -79,9 +78,9 @@ fun DetailMemoScreen(
         CategoryBottomSheet(
             onDismissRequest = { showCategoryBottomSheet = false},
             selectedCategoryType = selectedCategoryType,
-            categoryList = subCategoryList,
-            onSubCategoryClick = onSubCategoryClick,
-            onSubCategoryItemClick = onSubCategoryItemClick,
+            categoryList = categoryList,
+            onSubCategoryClick = onCategoryClick,
+            onSubCategoryItemClick = onCategoryItemClick,
             onAddSubCategoryClick = onAddSubCategoryClick,
         )
     }
@@ -96,7 +95,7 @@ fun DetailMemoScreen(
         Column(modifier = Modifier.padding(padding)) {
             IncomeExpenseTypeSelector(
                 selectedCategory = memoForm.incomeExpenseType,
-                onCategoryClick = onCategoryClick
+                onCategoryClick = onIncomeExpenseTypeClick
             )
             Row(
                 Modifier
@@ -119,7 +118,7 @@ fun DetailMemoScreen(
             SubCategory(
                 categoryType = CategoryType.ASSET,
                 selectedCategory = memoForm.asset,
-                onSubCategoryClick = onSubCategoryClick,
+                onSubCategoryClick = onCategoryClick,
                 showCategoryBottomSheet = { showCategoryBottomSheet = true }
             )
 
@@ -131,7 +130,7 @@ fun DetailMemoScreen(
             SubCategory(
                 categoryType = attrType,
                 selectedCategory = memoForm.attribute,
-                onSubCategoryClick = onSubCategoryClick,
+                onSubCategoryClick = onCategoryClick,
                 showCategoryBottomSheet = { showCategoryBottomSheet = true }
             )
 
@@ -153,8 +152,6 @@ fun DetailMemoScreen(
                 Text(text = "설명",modifier = Modifier.weight(0.2f), fontSize = 20.sp)
                 OutlinedTextField(value = description, onValueChange = onDescriptionValueChanged, singleLine = true)
             }
-
-
 
             when(memoScreenType) {
                 is DetailMemoScreenType.Add -> {

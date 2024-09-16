@@ -33,20 +33,20 @@ class AddMemoViewModel @Inject constructor(
     val categoryList: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
     val categoryType: MutableStateFlow<CategoryType> = MutableStateFlow(CategoryType.EMPTY)
 
-    fun setPrice(price: String) {
-        this.price.value = price
-    }
-
-    fun setDescription(description: String) {
-        this.description.value = description
-    }
-
     fun setTime(time: LocalTime) {
         _memoForm.value = memoForm.value.updateTime(time)
     }
 
     fun setDate(date: LocalDate) {
         _memoForm.value = memoForm.value.updateDate(date)
+    }
+
+    fun setPrice(price: String) {
+        this.price.value = price
+    }
+
+    fun setDescription(description: String) {
+        this.description.value = description
     }
 
     fun setIncomeExpenseType(type: IncomeExpenseType) {
