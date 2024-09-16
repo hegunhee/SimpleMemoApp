@@ -1,71 +1,58 @@
 package com.hegunhee.newsimplememoapp.data.repository
 
-import com.hegunhee.newsimplememoapp.data.dataSource.LocalDataSource
-import com.hegunhee.newsimplememoapp.data.entity.MemoEntity
-import com.hegunhee.newsimplememoapp.data.mapper.*
-import com.hegunhee.newsimplememoapp.domain.model.MemoType
-import com.hegunhee.newsimplememoapp.domain.model.StaticsData
+import com.hegunhee.newsimplememoapp.data.dataSource.RemoteDataSource
+import com.hegunhee.newsimplememoapp.data.mapper.toAttributeMemos
+import com.hegunhee.newsimplememoapp.data.mapper.toMemo
+import com.hegunhee.newsimplememoapp.data.mapper.toMemoRequest
+import com.hegunhee.newsimplememoapp.data.mapper.toMemosSummary
+import com.hegunhee.newsimplememoapp.data.mapper.toStaticsMemos
+import com.hegunhee.newsimplememoapp.domain.model.memo.AttributeMemos
+import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
+import com.hegunhee.newsimplememoapp.domain.model.memo.MemoForm
+import com.hegunhee.newsimplememoapp.domain.model.memo.Memo
+import com.hegunhee.newsimplememoapp.domain.model.memo.MemosSummary
+import com.hegunhee.newsimplememoapp.domain.model.memo.StaticsMemos
 import com.hegunhee.newsimplememoapp.domain.repository.MemoRepository
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class DefaultMemoRepository @Inject constructor(
-    private val localDataSource: LocalDataSource
+    private val remoteDataSource : RemoteDataSource
 ) : MemoRepository {
-
-    override suspend fun getMemo(memoId: Int) : MemoType.Memo {
-        return localDataSource.getMemo(memoId).toMemo()
+    override suspend fun getMemo(memoId: Int): Result<Memo> {
+        return runCatching { remoteDataSource.findMemo(memoId).toMemo() }
     }
 
-    override suspend fun getMemoTypeListSortedByYearAndMonth(year: Int, month: Int): List<MemoType> {
-        val memoList = localDataSource.getMemoListSortedByYearAndMonth(year,month)
-        return memoList.getMonthMemoList(year,month);
+    override suspend fun getMemosByDate(year: Int, month: Int): Result<MemosSummary> {
+        return runCatching { remoteDataSource.getMemosByDate(year,month).toMemosSummary() }
     }
 
-    override suspend fun getMemoTypeListByAttr(attr: String, year: Int, month: Int): List<MemoType> {
-        val memoList = localDataSource.getMemoListSortedByAttrYearMonth(attr,year,month)
-        return memoList.getMonthMemoList(year,month);
+    override suspend fun getMemosByAttr(
+        attr: String,
+        year: Int,
+        month: Int
+    ): Result<AttributeMemos> {
+        return runCatching { remoteDataSource.getMemosByAttr(attr,year,month).toAttributeMemos() }
     }
 
-    private fun List<MemoEntity>.getMonthMemoList(year : Int,month : Int) : List<MemoType> {
-        return this
-            .groupBy { it.day }
-            .flatMap { (day, list) ->
-                val incomeSum = list.filter { it.category == "수입" }.sumOf { it.price }
-                val expenseSum = list.filter { it.category == "지출"}.sumOf { it.price }
-                val memoDate = MemoType.MemoDate(year,month,day,list.firstOrNull()?.dayOfWeek ?: "월", incomeSum,expenseSum)
-                listOf(memoDate) + list.map { it.toMemo() }
-            }
+    override suspend fun getStaticsMemo(
+        type: IncomeExpenseType,
+        year: Int,
+        month: Int
+    ): Result<StaticsMemos> {
+        return runCatching { remoteDataSource.getStaticsMemos(type,year,month).toStaticsMemos() }
     }
 
-    override suspend fun insertMemo(memo: MemoType.Memo) {
-        localDataSource.insertMemo(memo.toMemoEntity())
-    }
-
-    override suspend fun updateMemo(memo: MemoType.Memo) {
-        localDataSource.updateMemo(memo.toMemoEntity())
-    }
-
-    override suspend fun deleteMemo(id : Int) {
-        localDataSource.deleteMemo(id)
-    }
-
-    override suspend fun deleteAllMemo() {
-        localDataSource.deleteAllMemo()
-    }
-
-    override suspend fun getStaticsData(year: Int, month: Int): List<StaticsData> {
-        val memoList = localDataSource.getMemoListSortedByYearAndMonth(year,month)
-        val incomeTotalPrice = memoList.filter { it.category == "수입" }.sumOf { it.price }
-        val expenseTotalPrice = memoList.filter { it.category == "지출" }.sumOf { it.price }
-        return memoList.groupBy { it.attr }.map { (attr,list) ->
-            val percent = if(list[0].category == "수입") {
-                list.sumOf { it.price } / incomeTotalPrice.toFloat() * 100
-            }else{
-                list.sumOf { it.price } / expenseTotalPrice.toFloat() * 100
-            }
-            StaticsData(list[0].category,percent.toInt(),attr,list.sumOf { it.price },year,month)
+    override suspend fun insertMemo(memoForm: MemoForm): Result<Int> {
+        return runCatching {
+            remoteDataSource.insertMemo(memoForm.toMemoRequest()).memoId
         }
+    }
+
+    override suspend fun updateMemo(memoId: Int, memoForm: MemoForm): Result<Int> {
+        return runCatching { remoteDataSource.updateMemo(memoId,memoForm.toMemoRequest()).memoId }
+    }
+
+    override suspend fun deleteMemo(memoId: Int): Result<Int> {
+        return runCatching { remoteDataSource.deleteMemo(memoId).memoId }
     }
 }

@@ -1,23 +1,25 @@
 package com.hegunhee.newsimplememoapp.domain.repository
 
-import com.hegunhee.newsimplememoapp.domain.model.MemoType
-import com.hegunhee.newsimplememoapp.domain.model.StaticsData
+import com.hegunhee.newsimplememoapp.domain.model.memo.AttributeMemos
+import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
+import com.hegunhee.newsimplememoapp.domain.model.memo.MemoForm
+import com.hegunhee.newsimplememoapp.domain.model.memo.Memo
+import com.hegunhee.newsimplememoapp.domain.model.memo.MemosSummary
+import com.hegunhee.newsimplememoapp.domain.model.memo.StaticsMemos
 
 interface MemoRepository {
 
-    suspend fun getMemo(memoId: Int) : MemoType.Memo
+    suspend fun getMemo(memoId : Int) : Result<Memo>
 
-    suspend fun getMemoTypeListSortedByYearAndMonth(year : Int,month : Int) : List<MemoType>
+    suspend fun getMemosByDate(year : Int, month : Int) : Result<MemosSummary>
 
-    suspend fun getMemoTypeListByAttr(attr : String, year : Int,month : Int) : List<MemoType>
+    suspend fun getMemosByAttr(attr : String,year :Int, month : Int) : Result<AttributeMemos>
 
-    suspend fun insertMemo(memo : MemoType.Memo)
+    suspend fun getStaticsMemo(type : IncomeExpenseType,year : Int,month : Int) : Result<StaticsMemos>
 
-    suspend fun updateMemo(memo : MemoType.Memo)
+    suspend fun insertMemo(memoForm : MemoForm) : Result<Int>
 
-    suspend fun deleteMemo(id : Int)
+    suspend fun updateMemo(memoId : Int,memoForm: MemoForm) : Result<Int>
 
-    suspend fun deleteAllMemo()
-
-    suspend fun getStaticsData(year : Int,month :Int) : List<StaticsData>
+    suspend fun deleteMemo(memoId : Int) : Result<Int>
 }
