@@ -6,13 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.hegunhee.newsimplememoapp.domain.model.memo.MemoType
 import com.hegunhee.newsimplememoapp.feature.R
 import com.hegunhee.newsimplememoapp.feature.common.MemoAdapterActionHandler
 import com.hegunhee.newsimplememoapp.feature.databinding.ItemMemoBinding
 import com.hegunhee.newsimplememoapp.feature.databinding.ItemMemoDateBinding
 
-class MemoServerAdapter(val actionHandler : MemoAdapterActionHandler) :
-    ListAdapter<MemoType,MemoServerAdapter.MemoAdapterViewHolder>(diffUtil){
+class MemoAdapter(val actionHandler : MemoAdapterActionHandler) :
+    ListAdapter<MemoType,MemoAdapter.MemoAdapterViewHolder>(diffUtil){
 
     sealed class MemoAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         abstract fun bindView(memo: MemoType)

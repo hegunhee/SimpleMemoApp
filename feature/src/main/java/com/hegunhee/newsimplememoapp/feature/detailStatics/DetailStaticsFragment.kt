@@ -12,7 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.hegunhee.newsimplememoapp.feature.R
-import com.hegunhee.newsimplememoapp.feature.common.memo.MemoServerAdapter
+import com.hegunhee.newsimplememoapp.feature.common.memo.MemoAdapter
 import com.hegunhee.newsimplememoapp.feature.databinding.FragmentDetailStaticsBinding
 import com.hegunhee.newsimplememoapp.feature.dateDialog.DateDialogFragment
 import com.hegunhee.newsimplememoapp.feature.main.MainFragmentDirections
@@ -24,14 +24,14 @@ class DetailStaticsFragment : Fragment() {
 
     private val viewModel: DetailStaticsViewModel by viewModels()
     private lateinit var binding: FragmentDetailStaticsBinding
-    private lateinit var memoAdapter : MemoServerAdapter
+    private lateinit var memoAdapter : MemoAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_detail_statics,container,false)
-        memoAdapter = MemoServerAdapter(viewModel)
+        memoAdapter = MemoAdapter(viewModel)
         binding = FragmentDetailStaticsBinding.bind(root).apply {
             viewModel = this@DetailStaticsFragment.viewModel
             lifecycleOwner = viewLifecycleOwner
