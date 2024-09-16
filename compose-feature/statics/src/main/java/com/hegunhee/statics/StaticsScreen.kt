@@ -16,11 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.hegunhee.newsimplememoapp.core.ui.IncomeExpenseTypeSelector
 import com.hegunhee.newsimplememoapp.core.ui.DatePickerDialog
 import com.hegunhee.newsimplememoapp.core.ui.DateSelector
+import com.hegunhee.newsimplememoapp.core.ui.IncomeExpenseTypeSelector
 import com.hegunhee.newsimplememoapp.core.ui.PercentStatics
-import com.hegunhee.newsimplememoapp.domain.model.StaticsData
+import com.hegunhee.newsimplememoapp.domain.model.memo.IncomeExpenseType
+import com.hegunhee.newsimplememoapp.domain.model.memo.StaticsMemo
 
 @Composable
 fun StaticsScreenRoot(
@@ -30,6 +31,8 @@ fun StaticsScreenRoot(
 ) {
     val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 
+
+    // 년도와 날짜만 분리해서 상단에 고정시켜놓을까 고민중
     when(uiState) {
         is StaticsUiState.Loading -> { }
         is StaticsUiState.Success -> {
@@ -37,13 +40,13 @@ fun StaticsScreenRoot(
                 paddingValues = paddingValues,
                 year = uiState.year,
                 month = uiState.month,
-                category = uiState.category,
+                incomeExpenseType = uiState.incomeExpenseType,
                 staticsList = uiState.staticsList,
                 onPreviousMonthCLick = viewModel::onPreviousMonthClick,
                 onNextMonthClick = viewModel::onNextMonthClick,
                 onDatePickerCurrentMonthClick = viewModel::onDatePickerCurrentMonthClick,
                 onDatePickerMonthClick =viewModel::onDatePickerMonthClick,
-                onCategoryClick = viewModel::setCategory,
+                onIncomeExpenseTypeClick = viewModel::setIncomeExpenseType,
                 onDetailStaticsClick = onDetailStaticsClick
             )
         }
@@ -55,13 +58,13 @@ fun StaticsScreen(
     paddingValues: PaddingValues,
     year : Int,
     month : Int,
-    category: String,
-    staticsList : List<StaticsData>,
+    incomeExpenseType: IncomeExpenseType,
+    staticsList : List<StaticsMemo>,
     onPreviousMonthCLick : () -> Unit,
     onNextMonthClick : () -> Unit,
     onDatePickerCurrentMonthClick : () -> Unit,
     onDatePickerMonthClick : (Int, Int) -> Unit,
-    onCategoryClick : (String) -> Unit,
+    onIncomeExpenseTypeClick : (IncomeExpenseType) -> Unit,
     onDetailStaticsClick: (String) -> Unit
 ) {
     var datePickerDialogState by remember{ mutableStateOf<Boolean>(false) }
@@ -90,11 +93,11 @@ fun StaticsScreen(
     ) { padding ->
         Column(modifier = Modifier.fillMaxWidth().padding(padding).padding(horizontal = 10.dp)) {
             IncomeExpenseTypeSelector(
-                selectedCategory = category,
-                onCategoryClick = onCategoryClick
+                selectedCategory = incomeExpenseType,
+                onCategoryClick = onIncomeExpenseTypeClick
             )
             LazyColumn() {
-                items(staticsList,key = {it.attr}) {
+                items(staticsList,key = {it.attribute}) {
                     PercentStatics(it,onDetailStaticsClick)
                 }
             }
