@@ -70,7 +70,6 @@ class AndroidComposeApplicationPlugin : Plugin<Project> {
                 add("kapt",libs.findLibrary("room-compiler").get())
 
                 add("androidTestImplementation",libs.findLibrary("room-testing").get())
-                add("androidTestImplementation",libs.findLibrary("mockito-core").get())
 
             }
         }

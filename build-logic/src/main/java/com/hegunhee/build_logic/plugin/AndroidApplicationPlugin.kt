@@ -46,7 +46,6 @@ class AndroidApplicationPlugin : Plugin<Project> {
                 add("testImplementation",libs.findLibrary("junit-junit").get())
                 add("androidTestImplementation",libs.findLibrary("ext-junit").get())
                 add("androidTestImplementation",libs.findLibrary("espresso-core").get())
-                add("testImplementation",libs.findLibrary("mockito-inline").get())
 
                 add("implementation",libs.findBundle("lifecycle").get())
 
@@ -57,7 +56,7 @@ class AndroidApplicationPlugin : Plugin<Project> {
                 add("kapt",libs.findLibrary("room-compiler").get())
 
                 add("androidTestImplementation",libs.findLibrary("room-testing").get())
-                add("androidTestImplementation",libs.findLibrary("mockito-core").get())
+                add("testImplementation",libs.findLibrary("mockito-kotlin").get())
 
             }
         }

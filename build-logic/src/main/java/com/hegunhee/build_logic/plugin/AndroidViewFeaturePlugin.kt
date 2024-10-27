@@ -28,7 +28,6 @@ class AndroidViewFeaturePlugin : Plugin<Project> {
                 add("testImplementation",libs.findLibrary("junit-junit").get())
                 add("androidTestImplementation",libs.findLibrary("ext-junit").get())
                 add("androidTestImplementation",libs.findLibrary("espresso-core").get())
-                add("testImplementation",libs.findLibrary("mockito-inline").get())
 
                 add("implementation",libs.findBundle("lifecycle").get())
 
