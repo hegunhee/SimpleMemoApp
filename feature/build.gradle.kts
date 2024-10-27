@@ -17,4 +17,6 @@ dependencies {
 
     implementation(project(":core:util"))
 
+    debugImplementation(libs.fragment.test.manifest)
+    androidTestImplementation(libs.fragment.test)
 }
