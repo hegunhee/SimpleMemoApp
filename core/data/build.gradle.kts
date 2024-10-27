@@ -16,7 +16,7 @@ dependencies {
 
     // Coroutines
     implementation(libs.bundles.coroutine)
-    implementation(libs.coroutine.test)
+    testImplementation(libs.coroutine.test)
 
     //Room DB
     implementation(libs.bundles.room)
@@ -27,4 +27,5 @@ dependencies {
     testImplementation(libs.junit.junit)
     androidTestImplementation(libs.ext.junit)
 
+    testImplementation(libs.mockito.kotlin)
 }
