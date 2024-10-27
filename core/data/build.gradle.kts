@@ -26,6 +26,8 @@ dependencies {
 
     testImplementation(libs.junit.junit)
     androidTestImplementation(libs.ext.junit)
+    testImplementation(libs.ext.junit)
 
     testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mock.web.server)
 }

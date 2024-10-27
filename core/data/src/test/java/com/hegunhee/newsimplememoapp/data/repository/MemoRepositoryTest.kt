@@ -17,8 +17,8 @@ import org.mockito.kotlin.whenever
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
-@RunWith(MockitoJUnitRunner::class)
 @ExperimentalCoroutinesApi
+@RunWith(MockitoJUnitRunner::class)
 class MemoRepositoryTest {
 
     @InjectMocks
